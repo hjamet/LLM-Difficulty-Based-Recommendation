@@ -1,6 +1,110 @@
-58:05 INFO - [dmkd_additions/difficulty_estimation/download_data.py:17] Starting data download process...
-58:05 DEBUG - [dmkd_additions/difficulty_estimation/download_data.py:46] Output directory set to: /home/lopilo24/UNIL/Lingorank/LLM-Difficulty-Based-Recommendation/results/raw
-58:05 INFO - [dmkd_additions/difficulty_estimation/download_data.py:50] Downloading data from HuggingFace hub
-58:06 INFO - [dmkd_additions/difficulty_estimation/download_data.py:60] Moving data to correct folder
-58:06 DEBUG - [dmkd_additions/difficulty_estimation/download_data.py:68] Cleaning up temporary files
-58:06 INFO - [dmkd_additions/difficulty_estimation/download_data.py:71] Data download completed successfully
+33:21 DEBUG - [src/utilitaries/openai_utils.py:17] Setting up OpenAI token
+33:21 DEBUG - [src/utilitaries/openai_utils.py:28] Loading existing OpenAI token
+33:21 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:423] Starting fine-tuning process for model: gpt-4o-mini-2024-07-18
+33:21 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:426] Fine-tuning on dataset: french_difficulty
+33:26 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:63] Starting fine-tuning process for model gpt-4o-mini-2024-07-18 on dataset french_difficulty
+33:26 INFO - [dmkd_additions/difficulty_estimation/download_data.py:22] Starting data download process...
+33:26 WARNING - [dmkd_additions/difficulty_estimation/download_data.py:53] Data already downloaded. Loading existing files.
+33:26 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:233] Preparing training data for fine-tuning
+33:26 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:234] Dataset columns: ['sentence', 'difficulty']
+33:26 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:241] Using columns: text=sentence, difficulty=difficulty
+33:26 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:262] Prepared 3840 conversations for training
+33:26 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:277] Saving training data to results/dmkd_additions/difficulty_estimation/gpt_fine_tuning/gpt-4o-mini-2024-07-18_french_difficulty_train.jsonl
+33:26 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:88] Uploading training file to OpenAI
+33:29 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:93] Creating fine-tuning job
+33:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:99] Waiting for fine-tuning job to complete...
+33:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:100] Job ID: ftjob-kU6hHxMRW6RMdbaIqSEmCGay
+33:32 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Validating training file: file-wSDiUZ96d5M1gv7QapdLbo6W
+33:32 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+34:33 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Validating training file: file-wSDiUZ96d5M1gv7QapdLbo6W
+34:33 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+35:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Validating training file: file-wSDiUZ96d5M1gv7QapdLbo6W
+35:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+36:35 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Validating training file: file-wSDiUZ96d5M1gv7QapdLbo6W
+36:35 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+37:37 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Validating training file: file-wSDiUZ96d5M1gv7QapdLbo6W
+37:37 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+38:38 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Validating training file: file-wSDiUZ96d5M1gv7QapdLbo6W
+38:38 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+39:39 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Files validated, moving job to queued state
+39:39 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+40:40 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Fine-tuning job started
+40:40 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: None
+41:41 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Fine-tuning job started
+41:41 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: None
+42:42 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 21/1646: training loss=0.46
+42:42 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 21, 'train_loss': 0.4633481800556183, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8214285969734192}
+43:44 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 69/1646: training loss=0.36
+43:44 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 69, 'train_loss': 0.3642348647117615, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8571428656578064}
+44:45 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 133/1646: training loss=0.36
+44:45 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 133, 'train_loss': 0.3575722873210907, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8214285969734192}
+45:46 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 197/1646: training loss=0.35
+45:46 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 197, 'train_loss': 0.351796954870224, 'total_steps': 1646, 'train_mean_token_accuracy': 0.75}
+46:47 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 255/1646: training loss=0.47
+46:47 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 255, 'train_loss': 0.46764007210731506, 'total_steps': 1646, 'train_mean_token_accuracy': 0.75}
+47:48 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 311/1646: training loss=0.18
+47:48 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 311, 'train_loss': 0.17900153994560242, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+48:49 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 355/1646: training loss=0.26
+48:49 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 355, 'train_loss': 0.25528791546821594, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8571428656578064}
+49:51 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 407/1646: training loss=0.29
+49:51 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 407, 'train_loss': 0.28856319189071655, 'total_steps': 1646, 'train_mean_token_accuracy': 0.7857142686843872}
+50:52 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 475/1646: training loss=0.23
+50:52 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 475, 'train_loss': 0.23120716214179993, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9285714030265808}
+51:53 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 538/1646: training loss=0.12
+51:53 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 538, 'train_loss': 0.1215568259358406, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+52:55 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 564/1646: training loss=0.23
+52:55 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 564, 'train_loss': 0.22899818420410156, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8571428656578064}
+53:56 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 622/1646: training loss=0.36
+53:56 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 622, 'train_loss': 0.359367311000824, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8928571343421936}
+54:57 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 679/1646: training loss=0.24
+54:57 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 679, 'train_loss': 0.24138259887695312, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8571428656578064}
+55:59 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 746/1646: training loss=0.23
+55:59 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 746, 'train_loss': 0.23342731595039368, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8928571343421936}
+57:00 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 807/1646: training loss=0.15
+57:00 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 807, 'train_loss': 0.1468285173177719, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9285714030265808}
+58:01 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 869/1646: training loss=0.15
+58:01 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 869, 'train_loss': 0.147252157330513, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+59:02 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 928/1646: training loss=0.22
+59:02 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 928, 'train_loss': 0.2171439379453659, 'total_steps': 1646, 'train_mean_token_accuracy': 0.8571428656578064}
+00:03 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 983/1646: training loss=0.20
+00:03 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 983, 'train_loss': 0.19784437119960785, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9285714030265808}
+01:04 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1047/1646: training loss=0.15
+01:04 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1047, 'train_loss': 0.1536039561033249, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+02:05 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1096/1646: training loss=0.19
+02:05 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1096, 'train_loss': 0.19208963215351105, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9285714030265808}
+03:07 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1124/1646: training loss=0.15
+03:07 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1124, 'train_loss': 0.15040180087089539, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9285714030265808}
+04:08 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1181/1646: training loss=0.01
+04:08 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1181, 'train_loss': 0.014753545634448528, 'total_steps': 1646, 'train_mean_token_accuracy': 1.0}
+05:08 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1239/1646: training loss=0.13
+05:08 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1239, 'train_loss': 0.12970508635044098, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+06:10 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1298/1646: training loss=0.05
+06:10 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1298, 'train_loss': 0.05261421203613281, 'total_steps': 1646, 'train_mean_token_accuracy': 1.0}
+07:10 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1360/1646: training loss=0.03
+07:10 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1360, 'train_loss': 0.033564772456884384, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+08:11 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1418/1646: training loss=0.03
+08:11 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1418, 'train_loss': 0.031534332782030106, 'total_steps': 1646, 'train_mean_token_accuracy': 1.0}
+09:12 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1484/1646: training loss=0.14
+09:12 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1484, 'train_loss': 0.13844408094882965, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+10:13 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1539/1646: training loss=0.09
+10:13 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1539, 'train_loss': 0.08663211762905121, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9285714030265808}
+11:15 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1602/1646: training loss=0.07
+11:15 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1602, 'train_loss': 0.06883042305707932, 'total_steps': 1646, 'train_mean_token_accuracy': 0.9642857313156128}
+12:16 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: Step 1646/1646: training loss=0.13
+12:16 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {'step': 1646, 'train_loss': 0.12776947021484375, 'total_steps': 1646, 'train_mean_token_accuracy': 0.949999988079071}
+13:17 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:116] Latest event: The job has successfully completed
+13:17 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:118] Event data: {}
+13:17 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:123] Fine-tuning completed successfully!
+13:17 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:200] Fine-tuning job completed successfully. Job details saved to results/dmkd_additions/difficulty_estimation/gpt_fine_tuning/gpt-4o-mini-2024-07-18_french_difficulty_job.json
+13:17 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:395] Cancelling all running fine-tuning jobs
+13:19 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:460] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on french_difficulty
+13:19 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:463] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
+13:19 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:316] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
+13:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:329] Raw prediction: BONJOUR JEAN ! COMMENT PUIS-JE VOUS AIDER AUJOURD'HUI
+13:34 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:334] Invalid prediction format: BONJOUR JEAN ! COMMENT PUIS-JE VOUS AIDER AUJOURD'HUI. Using fallback: A1
+13:34 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:316] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
+13:43 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:329] Raw prediction: L'ÉPISTÉMOLOGIE CONTEMPORAINE, INFLUENC
+13:43 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:334] Invalid prediction format: L'ÉPISTÉMOLOGIE CONTEMPORAINE, INFLUENC. Using fallback: A1
+13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:385] Test predictions saved to results/dmkd_additions/difficulty_estimation/predictions/predictions_ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF_french_difficulty_20241119_191343.json
+14:22 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:25] Received interrupt signal. Cleaning up...
+14:22 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:28] Cleanup complete. Exiting...
