@@ -1,0 +1,6 @@
+58:05 INFO - [dmkd_additions/difficulty_estimation/download_data.py:17] Starting data download process...
+58:05 DEBUG - [dmkd_additions/difficulty_estimation/download_data.py:46] Output directory set to: /home/lopilo24/UNIL/Lingorank/LLM-Difficulty-Based-Recommendation/results/raw
+58:05 INFO - [dmkd_additions/difficulty_estimation/download_data.py:50] Downloading data from HuggingFace hub
+58:06 INFO - [dmkd_additions/difficulty_estimation/download_data.py:60] Moving data to correct folder
+58:06 DEBUG - [dmkd_additions/difficulty_estimation/download_data.py:68] Cleaning up temporary files
+58:06 INFO - [dmkd_additions/difficulty_estimation/download_data.py:71] Data download completed successfully

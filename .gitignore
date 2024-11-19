@@ -32,3 +32,7 @@ results/
 
 # Hugging Face repository
 FLDE/
+
+# Cursor
+.cursorignore
+.cursorrules
