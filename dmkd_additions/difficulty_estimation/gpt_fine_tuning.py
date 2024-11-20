@@ -15,6 +15,14 @@ logger = Logger(__name__)
 
 # Global variable to store OpenAI client for signal handler
 global_client = None
+DEFAULT_SYSTEM_PROMPT = """Vous êtes un évaluateur linguistique utilisant le Cadre européen commun de référence pour les langues (CECRL). 
+Votre mission est d'attribuer une note de compétence linguistique à ce texte, en utilisant les niveaux du CECRL, 
+allant de A1 (débutant) à C2 (avancé/natif). Évaluez ce texte et attribuez-lui la note correspondante du CECRL."""
+
+# At the top of the file, add these constants
+RESULTS_BASE_DIR = "results"
+SCRATCH_BASE_DIR = "scratch"
+DMKD_SUBDIR = os.path.join("dmkd_additions", "difficulty_estimation", "gpt_fine_tuning")
 
 
 def signal_handler(signum, frame):
@@ -35,7 +43,7 @@ signal.signal(signal.SIGTERM, signal_handler)  # System shutdown
 
 
 def fine_tune_gpt(
-    model_name: str, dataset_name: str, system_prompt: bool = False
+    model_name: str, dataset_name: str, system_prompt: bool = False, force: bool = False
 ) -> Dict[str, Any]:
     """
     Fine-tunes a GPT model on a dataset.
@@ -44,11 +52,28 @@ def fine_tune_gpt(
         model_name (str): The name of the GPT model to fine-tune.
         dataset_name (str): The name of the dataset to fine-tune on.
         system_prompt (bool): Whether to use a system prompt for the fine-tuning.
+        force (bool): If True, forces fine-tuning even if model already exists.
 
     Returns:
         dict: A json file describing the fine-tuned model.
     """
     global global_client
+
+    # Check if model already exists
+    results_dir = os.path.join(RESULTS_BASE_DIR, DMKD_SUBDIR)
+    system_prompt_suffix = "_with_system" if system_prompt else "_no_system"
+    job_file_path = os.path.join(
+        results_dir, f"{model_name}_{dataset_name}{system_prompt_suffix}_job.json"
+    )
+
+    if os.path.exists(job_file_path) and not force:
+        logger.info(
+            f"Found existing fine-tuned model for {model_name} on {dataset_name}"
+        )
+        with open(job_file_path, "r") as f:
+            job_details = json.load(f)
+        logger.info(f"Loading existing model: {job_details.get('fine_tuned_model')}")
+        return job_details
 
     # Confirmation for the user
     if (
@@ -67,7 +92,7 @@ def fine_tune_gpt(
     try:
         # Initialize OpenAI client
         client = OpenAI()
-        global_client = client  # Store client globally for signal handler
+        global_client = client
 
         data = download_data()
         dataset = getattr(data, dataset_name)
@@ -78,9 +103,10 @@ def fine_tune_gpt(
         )
 
         # Save training file
-        results_dir = "results/dmkd_additions/difficulty_estimation/gpt_fine_tuning"
+        scratch_dir = os.path.join(SCRATCH_BASE_DIR, DMKD_SUBDIR)
         train_file_path = os.path.join(
-            results_dir, f"{model_name}_{dataset_name}_train.jsonl"
+            scratch_dir,
+            f"{model_name}_{dataset_name}{system_prompt_suffix}_train.jsonl",
         )
         train_file_path = __save_training_file(train_conversations, train_file_path)
 
@@ -95,89 +121,71 @@ def fine_tune_gpt(
             training_file=training_file.id, model=model_name
         )
 
-        # Wait for job completion with progress bar
+        # Wait for job completion with enhanced progress bar
         logger.info("Waiting for fine-tuning job to complete...")
         logger.info(f"Job ID: {job.id}")
 
-        # Initialize progress bar
-        pbar = tqdm(desc="Fine-tuning progress", unit="tokens")
-        last_token_count = 0
         start_time = time.time()
+        with tqdm(desc="Fine-tuning progress", unit="steps", ncols=100) as pbar:
+            last_step = 0
+            while True:
+                try:
+                    job_status = client.fine_tuning.jobs.retrieve(job.id)
+                    events = client.fine_tuning.jobs.list_events(job.id, limit=1).data
 
-        while True:
-            try:
-                # Get the latest status and events
-                job_status = client.fine_tuning.jobs.retrieve(job.id)
-                events = client.fine_tuning.jobs.list_events(job.id, limit=1).data
-
-                # Log latest event if available
-                if events:
-                    latest_event = events[0]
-                    logger.debug(f"Latest event: {latest_event.message}")
-                    if hasattr(latest_event, "data"):
-                        logger.debug(f"Event data: {latest_event.data}")
-
-                # Check job status
-                if job_status.status == "succeeded":
-                    pbar.close()
-                    logger.info("Fine-tuning completed successfully!")
-                    break
-                elif job_status.status == "failed":
-                    pbar.close()
-                    error_message = f"Fine-tuning failed: {getattr(job_status, 'error', 'Unknown error')}"
-                    logger.error(error_message)
-                    raise Exception(error_message)
-                elif job_status.status == "cancelled":
-                    pbar.close()
-                    error_message = "Fine-tuning was cancelled"
-                    logger.error(error_message)
-                    raise Exception(error_message)
-
-                # Update progress bar using events data if available
-                if events and hasattr(events[0], "data"):
-                    event_data = events[0].data
-                    if hasattr(event_data, "step") and hasattr(
-                        event_data, "train_loss"
-                    ):
-                        current_step = event_data.step
-                        train_loss = event_data.train_loss
-                        pbar.set_description(
-                            f"Step {current_step} - Loss: {train_loss:.4f}"
+                    if events:
+                        latest_event = events[0]
+                        event_data = (
+                            latest_event.data if hasattr(latest_event, "data") else {}
                         )
-                        pbar.update(1)
 
-                # Fallback to basic progress indication if no detailed metrics
-                elif (
-                    hasattr(job_status, "trained_tokens")
-                    and job_status.trained_tokens is not None
-                ):
-                    current_tokens = job_status.trained_tokens
-                    if current_tokens > last_token_count:
-                        pbar.update(current_tokens - last_token_count)
-                        last_token_count = current_tokens
+                        # Update progress bar based on event type
+                        if isinstance(event_data, dict):
+                            current_step = event_data.get("step", 0)
+                            total_steps = event_data.get("total_steps", 0)
+                            train_loss = event_data.get("train_loss", None)
+                            accuracy = event_data.get("train_mean_token_accuracy", None)
 
-                    # Add percentage to progress bar description if total tokens available
-                    if (
-                        hasattr(job_status, "training_file")
-                        and hasattr(job_status.training_file, "tokens")
-                        and job_status.training_file.tokens
-                    ):
-                        total_tokens = job_status.training_file.tokens
-                        percentage = (current_tokens / total_tokens) * 100
-                        pbar.set_description(f"Fine-tuning progress: {percentage:.1f}%")
-                else:
-                    # If no metrics available, just show elapsed time
-                    elapsed = time.time() - start_time
-                    pbar.set_description(
-                        f"Fine-tuning in progress (elapsed: {elapsed:.0f}s)"
-                    )
+                            if current_step and current_step > last_step:
+                                pbar.update(current_step - last_step)
+                                last_step = current_step
 
-            except Exception as e:
-                logger.error(f"Error while monitoring fine-tuning: {str(e)}")
-                # Continue monitoring even if there's an error getting status
+                            # Update description with rich information
+                            desc = f"Step {current_step}/{total_steps}"
+                            if train_loss is not None:
+                                desc += f" | Loss: {train_loss:.3f}"
+                            if accuracy is not None:
+                                desc += f" | Acc: {accuracy:.2%}"
 
-            # Wait before checking again
-            time.sleep(60)  # Check every minute
+                            elapsed = time.time() - start_time
+                            desc += f" | {elapsed:.0f}s"
+
+                            pbar.set_description(desc)
+
+                            # Update total if available
+                            if total_steps and pbar.total != total_steps:
+                                pbar.total = total_steps
+
+                    # Check job status
+                    if job_status.status == "succeeded":
+                        pbar.close()
+                        logger.info("Fine-tuning completed successfully!")
+                        break
+                    elif job_status.status == "failed":
+                        pbar.close()
+                        error_message = f"Fine-tuning failed: {getattr(job_status, 'error', 'Unknown error')}"
+                        logger.error(error_message)
+                        raise Exception(error_message)
+                    elif job_status.status == "cancelled":
+                        pbar.close()
+                        error_message = "Fine-tuning was cancelled"
+                        logger.error(error_message)
+                        raise Exception(error_message)
+
+                except Exception as e:
+                    logger.error(f"Error while monitoring fine-tuning: {str(e)}")
+
+                time.sleep(60)  # Check every minute
 
         # Update job details with final status
         job_details = {
@@ -192,7 +200,7 @@ def fine_tune_gpt(
         }
 
         job_file_path = os.path.join(
-            results_dir, f"{model_name}_{dataset_name}_job.json"
+            results_dir, f"{model_name}_{dataset_name}{system_prompt_suffix}_job.json"
         )
         with open(job_file_path, "w") as f:
             json.dump(job_details, f, indent=4)
@@ -241,14 +249,11 @@ def __prepare_training_data(dataset: pd.DataFrame, system_prompt: bool = False) 
     logger.debug(f"Using columns: text={text_column}, difficulty={difficulty_column}")
 
     conversations = []
-    default_system_prompt = """Vous êtes un évaluateur linguistique utilisant le Cadre européen commun de référence pour les langues (CECRL). 
-    Votre mission est d'attribuer une note de compétence linguistique à ce texte, en utilisant les niveaux du CECRL, 
-    allant de A1 (débutant) à C2 (avancé/natif). Évaluez ce texte et attribuez-lui la note correspondante du CECRL."""
 
     for _, row in dataset.iterrows():
         messages = []
         if system_prompt:
-            messages.append({"role": "system", "content": default_system_prompt})
+            messages.append({"role": "system", "content": DEFAULT_SYSTEM_PROMPT})
 
         messages.extend(
             [
@@ -301,15 +306,14 @@ def __validate_prediction(prediction: str) -> bool:
     return prediction.strip().upper() in valid_levels
 
 
-def __predict_difficulty(model_id: str, text: str, fallback_level: str = "A1") -> str:
+def __predict_difficulty(model_id: str, text: str, system_prompt: bool = False) -> str:
     """
     Predicts the difficulty of a text using a fine-tuned GPT model.
 
     Args:
         model_id (str): The id of the fine-tuned model.
         text (str): The text to predict the difficulty of.
-        fallback_level (str): The level to return if prediction fails validation.
-
+        system_prompt (bool): Whether to use a system prompt.
     Returns:
         str: The predicted difficulty of the text.
     """
@@ -318,9 +322,15 @@ def __predict_difficulty(model_id: str, text: str, fallback_level: str = "A1") -
     try:
         client = OpenAI()
 
+        messages = [
+            {"role": "user", "content": text},
+        ]
+        if system_prompt:
+            messages.insert(0, {"role": "system", "content": DEFAULT_SYSTEM_PROMPT})
+
         response = client.chat.completions.create(
             model=model_id,
-            messages=[{"role": "user", "content": text}],
+            messages=messages,
             temperature=0,
             max_tokens=10,
         )
@@ -331,19 +341,17 @@ def __predict_difficulty(model_id: str, text: str, fallback_level: str = "A1") -
         if __validate_prediction(predicted_difficulty):
             return predicted_difficulty
         else:
-            logger.warning(
-                f"Invalid prediction format: {predicted_difficulty}. Using fallback: {fallback_level}"
-            )
-            return fallback_level
+            logger.warning(f"Invalid prediction format: {predicted_difficulty}")
+            return ""
 
     except Exception as e:
         logger.error(f"Error during prediction: {str(e)}")
-        return fallback_level
+        return ""
 
 
 def __test_predictions(model_id: str, dataset_name: str, system_prompt: bool):
     """
-    Tests the model with example predictions and saves results.
+    Tests the model with example predictions and logs results.
 
     Args:
         model_id (str): The fine-tuned model ID
@@ -358,31 +366,24 @@ def __test_predictions(model_id: str, dataset_name: str, system_prompt: bool):
                 tout en questionnant les fondements méthodologiques de la recherche empirique.""",
     }
 
-    results_dir = "results/dmkd_additions/difficulty_estimation/predictions"
-    os.makedirs(results_dir, exist_ok=True)
+    logger.info(f"Testing predictions for model {model_id} on {dataset_name}")
+    logger.info(f"System prompt: {'enabled' if system_prompt else 'disabled'}")
 
-    results = []
     for difficulty, text in test_texts.items():
-        prediction = __predict_difficulty(model_id, text)
-        results.append(
-            {
-                "expected_level": difficulty,
-                "text": text,
-                "predicted_level": prediction,
-                "model": model_id,
-                "dataset": dataset_name,
-                "system_prompt": system_prompt,
-            }
-        )
+        prediction = __predict_difficulty(model_id, text, system_prompt=system_prompt)
+        logger.info(f"\nTest case (Expected: {difficulty}):")
+        logger.info(f"Text: {text}")
+        logger.info(f"Prediction: {prediction}")
 
-    # Save results
-    timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{results_dir}/predictions_{model_id}_{dataset_name}_{timestamp}.json"
+        # Log if prediction matches expected level
+        if prediction == difficulty:
+            logger.info("✓ Correct prediction")
+        else:
+            logger.warning(
+                f"✗ Incorrect prediction (expected {difficulty}, got {prediction})"
+            )
 
-    with open(filename, "w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=4)
-
-    logger.info(f"Test predictions saved to {filename}")
+    logger.info("Test predictions completed")
 
 
 def __cancel_all_jobs(client: OpenAI) -> None:
@@ -429,7 +430,7 @@ if __name__ == "__main__":
                 try:
                     # Create backup directory
                     backup_dir = os.path.join(
-                        "results",
+                        RESULTS_BASE_DIR,
                         "dmkd_additions",
                         "difficulty_estimation",
                         "backups",
@@ -438,6 +439,9 @@ if __name__ == "__main__":
 
                     # Save configuration before fine-tuning
                     timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+                    system_prompt_suffix = (
+                        "_with_system" if system_prompt else "_no_system"
+                    )
                     backup_config = {
                         "model": model,
                         "dataset": dataset,
@@ -445,7 +449,9 @@ if __name__ == "__main__":
                         "timestamp": timestamp,
                     }
 
-                    backup_file = f"{backup_dir}/config_{timestamp}.json"
+                    backup_file = os.path.join(
+                        backup_dir, f"config_{timestamp}{system_prompt_suffix}.json"
+                    )
                     with open(backup_file, "w") as f:
                         json.dump(backup_config, f, indent=4)
 
@@ -454,6 +460,7 @@ if __name__ == "__main__":
                         model_name=model,
                         dataset_name=dataset,
                         system_prompt=system_prompt,
+                        force=True,
                     )
 
                     if job_details and job_details.get("fine_tuned_model"):
