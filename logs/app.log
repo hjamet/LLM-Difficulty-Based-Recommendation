@@ -1,27 +1,276 @@
-13:43 DEBUG - [src/utilitaries/openai_utils.py:17] Setting up OpenAI token
-13:43 DEBUG - [src/utilitaries/openai_utils.py:28] Loading existing OpenAI token
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:424] Starting fine-tuning process for model: gpt-4o-mini-2024-07-18
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:427] Fine-tuning on dataset: french_difficulty
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-mini-2024-07-18 on french_difficulty
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:466] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on french_difficulty
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:469] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF on french_difficulty
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: enabled
-13:43 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
-13:44 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: A1
-13:44 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+22:59 DEBUG - [src/utilitaries/openai_utils.py:17] Setting up OpenAI token
+22:59 DEBUG - [src/utilitaries/openai_utils.py:28] Loading existing OpenAI token
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:424] Starting fine-tuning process for model: gpt-4o-mini-2024-07-18
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:427] Fine-tuning on dataset: french_difficulty
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-mini-2024-07-18 on french_difficulty
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on french_difficulty
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF on french_difficulty
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: enabled
+22:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
+23:01 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: A1
+23:01 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
 Test case (Expected: A1):
-13:44 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
-13:44 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: A1
-13:44 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
-13:44 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
-13:46 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: C2
-13:46 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+23:01 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+23:01 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: A1
+23:01 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+23:01 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF
+23:02 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: C2
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
 Test case (Expected: C2):
-13:46 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
                 et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
                 tout en questionnant les fondements méthodologiques de la recherche empirique.
-13:46 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: C2
-13:46 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
-13:46 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: C2
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-mini-2024-07-18 on french_difficulty
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVgZHFRf
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on french_difficulty
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVgZHFRf
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVgZHFRf on french_difficulty
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: disabled
+23:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVgZHFRf
+23:08 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: A1
+23:08 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+23:08 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+23:08 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: A1
+23:08 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+23:08 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVgZHFRf
+23:16 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: C2
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: C2
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:427] Fine-tuning on dataset: ljl
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-mini-2024-07-18 on ljl
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVh8Le2u
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on ljl
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVh8Le2u
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVh8Le2u on ljl
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: enabled
+23:16 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVh8Le2u
+23:17 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: LEVEL1
+23:17 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: LEVEL1
+23:17 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+23:17 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+23:17 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+23:17 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected A1, got )
+23:17 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVh8Le2u
+23:18 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: LEVEL4
+23:18 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: LEVEL4
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+23:18 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected C2, got )
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-mini-2024-07-18 on ljl
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVhn4Kgi
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on ljl
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVhn4Kgi
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVhn4Kgi on ljl
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: disabled
+23:18 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVhn4Kgi
+23:19 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: BONJOUR JEAN ! ENCHANTÉ DE FAIRE VOTRE CONNAISSANCE
+23:19 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: BONJOUR JEAN ! ENCHANTÉ DE FAIRE VOTRE CONNAISSANCE
+23:19 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+23:19 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+23:19 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+23:19 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected A1, got )
+23:19 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVhn4Kgi
+23:20 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: L'ÉPISTÉMOLOGIE CONTEMPORAINE, EN EFFET
+23:20 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: L'ÉPISTÉMOLOGIE CONTEMPORAINE, EN EFFET
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+23:20 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected C2, got )
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:427] Fine-tuning on dataset: sentences
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-mini-2024-07-18 on sentences
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AViOp8kB
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on sentences
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AViOp8kB
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AViOp8kB on sentences
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: enabled
+23:20 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AViOp8kB
+23:29 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: B1
+23:29 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+23:29 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+23:29 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: B1
+23:29 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected A1, got B1)
+23:29 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AViOp8kB
+23:30 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: C1
+23:30 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+23:30 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+23:30 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: C1
+23:30 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected C2, got C1)
+23:30 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+23:33 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:88] Starting fine-tuning process for model gpt-4o-mini-2024-07-18 on dataset sentences
+23:33 INFO - [dmkd_additions/difficulty_estimation/download_data.py:22] Starting data download process...
+23:34 WARNING - [dmkd_additions/difficulty_estimation/download_data.py:53] Data already downloaded. Loading existing files.
+23:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:241] Preparing training data for fine-tuning
+23:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:242] Dataset columns: ['sentence', 'difficulty']
+23:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:249] Using columns: text=sentence, difficulty=difficulty
+23:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:267] Prepared 1920 conversations for training
+23:34 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:282] Saving training data to scratch/dmkd_additions/difficulty_estimation/gpt_fine_tuning/gpt-4o-mini-2024-07-18_sentences_no_system_train.jsonl
+23:34 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:114] Uploading training file to OpenAI
+23:35 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:119] Creating fine-tuning job
+23:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:125] Waiting for fine-tuning job to complete...
+23:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:126] Job ID: ftjob-8fidEWv9lIQALWTDe8Jydcez
+01:14 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:172] Fine-tuning completed successfully!
+01:14 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:208] Fine-tuning job completed successfully. Job details saved to results/dmkd_additions/difficulty_estimation/gpt_fine_tuning/gpt-4o-mini-2024-07-18_sentences_no_system_job.json
+01:14 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:396] Cancelling all running fine-tuning jobs
+01:15 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-mini-2024-07-18 on sentences
+01:15 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AWLgSLdb
+01:15 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AWLgSLdb on sentences
+01:15 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: disabled
+01:15 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AWLgSLdb
+01:25 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: B1
+01:25 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+01:25 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+01:25 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: B1
+01:25 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected A1, got B1)
+01:25 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AWLgSLdb
+01:31 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: C1
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: C1
+01:31 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected C2, got C1)
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:424] Starting fine-tuning process for model: gpt-4o-2024-08-06
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:427] Fine-tuning on dataset: french_difficulty
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-2024-08-06 on french_difficulty
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-2024-08-06:university-of-lausanne::AVjGk3gk
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-2024-08-06 on french_difficulty
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-2024-08-06:university-of-lausanne::AVjGk3gk
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-2024-08-06:university-of-lausanne::AVjGk3gk on french_difficulty
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: enabled
+01:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AVjGk3gk
+01:37 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: A1
+01:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+01:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+01:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: A1
+01:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+01:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AVjGk3gk
+01:39 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: C2
+01:39 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+01:39 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+01:39 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: C2
+01:39 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+01:39 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+06:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:88] Starting fine-tuning process for model gpt-4o-2024-08-06 on dataset french_difficulty
+06:59 INFO - [dmkd_additions/difficulty_estimation/download_data.py:22] Starting data download process...
+06:59 WARNING - [dmkd_additions/difficulty_estimation/download_data.py:53] Data already downloaded. Loading existing files.
+06:59 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:241] Preparing training data for fine-tuning
+06:59 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:242] Dataset columns: ['sentence', 'difficulty']
+06:59 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:249] Using columns: text=sentence, difficulty=difficulty
+06:59 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:267] Prepared 3840 conversations for training
+06:59 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:282] Saving training data to scratch/dmkd_additions/difficulty_estimation/gpt_fine_tuning/gpt-4o-2024-08-06_french_difficulty_no_system_train.jsonl
+06:59 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:114] Uploading training file to OpenAI
+07:02 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:119] Creating fine-tuning job
+07:03 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:125] Waiting for fine-tuning job to complete...
+07:03 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:126] Job ID: ftjob-UYnSGo1WJxqaO5jz2bx4pihv
+57:55 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:172] Fine-tuning completed successfully!
+57:55 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:208] Fine-tuning job completed successfully. Job details saved to results/dmkd_additions/difficulty_estimation/gpt_fine_tuning/gpt-4o-2024-08-06_french_difficulty_no_system_job.json
+57:55 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:396] Cancelling all running fine-tuning jobs
+57:56 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-2024-08-06 on french_difficulty
+57:56 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-2024-08-06:university-of-lausanne::AWMZhq4k
+57:56 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-2024-08-06:university-of-lausanne::AWMZhq4k on french_difficulty
+57:56 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: disabled
+57:56 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AWMZhq4k
+58:13 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: A1
+58:13 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+58:13 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+58:13 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: A1
+58:13 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+58:13 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AWMZhq4k
+58:23 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: C2
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: C2
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:380] ✓ Correct prediction
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:427] Fine-tuning on dataset: ljl
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-2024-08-06 on ljl
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-2024-08-06:university-of-lausanne::AVkDBp9l
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-2024-08-06 on ljl
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-2024-08-06:university-of-lausanne::AVkDBp9l
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-2024-08-06:university-of-lausanne::AVkDBp9l on ljl
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: enabled
+58:23 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AVkDBp9l
+58:28 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: LEVEL1
+58:28 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: LEVEL1
+58:28 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+58:28 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+58:28 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+58:28 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected A1, got )
+58:28 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AVkDBp9l
+58:31 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: LEVEL4
+58:31 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: LEVEL4
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+58:31 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected C2, got )
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:70] Found existing fine-tuned model for gpt-4o-2024-08-06 on ljl
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:75] Loading existing model: ft:gpt-4o-2024-08-06:university-of-lausanne::AVlZoXK3
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:467] Fine-tuning job completed successfully for gpt-4o-2024-08-06 on ljl
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:470] Fine-tuned model ID: ft:gpt-4o-2024-08-06:university-of-lausanne::AVlZoXK3
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:369] Testing predictions for model ft:gpt-4o-2024-08-06:university-of-lausanne::AVlZoXK3 on ljl
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:370] System prompt: disabled
+58:31 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AVlZoXK3
+58:35 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: LEVEL3
+58:35 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: LEVEL3
+58:35 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: A1):
+58:35 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: Je m'appelle Jean. J'ai 20 ans.
+58:35 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+58:35 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected A1, got )
+58:35 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:320] Predicting difficulty for text using model ft:gpt-4o-2024-08-06:university-of-lausanne::AVlZoXK3
+58:37 DEBUG - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:339] Raw prediction: LEVEL4
+58:37 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:344] Invalid prediction format: LEVEL4
+58:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:374] 
+Test case (Expected: C2):
+58:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:375] Text: L'épistémologie contemporaine, héritière des travaux séminaux de Bachelard 
+                et Popper, s'interroge sur la démarcation entre science et pseudo-science, 
+                tout en questionnant les fondements méthodologiques de la recherche empirique.
+58:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:376] Prediction: 
+58:37 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:382] ✗ Incorrect prediction (expected C2, got )
+58:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:386] Test predictions completed
+58:37 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:427] Fine-tuning on dataset: sentences
+32:41 WARNING - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:33] Received interrupt signal. Cleaning up...
+32:41 INFO - [dmkd_additions/difficulty_estimation/gpt_fine_tuning.py:36] Cleanup complete. Exiting...

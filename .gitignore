@@ -22,13 +22,16 @@ wandb
 
 # Logs
 .slogs
-.logs
+.log
 
 # Scratch
 scratch
 
 .python-version
-results/
+
+# Results directory, but keep dmkd_additions
+results/*
+!results/dmkd_additions/
 
 # Hugging Face repository
 FLDE/

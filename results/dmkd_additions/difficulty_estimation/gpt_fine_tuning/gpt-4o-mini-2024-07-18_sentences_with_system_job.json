@@ -1,0 +1,10 @@
+{
+    "job_id": "ftjob-cK79EUkcx0Mr7lm26G5BTaz8",
+    "model_name": "gpt-4o-mini-2024-07-18",
+    "dataset_name": "sentences",
+    "training_file_id": "file-HvvH2RWuZxNn4ZdbFWvR80Zr",
+    "status": "succeeded",
+    "created_at": 1732119988,
+    "finished_at": 1732122202,
+    "fine_tuned_model": "ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AViOp8kB"
+}

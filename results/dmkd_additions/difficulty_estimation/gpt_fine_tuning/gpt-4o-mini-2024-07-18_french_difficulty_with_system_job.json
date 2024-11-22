@@ -1,0 +1,10 @@
+{
+    "job_id": "ftjob-kU6hHxMRW6RMdbaIqSEmCGay",
+    "model_name": "gpt-4o-mini-2024-07-18",
+    "dataset_name": "french_difficulty",
+    "training_file_id": "file-wSDiUZ96d5M1gv7QapdLbo6W",
+    "status": "succeeded",
+    "created_at": 1732037610,
+    "finished_at": 1732039957,
+    "fine_tuned_model": "ft:gpt-4o-mini-2024-07-18:university-of-lausanne::AVN0JEdF"
+}

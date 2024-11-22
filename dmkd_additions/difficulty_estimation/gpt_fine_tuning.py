@@ -78,7 +78,7 @@ def fine_tune_gpt(
     # Confirmation for the user
     if (
         not input(
-            f"Are you sure you want to fine-tune {model_name} on {dataset_name}? (y/n): "
+            f"Are you sure you want to fine-tune {model_name} on {dataset_name} {'with system prompt' if system_prompt else 'without system prompt'} ? (y/n): "
         ).lower()
         == "y"
     ):
@@ -460,7 +460,7 @@ if __name__ == "__main__":
                         model_name=model,
                         dataset_name=dataset,
                         system_prompt=system_prompt,
-                        force=True,
+                        force=False,
                     )
 
                     if job_details and job_details.get("fine_tuned_model"):
