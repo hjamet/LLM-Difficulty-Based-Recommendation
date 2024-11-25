@@ -1,0 +1,6 @@
+{
+    "model": "gpt-4o-mini-2024-07-18",
+    "dataset": "french_difficulty",
+    "system_prompt": false,
+    "timestamp": "20241123_182144"
+}

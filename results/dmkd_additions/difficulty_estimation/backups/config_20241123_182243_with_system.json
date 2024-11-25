@@ -1,0 +1,6 @@
+{
+    "model": "gpt-4o-2024-08-06",
+    "dataset": "sentences",
+    "system_prompt": true,
+    "timestamp": "20241123_182243"
+}

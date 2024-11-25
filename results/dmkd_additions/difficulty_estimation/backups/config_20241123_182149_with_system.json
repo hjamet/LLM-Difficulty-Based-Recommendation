@@ -1,0 +1,6 @@
+{
+    "model": "gpt-4o-mini-2024-07-18",
+    "dataset": "ljl",
+    "system_prompt": true,
+    "timestamp": "20241123_182149"
+}
