@@ -1,0 +1,22 @@
+# Active Tasks
+## High Priority
+- [ ] Test updated evaluation script
+  - [ ] Verify sequential prediction processing
+  - [ ] Check empty file handling
+  - [ ] Validate prediction saving
+  - [ ] Monitor memory usage
+- [ ] Add metrics calculation
+  - [ ] Implement accuracy calculation
+  - [ ] Add F1-score computation
+  - [ ] Generate confusion matrices
+
+## Upcoming
+- [ ] Generate comprehensive evaluation report
+- [ ] Analyze performance patterns across datasets
+- [ ] Document best-performing configurations
+
+# Recently Completed
+- [x] Fix batch processing issues (2024-03-20)
+- [x] Improve empty file handling (2024-03-20)
+- [x] Implement robust prediction validation (2024-03-20)
+- [x] Add test main for validation (2024-03-20)

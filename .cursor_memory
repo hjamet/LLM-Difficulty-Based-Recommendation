@@ -1,0 +1,45 @@
+# Project Context
+- Working on GPT model fine-tuning for French text difficulty estimation
+- Using CEFR levels (A1-C2) for classification
+- Special case: LJL dataset uses level1-level4 classification
+
+## Current State
+- Completed fine-tuning of models:
+  - gpt-4o-mini-2024-07-18
+  - gpt-4o-2024-08-06
+- Datasets used with different difficulty scales:
+  - french_difficulty (A1-C2)
+  - ljl (level1-level4)
+  - sentences (A1-C2)
+- Created and improved evaluation script (gpt_evaluation.py)
+  - Added robust prediction validation
+  - Removed unnecessary batch processing
+  - Enhanced error handling and logging
+  - Added test main for initial validation
+  - Fixed empty predictions file handling
+
+## Technical Details
+### Data Structure
+- Each dataset has train/test splits
+- Different difficulty labeling schemes:
+  - CEFR (A1-C2) for french_difficulty and sentences
+  - Level1-4 for ljl dataset
+- Validation system in place for both schemes
+
+### Models Configuration
+- System prompt imported from gpt_fine_tuning.py
+- Using OpenAI's fine-tuning API
+- Models trained with temperature=0 for consistency
+- Sequential prediction processing for reliability
+
+### Testing Configuration
+- Initial test with single example per dataset
+- Automatic model discovery from job files
+- System prompt detection from filenames
+- Detailed results logging
+
+## Performance Tracking
+- Enhanced logging system implemented
+- Success rate calculation added
+- Validation tracking per dataset type
+- File output with sanitized model IDs

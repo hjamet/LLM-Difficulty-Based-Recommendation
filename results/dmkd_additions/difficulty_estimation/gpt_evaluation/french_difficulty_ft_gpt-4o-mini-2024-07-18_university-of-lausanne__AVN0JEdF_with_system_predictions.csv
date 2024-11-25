@@ -1,0 +1,961 @@
+sentence,difficulty,predictions
+"Dani, est-ce que tu t'es inscrite à ton concours administratif ?",A1,B1
+Elle passe aussi à la boulagerie et elle achète une baguette toute chaude et des croissants pour le petit-déjeuner,A1,A1
+J'ai un frère et une soeur.,A1,A1
+Vous rentrez à quelle heure ?,A1,A1
+Qu'en pensez-vous ?,A1,A1
+Je m'appelle Henri.,A1,A1
+Nous avons un cours de Français.,A1,A1
+Vous aimez ce film ?,A1,A1
+On fait réparer ses chaussures,A1,A2
+Je suis le professeur Duquesnes.,A1,A1
+Qu'est-ce qu'il a ton petit chat ?,A1,A1
+"Il trouve qu'il fait trop chaud, alors il s'est ennuyé",A1,A2
+Il me reste des croissants.,A1,A2
+Elle ne travaille pas,A1,A1
+Le restaurant est sur votre gauche,A1,A1
+L'une s'appelle Jennifer et elle a 21 ans et l'autre s'appelle Ashley et elle a 22 ans,A1,A1
+Je mange de l'herbe,A1,A1
+Le test de niveau en français est sur le site Internet de l'école.,A1,A2
+Vous parlez bien anglais.,A1,A1
+L'école donne des cours de français.,A1,A1
+J'habite à Rouen mais je travaille à Paris,A1,A1
+J'habite à New-York. Et toi ?,A1,A1
+Séverine est arrivée après une annonce que ma fille a faite.,A1,A2
+Max ira à l'université l'année prochaine.,A1,A1
+Merci pour cette histoire et bonne année !,A1,A2
+Est-ce qu'il y a du pain?,A1,A1
+Pour le dessert il y a de la mousse au chocolat.,A1,A1
+Venez ici.,A1,A1
+Il parle italien et anglais,A1,A1
+Il pleut et j'attends l'autobus,A1,A1
+"Je suis une fille, je suis française et j'ai treize ans",A1,A1
+C'est loin de Paris ça !,A1,A1
+"Moi, je suis musicien, je suis violoniste.",A1,A1
+Viens ici!,A1,A1
+Est-ce qu'il y a des devoirs?,A1,A1
+Mais il y a un problème .,A1,A2
+Faites des groupes de trois personnes.,A1,A1
+J'ai deux voisins.,A1,A1
+"Il vit à Paris avec ses parents et sa petite soeur Julie, âgée de 8 ans.",A1,A1
+"Et bien sûr, c'est également la saison parfaite pour savourer une boisson chaude emmitouflée dans une couverture devant un bon feu de cheminée",A1,B2
+"Pour aller à la mairie, s'il vous plaît ?",A1,A1
+"Mon mari et moi avons deux enfants, une fille de sept ans et un garçon de trois ans.",A1,A1
+Il est bizarre ce chien.,A1,A1
+Parlez-moi de votre famille.,A1,A1
+Cette année Virginie est partie une semaine dans un hôtel à Arcachon avec son mari,A1,A2
+"Je vous rappelle vos rendez-vous de demain, mardi.",A1,A2
+Ils étaient là,A1,A2
+Je vais prendre ma douche dans ma salle-de-bain.,A1,A1
+Qui propose un travail de serveur ?,A1,A1
+"Merci monsieur, au revoir.",A1,A1
+"Bonjour, c'est mon dernier jour dans cette école.",A1,A2
+C'est très difficile.,A1,A1
+J'ai quatre pattes,A1,A1
+Elle s'appelle Folio et elle a un an.,A1,A1
+"Mon ordinateur ne fonctionne plus, je dois le changer.",A1,A2
+"Je suis dans le bus, j'arrive dans 5 minutes.",A1,A1
+"Le bébé pleure depuis des heures, il a faim.",A1,A2
+C'est un spectacle magique,A1,A1
+Il y a beaucoup de désordre dans l'appartement.,A1,A1
+C'est parce qu'il n'aimait pas les plats de la cantine.,A1,A2
+"Tous les mardis, il va à l'entraînement de football.",A1,A1
+Nous les mangeons ensemble le samedi soir.,A1,A1
+Quelle est ta chanson préférée dans le spectacle ?,A1,A1
+"Ici, il fait toujours chaud.",A1,A1
+Elle est rapide.,A1,A1
+"Et là en revanche, ça pourrait me servir.",A1,A2
+Il ne vient pas à la fête ce soir,A1,A1
+Un saison parfaite pour les sorcières,A1,B2
+Mais que fait Jules ?,A1,A1
+Comment allez-vous ?,A1,A1
+Puis-je utiliser les toilettes?,A1,A1
+Je ne trouve pas mes clés.,A1,A1
+Le jour de l'An correspond au 1 janvier.,A1,A1
+Qu'est ce que vous faites dans le parc?,A1,A1
+"C'est ici, Monsieur.",A1,A1
+"Je suis désolé, j'ai oublié mes devoirs à la maison.",A1,A2
+Merci beaucoup pour cette histoire.,A1,A1
+Vous avez 10 minutes pour faire le test.,A1,A1
+"Tous les ans, Jean passe ses vacances dans un grand hôtel du Sud de la France",A1,A1
+Tu parles bien anglais.,A1,A1
+Je souhaiterais vous rencontrer à ce sujet.,A1,B1
+Comment vas-tu ?,A1,A1
+Elle est petite.,A1,A1
+Je reste avec toi.,A1,A1
+Tu me manques beaucoup,A1,A1
+Domi était très contente de découvrir ce monde magnifique.,A1,A2
+"Elles m'ont promis de me faire découvrir tout Londres : nous visiterons les musées, les monuments et les parcs",A1,B1
+Il joue de la guitare dans un bar.,A1,A1
+"Je vois trois pommes de terre, mais elles ne sont pas bonnes.",A1,A2
+"Mais aujourd'hui, il a un peu peur.",A1,A2
+"Pendant les trois années d'études, je vivais déjà chez elle.",A1,B1
+Elle partage un appartement avec deux garçons.,A1,A1
+Mais où est Alice ?,A1,A1
+Mon ami ne répond pas au téléphone.,A1,A1
+"Delphine, je t'attends au coin de la rue, devant la pharmacie",A1,A1
+C'est le plat préféré de Manon.,A1,A1
+J'ai eu un week-end un peu spécial.,A1,A2
+"Aujourd'hui, on est samedi, nous rendons visite à notre grand-mère",A1,A1
+Il a mal à la tête à cause de la musique.,A1,A2
+Pour six personnes.,A1,A1
+"Qu'est-ce que je vous sers, mesdemoiselles ?",A1,A2
+Le train de ma soeur arrive à 20h05,A1,A1
+Est-ce que ton mari est aussi de Boston?,A1,A1
+Rien d'autre.,A1,A1
+Qu'est-ce que tu vas faire l'année prochaine,A1,A1
+"Si tu veux, tu peux arriver tôt.",A1,A1
+J'ai des cours de méchanique et d'informatique.,A1,A1
+Travaillez par groupe de deux personnes.,A1,A1
+Il est important de boire du café.,A1,A1
+Je conduis la voiture.,A1,A1
+Mon mari est professeur d'anglais dans une école qui se trouve à 20 kilomètres de la maison.,A1,A1
+La police cherche le voleur de mon vélo.,A1,A2
+C'est quoi le plat du jour s'il vous plaît ?,A1,A1
+Qu'est-ce que ça veut dire ?,A1,A1
+Nous commençons un nouveau cours,A1,A1
+Juste un peu.,A1,A1
+"Après avoir bu une tasse de thé dans un café, je rentre chez moi en bus",A1,A2
+Je vais prendre une tarte aux fraises.,A1,A1
+Elle est au chômage en ce moment,A1,A1
+Comment allez-vous aujourd'hui ?,A1,A1
+"Je m'appelle Bob, je suis médecin et j'ai 35 ans.",A1,A1
+J'ai déjà mangé.,A1,A1
+Elle est grande !,A1,A1
+J'aime beaucoup ceux avec la tour Eiffel.,A1,A1
+Juste un petit peu.,A1,A1
+Elle a décidé de s'y installer.,A1,A2
+"Si vous êtes intéressé, appelez-moi.",A1,A1
+C'est fini.,A1,A1
+J'espères que tu vas bien,A1,A1
+"Il y a cinq chambres, une grande cuisine, un salon et deux salles de bains",A1,A1
+Je vis chez Gérarda avec ma fille depuis deux ans.,A1,A2
+"Son mari, lui, n'aime pas beaucoup la mer",A1,A1
+"C'est là, au bout de la rue.",A1,A1
+Je profite aussi du petit-déjeuner pour lire les infos en ligne,A1,A2
+"Excusez-moi, je me suis perdu. Pouvez-vous m'aider ?",A1,A1
+"Merci Marco, c'est très gentil !",A1,A1
+Pourquoi l'oisillon se retrouve-t-il seul dans la forêt ?,A1,B1
+"Ce n'est pas étonnant, car c'est une saison mystérieuse",A1,A2
+J'écoute des dialogues tous les jours.,A1,A1
+"J'étais assez calme, j'avais beaucoup de copains et je passais des heures avec eux tous les jours",A1,A2
+Ils seront tous à la maison ce soir.,A1,A1
+Vous allez bientôt avoir une grande surprise !,A1,A2
+Vous êtes une des copines de Zoé.,A1,A1
+Je parle beaucoup.,A1,A1
+Je ne sais pas.,A1,A1
+"Le soir, je regarde la télé jusqu'à 11 heures.",A1,A1
+"Oui, ça sera tout ?",A1,A2
+"Excusez-moi, je me suis perdu.",A1,A1
+Je lis un livre très intéressant !,A1,A1
+Vous aimez votre travail ?,A1,A1
+Tu descends l'escalier et tu tournes à gauche.,A1,A1
+C'est pas mal.,A1,A1
+"Cet après-midi, avec mes amis nous allons au cinéma.",A1,A1
+Envoie-moi un mot pour confirmer votre présence.,A1,A2
+La longueur est une distance mais une sensation aussi.,A1,B1
+Je prends le train dimanche matin.,A1,A1
+Bonne chance !,A1,A1
+je me réveille tous les jpurs à 6 heures et quart.,A1,A1
+La vie en France est très différente de celle au Canada.,A1,A2
+Londres est différent de Paris.,A1,A1
+C'est auprès de son grand-père que Grégoire trouvera le courage de lutter pour devenir quelqu'un et grandir tout simplement.,A2,B1
+"Appuyez sur le bouton ""Marche"", en bas à droite de la machine.",A2,B1
+"Pas de diplôme, pas de boulot.",A2,A2
+Personne n'a échoué: ils ont tous réussi.,A2,B1
+"Je sais qu'elle est souvent seule à la maison, et que le soir il rentre très tard.",A2,B1
+Dites-moi où me cacher.,A2,A1
+"Dites-lui qu'un pauvre berger lui souhaite le bonjour, et qu'il le prie de le secourir .""",A2,A2
+Elle a dansé toute la nuit.,A2,A1
+"Nous avons l'habitude d'acheter quinze pommes, ce sont elles qui les comptent et les mettent dans notre panier.",A2,A2
+Serveur : y a-t-il un problème avec votre table ?,A2,A2
+Mais je pense qu'il m'aide beaucoup.,A2,A2
+Ils disaient que c'était grâce à eux que la forêt était si belle.,A2,B1
+Le ciel était noir.,A2,A2
+Je ne trouve pas les livres que j'ai pris à la bibliothèque.,A2,A2
+"Julie : pas avec la table, mais avec ceux de la table d'à côté ; ils parlent très fort.",A2,A2
+"Les invités voulaient boire du champagne, mais il n'y en avait plus.",A2,B1
+Voudrais-tu te joindre à nous ?,A2,A1
+Je vous soigne si vous avez mal aux dents.,A2,A2
+Le petit chat a plu à mes parents,A2,A1
+C'est en tout cas ce que pensait Capek dans son livre fondateur.,A2,B1
+Le 8 mai est la fête de la Victoire,A2,A2
+Marie m'a téléphoné et elle m'a rejoint.,A2,A2
+"Quand on est petit, on apprend à marcher dès huit mois.",A2,A2
+"Je te dis à très bientôt pour une rentrée des classes en pleine forme Le matin, Théo se lève à six heures",A2,A2
+"Aujourd'hui, je suis très occupé",A2,A1
+"J'ai une arme, et toi non.",A2,A2
+Il demande de l'aide à une alouette.,A2,A2
+"Ça change que tout le monde au XIXe siècle était obligé de comprendre le français pour aller à la mairie, au service militaire ou encore pour lire la presse.",A2,B1
+"Le 8 juillet, j'ai supprimé l'eau et le lait.",A2,A2
+Le petit chat plaît à mes parents.,A2,A1
+"D'habitude, il n'avait jamais peur.",A2,A2
+Il ne faut pas toujours aller les demander à la société.,A2,A2
+"Le serveur : Oui, ça commence dans quelques minutes !",A2,A2
+"Il a fait un temps magnifique, je suis allé me promener près du parc, il y avait un petit café ouvert.",A2,A2
+Je suis tout à fait d'accord avec la jeune fille.,A2,A2
+Même si je sais que c'est le repas le plus important de la journée.,A2,A2
+"Ce dragon était le vieux serpent, le roi.",A2,B1
+Il a plu et j'ai attendu l'autobus.,A2,A2
+Réponds-moi vite et fais ta réservation pour venir.,A2,A1
+Ça va durer encore longtemps ?,A2,A1
+je suis déjà en train de sortir du lit.,A2,A2
+"Cela remonte à il y a bien longtemps. C'était l'hiver, la veille du jour de Noël.",A2,A2
+Pouvez-vous nous donner un peu plus de détails ?,A2,A2
+J'ai ouvert la porte et le chien a couru comme une flèche à l'extérieur.,A2,A2
+"Non, juste quelques minutes.",A2,A1
+l'école doit nous préparer à affronter ce monde.,A2,A2
+"Chaque soir, je lis un peu et je dors sur le divan.",A2,A2
+"Bien, l'enquête est terminée, madame.",A2,A2
+C'est une fête très joyeuse où tout le monde met des vêtements pleins de couleurs.,A2,A2
+Je te dis à très bientôt pour une rentrée des classes en pleine forme !,A2,A2
+Je fais du sport tous les jours.,A2,A1
+On a passé le reste de la journée à faire les boutiques.,A2,A2
+"A la fin de son apprentissage, Julien est parti en France.",A2,B1
+Je crains que la table ne soit pas encore disponible.,A2,B1
+"Non, ne lisez pas ce texte pour l'instant !",A2,A2
+"Il reste au lit un quart d'heure dans le noir avant de se lever, pour faire durer la nuit.",A2,A2
+Qui est déjà monté à cheval ?,A2,A1
+"En fait, ma mère préfère faire le ménage toute seule parce que moi, je casse tout.",A2,A2
+"Pour ne pas être malade, lave-toi souvent les mains et ne bois pas dans le verre d'un autre enfant.",A2,A2
+T'as pas honte.,A2,A2
+Vous avez bien étudié et vous avez réussi facilement.,A2,A2
+C'est un gentil bouledogue qui aime les câlins.,A2,A1
+"À votre arrivée, le 7 juin prochain, nous allons vous accueillir à l'aéroport pour vous conduire à votre hôtel.",A2,B1
+"Un petit garçon : Ben trois dans un nid et dans l'autre, y'en a deux",A2,A2
+"Alors, je les ai remises et j'ai vu son sourire.",A2,A2
+"Si tu portes un nom arabe, tu as plus de mal à trouver du travail que si tu t'appelles François ou Sylvie.",A2,B1
+Je crois que c'est surtout pour me faire plaisir.,A2,A2
+"Tous les matins, il suit la même routine : il commence par se laver le visage avant de prendre une douche.",A2,A2
+Et les enfants adorent cette fête parce qu'on ne mange rien d'autre que des crêpes.,A2,A2
+"Vous prônez une ouverture de l'école sur le monde d'aujourd'hui, je suis tout à fait d'accord avec vous.",A2,B1
+"Un roman émouvant, où il est question d'apprendre à vivre, de trouver sa place parmi les autres.",A2,A2
+"C'est la commémoration, c'est-à-dire la fête anniversaire, de la fin de la Seconde Guerre mondiale.",A2,A2
+Mais le rocher était fermé.,A2,A2
+L'école ne peut pas tout faire.,A2,A2
+"C'est génial, j'ai tout vu avant vous !",A2,A2
+On est vraiment content que tu sois présente.,A2,A2
+Je suis en train de repeindre ma chambre.,A2,A2
+Si tu veux tu peux aussi m'appeler ; je suis chez moi vers 20 h 30.,A2,A1
+Ne pas respirer les aérosols.,A2,B2
+"Il sait bien cuisiner alors en général, il prépare aussi le repas.",A2,A2
+Il y a un nouveau film avec son acteur préféré,A2,A2
+Je vous remercie et je vous souhaite une très bonne journée.,A2,A2
+"Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation.",A2,A2
+"Oui, merci, c'est gentil !",A2,A1
+"À la Une ce soir, la condamnation de Nicolas Sarkozy.",A2,B1
+"Une foule se forme à la sortie du théâtre et se lance dans une série de mises à sac de demeures appartenant à des représentants de l'autorité royale, avant d'être réprimée dans le sang par l'infanterie",A2,C2
+Le nombre de manifestants varie d'une année à l'autre selon la popularité du gouvernement en place.,A2,B2
+À très bientôt.,A2,A1
+"Avec son allure, il donne l'impression d'être le maître du monde.",A2,B1
+Mais pas de maison de poupées,A2,A2
+Nous avons commencé un nouveau cours,A2,A1
+Nous vous remercions de votre compréhension et nous vous souhaitons une excellente journée.,A2,B1
+Cette maison est la nôtre.,A2,A1
+Elle met son chapeau et elle va à l'épicerie de quartier.,A2,A1
+On a dû écouter nos parents,A2,A2
+"Comme il faisait très beau, nous nous sommes promenés le long de la Seine",A2,B1
+"J'ai pris du poisson avec du riz, et mon frère a choisi un simple steak-frites",A2,A1
+Où étais-tu hier soir aux alentours de dix heure ?,A2,A2
+"Alors, qu'est-ce qu'on leur donne là ?",A2,A2
+"Ensuite, il se sèche très vite les cheveux pour aller manger son petit déjeuner.",A2,A2
+L'école n'a plus la même fonction qu'hier parce que le monde a changé.,A2,A2
+Ma femme ma dit que tu es trés gentille.,A2,A2
+"Jamais, moi je parlerai comme ça de mon père.",A2,A2
+Il nous arrive de procéder de cette façon de temps en temps.,A2,B1
+C'est la jungle.,A2,A1
+Il a pris son parapluie et il est sorti.,A2,A1
+"Là, la trap, ça vient tout droit des States et c'est tout nouveau en fait dans le rap",A2,A2
+Il fumait un paquet de cigarettes par jour avant d'arrêter.,A2,B1
+Comment tu as trouvé le repas de ce midi,A2,A2
+"Je m'appelle Camille et quand j'étais enfant, j'avais des rêves plein la tête.",A2,A2
+"Le dimanche, il se repose et en profite pour faire ses devoirs pour la semaine.",A2,A2
+"Il était temps pour eux de migrer vers l'Afrique, en attendant le prochain été.",A2,B1
+"Il y a un an, j'ai décidé de ne plus manger de viande.",A2,A2
+"Maintenant que je le connais, je n'ai plus peur !",A2,A2
+Tout savoir avant d'adopter un chat.,A2,B1
+Mais le marché est loin de leur maison et ils ne peuvent pas y aller à pied.,A2,A2
+"Quand on était petit, on apprenait à marcher.",A2,A2
+"Enseigner à apprendre, même par ceux qui ne réussissent pas.",A2,A2
+Je vais chez le dentiste l'après-midi mais je suis libre le soir,A2,A2
+Le gâteau est dans le frigo.,A2,A1
+J'ai trouvé un stage qui me plaît beaucoup.,A2,A2
+Tu veux du sucre dans ton café,A2,A1
+"J'ai obtenu ce que je voulais, je suis satisfait.",A2,B1
+Vous aimez l'aventure ?,A2,A1
+Je ne pourrai pas venir demain.,A2,A1
+On pourra se faire un cinéma ou un bowling à l'occasion si tu veux ?,A2,A1
+Ils ont des étoiles plein les yeux,A2,B1
+C'est maintenant ou jamais.,A2,A2
+Tu as entendu ce bruit ?,A2,A1
+"Ensuite, je vais faire mes courses au supermarché où je vais acheter des fruits et des légumes",A2,A2
+D'autres sont plus critiques.,A2,B2
+"Mais ma plus grande passion, c'est l'art.",A2,A1
+"Vous savez, je ne l'utilise que pour les cas d'urgence !",A2,B1
+C'est exactement l'une des meilleurs methodes d'apprentissage d'une langue etrangere.,A2,B1
+Un petit garçon : On essaye de leur parler,A2,A2
+La cuisine est la pièce préférée de ma maison,A2,A2
+Les hommes la découpent et la placent au-dessus de la flamme.,A2,A2
+Il faut bien faire attention à ses vêtements et à sa coiffure,A2,A2
+"Je m'appelle Laurent et j'habite à Paris avec mes parents, ma soeur ainée et mon frère.",A2,A1
+"Non, ne mange pas votre goûté dans la classe !",A2,A1
+"Comme ça, je pourrais l'utiliser plus souvent !",A2,A2
+Vincent cherche une idée de cadeau pour le départ de sa collègue de bureau,A2,A2
+Êtes-vous prêts à découvrir cette histoire de Noël ?,A2,A2
+Mais la société a évolué et si l'école ne le fait pas il y aura de plus en plus de jeunes comme ceux que décrit Mlle Lesueur.,A2,A2
+"Et toi, ça va ?",A2,A1
+Je vais me promener dans le parc avec mon camarade.,A2,A1
+"Oh tu sais, au début ce n'était pas facile.",A2,A2
+Une petite fille : Là ils [ne] comprennent pas notre langue parce qu'ils [ne] parlent pas,A2,A2
+"Tu pourrais ranger ta chambre, ça t'aiderait à les retrouver !",A2,B1
+"C'est déjà le lundi, et toute la semaine recommence",A2,A2
+Il pensait qu'un chef pouvait manger des pizzas et des frites tous les jours.,A2,B1
+"Et bien, pourquoi pas ?",A2,A2
+Les médecins disent souvent qu'on doit boire un verre de vin rouge après les repas.,A2,B1
+Donne-moi la serviette !,A2,A1
+"Excusez-moi, serait-il possible de changer de table ?",A2,A1
+"Cette fois, les femmes et les enfants marchent au milieu du groupe.",A2,A2
+Je répare votre voiture.,A2,A1
+Mon frère Patrice est plus jeune que moi,A2,A1
+"Puis, plus grand, je découvrais les métiers de policier et d'avocat dans un film",A2,A2
+Je rentrais chaque jour en compagnie de mon amoureux.,A2,B1
+"""Le démon partit bien vite, et il se précipita dans le trou, où, hélas, il retrouva la méchante femme.",B1,B1
+"Quand j'ai lu, j'ai découvert de nouvelles choses surprenantes sur les locataires qui occupaient l'appartement.",B1,B1
+"Vous parlez de la loi en général, mais vous oubliez de préciser que ce texte n'est pas voté!",B1,B1
+Cet homme n'hésitera pas à accueillir les hôtes qui se présentent chez lui au risque de perdre la vie.,B1,B1
+Il apprendra à ne pas courir après un ballon ou à ne pas avoir peur du klaxon des voitures.,B1,A2
+Du haut de cette colline la vue sur Marseille est remarquable,B1,B2
+Je vais vous donner une traitement qui va vous aider.,B1,A2
+C'est aussi un test pour les couples nouvellement formés ou qui n'avaient jamais expérimenté la vie à deux.,B1,B1
+"Cela faisait trois semaines que le navire était immobilisé accidentellement sur un récif, un rocher dans la mer, près de l'île.",B1,B2
+"Quand je reviendrai, j'offrirai beaucoup d'amour à ceux que j'aprécie et je couvrirai mes enfants de présents.",B1,B1
+Voyager c'est bien mais voyager responsable c'est encore mieux !,B1,B1
+"La vertu : la vertu est le mérite, la moralité ou la sagesse d'une personne.",B1,B1
+Le courant d'air ainsi créé permet à la sueur - qui absorbe la chaleur du corps - de s'évaporer et ainsi de le refroidir.,B1,B1
+C'était sa grande différence entre lui et moi.,B1,A2
+"Ils m'ont expliqué qu'ils n'avaient pas encore vu quelqu'un d'aussi expressif, et qu'ils allaient me recontacter.",B1,B1
+Nous allons nous promener en bord de mer et rendre visite à nos amis.,B1,A1
+Je ne suis qu'un bon soldat timide.,B1,A2
+"Je vois bien l'intérêt de cet appareil, mais je n'en ai pas l'usage.",B1,B1
+Il devait à tout prix téléphoner à son bourreau quand il recevait des nouvelles de son banquier.,B1,B2
+Vous deviez rendre des comptes à la justice pour vos crimes.,B1,B1
+Vous allez piloter ce fichu avion et m'amener en Amérique du Sud.,B1,B2
+"C'est une soupe de poissons, spécialité de Marseille",B1,B1
+"Le visage comprend une oreille de chaque côté, deux yeux surmontés par les sourcils et un nez au centre",B1,B1
+"Soudain, il entendit une voix qui lui disait de s'approcher.",B1,A2
+"En cette fin de matinée, Djengo, jeune chien d'un an et demi, est au travail.",B1,B1
+Ils se sont fait des copains et sont heureux de vivre en France,B1,B1
+"Je suis désole, mais je suis resté en arrière avec tes histoires.",B1,A2
+Une petite révolution et des chiffres qui parlent tout seuls.,B1,B1
+"Il accepte les différences, il est tolérant.",B1,B1
+"Pour les habitants des quartiers historiques, la vie n'est plus la même : les rues pleines de touristes perdent peu à peu leurs magasins de quartier.",B1,B1
+"À partir de maintenant, il travaillera avec nous dans l'équipe commerciale en tant que responsable des ventes.",B1,B1
+"Quand il y a un grand soleil sur la carte, il fera chaud sur la région",B1,A2
+Elle cueillera les roses et elle les arrosera si nécessaire.,B1,B1
+Qu'allez-vous faire demain ?,B1,A1
+"Évidemment, mes lunettes sont par terre, et moi, sans mes lunettes, je n'y vois rien, mais alors, rien du tout !",B1,B1
+C'est un parc où les gens viennent se promener en famille et entre amis,B1,A2
+Le tableau paraissait plus beau qu'avant.,B1,B1
+Je voudrais tellement que tout le monde admire mes tableaux !,B1,A2
+"Il avait pris sa belle valise verte qu'il trimballe depuis vingt ans, pour passer cinq jours de vacances près de Vannes chez sa vieille amie Sylvaine qu'il voyait beaucoup avant de vivre à Valencienne",B1,C1
+"Car depuis ce dimanche, l'utilisation des sacs en plastique fins est interdite dans tout l'État de New York sous peine d'une amende de 250 dollars",B1,B1
+C'est un médicament qui est très bon pour soigner les problèmes d'estomac.,B1,A2
+Il n'y a cependant pas de plats de légumes à la carte.,B1,A2
+"Accusé de vol, l'homme a fini par avouer qu'il était coupable.",B1,B1
+Je suis allé la voir dès que j'ai appris qu'elle avait des problèmes.,B1,B1
+"Quand ils s'approchent trop près de la tribu, les femmes leur jettent des pierres et les hommes les chassent.",B1,B1
+"En me massant, il a soulagé ma douleur.",B1,B1
+"Pour terminer, n'oubliez pas le maquillage",B1,A2
+"""Je n'ai pas l'habitude d'être en compagnie de quelqu'un vingt-quatre heures sur vingt-quatre et sept jours sur sept"", reconnaît cette chroniqueuse culinaire.",B1,B1
+"En hiver, elle ne sort jamais sans son parapluie et son écharpe",B1,A1
+"Une semaine au calme, ça procure un vrai plaisir.",B1,B1
+"Si vous pouviez rencontrez un artiste, qui est-ce que vous aimeriez rencontrer?",B1,B1
+La marche était cassée et je suis tombé par terre.,B1,A2
+Je compte bien arriver dès huit heures.,B1,A2
+J'ai été me plaindre à la mairie mais ça n'a servi à rien !,B1,B1
+Est-ce que ton mari et tes enfants vont bien,B1,A2
+"Ce n'est une surprise pour personne: avec le semi-confinement et le télétravail, les conflits entre voisins ont augmenté.",B1,B1
+Il jouait au jokari avec un ami.,B1,B1
+"Ce n'était ni un bateau, ni un avion, mais un moyen de transports terrestre.",B1,B1
+"Au sous-sol, il y a une cave, pour ranger le vin",B1,B1
+"Aujourd'hui, avec ma famille (mes parents et mon frère) nous sommes allés au marché de Noël, c'était vraiment incroyable",B1,A2
+J'aime aussi me promener avec mes amis en rêvant de voyages que nous pourrions faire ensemble.,B1,B1
+"""Nous devons nous préparer à de nouvelles mutations du coronavirus et ne plus dépendre uniquement de l'UE pour la production de vaccins de deuxième génération"", a-t-il ajouté.",B1,B2
+Une partie de l'énergie fournie pour se déplacer est transformée en chaleur.,B1,B1
+A qui appartient le chien qui aboie nuit et jour ?,B1,B1
+"Elle s'appelle Joy, on parlait de tout, on s'entendait super bien !",B1,A2
+"Le bac en poche, le premier d'entre eux choisit d'en faire son métier.",B1,B1
+"Ici, tout est immense, il y a du monde partout, les gens sont pressés c'est impressionnant !",B1,B1
+"C'est cette première canicule qui avait notamment décidé Greta Thunberg à s'asseoir avec sa pancarte devant le parlement de Stockholm, c'était le début de la grande mobilisation des jeunes pour le climat",B1,B1
+Il est nécessaire que les gens soeint conscients de l'importance de l'écologie,B1,B2
+"Lorsqu'il y a un éclair avec des nuages et de la pluie, il risque d'y avoir de la foudre et du tonnerre",B1,B1
+La nouvelle a fait grand bruit: cette affaire de couvre-feu cache en fait une angoisse plus profonde.,B1,B1
+Soit on le trouvera ridicule et ce sera une catastrophe.,B1,B1
+"Demain, nous nous lèverons tôt et nous nous promènerons dans la les bois situés aux alentours du manoir.",B1,B2
+"Ce livre, tu me le conseilles ou tu me le déconseilles?",B1,B1
+Je vais tirer une balle dans chacun de tes membres si tu ne me donnes pas cette serviette.,B1,B2
+Une bouchée de : cette expression fait référence à la quantité d'un aliment qu'on met dans la bouche en une fois.,B1,A2
+"J'ai fait de gros progrès en français, je le comprends et je sais le parler et l'écrire bien mieux maintenant",B1,A2
+Il passe la matinée au Mucem qui est un musée récent et très connu,B1,A2
+"il y a du travail, des théâtres, des cinémas, la vie culturelle est riche",B1,B1
+"C'est le cas à Nowra, à l'ouest de Sidney, où notre envoyée spéciale Murielle Paradon a pu rencontrer un couple de sexagénaires qui a trouvé refuge dans sa voiture",B1,B1
+"Sur le fond, tout le monde est d'accord.",B1,B1
+"En juillet, ma famille et moi irons dans le Sud de la France.",B1,A1
+Pourquoi tu n'as pas acheté cette antiquité ?,B1,B1
+Je vous demanderai de tout lui montrer et de le seconder cette semaine.,B1,B1
+"Si j'ai un accident, mon coeur ou mon foie pourront être utilisés.",B1,B2
+Ils ont déménagé car sa femme a été mutée à Paris.,B1,B1
+"C'est en représentant mon journal, Le Parisien, à l'émission Res Publica, à la radio, que j'ai rencontré Jean-Luc Hess, qui dirigeait alors la station.",B1,B2
+Mais je trouve qu'il vaut mieux permettre aux élèves de s'habiller comme ils veulent.,B1,B1
+"Rien n'était si beau, si leste, si brillant, si bien ordonné que les deux armées.",B1,B2
+Il y a un nouveau médicament pour traiter les problèmes de coeur.,B1,B1
+S'impliqueront-ils dans la vie sociale du collège?,B1,B2
+"Ces chocolats, coulés en forme d'oeufs, de lapins et de poules, sont souvent dispersés dans le jardin pour être retrouvés par les plus jeunes : c'est la ""chasse aux oeufs"".",B1,B2
+Comment s'appelle le directeur pour lequel vous travaillez ?,B1,B1
+"Derrière ces jeunes, il y a très souvent des parents en grande difficulté à cause de la pauvreté ou du chômage.",B1,B1
+La forêt leur donne du bois et du gibier.,B1,B1
+Venez profitez du studio d'enregistrement et de la salle de répétitions !,B1,B1
+"Mais pour les visiteurs et les professionnels, c'est également l'occasion de découvrir les dernières innovations, et surtout de goûter les créations des chefs pâtissiers et chocolatiers",B1,C1
+"Les serveurs sont mal organisés, c'est dommage.",B1,B1
+"C'est vraiment génial d'être en ville et d'avoir les monuments, les musées et la plage au même endroit",B1,B1
+"Il n'a fallu que 12 ans, entre 1999 et 2011, pour que la population mondiale passe de 6 à 7 milliards d'habitants",B1,B1
+Montrant un gentilhomme qui va et vient dans la salle comme s'il cherchait quelqu'un.,B1,B2
+250 nouveaux talents seront sur le marché du travail d'ici la fin de l'année.,B1,B2
+"Après un trajet en bus, il est heureux de retrouver la mer",B1,A2
+Nous ne privons plus du bonheur de manger,B1,A2
+"Dans le désert, tous les hommes n'ont pas la peau noire.",B1,B1
+Je te souhaite également tout le meilleur pour cette nouvelle année !,B1,A2
+Elle est vraiment contente que tu aies acccepté l'invitation.,B1,B1
+"Quand je finirai ce travail, je partirai en Floride. Je fuirai l'hiver et les grands froids.",B1,B1
+"Ce week-end on était à l'hôtel pour une réunion familiale, bon on hésite quoi, quand on croise les gens dans le couloir, on ne sait pas trop s'il faut porter le masque.",B1,B1
+"""Je vous laisserai sortir seulement à condition que vous juriez solennellement que vous ne révélerez à personne où vous avez dormi, ni comment vous êtes entré dans la grotte aux serpents !"" dit le roi.",B1,B1
+Elle serait partie en vacances.,B1,B1
+Je mets tous mes efforts et toute mon énergie exclusivement dans le travail.,B1,B2
+J'aimerais que tu fermes la fenêtre avant de partir.,B1,A1
+Et la grande personne était bien contente de connaître un homme aussi raisonnable.,B1,A2
+"Certains, comme les Bédouins, sont des Blancs à la peau mate et tannée par le soleil.",B1,C1
+Comment vont les enfants ?,B1,A1
+"Remarquez bien que les nez ont été faits pour porter des lunettes, aussi avons-nous des lunettes.",B1,B2
+"Le berger pensa à sa femme, et descendit la montagne aussi vite que possible, car il avait peur d' être grondé parce qu'il était resté si longtemps absent.",B1,B1
+"Équipé d'une caméra, d'un téléphone portable et d'un ordinateur, il aide le client à faire ses courses directement dans le magasin.",B1,B1
+"Plus qu'à un changement de métier, c'est à un changement de vie auquel aspirent ces individus.",B1,B2
+Et c'est ce plus qui nous différencie des autres écoles informatiques.,B1,B1
+"Comme c'est proche de la maison, je peux y aller à pied, c'est très agréable",B1,A1
+Elle est surprise que les étudiants soient toujours en retard.,B1,B1
+"Quand il doit rencontrer un client important, Marc n'hésite pas à s'habiller sobrement",B1,B1
+"En janvier dernier, j'ai voulu laisser un message sur le répondeur de mon frère.",B1,A2
+"On a beau dire, mais la France ça reste quand même le pays des 400 fromages.",B1,B1
+Il a précisé qu'il partait en vacances dès demain.,B1,B1
+Il nous a indiqué qu'il avait fini son film hier et qu'il allait en commercer un nouveau dans deux semaines.,B1,B1
+"Je l'aide en français et elle me donne un coup de main en anglais, parce que ce n'est pas ma matière préférée .",B1,A2
+Ta soeur est venue hier nous rendre visite.,B1,A2
+"Le télévendeur travaille à temps plein, à temps partiel ou en complément d'une autre activité.",B1,B1
+"On ne peut pas tout faire pendant les heures de cours, ce qui me pose un problème, en vue de la journée scolaire.",B1,B1
+"À mon avis, il faut s'entraîner et se préparer aussi bien que possible pour les épreuves de toutes sortes.",B1,B1
+C'est une manière de découvrir un endroit en évitant les lieux touristiques et en respectant le milieu naturel.,B1,B1
+"Cette situation pourrait laisser croire qu'il y a un retard dans l'apprentissage d'une des deux langues, mais quand on étudie le vocabulaire des enfants bilingues et monolingues à trois ans, on trouve le même nombre de mots, en moyenne.",B1,B2
+Tu as continué à penser à ton amant disparu.,B1,B1
+"En chemin, il a pu admirer la magnifique fontaine Bartholdi sur la grande Place des Terreaux.",B1,B2
+Les membres sont au nombre de quatre,B1,B2
+"La méchante femme n'y retournera sûrement pas."" Le démon partit bien vite, et il se précipita dans le trou, où, hélas, il retrouva la méchante femme.",B1,B1
+Essayez maintenant d'identifier les mots de vocabulaire dans l'histoire en l'écoutant à nouveau.,B1,A2
+"C'est donc une méthode qui suppose une capacité d'écoute, de réflexion et une bonne disposition d'esprit.",B1,B2
+"Et pour l'Europe, et bien pour l'Europe, c'est la française Claire Nouvian qui a été récompensée pour son combat au sein de son association Bloom, créé en 2005, pour préserver la biodiversité de l'océan",B1,C1
+"Trop souvent le tourisme est une cause de dégradation de l'environnement ou de désorganisation d'une société traditionnelle alors que le voyageur doit être à l'écoute, tolérant et s'adapter à la vie locale.",B1,B2
+"Les gens voulaient fuir le monde, et généralement, là où il y avait beaucoup de monde, c'était les destinations sud.",B1,B1
+La femme faisait tout ce que son mari lui demandait.,B1,A2
+Ce chien m'apporte beaucoup de bonheur.,B1,A1
+Quelle est la plus belle qualité de la femme d'Azaël ?,B1,A2
+"Oui, nous allons bien.",B1,A1
+"""J'ai vraiment dû beaucoup insister pour être choisi ! rapporte Monsieur.",B1,B1
+Il y a douze milles entre la cabane du pêcheur et la ville.,B1,B1
+Le réalisateur m'a expliqué qu'il avait longtemps cherché l'acteur idéal.,B1,B1
+Il fait un froid incroyable à Moscou mais la ville est superbe,B1,B1
+"Enfin, il faut savoir que l'éducation complète d'un chien guide coûte très cher et qu'en France, les dix écoles sont entièrement financées par des dons.",B1,B1
+"Un ange de l'hospitalité, envoyé par le prophète vient sauver le pacha.",B1,B2
+Il est impératif de tenir votre chien en laisse lorsque vous le promenez.,B1,B1
+Le pacha vient en aide à un serpent (le roi des serpents) car l'un des commandements du Coran est de faire preuve d'hospitalité ses hôtes.,B1,B1
+"En Amérique du Nord, LeeAnn Walters, une femme au foyer, a été distinguée pour avoir créé un mouvement citoyen qui a permis de révéler la crise de l'eau contaminée de Flint dans le Michigan",B1,C1
+Nous avons reçu plusieurs plaintes à ce sujet.,B1,B2
+"Les piscines partagées par exemple ou ce genre de chose, là je me suis dit, cet été, bof quoi.",B1,B1
+"""La batterie est en dessous du niveau nécessaire pour faire fonctionner l'ordinateur central"", a dit M. Ulamec.",B1,B1
+"Il savait déjà qu'il faut éviter les aliments grossiers, les lourdes venaisons et les boissons fermentées ; il connaissait aussi l'influence bienfaisante des bains fréquents, qui gardent la peau saine et reposent des fatigues.",B2,C1
+"Il décrivait aussi les longues arènes entourées de gradins où s'exerçaient les jeunes hommes, le labeur patient par lequel ceux-ci se préparaient aux jeux, et les soins incessants qui, après de longues années, leur méritaient les odes des poètes, les acclamations de la foule et les honneurs des cités.",B2,B2
+"Alors après, on va bien distinguer dans les dettes : les dettes publiques, privées, multilatérales.Voilà, parce que de quelles dettes parle-t-on ?",B2,B2
+La communauté scientifique apprécie peu la présence de femmes.,B2,B2
+"Ces gens cultivaient leurs terres, élevaient des troupeaux, obéissaient aux usages, aimaient et mouraient selon la loi commune.",B2,B2
+"Autrement dit, avoir une ""vraie"" vie sociale satisfaisante conduirait à passer moins de temps sur les réseaux sociaux.",B2,B2
+"Il n'y a là rien d'impossible, estime un député, 75 % des déplacements domicile-travail font aujourd'hui moins de 5 km et 70 % de ces trajets sont faits aujourd'hui en voiture.",B2,B2
+"700 000 tonnes de couches usagées sont jetées chaque année au Japon, ce qui représente jusqu'à 25 % des déchets incinérés dans certaines communes.",B2,B2
+"Ce précieux instrument, d'origine américaine, envoyait, sans se gêner, un projectile conique de quatre kilogrammes à une distance moyenne de seize kilomètres.",B2,B2
+Ces chiffres sont susceptibles de varier au cours de cette année.,B2,B2
+On semble oublier que le personnel en milieu scolaire applique déjà cette mesure.,B2,B2
+"Grâce à l'intervention de monsieur Ibrahim, le monde des adultes s'était fissuré, il n'offrait pas le même mur uniforme contre lequel je me cognais, une main se tendait à travers une fente.",B2,C1
+L'anecdote est révélatrice.,B2,B2
+Les préadolescents et adolescents semblent particulièrement sensibles.,B2,B2
+La pudeur vous défend de voir ma lame nue ?,B2,C2
+Il plut toute la nuit et le vent souffla sans cesse contre les carreaux de la ville demeure.,B2,B2
+L'accès par voie électronique de l'ensemble des formalités au registre du commerce et des sociétés.,B2,B2
+"Ce constat est simple : la collecte des informations étant désormais, en grande partie, confiée aux ordinateurs, pourquoi demander aux élèves de mémoriser par coeur des données que l'on peut relativement facilement retrouver sur l'internet ?",B2,B2
+"Liberté privée, ordre public: telle est l'équation fétiche des Français.",B2,C2
+"Les masses liquides transportent les plus grandes espèces connues de mammifères, et peut-être recèlent-elles des mollusques d'une incomparable taille, des crustacés effrayants à contempler, tels que seraient des homards de cent mètres ou des crabes pesant deux cents tonnes !",B2,C1
+Il arrive que le portable brise les amitiés entre jeunes.,B2,B2
+"Les reliures de tons différents, rouges, jaunes, vertes, violettes, et bleues, mettaient de la couleur et de la gaieté dans cet alignement monotone de volumes.",B2,C1
+Nous proclamerons notre indépendence dès que l'armistice sera signé.,B2,B2
+La compétence fiscale des communes est réduite car elle dépend du droit cantonal.,B2,C1
+"Pourtant, sur cette distance, le vélo est le mode de transport le plus performant en milieu urbain et semi-urbain.",B2,B2
+"Le petit prince grandit en paix, entouré de tuteurs et de régents ; mais son plus intime ami et son meilleur conseiller fut un étranger, venu longtemps auparavant des contrées du Sud, qui s'étendent le long de la mer.",B2,C1
+Pour preuve : les Bédouins ont fait du thé à la menthe brûlant un véritable rituel et en consomment plusieurs fois par jour.,B2,B2
+"Un résultat largement inférieur à celui des déchets ménagers, qui forment la grande majorité des quelque 2 millions de tonnes de déchets électroniques produits chaque année en France, selon l'Agence de l'environnement et de la maîtrise d'énergie (Ademe).",B2,C1
+Les micro-changements apportés par ce type d'union sont capables d'annoncer de profonds changements sociaux.,B2,C1
+"Les fans des costumes de Carrie Bradshaw dans ""Sex and the City"" se régaleront devant les tenues d'Emily, de la même créatrice, Patricia Field (même si on lève les yeux au ciel quand Emily se met à porter des bérets).",B2,B2
+"C'est l'année où les centaines de milliers de baby-boomers, nés lors du pic des naissances de 1946, arriveront à la retraite.",B2,B2
+"Le robot Philae s'assoupit sur la comète ""Tchouri"", après une mission historique qui a tenu en haleine et permis de récolter des données qui pourraient aider à comprendre les origines de la vie sur Terre.",B2,B2
+Des coutumes similaires ont existé autrefois notamment dans le Finistère : les enfants s'amusaient à creuser des betteraves au moment de la Toussaint pour faire peur aux gens du voisinage,B2,C2
+"De quelles huées gouailleuses, de quelles curiosités grossières n'êut-il pas été l'objet et la victime!",B2,C2
+Je pense que fréquenter les galeries est la meilleure manière d'éduquer son oeil à l'art contemporain.,B2,B2
+Les adaptations cinématographiques détruisent l'image fictive donnée par les oeuvres littéraires.,B2,B2
+"Encore faut-il réfléchir aux changements lourds induits par ces nouvelles technologies sur le plan social, politique, collectif.",B2,C1
+"Ils attaquèrent la forêt tous ensemble, travaillant jour et nuit et frappant avec tant de force que le heurt de leurs cognées sur les troncs emplissait les plaines comme un grondement incessant de tonnerre.",B2,B2
+Presque tous les jeunes déclarent aimer leur collège ou leur lycée.,B2,B2
+"Stop : tout d'abord, figurez-vous que les vrais nouveaux pères n'ont aucune envie d'être appelés comme cela.",B2,B1
+Nous assistons à la montée des médicaments génériques et il devient difficile de renouveler les produits.,B2,B2
+De nombreux opposants au projet se sont rassemblés en dépit de l'interdiction de manifester.,B2,B2
+Ne vont-ils pas accaparer les affaires publiques à leur avantage ?,B2,B2
+Les professeurs d'anglais préparent des cours sur le sujet et participent à sa diffusion auprès de la jeunesse,B2,B2
+"Aussitôt que le registre du commerce aura reçu le dossier de modification, la plate-forme vous enverra une réponse électronique appelée accusé de réception .",B2,C1
+"Les broches également, très pratiques aussi, en les accumulant, et les petits boléros par-dessus",B2,B2
+"De plus, certaines limitations sont également apparues, en termes de puissance ou bien de permis de conduire.",B2,B2
+Carlos Ghosn sera-t-il le dernier protagoniste de sa folle escapade à demeurer hors d'atteinte de la justice ?,B2,C1
+Un allongement du congé paternité peut contribuer à introduire plus d'égalité dans les couples.,B2,B2
+"De plus, les agences nationales réglementaires de notre pays exigent de nous davantage de qualité, de sécurité et de fiabilité.",B2,B2
+"Même si on adore un livre, il faut, je pense, accepter que certains passages du livre soient coupés ou modifiés, car le travail d'écriture est complètement différent du travail d'adaptation cinématographique.",B2,B2
+"Les cadeaux seront déposés à son pied, le soir du 24 ou le 25 décembre au matin",B2,B1
+"L'avantage des galeries, c'est qu'elles sont souvent gratuites contrairement aux musées dont l'entrée est souvent payante.",B2,B2
+"Durant les années 1990, beaucoup de gens étaient réticent à cette nouvelle fête : Les parents et les enseignants n'y voyaient qu'une fête commerciale",B2,B2
+"En raison de la sécheresse qui a réduit les récoltes, le même gouverneur Bradford proclame une journée de jeûne et de prière",B2,C1
+Un jeune Enfant dans l'eau se laissa choir en badinant sur les bords de la Seine.,B2,C2
+Claude HAGÈGE est Professeur au Collège de France et Directeur d'études à l'École Pratique des Hautes Études,B2,C2
+"Dans sa tête, le bruit de bottes des soldats allemands résonna.",B2,B2
+"Ton direct et souvent bougon pour Joe Manchin, 73 ans, et discrétion médiatique contrastant avec les perruques et tenues colorées de Kyrsten Sinema, 44 ans, première candidate au Sénat ouvertement bisexuelle en 2018.",B2,B2
+"Si vous étiez arrivés à l'heure comme convenu, vous auriez vu le début du reportage auto-biographique sur l'auteur contemporain le plus convoité du moment.",B2,B2
+Une perspective quasi inconcevable dans un Congrès aussi divisé.,B2,C1
+"Et comme elle était, à ses débuts, utilisée sur les trottoirs, elle a occasionné de nombreux accidents",B2,B1
+"Si vous aviez cherché ces dossiers, vous les auriez trouvés.",B2,B2
+"Quand elle est élevée, la FOMO est souvent associée à une humeur très fréquemment négative, une faible satisfaction de sa vie en général et à plus de symptômes dépressifs.",B2,B2
+"Ce qui équivaut à dire que si vous pouviez atteindre cette profondeur dans l'océan, chaque centimètre carré de la surface de votre corps subirait une pression de mille kilogrammes.",B2,B2
+"Il apprit à courir, à lutter, à sauter, à lancer au loin de lourdes pierres, à franchir les murs, à frapper des deux mains, à dresser de jeunes chevaux, à franchir à la nage les rivières.",B2,B2
+"Pour éviter un oubli, vous pouvez consulter le ""Guide des formalités"" en ligne.",B2,B2
+"À chaque respiration elle sentait la fumée entrer dans ses poumons, tel un insidieux poison.",B2,B2
+Les parents qui ont du mal à couper le cordon s'étonnent que leurs enfants préfèrent brancher leur boîte vocale et ne répondent pas à leurs appels.,B2,B2
+"Les enseignants qui sont en classe inversée, ils parlent à tous leurs élèves, tous les jours.",B2,B1
+"En attendant, de petites formations d'initiation à l'algorithmique et au langage informatique ont été réalisées pour les professeurs des écoles et des collèges, les inspecteurs et les formateurs d'IUFM (Institut Universitaire de Formation des Maîtres).",B2,C2
+"Les grainetiers, les grands grainetiers québécois n'ont plus de stock, et donc l'approvisionnement est rendu difficile.",B2,B2
+James a ensuite rejoint le quartier moderne de la Confluence où le fleuve de la Saône se jette dans le Rhône,B2,B2
+"C'est très important, surtout dans une dynamique d'innovation dans laquelle travaille typiquement une équipe de développement de voir, en tant que manager, que les personnes en face s'expriment indépendamment, offrent leurs pistes d'amélioration sur leur travail au quotidien.",B2,C1
+"C'est pourquoi, si près de 50 % de nos essais sont sous-traités, nous gagnerons en souplesse et éviterons la baisse momentanée de nos effectifs.",B2,B2
+Il est tombé malade l'année précédant son mariage.,B2,B1
+Le spectacle était épouvantable et charmant.,B2,B1
+"Les tentes des nomades offrent un asile tempéré, à condition d'être ouvertes pour favoriser l'installation d'un courant d'air qui évacue la chaleur.",B2,C1
+Il y a essentiellement trois grandes catégories.,B2,B2
+Un journaliste de Art Press a interviewé Agathe sur la performance dans laquelle elle a participé.,B2,B1
+"La tradition nord-américaine veut qu'on se retrouve en famille pour manger une dinde farcie accompagnée d'une purée de pommes de terre, de patates douces, d'une gelée de canneberges et une tarte à la citrouille",B2,B2
+"Ce dernier lui décrit sa patrie dans les contrées du sud, il lui parle des coutumes, des traditions de son peuple.",B2,B2
+"Si elle avait un caractère plus commode, elle nouerait plus d'amitiés sincères.",B2,B2
+"À mi-parcours, il doit souvent faire demi-tour.",B2,B1
+"Les passants semblent moins pressés, et s'attardent plus facilement devant une devanture ou dansles rayons.",B2,B2
+Ces gens vivent en autarcie totale.,B2,C1
+"Pour ses défenseurs, le projet pourrait permettre d'adapter les pratiques scolaires au monde professionnel.",B2,B2
+Je travaille dans une compagnie d'assistance médicale en tant que médecin consultant pour la partie Asie-Pacifique.,B2,C1
+Il a également la possibilité de verser des indemnités kilométriques à ceux qui utilisent leur véhicule personnel pour se rendre au travail.,B2,B1
+"Quant à ma grande passion, l'art contemporain, elle est née lors d'une visite au musée d'art moderne de New York, puis de la ""Phillips Collection"" à Washington DC quand j'avais 18 ans.",B2,B2
+Le temps est loin où les explorateurs découvraient des îles désertes avec des plages de sable fin.,B2,B2
+"La trottinette électrique est aussi limitée aux pistes cyclables ou sur la chaussée, entraînant des conflits avec les cyclistes et les automobilistes",B2,B2
+"Si tu étais moins bavard, les gens te confieraient plus de secrets intimes et confidentiels.",B2,B2
+"La construction de routes et d'infrastructures dans les forêts entraîne le plus souvent un afflux de population incontrôlable, ce qui ne fait qu'accroître le déboisement.",B2,B2
+"Les passants semblent moins pressés, et s'attardent plus facilement devant une devanture ou dans les rayons",B2,B2
+"Des balades sur les quais de Seine jusqu'au pont des Arts, des pauses déjeuner au jardin du Luxembourg, des plans de la tour Eiffel et de l'Opéra Garnier : les décors de la série ""Emily in Paris"" semblent tout droit tirés d'un guide touristique.",B2,B2
+"À 40 ans, il est usé",B2,B1
+"À cette occasion, a été annoncé un grand plan vélo destiné à faire décoller enfin ce mode de transport, notamment grâce à l'indemnité kilométrique : ce dispositif autorise l'employeur à dédommager ses salariés se rendant au travail à vélo (environ 0, 25 euro par kilomètre parcouru).",B2,B2
+"Nous sommes pris en otages par des imposteurs, par des maniaques du pré-cuit et de la vinaigrette en sachet !",B2,C1
+"Elle était demeurée jusqu'à douze ans dans la maison, puis, malgré les pleurs de la mère, elle fut mise au Sacré-Coeur.",B2,B2
+Le vernissage aura lieu le 22 juin à la Galerie de la Calande.,B2,B1
+"Une fois franchi le seuil de l'entrée, on peut apercevoir, dans un coin, un tas de chaussures sombres, puis, tel un arc-en-ciel, une rangée de téléphones portables.",B2,B2
+Certains se défendront en citant la nouvelle cuisine censée jadis révolutionner nos habitudes.,B2,B2
+"""Prince, dirent-ils, la forêt est trop sauvage et trop grande : aucun homme ne pourrait pénétrer jusqu'à son coeur.",B2,B2
+"L'ambitieux a les dents longues mais pour réussir, les ambitieux doivent être prudents et persévérants sinon ils peuvent se casser les dents.",B2,B2
+"Du surgelé, du réchauffé, du périmé et pire encore : de l'industrialisé se faisant passer pour du traditionnel !",B2,B2
+"Et puis la France, comme la plupart des pays du monde, doit importer les matières premières inexistantes sur son sol et ne fabrique plus la totalité des produits sur son territoire",B2,B2
+La multiplication des nouvelles technologies va-t-elle nous faire perdre la tête?,B2,B2
+Il a dérivé pendant deux jours avant d'être secouru.,B2,B1
+"En effet, sitôt rentrés chez eux, Vanessa, 14 ans, Raphaël, 16 ans, Marie, 44 ans, et Patrick, 45 ans, branchent les petites boîtes colorées afin de les recharger.",B2,B2
+"Outre les économies substantielles que permet une telle collaboration, les entreprises bénéficient désormais de jeunes formés à leurs besoins spécifiques.",B2,B2
+Mais pas en proposant des portions microscopiques présentées de manière pompeuse.,B2,B2
+C'était avec ravissement que la comtesse retrouvait les souvenirs de sa première jeunesse et les comparait à ses sensations actuelles.,B2,B2
+"C'est le début de troubles qui se poursuivent et s'étendent au reste du territoire tout au long du mois de septembre les fameuses ""Journées de septembre"" amplifiés le refus de Guillaume 1er de considérer les revendications des insurgés",B2,C2
+Il commence même déjà à dater.,B2,A2
+Une deuxième balle fit étinceler le pavé à côté de lui.,B2,B2
+"Un lundi, Franck et Guillaume, qui travaillaient tous les dimanches comme extras dans un autre restaurant sur l'avenue, se sont rendus au chevet de leur grand-mère",B2,B2
+Leur capacité de concentraction s'effiloche.,B2,B2
+"Au collège et au lycée, on pratique l'art de la conversation, celui de la complicité, des petites passions partagées dans un sentiment de légèreté et d'insouciance puisque rien n'est définitif.",B2,B2
+Ces espérances l'avaient rendu très indulgent pour beaucoup de fautes que j'avais commises.,B2,C2
+"Les Français ne cèdent pas au chacun pour soi, mais ils s'intéressent d'abord à leur cercle familial proche.",B2,B1
+J'aurais voulu pouvoir quitter le bureau à 13h.,B2,B1
+La prolifération de la culture sur brûlis a largement dégradé la forêt ivoirienne alors que le Gabon a plus à craindre de l'ouverture de son couvert forestier à l'exploitation industrielle du bois.,B2,C1
+Le revenu des enfants sous autorité parentale est ajouté à celui du détenteur de l'autorité parentale.,B2,C1
+"Par exemple, porter une robe noire avec un foulard de couleur vive, fuschia ou orange ou rouge ou vert, et deux jours après, vous remettez cette robe noire avec d'autres bijoux, un gros collier",B2,B1
+Vous procéderez au paiement sécurisé en ligne de l'opération.,B2,B2
+"Même si la Révolution française était déjà en cours, la prise symbolique de la Juillet forteresse, qui ne comptait que 7 prisonniers à l'époque, reste l'événement clé de la révolte",B2,B2
+Soyons sérieux,B2,A1
+"Pour compenser les pertes d'eau par transpiration, il faut se réhydrater en continu : dans le désert, il peut être nécessaire de boire jusqu'à 10 litres d'eau par jour.",B2,B2
+"Beaucoup voient leur nid familial sous un nouveau jour : ""Les appartements parisiens des arrondissements historiques sont peut-être plein de charme, mais ils sont surtout trop petits"", se moque le Wall Street Journal.",B2,B2
+"Depuis 2006, les particuliers français peuvent recycler des déchets d'équipements électriques et électroniques grâce à la reprise un pour un .",B2,B2
+"Si nous sommes bloqués dans l'ascenseur qui s'est arrêté brusquement, nous appellerons du secours dès que la communication sera établie.",B2,B1
+"Si elle avait étudié davantage, elle aurait pu réussir l'examen.",B2,B2
+Et chaque hiver constitue une nouvelle menace.,B2,B2
+"C'est le principe de responsabilité élargie du producteur, initié par la directive européenne de 2003, qui leur impose de prendre en charge la fin de vie de leurs appareils.",B2,B2
+Le 24 décembre est le jour du réveillon,B2,A2
+Il n'y a qu'à observer la métamorphose des rues commerçantes pouren être convaincu.,B2,B2
+"La mère de Raphaël et de Vanessa exprime sa satisfaction : depuis que ses enfants possèdent un portable, ""ça a libéré ma ligne"", déclare-t-elle.",B2,B2
+"Il est particulièrement observé chez les personnes ayant un besoin de popularité développé, qui considèrent dès lors le moindre signal du smartphone comme un possible indicateur de leur degré de popularité.",B2,C2
+"Colette eut des funérailles nationales lors de sa mort en 1954 et est enterrée auprès de sa fille, au cimetière du Père-Lachaise à Paris.",B2,C1
+"Déjà, les problèmes s'accumulent.",B2,B1
+"Pour notre entreprise, externaliser, c'est se concentrer sur nos activités principales, recherche et commercialisation, que nous maîtrisons parfaitement et faire réaliser par des intervenants extérieurs les activités de production et les essais cliniques.",B2,C1
+"Une conversation normale se fait à 60 dB, tandis que le bruit du vent dans les arbres atteint les 20 dB.",B2,B1
+"Le gouverneur de la colonie, William Bradford, décida alors de proclamer un jour de remerciement et d'action de grâce pour remercier Dieu de leur avoir donné une terre finalement si accueillante avec des indigènes si serviables",B2,B2
+Cela lui paraissait invraisemblable.,B2,B2
+"Finies les façades grises et ternes, terminée la morosité ambiante : les rues se parent de guirlandes scintillantes et les vitrines rivalisent d'imagination pour leur décoration.",B2,B2
+"Le jeune prince ne se lassait pas de redemander ces récits, et l'étranger ne pouvait se lasser de les répéter, évoquant à ses yeux les corps frottés d'huile, tordus dans l'horreur de la lutte ou se ramassant pour la détente, la foule ondulant au soleil, les pieds nus volant sur le sable.",B2,C1
+"Com' est l'abréviation de communication, de commandant, de communion, de commerce - le petit com du coin, ainsi de suite.",B2,A2
+"À cette occasion, a été annoncé un grand plan vélo destiné à faire décoller enfn ce mode de transport, notamment grâce à ""l'indemnité kilométrique"".",B2,B2
+"Les appareils pouvant être recyclés à 85% de leur poids environ, l'enjeu est important.",B2,B2
+"Ils sont tolérants et compréhensifs, à condition que les enfants réussissent leurs études.",B2,B2
+"Finies les façades grises et ternes, terminée la morosité ambiante",B2,B2
+"Aux États-Unis, on fêtera Thanksgiving le quatrième jeudi de novembre",B2,B1
+Les retraités sont sur-représentés dans l'électorat français par rapport aux autres tranches d'âge.,B2,B2
+"Fini les pâtes à l'italienne, les gros haricots blancs, les pommes de terre en robe des champs avec du beurre et du bon pain frais.",B2,B2
+Les usines sont situées à Mattighofen au nord de Salzbourg.,B2,B2
+"Toniques, les papy-boomers sont formatés pour le changement.",B2,C1
+"Soumis à des persécutions en raison de leur confession protestante, ils espèrent pouvoir vivre leur foi librement",B2,C1
+"Créatrice d'emplois, la filière permet aussi de rééquilibrer une balance commerciale souvent désavantageuse, tout en diversifiant les activités locales.",B2,B2
+"Caterina serait, selon la tradition, fille de paysans pauvres.",B2,C1
+"Après lui avoir fait faire une bonne lieue, à pied, dans l'obscurité rendue plus profonde en apparence par le feu des bivouacs qui de toutes parts éclairaient l'horizon, l'adjudant remit Fabrice à un officier de gendarmerie qui, d'un air grave, lui demanda ses papiers.",C1,C1
+"En clair, les adolescentes souffrent d'un complexe d'infériorité par rapport à leurs comparses masculins, comme l'a montré cette sociologue de l'éducation dans un ouvrage de référence, L'Ecole des filles (L'Harmattan).",C1,C1
+"Ce système s'inspire de celui contre la désinformation liée aux élections et processus civiques, qui a notamment conduit Twitter à bannir l'ancien président américain Donald Trump.",C1,C1
+"Exilée en permanence, je passe mes nuits à souder les rails qui mènent à l'identité.",C1,C1
+Mais les pays les plus défavorisés voient leur situation alimentaire se dégrader inexorablement.,C1,C1
+Un débat public et démocratique est donc nécessaire!,C1,B2
+"Observant que, à l'exception du changement de mode de scrutin pour les communes dont la population est comprise entre 2 000 et 3 500 habitants, le texte issu des travaux de l'Assemblée nationale avait recueilli une approbation presque unanime de tous les groupes de cette assemblée, le rapporteur a souhaité rappeler que la démarche suivie par les députés, consistait à mettre en oeuvre des solutions permettant d'optimiser la présence des femmes dans la vie politique.",C1,C1
+Des start-up développent des solutions sur le thème de la reconnaissance temps-réel de formes dans une vidéo.,C1,C2
+"Un jour, Cunégonde, en se promenant auprès du château, dans le petit bois qu'on appelait parc, vit entre des broussailles le docteur Pangloss qui donnait une leçon de physique expérimentale à la femme de chambre de sa mère, petite brune très jolie et très docile.",C1,C1
+Les Inuits espèrent pouvoir s'appuyer sur un rapport qui sera remis en septembre 2004 aux huit pays du Conseil de l'Arctique.,C1,C1
+On préférait se référer à l'autonomie des civilisations juxtaposées.,C1,C1
+"A 50 ans, on est vieux pour l'entreprise, tranche la chasseuse de têtes Catherine Euvrard, sexa survitaminée.",C1,C1
+Ça a développé je pense instinctivement et naturellement ma créativité en cuisine,C1,B2
+"Des réseaux nationaux, puis internationaux, se sont créés pour fournir des informations à leurs membres, préparer des campagnes de sensibilisation, voire faire du lobbying.",C1,C1
+"Telle est du moins la représentation métaphorique qu'on s'en fait dans la culture populaire afghane, entre soeurs, copines ou voisines, à l'abri des oreilles masculines indiscrètes.",C1,C1
+"Honte de devoir leur amour à ma beauté, mon écoeurante beauté qui fait battre les paupières des chéries, ma méprisable beauté dont elles me cassent les oreilles depuis mes seize ans.",C1,C2
+"Ensuite, nous sortions pour notre promenade au parc, où nous retrouvions quelques amis",C1,B1
+La durée de retention des données peut être fixée par des réglementations sectorielles.,C1,C1
+"Elle se retrouvait dans les lectures de sa jeunesse, en plein Walter Scott.",C1,B2
+"Pour une meilleure conservation, notre chef a transformé ses piments végétariens et son ail en purée, en les mixant avec une à deux cuillères d'huile",C1,B2
+"D'autres enquêtes montrent que les enseignants interrogent plus souvent les filles que leurs camarades du sexe ""fort"" sur des sujets à connaître ""par coeur"".",C1,C1
+"Le ressortissants d'un pays tiers à l'Union européenne et des pays associés soumis à visas, qui souhaitent effectuer un court séjour dans un ou plusieurs pays de la zone Schengen",C1,C1
+Une autre organisation qui produit sa part d'impact sur les peuples autochtones de la côte est la Commission baleinière internationale .,C1,C1
+"En cette grande occasion, pour accomplir ce voyage politique, le marquis remettait à son fils quatre écus, et, suivant l'usage, ne donnait rien à sa femme, qui le menait.",C1,C1
+"En remontant dans le temps, on s'aperçoit que le déclin de la diversité linguistique a été considérablement accéléré par les conquêtes colonialistes européennes qui ont éliminé au moins 15 % des langues parlées à l'époque.",C1,C1
+"Le 7 mars 1991, 25 000 réfugiés albanais atteignent le port de Brindisi, dans la région des Pouilles.",C1,C1
+"Chaque printemps, la Quinzaine du commerce équitable est l'occasion de lancer de grandes campagnes de sensibilisation.",C1,B2
+"Que ces acteurs, telle la marque Max Havelaar, croient ou feignent de croire qu'ils disposent du rapport de force nécessaire pour infléchir les pratiques de ces multinationales, c'est leur droit.",C1,C1
+"Bref, première leçon, le québécois n'est pas un français déformé mais plutôt un français historique, proche de celui qui était parlé en France avant le 17e siècle",C1,B2
+"L'Europe eut la bonhomie d'être surprise de cet évènement, qui ne surprit point le marquis del Dongo ; il écrivit à son souverain une lettre pleine d'effusion de coeur ; il lui offrait ses talents et plusieurs millions, et lui répétait que ses ministres étaient des jacobins d'accord avec les meneurs de Paris.",C1,C1
+Mon second copain fit des études de commerce.,C1,B2
+Nous voulons surmonter les obstacles judiciaires et techniques qui nous empêchent d'intercepter les conversations téléphoniques par Skype entre les suspects.,C1,C1
+La Chine et l'Inde connaissent depuis dix ans une augmentation du taux de surpoids de 5 %.,C1,C1
+Comme un rappel du massacre des quelque 60 millions de bisons orchestré à la fin du XIXe siècle pour venir à bout des Peaux Rouges.,C1,C1
+"Il l'avait tenue là sévèrement enfermée, cloîtrée, ignorée et ignorante des choses humaines.",C1,C1
+"Le Falcon 1 est un lanceur théoriquement réutilisable qui peut placer, selon son constructeur, 670 kg en orbite basse.",C1,C1
+"Ensuite, on ira au cinéma du quartier qui organise tous les ans des séances spéciales",C1,A2
+"Viennent ensuite les personnes âgées, puis les personnes malades ou handicapées, qui font l'objet d'une sollicitude en hausse.",C1,B2
+"Au fils des pages, je doutais qu'ils eussent écrit ces lignes et proses de ses propres mains.",C1,C2
+Il avait une de ces pâleurs splendides qui donnent quelque chose de la majesté des marbres aux races ardentes du Midi.,C1,C1
+Les ignorer en restant nostalgique est inconscient.,C1,B2
+"Notamment, ils valorisent davantage la tolérance, l'ouverture aux autres, le métissage culturel, la solidarité et l'indépendance d'esprit.",C1,B2
+"Leur vue parut frapper si vivement l'adjudant sousofficier, qu'aussitôt il changea de pensée, et se mit à interroger aussi le domestique.",C1,C1
+"Près de 100 squelettes complets d'animaux ont été découverts jusqu'ici dans une zone relativement petite de 100 m², à l'ouest du Grand Temple.",C1,B2
+"Plus près de nous, l'internationalisation des marchés financiers, la diffusion de l'information par les médias électroniques et les autres avatars de la mondialisation ont intensifié la menace qui pesait déjà sur les petites langues.",C1,C1
+"Au nom du mot 'tradition, ' ils demandent que les autochtones se conforment à celles-ci.",C1,B2
+La malnutrition apparaît donc aujourd'hui comme le résultat d'une organisation inadéquate du système économique et politique.,C1,C1
+"Le frère aîné de Fabrice, le marchesine Ascagne, voulut se mettre des promenades de ces dames ; mais sa tante jetait de l'eau sur ses cheveux poudrés, et avait tous les jours quelque nouvelle niche à lancer à sa gravité.",C1,C2
+Êtes-vous pour ou contre la création d'un lexique autochtone pour désigner les termes d'informatique d'origine anglophone?,C1,C2
+"Certes, l'individu, actif et volontaire, est le seul initiateur de sa reconversion.",C1,B2
+"La sémantique du directeur de l'opéra, en fin de carrière, rejoint celle du sénateur (LR) Etienne Blanc, qui fustige la décision de l'exécutif écologiste, allié à la ""gauche unie"".",C1,C1
+"Personnalité clivante au sein de la majorité, la ministre de la transition écologique, Barbara Pompili, a la lourde tâche de redorer le bilan environnemental d'Emmanuel Macron pour l'élection présidentielle de 2022.",C1,C1
+"Pour dissuader ses lycéens de faire les Beaux-arts, l'École du cirque ou un diplôme d'arts du spectacle, un proviseur avait coutume de leur raconter cette histoire : ""J'avais deux copains",C1,C1
+"Malgré la réticence du gouvernement italien, le gouvernement des États-Unis aurait de son côté manifesté son intérêt à connaître les démarches entreprises par les enquêteurs des 27 pays membres de l'Union européenne.",C1,C1
+"Pour y remédier, à leur échelle, des militants ont commencé à organiser leurs propres filières d'importation dès la fin des années 1960.",C1,C1
+"Nous nous interrogeons sur le soutien moral et financier des pouvoirs publics à une campagne de sensibilisation dont le message (""Achetez du café qui vous permette de dormir tranquille"", encart publicitaire de la marque Max Havelaar France) suinte la vieille culture coloniale qui marque encore aujourd'hui nos imaginaires collectifs et notre rapport au monde: le rôle de l'État est-il de financer des opérations de ""communication éthique"" d'enseignes multinationales?",C1,C2
+"Cet épisode, auquel la population locale répondra par un élan de solidarité inédit, marque un tournant dans l'histoire de l'Italie, confrontée pour la première fois à l'immigration de masse.",C1,B2
+"Chaque fin de semaine, ils partaient ensemble en ran- donnée dans les Alpes",C1,C1
+"Longtemps, il fut une journée remplie d'obligations sociales.",C1,B2
+"La ville, chaude comme une étuve, paraissait suer dans la nuit étouffante.",C1,C1
+"Une belle robe moulante, elle veut mettre en avant ses formes",C1,B1
+"Une des sources majeures des gaz à effet de serre dans le monde étant la production d'électricité d'origine fossile, il est donc normal de s'atteler à l'immense tâche de décarboner nos productions.",C1,B2
+"Il s'arrêtait toutes les quatre ou cinq brasses pour écouter la cloche mais, à chaque halte, elle semblait plus éloignée.",C1,B2
+"Les bruits de klaxon viennent entrecouper les mots des militantes qui s'expriment, un micro dans leurs mains endolories par le froid matinal.",C1,C1
+"Le plasma ainsi conservé ne pourra être utilisé que lorsque le deuxième don du donneur, quatre mois après le premier, n'aura révélé aucun marqueur infectieux.",C1,C1
+"Quoique en Turquie le premier gueux en haillons aille s'asseoir sur le divan des cafés auprès du Turc le plus somptueusement vêtu sans que celui-ci se recule pour éviter à sa manche bordée d'or le contact d'une loque effilochée et graisseuse, cependant certaines classes ont leurs lieux de réceptions habituels, et le café à la fontaine de marbre est un des mieux hantés de la ville.",C1,C2
+Ascagne jura de se venger de Fabrice.,C1,C1
+Et comment le conservatoire finance-t-il la protection du littoral et l'accueil du public ?,C1,C1
+"Le projet de loi pour le climat, qui reprend certaines propositions de la Convention citoyenne, sera débattu à l'Assemblée fin mars et en commission spéciale dès lundi.",C1,C1
+Nous apprécions qu'ils aient répondu sur-le-champ.,C1,B2
+"Avec la lutte contre le séparatisme, une stratégie d'entrave et répressive contre l'islam radical est mise en oeuvre.",C1,C1
+Je me fus lourdement trompé dans mon calcul .,C1,C2
+"Mais il faut pour cela qu'un certain nombre de conditions soient réunies : la communauté elle-même doit avoir envie de sauver sa langue ; la culture plus vaste dans laquelle elle s'inscrit doit respecter les langues minoritaires ; et il faut des fonds pour financer les cours, le matériel pédagogique et les enseignants.",C1,C1
+Giscard va pourtant réussir à transformer ce revers en tremplin,C1,C1
+"vec ses livreurs à vélo aux énormes sacs à dos carrés, l'entreprise est devenue incontournable pendant la pandémie.",C1,B2
+"Dans cette véritable ""biographie de la langue française"", les auteurs veulent mettre les pendules à l'heure et malmener queslques fausses croyances",C1,C2
+Les cadres d'aujourd'hui quittent leur entreprise pour ouvrir des maisons d'hôtes.,C1,B2
+"Lucie s'avançait, à demi soutenue par ses femmes, une couronne d'oranger dans les cheveux, et plus pâle que le satin blanc de sa robe.",C1,C1
+"Les yeux de Fabrice se mouillèrent, il répandit des larmes en embrassant la comtesse, mais sa résolution de partir ne fut pas un instant ébranlée.",C1,B2
+"Ce lundi 8 mars, Journée internationale des droits des femmes, les salariés de McDonald's sont à nouveau dans la rue.",C1,B1
+"Lui qui, enfant, suivait sa mère trappeur, peut encore aujourd'hui emmener son fils de 14 ans chasser, mais dit craindre la réduction des quotas de chasse pour les ours polaires.",C1,C1
+Il interroge surtout la prétendue affinité élective de celle-ci avec le seul monothéisme.,C1,C2
+"Franny Stone et son mari Niall, ornithologue, ont été aux avant-postes du crépuscule de la biodiversité.",C1,C1
+"Cette réaction est réalisée dans des organites intracellulaires spécialisés, les chloroplastes, porteurs de pigments photorécepteurs, tels que les chlorophylles, les caroténoïdes.",C1,C1
+"33° à l'ombre, et 80% d'humidité, aujourd'hui, c'est au ceur du jardin tropical de Valombreuse que nous vous proposons de découvrir l'une des spécialités culinaires les plus consommées aux Antilles : les accras de morue",C1,C1
+"Une preuve en est que deux millions d'emplois en Europe, nécessitant des compétences scientifiques et technologiques, ne sont pas pourvus.",C1,C1
+Le départ est le seul horizon offert à ceux qui cherchent les mille écrins où le destin cache les solutions de ses mille erreurs.,C1,C2
+Les français sont attachés à leur pause dominicale.,C1,B2
+"On vient d'acheter une résidence secondaire, au Pays basque, qui sera notre point de ralliement familial.",C1,C1
+"La charpente et la couverture ne sont plus étanches, les balustrades en granit sont abîmées, certains parements doivent être remplacés ou consolidés, quatre verrières du XIIIe siècle, les plus anciens vitraux répertoriés en Bretagne, ne sont plus protégés.",C1,C1
+Le développement des technologies a permis une augmentation importante de la productivité et a soulagé les hommes de nombreuses tâches ingrates ; pourtant le travail occupe encore une très large place dans nos existences.,C1,C1
+"Or, Internet et les réseaux sociaux mobilisent toute notre attention et ne permettent pas de trouver cette tranquillité d'esprit.",C1,B2
+"Le grand objet de ces expéditions nocturnes, que Fabrice commandait en chef, était d'aller visiter les lignes dormantes, avant que les pêcheurs eussent entendu l'avertissement donné par les petites clochettes.",C1,C1
+"La ""visio"" atténuera sans doute l'émotion des retrouvailles et la solennité des adieux.",C1,B2
+L'idée de base en commande référencée vision consiste a considérer un système de vision comme un capteur particulier associé à une tâche et inséré dans une boucle de commande.,C1,C2
+"La taille des ménages est à cet égard un facteur important: les ménages issus de la migration, qui sont en général plus grands, doivent partager leurs revenus et leur patrimoine entre plus de personnes que les ménages non issus de la migration.",C1,C1
+"Ainsi, en Amérique latine, en Asie de l'Est et du Sud-Est, et même au sein du sous-continent indien, de gros progrès ont été accomplis depuis trente ans.",C1,C1
+"Les langues ne sont pas seulement le moyen privilégié de communication entre les humains, elles incarnent la vision du monde de leurs locuteurs, leurs imaginaires, leurs façons de véhiculer le savoir.",C1,C1
+"Contrairement aux autres lanceurs privés, passés ou encore opérationnels, le Falcon 1 utilise des composants entièrement conçus au sein de la société qui le commercialise.",C1,C1
+"Voilà le chemin à suivre, finissons-en avec ce décalage inacceptable entre la cuisine d'en haut (consommée par une minorité) et la cuisine d'en bas, celle de la majorité silencieuse, débordante et insipide.",C1,B2
+"Leurs enfants sont grands (ceux du premier lit du moins), leurs emprunts remboursés, leurs revenus souvent confortables - ils détiennent 60% de la richesse nationale et 50% du revenu net des ménages français - ils sont propriétaires de leur logement dans 8 cas sur 10 et possèdent un autre bien immobilier dans 1 cas sur 3.",C1,C1
+"Lettres de motivation, d'amour ou de rupture, relecture de mémoires d'étudiant, textes d'hommage à lire et à distribuer pendant des obsèques, situations administratives à démêler avec la banque, les impôts ou la copropriété, l'écrivain public doit pouvoir répondre à toutes les demandes.",C1,C1
+"Depuis, la junte lui a désigné un remplaçant aux Nations Unies, tandis que Kyaw Moe Tun assure toujours représenter le pays, un imbroglio juridique qui devra être tranché par l'ONU.",C1,C1
+Les importateurs s'engagent aussi à verser un acompte et à privilégier des relations commerciales durables avec les producteurs.,C1,B2
+Il fit ses valises énergiquement et vint à notre rencontre avec empressement et détermination.,C1,B2
+"Les jeunes beaux se pavanaient au parquet, étalant, dans l'ouverture de leur gilet, leur cravate rose ou vert pomme ; et Mme Bovary les admirait d'en haut, appuyant sur des badines à pomme d'or la paume tendue de leurs gants jaunes.",C1,C2
+"Les pruniers étaient nus, les pommiers étaient jaunes, les feuilles de noyer tombaient en une sorte de vol plané, large et lent d'abord, qui s'accentuait d'un seul coup comme un plongeon d'épervier dès que l'angle de chute devenait moins obtus.",C1,C2
+"Comme le révélait récemment la police italienne, les réseaux de prostitution, les trafiquants d'armes et les vendeurs de drogue utilisent de plus en plus le logiciel de téléphonie par Internet.",C1,B2
+"Sont considérés comme ""arriérés de paiement"" les impayés ou les retards de paiement dans les cas suivants: loyer ou intérêts hypothécaires sur le logement principal, factures d'eau, d'électricité, de gaz et de chauffage, primes d'assurance-maladie, remboursement de crédits et impôts.",C1,C1
+"Larmoyante et enthousiasmante, aussi cheesy qu'agréable, un brin ringarde autant que brillante, la série propose quelque chose qui va complètement à contre-courant des séries contemporaines, complexes, sombres, souvent très conscientes d'elles-mêmes, mais renoue avec un aspect primordial : la proximité bientôt familière avec des personnages qu'on a envie de suivre jusqu'au bout de leur histoire.",C1,C1
+"Or, sur les quelque 6 000 langues qui existent actuellement dans le monde, la moitié compte moins de 10 000 locuteurs et un quart moins de 1 000.",C1,C1
+"Pour expliquer ces différences, il est nécessaire d'utiliser le concept social du genre (Doyal, 2003), qui permet de comprendre par exemple comment les normes sociales ont favorisé l'adoption du tabagisme par les hommes d'abord, puis plus tardivement par les femmes.",C1,C1
+"Si les produits anti, pré et probiotiques agissent sur le comportement, en modifiant la composition de la flore intestinale, ils pourraient donc servir de médicaments psychotropes.",C1,C2
+Ce commandant mena plusieurs batailles épiques grâce à sa bravour et ses tactiques militaires ingénieuses.,C1,C1
+"D'après des ordres venus de Vienne, le général autrichien reçut le marquis del Dongo avec une considération voisine du respect ; on se hâta de lui offrir une des premières places dans le gouvernement, et il l'accepta comme le paiement d'une dette.",C1,C1
+Plusieurs personnes qui ont vécu ces jours tourmentés racontent.,C1,B2
+"Il existe, pour une fois, un consensus très large sur les conclusions d'un organisme scientifique collégial international, le Giec : pour faire face au dérèglement climatique, il est impératif de ""décarboner"" nos économies !",C1,C1
+"Le directeur financier, sans doute moins heureux qu'il l'affichait, a tout abandonné : son travail, son entreprise, sa vie parisienne et son appartement cossu",C1,C1
+"Toute la journée, nous sommes inondés d'informations de toute part : messages personnels, professionnels, publicitaires, fils d'infos en continu.",C1,B2
+"Or, le Code du travail stipule que pour pouvoir bénéficier d'un congé sabbatique, le salarié doit remplir une double condition d'ancienneté de trente-six mois, consécutifs ou non, dans l'entreprise et six années d'activité professionnelle antérieure",C1,C2
+"Et nos esprits qui reçoivent les instructions de ces organes, diversement impressionnés, comprennent, analysent et jugent comme si chacun de nous appartenait à une autre race.",C1,C2
+Dans l'intérêt d'une sécurité optimale pour le bénéficiaire elles sont toutefois indispensables.,C1,C1
+"Originaire des Saintes, un archipel situé au sud de la Guadeloupe, Gérard-Michel a un parcours pour le moins atypique",C1,C1
+"Revue une fois, elle sera cette fois plus facilement accessible""",C1,A2
+"Ainsi, en cinquante ans, ""la quantité d'aliments disponible pour chaque habitant de la Terre est passée, en moyenne, de 2 320 à 2 800 kilocalories par jour"", expliquait, en 2002, Bertrand Hervieu, président de l'INRA, devant l'Académie des sciences morales et politiques.",C1,C1
+"Au fil de retours en arrière éclairant la vie passée de l'héroïne, l'écrivaine chronique par touches la disparition successive de plusieurs spécimens.",C1,C1
+La huitième édition sera la bonne,C1,A2
+"International Business Machines Corporation, connue sous le sigle IBM, est une société multinationale américaine présente dans les domaines du matériel informatique, du logiciel et des services informatiques.",C1,C1
+"Pour ce faire, Ken Follett a offert l'intégralité des droits d'auteur de son récit ""Notre-Dame"", publié après l'incendie de Notre-Dame-de-Paris, le 15 avril 2019, à la Fondation du patrimoine (FDP).",C1,C1
+"Deux fois, malgré sa pauvreté, la comtesse vint passer quelques jours à Milan ; il s'agissait de voir un ballet sublime de Vigano, donné au théâtre de la Scala, et le marquis ne défendait point à sa femme d'accompagner sa belle-soeur.",C1,C1
+"Pour clore cette monographie du café constantinopolitain, citons-en un autre qui n'est guère fréquenté que par des matelots.",C1,C1
+"Le 8 mars, à six heures du matin, le marquis, revêtu de ses insignes, se faisait dicter, par son fils aîné, le brouillon d'une troisième dépêche politique ; il s'occupait avec gravité à la transcrire de sa belle écriture soignée, sur du papier portant en filigrane l'effigie du souverain.",C1,C1
+"Dès qu'il eut fini son intervention éloquante, il partit fièrement.",C1,C1
+"Le lendemain de son 50ème anniversaire, on lui diagnostique un cancer du poumon en phase terminale avec une espérance de vie estimée à deux ans.",C1,C1
+"Ici, tout est mêlé et accéléré , souligne la sociologue.",C1,B2
+"Au cours des années 1970 et 1980, plusieurs groupes environnementalistes de pays industrialisés d'Europe de l'ouest et d'Amérique du Nord ont organisé des campagnes contre la chasse aux baleines et aux phoques.",C1,C1
+La peur du huis clos de la retraite.,C1,C2
+"Ainsi en a décidé le très puritain George Bush, avec la bénédiction de la féministe Hillary Clinton.",C1,C1
+"L'effet autocuiseur Si sept millions de citadins rêvent de refaire leur vie aux champs, tous ne passent pourtant pas à l'acte.",C1,C1
+"Ellénore n'avait qu'un esprit ordinaire ; mais ses idées étaient justes, et ses expressions, toujours simples, étaient quelquefois frappantes par la noblesse et l'élévation de ses sentiments.",C1,C1
+"Se reconvertir, mode d'emploi, les deux auteures donnent des indices.",C1,C1
+"En vingt ans, leur nombre est passé de 4 500 à plus de 30 000, selon la direction du Tourisme du ministère de l'Emploi, qui ne recense que les maisons d'hôtes labellisées par les principales organisations touristiques.",C1,C1
+Les peuples des côtes de l'Alaska ont été particulièrement touchés par cette politique.,C1,C1
+"L'intensité carbone de la Suisse est certes modérée, grâce à une faible intensité énergétique et à une production d'électricité presque totalement décarbonée.",C1,B2
+Monet peignit ce portrait emplit de sensualité et lourd de symbolisme.,C1,C1
+"À l'époque elle avait adoré son aspect brillant et rutilant, sans la moindre éraflure.",C1,B2
+"Aristocrate de naissance, il haîssait par instinct quatre-vingt-treize; mais philosophe par tempérament, et libéral par éducation, il exécrait la tyrannie d'une haine inoffensive et déclamatoire.",C1,C2
+"Des événements privés - séparation, naissance, deuil ou problème de santé - peuvent aussi jouer un rôle clé dans la reconversion.",C1,C1
+"La première modernité a inventé l'universalisme abstrait, qui définissait tout ce que les individus ont en commun.",C1,C1
+"Héloïse Dufour, donc je le disais, vous êtes biologiste.",C1,B1
+Disons que la coopération fait partie de l'arsenal pédagogique des élèves.,C1,C2
+Cruel paradoxe.,C1,C1
+"Contrairement à la cuisine italienne qui brille par sa fraîcheur et sa simplicité ou à la cuisine espagnole (pour ne citer que nos voisins les plus proches) qui allie dynamisme et innovation, la cuisine hexagonale n'est plus capable de se remettre en question.",C1,B2
+Il ne dit jamais rien qui puisse nous affecter outre mesure dans nos estimes de soi.,C1,C2
+Cette réaction est difficile à réaliser car il faut rapprocher deux noyaux qui ont tendance naturellement à se repousser.,C1,B2
+"Ne trouves-tu pas que ces vieux murs noircis, symboles maintenant et autrefois moyens du despotisme, sont une véritable image du triste hiver ?",C1,C1
+Il me faut une botte de thym également,C1,B1
+"On comprend qu'une semblable manière de composer, si différente de l'ancien procédé visible à tous les yeux; déroute souvent les critiques, et qu'ils ne découvrent pas tous les fils si minces, si secrets, presque invisibles, employés par certains artistes modernes à la place de la ficelle unique qui avait nom : l'Intrigue.",C1,C2
+Il a donc rejeté tout changement de mode de scrutin qui introduirait des mécanismes partisans et abstraits dans ces collectivités où l'appartenance politique des élus est fort peu prise en compte.,C1,C2
+La comtesse s'était passionnée pour le caractère primitif et pour l'astrologie de l'abbé Blanès.,C1,C1
+"En effet, le risque pour un homme comme Calliclès décidant de mener une vie intempérante et désordonnée est de devenir l'esclave de ses propres passions et désirs",C2,C2
+La merveilleuse paix de cet été endormi entrait en moi comme une marée.,C2,C1
+"Néanmoins, ces observations ont été obtenues en conditions contrôlées, et l'exposition des larves selon un scénario environnementalement réaliste d'ingestion de feuilles de plantes de culture contaminées n'a jamais été encore entrepris.",C2,C1
+"En voici un des moins obscurs : ""Plus nous devenons maîtres de la biosphère, plus nous en devenons dépendants ; plus nous la dégradons, plus nous dégradons nos vies5.",C2,C1
+"Aussitôt que Julie eut découvert la vérité, elle fut furieuse",C2,C2
+"Un bel organe, un imperturbable aplomb, plus de tempérament que d'intelligence et plus d'emphase que de lyrisme, achevaient de rehausser cette admirable nature de charlatan, où il y avait du coiffeur et du toréador.",C2,C2
+"Les conviés arrivèrent de bonne heure dans des voitures, carrioles à un cheval, chars à bancs à deux roues, vieux cabriolets sans capote, tapissières à rideaux de cuir, et les jeunes gens des villages les plus voisins dans des charrettes où ils se tenaient debout, en rang, les mains appuyées sur les ridelles pour ne pas tomber, allant au trot et secoués dur.",C2,C2
+"Premièrement, la source de l'illusion humaine du libre arbitre est l'ignorance des causes qui nous poussent à agir",C2,C2
+"Nous la chantions ensemble, ma mère assise au piano, moi, debout devant elle, une main sur le coeur, l'autre tendue vers la barricade, nous regardant dans les yeux; lorsque nous en venions à ""Aux armes, citoyens!"", ma mère abattait ses deux mains avec violence sur le clavier et je brandissais le poing d'un air menaçant.",C2,C1
+"Pour certains auteurs, les conséquences pourraient être une évolution importante de l'organisation traditionnelle de l'entreprise",C2,C2
+"Telle, étourdie par la gaieté des fidèles, ivre de camaraderie, de médisance et d'assentiment, Mme Verdurin, juchée sur son perchoir, pareille à un oiseau dont on eût trempé le colifichet dans du vin chaud, sanglotait d'amabilité.",C2,C2
+"L'événement était drôle, mais également tristement révélateur : François Hollande a écrit un seul mot en anglais dans sa lettre de félicitations à Barack Obama pour sa réélection, et ce mot était mauvais",C2,B2
+"Nous brûlons de trouver une assiette ferme, et une dernière base constante pour y édifier une tour qui s'élève à l'infini, mais tout notre fondement craque, et la terre s'ouvre jusqu'aux abîmes.",C2,C2
+Cet auteur tellement lu pour sa Grammaire impertinente propose aussi des Jeux pour lire vite.,C2,C2
+"Notre mode de pensée, de connaissance, qui ne pousse pas à prévoir les conséquences, nous dessert, puisque la contingence et les autres viennent sans cesse contrecarrer nos prévisions, nos volontés.",C2,C2
+"Pour mieux maîtriser son langage en septembre qu'en juin, l'écrivain Yak Rivais propose une approche très personnelle qui n'en finit pas de séduire",C2,C1
+"La première limite est que les instruments de contingentement spatial pris en compte donnent une idée de la maîtrise ""potentielle"" de l'urbanisation, maîtrise dérivant des possibilités fournies par le cadre légal et stratégique dont chaque canton s'est doté.",C2,C2
+Mon amourpropre s'y mêlait.,C2,C2
+"Puis, il y eut une pause lugubre, suivie d'un vaste soupir d'agonie où l'on eût dit que l'âme de la grosse cloche s'exhalait.",C2,C1
+"Le verbe d'Adnane était entièrement vacciné contre les mots omniprésents de la langue de bois de l'époque, comme s'il avait des oreilles-passoires filtrant les mots des médias et des haut-parleurs plantés sur chaque quartier.",C2,C2
+"Par conséquent, l'entrée dans la liberté authentique, par opposition avec la liberté illusoire des désirs infinis, c'est l'entrée dans une véritable autonomie et c'est pouvoir devenir responsable de ses actes et pouvoir en répondre",C2,C2
+"De fait, en scindant son enseignement supérieur en deux systèmes concurrents, la France a créé une hiérarchie dans toutes les têtes: la grande école est synonyme de réussite, l'université de rebut.",C2,C2
+"Mais, comme il ne s'entendait guère plus en culture qu'en indienne, qu'il montait ses chevaux au lieu de les envoyer au labour, buvait son cidre en bouteilles au lieu de le vendre en barriques, mangeait les plus belles volailles de sa cour et graissait ses souliers de chasse avec le lard de ses cochons, il ne tarda point à s'apercevoir qu'il valait mieux planter là toute spéculation.",C2,C1
+"Après la transfusion, le sang provenant d'un don de sang complet ou d'un don par aphérèse est congelé à une température de moins 30 degrés Celsius et est mis en quarantaine.",C2,C1
+"J'étais reconnaissant de l'obligeance qu'on me témoignait ; mais tantôt ma timidité m'empêchait d'en profiter, tantôt la fatigue d'une agitation sans but me faisait préférer la solitude aux plaisirs insipides que l'on m'invitait à partager.",C2,C2
+Il clabaude aux esgourdes des blaireaux enfarinés et des tordus pasteurisés.,C2,C2
+"Prolongation de la vie, retard de la vieillesse, cessation des douleurs, moyens pour corriger les défauts naturels ou pour exalter les facultés intellectuelles, etc. : à faire luire tant de vains espoirs, ils ont fait naître un si violent préjugé contre toutes nouveautés de ce genre qu'elles en sont maintenant discréditées au point que nul mortel, même courageux, ne se hasarderait à entreprendre quelque chose de semblable.",C2,C2
+"Un garçon tombé du Midi à Paris, avec l'audace aimable d'un aventurier et, dès le lendemain, des histoires de femme, une continuelle exploitation de la femme, le scandale d'un flagrant délit, dont le quartier parlait encore ; puis, la conquête brusque et inexplicable de Mme Hédouin, qui lui avait apporté le Bonheur des dames.",C2,C2
+"Trop se spécialiser dans un environnement qui change sans cesse, c'est comme rouler vite avec des oeillères.",C2,B2
+"Je passai quelques heures à ses pieds, me proclamant le plus heureux des hommes, lui prodiguant mille assurances de tendresse, de dévouement et de respect éternel.",C2,C1
+"La ""marquise"" reprit un ton plus doux, car elle avait constaté que le protecteur des massifs et des pelouses l'écoutait avec bonhomie sans songer à la contredire, gardant inoffensive au fourreau une épée qui avait plutôt l'air de quelque instrument de jardinage ou de quelque attribut horticole.",C2,C2
+"Cette quête de l'altérité zonale laissa au milieu du XXe une marque géographique frappante : lorsque s'imposa l'idée de tiers-monde, il s'avéra que les pays sous-développés étaient alors très majoritairement situés dans la zone intertropicale, le ""Sud"".",C2,C2
+Est-il exorbitant de prétendre qu'un mode de pensée qui accepte l'incertain soit devenu hors jeu ?,C2,C1
+"Ceci dit, il reste qu'entre l'ovule et le spermatozoïde on observe des différences secondaires des plus intéressantes ; la singularité essentielle de l'ovule c'est qu'il est chargé de matériaux destinés à nourrir et à protéger l'embryon ; il accumule des réserves aux dépens desquelles le foetus édifiera ses tissus, réserves qui sont non une substance vivante mais une matière inerte ; il en résulte qu'il présente une forme massive, sphérique ou ellipsoïdale, et qu'il est relativement volumineux ; on sait quelles dimensions atteint l'oeuf de l'oiseau ; chez la femme l'ovule mesure 0, 13 mm de diamètre ; tandis que dans le sperme humain on trouve 60 000 spermatozoïdes par millimètre cube : la masse du spermatozoïde est extrêmement réduite, il a une queue filiforme, une petite tête allongée, aucune substance étrangère ne l'alourdit, il est tout entier vie ; cette structure le voue à la mobilité ; au lieu que l'ovule, où se trouve engrangé l'avenir du foetus, est un élément fixe : enfermé dans l'organisme femelle ou suspendu dans un milieu extérieur, il attend passivement la fécondation ; c'est le gamète mâle qui va à sa recherche ; le spermatozoïde est toujours une cellule nue, l'ovule est selon les espèces protégé ou non par une membrane ; mais en tout cas dès que le spermatozoïde entre en contact avec lui, il le bouscule, le fait osciller, et s'infiltre en lui : le gamète mâle abandonne sa queue, sa tête se gonfle et d'un mouvement tournant gagne le noyau ; pendant ce temps, l'oeuf forme aussitôt une membrane qui le ferme aux autres spermatozoïdes.",C2,C2
+"L'haplodiploïdisation, en revanche, permet d'obtenir directement une lignée haploïde et donc pure, présentant les traits désirés.",C2,C2
+"Inversement, les régions tempérées lointaines n'intéressent que médiocrement les colonisateurs jusqu'à l'explosion démographique du Vieux Continent au XIXe siècle, moment où les pays neufs deviennent des polongements européens.",C2,C2
+"Et puis en outre, ça me paraît être un moyen prometteur pour lutter contre les inégalités et le décrochage scolaire.",C2,B2
+"Mains jointes, et un sang de velours dans les veines, ils contemplaient le ciel sublime et leur amour dans les palpitantes étoiles, bénissantes là haut.",C2,C1
+"Les lois de programmation mentionnées à l'antépénultième alinéa de l'article 34 de la Constitution ont pour objet de déterminer ""les objectifs de l'action de l'État"".",C2,C2
+"Ce qui est à moi, ces quelques milliers de mortiférés qui tournent en rond dans la calebasse d'une île et ce qui est à moi aussi, l'archipel arqué comme le désir inquiet de se nier, on dirait une anxiété maternelle pour protéger la ténuité plus délicate qui sépare l'une de l'autre Amérique ; et ses flancs qui sécrètent pour l'Europe la bonne liqueur d'un Gulf Stream, et l'un des deux versants d'incandescence entre quoi l'Equateur funambule vers l'Afrique. Et mon île non-clôture, sa claire audace debout à l'arrière de cette polynésie, devant elle, la Guadeloupe fendue en deux de sa raie dorsale et de même misère que nous, Haïti où la négritude se mit debout pour la première fois et dit qu'elle croyait à son humanité et la comique petite queue de la Floride où d'un nègre s'achève la strangulation, et l'Afrique gigantesquement chenillant jusqu'au pied hispanique de l'Europe, sa nudité où la Mort fauche à larges andains.",C2,C2
+L'épidémie de coronavirus nous contraint à éprouver l'incertain de nos existences comme une dégradation provisoire.,C2,C2
+"L'ordinateur peut aussi répondre à des interruptions qui lui permettent d'exécuter des programmes de réponses spécifiques à chacune, puis de reprendre l'exécution séquentielle du programme interrompu.",C2,C2
+"Et des trous s'enfoncèrent dans ces alluvions de l'espace, des trous infundibuliformes, roux, par lesquels filtra une lumière de lanterne sourde.",C2,C2
+"Ovoïde et renflée de baleines, elle commençait par trois boudins circulaires ; puis s'alternaient, séparés par une bande rouge, des losanges de velours et de poils de lapin ; venait ensuite une façon de sac qui se terminait par un polygone cartonné, couvert d'une broderie en soutache compliquée, et d'où pendait, au bout d'un long cordon trop mince, un petit croisillon de fils d'or, en manière de gland.",C2,C2
+"Qui résiste en effet au plaisir de ""schtroumpfer"" son texte, c'est-à-dire d'y remplacer tous les verbes d'action et les participes passés par le verbe ""schtroumpfer"", correctement accordé, bien sûr ?",C2,C2
+"Sur une sorte de haquet, deux futailles de vin posaient, car c'était pour fêter la surprise d'un petit convoi républicain que Charette avait accordé cette débauche à son armée.",C2,C2
+"J'avais en outre une diarrhée du diable, que j'ai vaincue sans nul médicament, par la contention mentale et donc musculaire.",C2,C2
+"Ils permirent ainsi, pour le meilleur et pour le pire, cette ""grande transformation"" qui multiplia les productions et autorisa l'augmentation colossale de l'espèce humaine.",C2,C1
+"Certains partirent furibonds, jurant qu'ils ne se soumettraient jamais à un roi trop jeune pour avoir de la barbe au menton",C2,C1
+"Ô chants dans l'auto qui vers elle me mènera, vers elle qui m'attendra, vers les longs cils étoilés, ô son regard lorsque j'arriverai, elle sur le seuil m'attendant, élancée et de blanc vêtue, prête et belle pour moi, prête et craignant d'abîmer sa beauté si je tarde, et allant voir sa beauté dans la glace, voir si sa beauté est toujours là et parfaite, puis revenant sur le seuil et m'attendant en amour, émouvante sur le seuil et sous les roses, ô tendre nuit, ô jeunesse revenue, ô merveille lorsque je serai devant elle, ô son regard, ô notre amour, et elle s'inclinera sur ma main, ô merveille de son baiser sur ma main, et elle relèvera la tête et nos regards s'aimeront et nous sourirons de tant nous aimer, toi et moi, et gloire à Dieu.",C2,C2
+"On peut, cependant, avancer que la Daimler fut la première moto dotée d'un moteur à combustion interne.",C2,C1
+"les dix minutes, vingt personnes sont autorisées à gravir l'escalier en colimaçon",C2,C1
+"Expérience qu'il ne put mener à bien, mais qu'il y avait déjà bien du mérite à concevoir: Réaumur est le premier biologiste qui ait tenté de prolonger la vie d'un mammifère en lui imposant une torpeur artificiellement entretenue.",C2,C2
+"Si quelques-uns échappent à cette destinée générale, ils renferment en eux-mêmes leur dissentiment secret ; ils aperçoivent dans la plupart des ridicules le germe des vices : ils n'en plaisantent plus, parce que le mépris remplace la moquerie, et que le mépris est silencieux.",C2,C2
+l défend ainsi une position philosophique déterministe suivant laquelle tous les événements sont absolument nécessaires et le sentiment que nous avons d'être libres ne serait qu'une illusion naturelle,C2,C2
+J'eus de nombreuses maladies infectieuses et je dus garder le lit durant des semaines en isolement total sans l'ombre d'un espoir.,C2,C1
+"Pour pallier le manque de compétences transversales, la créativité dans les salles de classe de tous âges pourrait être le fait des élèves eux-mêmes, en devenant des ""proconsommateurs"" - producteurs et consommateurs - de connaissances.",C2,C2
+"Pour conjurer les deux mois de vacances, ils achètent donc leur potion en librairie pour un investissement moyen de 7 euros",C2,C2
+"Pour conjurer les deux mois de vacances, ils achètent donc leur potion en librairie pour uninvestissement moyen de 7 euros.",C2,C1
+"Lucie entama d'un air brave sa cavatine en sol majeur; elle se plaignait d'amour, elle demandait des ailes.",C2,B2
+"Celui qui, à 65 ans, apprécie toujours autant ses visites dans les classes, estime que les parents ont parfois trop négligé des choses très simples",C2,B1
+"De ce poste élevé elle participait avec entrain à la conversation des fidèles et s'égayait de leurs ""fumisteries"", mais depuis l'accident qui était arrivé à sa mâchoire, elle avait renoncé à prendre la peine de pouffer effectivement et se livrait à la place à une mimique conventionnelle qui signifiait sans fatigue ni risques pour elle, qu'elle riait aux larmes.",C2,C2
+"Or à prendre les choses rigoureusement, l'homme est tout aussi déterminé à se mouvoir sous l'influence de causes externes qu'une pierre qui reçoit une impulsion",C2,C2
+Je me débattais intérieurement : j'étais indigné contre moi-même.,C2,C2
+Elle élevait deux enfants qu'elle avait eus du comte de P *** avec une austérité excessive.,C2,C1
+"Suen (Liebowitz, 2000), sont éloquents sur la dispersion et la variété des modes de mesure de ce type en cours aujourd'hui dans les entreprises",C2,C2
+"Chez les gros utilisateurs, cette communication comblerait un ""vide existentiel"" et contrecarrerait une vie sociale ""réelle"" insatisfaisante.",C2,C1
+"Paul Andreu, l'architecte de l'aéroport de Roissy (du terminal 1 au terminal 2E-K) ainsi que de l'Opéra de Pékin entre autres, s'était demandé s'il devait installer des portes automatiques dans un aéroport qu'il était en train de concevoir comme le requérait tout aéroport digne de ce nom car, après un rapide calcul à partir des conditions locales, le coût d'achat et sur-tout de maintenance d'une porte automatique revenait plus cher que le salaire d'un portier qui pouvait nourrir une famille avec. ce que la porte était bien incapable de faire!",C2,B2
+"La salle commençait à se remplir, on tirait les lorgnettes de leurs étuis, et les abonnés, s'apercevant de loin, se faisaient des salutations.",C2,C1
+Le tas de riz tantant tanta le tas de rats tentés.,C2,C2
+Et parions que ces nouvelles technologies sauront créer un imaginaire tout aussi riche et fécond et pas seulement être des technologies au service de notre réalité.,C2,C1
+"Ceux qui, même adultes, apprennent le breton ou l'apprennent à leurs enfants, sont dignes d'admiration",C2,C1
+"Le problème va du garçon de café tentant inintelligiblement de communiquer avec des touristes médusés jusque, comme on l'a vu, aux niveaux les plus élevés de la société française",C2,C2
+"Né en 1887 dans l'Empire austro-hongrois, serrurier de formation et poète par passion, Lajos Kassák est écrivain, peintre et fondateur de revues de l'avant-garde hongroise.",C2,C1
+"D'autres éditeurs exploitent le créneau, et Internet regorge de sites intéressants qui permettent une approche moins scolaire, certes, mais tellement plus amusante, des mathématiques",C2,C2
+"Occasionnellement, Kassák ment sur ses intentions, sa profession ou sa confession ; il se dit ainsi juif pour bénéficier d'une caisse d'entraide juive (autre réseau élaboré à l'échelle européenne) et manque de se faire démasquer lorsqu'il tient son livre de prières à l'envers ou peine à retenir les quelques lignes de prière apprises phonétiquement.",C2,C2
+"Une plaisanterie plus légère, une conversation plus variée, un mélange particulier de mélancolie et de gaieté, de découragement et d'intérêt, d'enthousiasme et d'ironie, étonnèrent et attachèrent Ellénore.",C2,C1
+"Distrait, inattentif, ennuyé, je ne m'apercevais point de l'impression que je produisais, et je partageais mon temps entre des études que j'interrompais souvent, des projets que je n'exécutais pas, des plaisirs qui ne m'intéressaient guère, lorsqu'une circonstance, très frivole en apparence, produisit dans ma disposition une révolution importante.",C2,C2
+"Car, si les émoluments fixes étaient insignifiants, il y avait le casuel, il y avait surtout les quêtes à domicile.",C2,C2
+"Sur le sable, la mer haletait de toute la respiration rapide et étouffée de ses petites vagues.",C2,C2
+"Après 13 ans aussi, pour des raisons sociales, l'enfant commence à éprouver des contraintes caractérielles, des réticences dues à la volonté de défendre son image, à la peur du ridicule, toutes choses qui sont des attitudes d'adulte",C2,C2
+"De Buren exprime ces différents points de vue sur la ressource à travers une triple définition du concept : la ressource institutionnelle, telle qu'elle perçut au travers des règles qui encadrent ses usages, la ressource physique perçue au travers des fonctions qu'elle remplit et finalement la ressource sociale, lorsqu'elle est envisagée au travers des relations, qui se nouent entre ses usages.",C2,C2
+"On avait apporté le rôti, des perdreaux flanqués de cailles, puis des petits pois, puis une terrine de foie gras accompagnée d'une salade aux feuilles dentelées, emplissant comme une mousse verte un grand saladier en forme de cuvette.",C2,C1
+"Elle se caractérise par une fébricule, des courbatures, des adénopathies cervicales postérieures et parfois un purpura du voile du palais.",C2,C2
+"Les expériences qui ont été faites démontrent donc chez l'enfant l'aptitude au mimétisme phonique mais aussi la capacité d'acquérir non seulement le vocabulaire et la syntaxe, mais aussi la prononciation",C2,C2
+"Je suis bilingue anglais parce qu'en rentrant à la maison après l'école, au lieu de faire mes devoirs, je regardais des séries américaines en version originale",C2,B1
+"Il a professé à Padoue des principes d'une philosophie qui sent le fagot, dit-on, et ses nombreuses découvertes dans des sciences dangereuses pourront bien finir par le brouiller tout à fait avec l'Église.",C2,C2
+"A cet égard, il existe de nombreux avantages techniques pour les enfants bretons à apprendre le breton",C2,C2
+"Ainsi, le genre est un déterminant de la santé à considérer en association avec d'autres déterminants sociaux tels que la condition socio-économique, l'âge ou l'appartenance ethnique, dans une perspective d'intersectionnalité pour décrire cette interaction de différentes caractéristiques.",C2,C1
+"Un visage humain est projeté sur un masque de plastique et s'adapte à son interlocuteur (rire, larmes, dédain, gêne, neutre.)",C2,C1
+"De fait, la nature peut être, par l'homme, changée tout à fait, transformée, ébranlée jusqu'en ses fondements, et c'est pourquoi il sied de réhabiliter le mot de magie, en lui redonnant le sens honorable qu'il avait autrefois et en désignant par là une science justement ambitieuse qui, de la connaissance des formes cachées, déduit des opérations étonnantes.",C2,C2
+Cet amour-propre était en tiers entre Ellénore et moi.,C2,C2
+"Le nombre insuffisant de professeurs formés est également un frein pour beaucoup d'adversaires de cette mesure, qui la jugent inapplicable.",C2,C1
+"Qu'est-ce qui peut bien poser problème dans ces petits livrets pourtant plutôt attractifs pour que seuls 23, 4 % de leurs détenteurs arrivent au bout ?",C2,C1
+"Pour les situations qui s'apparentent à de réelles addictions comportementales, un travail sur l'estime de soi est souvent nécessaire.",C2,C1
+Elle voulut parler : je lui demandai de m'écouter.,C2,C2
+"Pour de multiples raisons, l'éducation s'est focalisée sur la spécialisation.",C2,B2
+Français et mathématiques sont - personne ne s'en étonnera - les deux disciplines les plus révisées durant l'été,C2,C2
+"En province, les centres d'administration laïque ou cléricale, les sièges de parlements groupent des ecclésiastiques et des laïques instruits en nombre considérable, ils copient les salons et créent des centres locaux, lieux d'échange des idées.",C2,C2
+Il s'agit vraiment d'introduire l'informatique dans la culture générale.,C2,B1
+"Il avait marché brûlant, imprudent et damné, ses paupières frémissant sur ses épaisses prunelles, noires de la douleur d'une participation qui devait, quatre siècles plus tard, faire de lui une victime lorsqu'il sentit dans sa propre gorge l'écho du cri qui avait couru jadis sur la Piazza Montanara : ""Roba Vecchia !"" - la dégradation au prix de laquelle les siens avaient survécu.",C2,C2
+"Les concierges, en manches de chemise, à cheval sur des chaises en paille, fumaient la pipe sous des portes cochères, et les passants allaient d'un pas accablé, le front nu, le chapeau à la main.",C2,C2
+"Peut-être était-ce l'apaisante influence du cigare dont la bague rouge, ornée d'un somptueux écu gaufré d'or, indiquait sans discrétion le prix.",C2,C1
+"D'autres auteurs ont exploité ce terrain comme Erik Orsenna et ses Chevaliers du subjonctif, sorti à l'automne 2004.",C2,C2
+"Il dégoise, l'ostrogoth de la téloche formaté au formol, tel un psittacidé déréglé et moche.",C2,C2
+Le mouvement qui atteint son apogée à Paris entre 1750 et 1765 progresse dans les provinces pour gagner la génération qui précède la Révolution.,C2,C1
+Les bioessais effectués ont montré que les mêmes symptômes de morbidité sont observés chez les deux espèces et avec les deux métaux.,C2,C1
+"Le départ de Mlle Swann qui - en m'ôtant la chance terrible de la voir apparaître dans une allée, d'être connu et méprisé par la petite fille privilégiée qui avait Bergotte pour ami et allait avec lui visiter des cathédrales - me rendait la contemplation de Tansonville indifférente la première fois où elle m'était permise, semblait au contraire ajouter à cette propriété, aux yeux de mon grand-père et de mon père, des commodités, un agrément passager, et, comme fait, pour une excursion en pays de montagnes, l'absence de tout nuage, rendre cette journée exceptionnellement propice à une promenade de ce côté ; j'aurais voulu que leurs calculs fussent déjoués, qu'un miracle fît apparaître Mlle Swann avec son père, si près de nous que nous n'aurions pas le temps de l'éviter et serions obligés de faire sa connaissance.",C2,C2
+"Sa famille, assez illustre en Pologne, avait été ruinée dans les troubles de cette contrée.",C2,C1
+Nous crûmes longtemps que nos ancêtres eurent vécu une vie de rêve.,C2,C1
+"Le dessein de lui plaire, mettant dans ma vie un nouvel intérêt, animait mon existence d'une manière inusitée.",C2,C2
+"Entre ceux qui ne jurent que par l'introduction de l'informatique comme un enseignement obligatoire, et ceux qui ont peur que l'on veuille transformer le primaire en une prépa à l'Ecole 42, il existe pourtant des pistes pour initier les enseignants et favoriser un passage du périscolaire au scolaire, sans avoir à attendre une réforme du socle commun qui prendra des années.",C2,C2
+"Les méthodes de la biologie synthétique, qui aboutissent à la création artificielle de systèmes ou de composants biologiques en ajoutant des séquences artificielles d'ADN à un ""châssis"" génétique naturel minimal ou en assemblant des segments d'ADN artificiel pour créer de toutes pièces un système fonctionnel.",C2,C2
+"Ces derniers auraient engendré des rats mithridatisés, pathologiquement agressifs, dotés d'une formidable force de mâchoire.",C2,C1
+"Suite à une série de retards, cet employé a été mis à pied pour une durée indertéminée",C2,B2
+"Le mot ""robot"" a été inventé par l'auteur tchèque Karel Capek de la pièce Rossum's Universal Robots (R.U.R), jouée en 1920, et qui mettait en scène des hommes décérébrés prenant la place des ouvriers dans les usines.",C2,C1
+"Le récit s'ordonne par l'accumulation de saynètes, procédé qui donne une tonalité picaresque au parcours, mais qui participe aussi à ancrer les souvenirs d'une mobilité dans des lieux, ne seraient-ils que de passage.",C2,C1
+"Ils avaient trouvé du plaisir à se donner ample carrière, j'en trouvais à les observer et à les décrire ; et ce qu'ils appelaient une perfidie me paraissait un dédommagement tout innocent et très légitime.",C2,C1
+"Certains, pourtant, haïssent cette béance dans leur agenda, ce vide, ce temps mort.",C2,C2
+"C'est un truisme de dire qu'une économie fonctionnant bien, hautement rationalisée et unifiée, exige un étalon d'échange stable.",C2,C2
+La sécheresse que connaît actuellement le France ne résulte pas seulement d'une météorologie défavorable mais découle aussi d'une politique de l'eau TM archaïque,C2,C1
+"L'auteur évoque l'insouciance des journées passées avec la panse pleine et sa conviction, acquise dans le monde du vagabondage, que le travail régulier, dégradant, ne fera plus jamais partie de son mode de vie.",C2,C2
+"Le modele theorique mis en oeuvre ici s'appuie sur l'idee d'un dispositif representatif qui jouerait sur trois niveaux : scenique, scenographique et enonciatif.",C2,C2
+"Forcée à admettre que je ne manifestais aucune disposition spéciale, ni talent caché, ma mère finit par conclure, comme tant d'autres mères avant elle, qu'il ne me restait plus qu'une solution: la diplomatie.",C2,C2
+"La connexion permanente, notamment aux réseaux sociaux la rassurerait quant à son insertion et lui donnerait alors l'impression qu'elle est un acteur socialement central et important.",C2,C1
+"Pour mieux maîtriser sonlangage en septembre qu'en juin, l'écrivain YakRivais propose une approche très personnelle quin'en finit pas de séduire. Cet auteur tellement lupour sa Grammaire impertinentepropose aussi.des Jeux pour lire vite(Retz). De quoi faire aimerla grammaire aux plus récalcitrants ! Qui résisteen effet au plaisir de ""schtroumpfer"" son texte, c'est-à-dire d'y remplacer tous les verbes d'actionet les participes passés par le verbe ""schtroump-fer"", correctement accordé, bien sûr ? Qui se refu-serait à trouver le plus rapidement possible le motle plus long d'un petit texte ? Ou à identifier desmots cachés.",C2,C2
+"Serait - ce que la vie semble d'autant plus réelle que toutes les illusions disparaissent, comme la cime des rochers se dessine mieux dans l'horizon lorsque les nuages se dissipent ?",C2,C2
+"Les égouts soufflaient par leurs bouches de granit leurs haleines empestées, et les cuisines souterraines jetaient à la rue, par leurs fenêtres basses, les miasmes infâmes des eaux de vaisselle et des vieilles sauces.",C2,C2
+Mieux valait oublier le mauvais plaisantin qui m'avait posé un lapin.,C2,C1
+"Les grandes puissances étaient collectivement responsables de la paix et du repos de l'Europe; elles se concertaient en permanence pour régler les problèmes, ou au moins pour éviter qu'ils ne débouchent sur une guerre généralisée.",C2,C1
+"Par ailleurs, Platon, dans Protagoras, relate l'apparition de la technique, et donc du travail, chez les Hommes dans ""le mythe de Prométhée""",C2,C2
+"Utiliser des stoppeurs externes (horloge, messages d'avertissement), parler de ses affects négatifs à des proches, faire de la relaxation, de la méditation, du sport, se rappeler les conséquences négatives d'une consommation excessive (encourager un discours critique, peser le pour et le contre), surfer sur l'envie (la laisser venir, résister et attendre qu'elle passe)., autant de moyens pour essayer d'endiguer ces envies devenues incontrôlables.",C2,C2
+"Lorsque nous lûmes ce passage émouvant, nous rappelant les jours heureux passés, nous pleurâmes face à nos existances misérables et sans lendemain.",C2,C1
+"Loin d'une société oisive, il faut continuer à innover et aider les populations qui risquent de voir leur travail disparaître en les formant à d'autres talents.",C2,B2
+"Jean Buridan, philosophe français du quatorzième siècle, aurait, selon la légende, conçu une expérience imaginaire afin de prouver l'existence du libre arbitre : la situation serait celle d'un animal, en l'occurrence un âne, ayant également faim et soif, et qui, placé à égale distance d'une botte de foin et d'un seau d'eau, hésite, se montre incapable de choisir, et finalement se laisse mourir",C2,C2
+"Figurez-vous tous ces pauvres gens, entassés dans un logement insalubre, sous un plafond qui menace de s'effondrer à tout moment",C2,C1
+"Tout cela met l'enfant bretonnant en situation d'avoir, au travers d'une langue assez exotique, un très large éventail de moyens d'expression qui viennent s'ajouter à ceux que le français lui propose",C2,C2
+"Si l'esprit consiste à se saisir, dans sa propre opposition à soi, nulle période n'est mieux marquée par son avènement que celle du subjectivisme absolu.",C2,C2
+Je me précipite sur celle terre qui devrait s'entrouvrir pour m'engloutir à jamais ; je pose ma tête sur la pierre froide qui devrait calmer la fièvre ardente qui me dévore.,C2,C2
+"Duroy s'assit sur un canapé très bas, rouge comme les tentures des murs, et dont les ressorts fatigués, s'enfonçant sous lui, lui donnèrent la sensation de tomber dans un trou",C2,C1
+"Cependant, au vu de la grande inertie liée au développement urbain et aux cycles d'aménagement du territoire, cela n'affaiblit pas la validité de l'analyse.",C2,C1
+"Qu'est-ce qui peut bien poser problème dans ces petits livrets pourtant plutôt attractifs pour que seuls 23, 4 % de leurs détenteurs arrivent au bout ?",C2,C1
+Elle dénoua le ruban qui attachait le manche de la quenouille à son corsage et me tendit la quenouille,C2,C2
+"Car sans incertitude nous serions cantonnés à une vie morne, dont la fresque ne serait teinte que de dégradés de gris, en absence complète de couleurs",C2,C2
+"Gutrie (Petty, 2000) citent les initiatives marquantes prises dans ce domaine par SKANDIA, RAMBOLL et DOW CHEMICALS pour la publication de rapports annuels incluant la notion de capital intellectuel",C2,C2
+Se prémunir contre l'altération des données et avoir la certitude qu'elles n'ont pas été modifiées lors de leur stockage ou de leur traitement contribue à la qualité des prises de décisions basées sur celles-ci.,C2,C1
+"Mus par un cartésianisme extrémiste, les programmes sont concentrés sur la grammaire et l'apprentissage de règles théoriques, et se fondent principalement sur la mémorisation",C2,C2
+"Tout comme les comportements des animaux sont déterminés par l'instinct, leur environnement ou des déterminations biologiques, les actes et les pensées des hommes le sont eux-mêmes par de multiples facteurs à la fois internes et externes dont on ignore le plus souvent l'existence et la puissance : facteurs d'origine physiologiques, psychologiques, sociales, etc",C2,C2
+"Elles le contemplaient toutes les deux, l'approuvant du regard, trouvant qu'il parlait bien et juste, confessant par leur silence ami que leur morale inflexible de Parisiennes n'aurait pas tenu longtemps devant la certitude du secret.",C2,C1
+"Auparavant, la duplication de l'ADN se faisait par clonage moléculaire : la séquence d'intérêt était insérée dans le génome d'une bactérie et l'on se servait du taux de croissance élevé du micro-organisme pour obtenir autant de clones de la séquence d'ADN.",C2,C1
+L'homme impoli est le lépreux du monde fashionable.,C2,B2
+Cette épée brûlante rongeait mes cils et fouillait mes yeux douloureux.,C2,C2
+J'attribuais à son charme cet effet presque magique : j'en aurais joui plus complètement encore sans l'engagement que j'avais pris envers mon amour-propre.,C2,C2
+Je vous saurais gré de bien vouloir me donner votre réponse dans les plus brefs délais,C2,C2
+"Quand elle s'amusait dans la conversation, ses yeux se tournaient naturellement vers moi.",C2,B1
+"Je ne savais pas que, bien plus tristement que les petits écarts de régime de son mari, mon manque de volonté, ma santé délicate, l'incertitude qu'ils projetaient sur mon avenir, préoccupaient ma grand'mère au cours de ces déambulations incessantes de l'après-midi et du soir, où on voyait passer et repasser, obliquement levé vers le ciel, son beau visage aux joues brunes et sillonnées, devenues au retour de l'âge presque mauves comme les labours à l'automne, barrées, si elle sortait, par une voilette à demi relevée, et sur lesquelles, amené là par le froid ou quelque triste pensée, était toujours en train de sécher un pleur involontaire.",C2,C2
+"Comme Monsieur, un informaticien fondateur de la librairie des maths, pour qui ""il y a tellement de manières d'aimer les mathématiques [qu'il propose] de nombreux produits plus ou moins littéraires, plus ou moins ludiques"".",C2,C2
+"Alors qu'au cours du Paléolithique, la diffusion avait fractionné l'écoumène en petits groupes, la tendance depuis la fin de la dernière glaciation est à l'épaississement des relations dans l'Ancien Monde, par augmentation des effectifs et par tissage d'interconnexions.",C2,C2
+"Ça vous débagoule des raisons, des accusations, des syllogismes, des calomnies, des paroles à rendre fou !",C2,C2
+Votre amitié me soutenait : sans cette amitié je ne puis vivre.,C2,C2

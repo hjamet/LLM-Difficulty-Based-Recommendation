@@ -1,0 +1,38 @@
+# Project Structure
+dmkd_additions/
+└── difficulty_estimation/
+    ├── download_data.py          # Dataset management
+    ├── gpt_fine_tuning.py        # Model training
+    ├── gpt_evaluation.py         # Prediction generation
+    │   ├── validate_prediction() # Validation for different scales
+    │   ├── generate_predictions()# Sequential prediction generation
+    │   └── main()               # Test script with single examples
+    └── evaluation/               # [TO BE CREATED]
+        ├── evaluate_models.py     # Main evaluation script
+        └── metrics.py            # Evaluation metrics
+
+# Key Components
+## Data Management
+- download_data.py: Handles dataset retrieval and preprocessing
+- Provides train/test splits for all datasets
+- Handles different difficulty scales (CEFR vs Level1-4)
+
+## Model Training
+- gpt_fine_tuning.py: Handles model fine-tuning
+- Defines system prompt
+- Supports different difficulty scales
+
+## Evaluation
+- gpt_evaluation.py: 
+  - Generates model predictions
+  - Implements sequential processing
+  - Handles different difficulty scales
+  - Includes robust validation
+  - Includes test main for validation
+  - Saves predictions in results directory
+
+## Planned Evaluation Components
+- Full dataset evaluation
+- Comprehensive metrics calculation
+- Results visualization
+- Performance comparison tools
