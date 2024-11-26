@@ -63,9 +63,24 @@ def _normalize_context(context: str) -> str:
     Returns:
         str: Normalized context name (with_context, no_context)
     """
-    if context in ["CECRL", "with_system"]:
-        return "with_context"
-    return "no_context"
+    # Convert to string and lowercase for consistent comparison
+    context = str(context).lower()
+
+    # Map various context indicators to standardized values
+    with_context_indicators = ["with_system", "with_context", "cecrl", "with_prompt"]
+
+    # Log the context normalization
+    logger.debug(f"Normalizing context: {context}")
+
+    # Return normalized value
+    normalized = (
+        "with_context"
+        if any(indicator in context for indicator in with_context_indicators)
+        else "no_context"
+    )
+    logger.debug(f"Normalized context: {normalized}")
+
+    return normalized
 
 
 def compute_metrics() -> pd.DataFrame:
@@ -176,35 +191,37 @@ def compute_metrics() -> pd.DataFrame:
 
 
 def _parse_filename(filename: str) -> Tuple[str, str, str]:
-    """Parse prediction filename to extract metadata.
+    """Parse prediction filename to extract metadata."""
+    logger.debug(f"Parsing filename: {filename}")
 
-    Args:
-        filename (str): Format: {dataset}_{model}_[context]_predictions.csv
+    # Extract dataset (first part before _ft_)
+    dataset = filename.split("_ft_")[0]
 
-    Returns:
-        Tuple[str, str, str]: (dataset, model, context)
-    """
-    # Remove _predictions.csv suffix
-    base = filename.replace("_predictions.csv", "")
+    # Extract model name
+    if "_ft_" in filename:
+        # Pour les modèles fine-tunés
+        model_part = filename.split("_ft_")[1].split("_university")[0]
+        # Extraire la partie avant la date
+        model = model_part.split("-20")[0]
+        # Standardiser le nom
+        if model.upper().startswith("GPT-4O"):
+            if model.upper().endswith("MINI"):
+                model = "GPT-4o-mini"
+            else:
+                model = "GPT-4o"
+    else:
+        # Pour les autres modèles (cas non fine-tuné)
+        model = filename.split("_")[1]
 
-    # Split remaining parts
-    parts = base.split("_")
+    # Extract context
+    if "_with_system" in filename:
+        context = "with_context"
+    elif "_no_system" in filename:
+        context = "no_context"
+    else:
+        context = "no_context"
 
-    # Extract dataset (first part)
-    dataset = parts[0]
-
-    # Check for context
-    context = "with_context" if "with_system" in filename else "no_context"
-
-    # Extract model name (everything between dataset and context/predictions)
-    model_start = len(dataset) + 1
-    model_end = filename.find(
-        "_with_system" if context == "with_context" else "_no_system"
-    )
-    if model_end == -1:
-        model_end = filename.find("_predictions.csv")
-    model = filename[model_start:model_end]
-
+    logger.debug(f"Parsed: dataset={dataset}, model={model}, context={context}")
     return dataset, model, context
 
 
@@ -482,66 +499,236 @@ def create_latex_table() -> Dict[str, str]:
         historical_df = load_old_experiments_metrics()
         current_df = compute_metrics()
 
-        # Combine results and remove duplicates
-        all_results = pd.concat([historical_df, current_df], ignore_index=True)
-        all_results = all_results.drop_duplicates(
-            subset=["dataset", "model", "context"], keep="first"
+        # Debug logs pour voir les données avant fusion
+        logger.debug("Historical data:")
+        logger.debug(
+            historical_df[
+                ["model", "context", "dataset", "accuracy", "pairwise_mismatch"]
+            ]
+        )
+        logger.debug("\nCurrent data:")
+        logger.debug(
+            current_df[["model", "context", "dataset", "accuracy", "pairwise_mismatch"]]
         )
 
-        # Create tables by dataset
-        tables = {}
-        for dataset in all_results["dataset"].unique():
-            # Filter dataset results
-            dataset_results = all_results[all_results["dataset"] == dataset].copy()
+        # Standardiser les noms de modèles avant la fusion
+        def standardize_model_name(x):
+            if "GPT-4O-MINI" in x.upper():
+                return "GPT-4o-mini"
+            elif "GPT-4O" in x.upper():
+                return "GPT-4o"
+            return x
 
-            # Create multi-index from model and context
-            dataset_results["context"] = dataset_results["context"].map(
-                {"with_context": "\\checkmark", "no_context": "-"}
-            )
-            dataset_results = dataset_results.set_index(["model", "context"])
+        historical_df["model"] = historical_df["model"].apply(standardize_model_name)
+        current_df["model"] = current_df["model"].apply(standardize_model_name)
 
-            # Sort by accuracy and pairwise mismatch
-            dataset_results = dataset_results.sort_values(
-                by=["accuracy", "pairwise_mismatch"], ascending=[False, True]
-            )
+        # Combine results and remove duplicates
+        all_results = pd.concat([historical_df, current_df], ignore_index=True)
 
-            # Format metrics
-            dataset_results = dataset_results.round(2)
+        # Garder la meilleure performance pour chaque combinaison unique de dataset/model/context
+        best_results = []
+        for (dataset, model, context), group in all_results.groupby(
+            ["dataset", "model", "context"]
+        ):
+            # Pour chaque groupe, prendre la ligne avec la meilleure accuracy
+            best_row = group.loc[group["accuracy"].idxmax()]
+            best_results.append(best_row)
 
-            # Rename dataset for table
-            dataset_name = (
-                dataset.replace("french-difficulty", "SentencesBooks")
-                .replace("ljl", "LjL")
-                .replace("sentences", "SentencesInternet")
-            )
+        all_results = pd.DataFrame(best_results)
 
-            # Create LaTeX table
-            latex = (
-                dataset_results.style.background_gradient(
-                    cmap="Greens", subset=["accuracy"]
+        # Debug log après regroupement
+        logger.debug("\nAll results after grouping:")
+        logger.debug(
+            all_results[
+                ["model", "context", "dataset", "accuracy", "pairwise_mismatch"]
+            ]
+        )
+
+        # Debug: afficher les valeurs uniques de contexte avant standardisation
+        logger.debug("Unique context values before mapping:")
+        logger.debug(all_results["context"].unique())
+
+        # Standardize context values before pivot
+        context_mapping = {
+            "with_context": "with_context",
+            "with_system": "with_context",
+            "CECRL": "with_context",
+            "no_context": "no_context",
+            "no_system": "no_context",
+            "-": "no_context",
+            None: "no_context",  # Ajout pour gérer les valeurs None
+            "": "no_context",  # Ajout pour gérer les chaînes vides
+        }
+
+        # Appliquer le mapping avec un message de debug pour les valeurs non mappées
+        def map_context(x):
+            if x not in context_mapping:
+                logger.warning(f"Unmapped context value: '{x}'")
+                return "no_context"
+            return context_mapping[x]
+
+        all_results["context"] = all_results["context"].apply(map_context)
+
+        # Debug: afficher les valeurs uniques après standardisation
+        logger.debug("Unique context values after mapping:")
+        logger.debug(all_results["context"].unique())
+
+        # Debug: afficher les lignes pour GPT-4o et GPT-4o-mini
+        logger.debug("GPT-4o and GPT-4o-mini rows:")
+        logger.debug(all_results[all_results["model"].isin(["GPT-4o", "GPT-4o-mini"])])
+
+        # Create one table with all datasets
+        pivoted_acc = all_results.pivot_table(
+            index=["model", "context"],
+            columns="dataset",
+            values="accuracy",
+            aggfunc="first",
+        ).round(2)
+
+        pivoted_pm = all_results.pivot_table(
+            index=["model", "context"],
+            columns="dataset",
+            values="pairwise_mismatch",
+            aggfunc="first",
+        ).round(1)
+
+        # Rename columns
+        column_mapping = {
+            "ljl": "LjL",
+            "sentences": "Sentences Internet",
+            "french-difficulty": "Sentences Books",
+        }
+        pivoted_acc.columns = pivoted_acc.columns.map(column_mapping)
+        pivoted_pm.columns = pivoted_pm.columns.map(column_mapping)
+
+        # Sort by average pairwise mismatch
+        avg_mismatch = pivoted_pm.mean(axis=1)
+        sort_order = avg_mismatch.sort_values().index
+
+        # Create detailed caption
+        caption = (
+            "Difficulty estimation metrics for all datasets. "
+            "For each model and dataset, we report two metrics: "
+            "accuracy (Acc.) and pairwise mismatch (PM). "
+            "Accuracy ranges from 0 to 1, higher is better. "
+            "PM measures the violation of the difficulty ordering between pairs of sentences "
+            "(e.g., an A1 sentence predicted as more difficult than a C2 sentence), "
+            "ranging from 0 to 100, lower is better. "
+            "System Prompt indicates whether the model was given explicit CEFR level descriptions (\\checkmark) "
+            "or not (-). "
+            "Models are sorted by their average PM score across all datasets."
+        )
+
+        # Create LaTeX table
+        latex = "\\begin{table}[!h]\n"
+        latex += "    \\centering\n"
+        latex += "    \\small\n"
+        latex += "    \\setlength{\\tabcolsep}{4pt}\n"
+        latex += "    \\begin{tabular}{lccccccc}\n"
+        latex += "        \\toprule\n"
+        latex += "        & & \\multicolumn{2}{c}{\\textbf{Sentences Books}} & \\multicolumn{2}{c}{\\textbf{LjL}} & \\multicolumn{2}{c}{\\textbf{Sentences Internet}} \\\\\n"
+        latex += "        \\cmidrule(lr){3-4} \\cmidrule(lr){5-6} \\cmidrule(lr){7-8}\n"
+        latex += "        \\textbf{Model} & \\textbf{System Prompt} & Acc. & PM & Acc. & PM & Acc. & PM \\\\\n"
+        latex += "        \\midrule\n"
+
+        # Content
+        current_model = None
+        footnoted_models = {
+            "GPT-3.5",
+            "CamemBERT",
+            "Mistral-7B",
+            "Davinci",
+            "Babbage",
+            "GPT-4o",
+            "GPT-4o-mini",
+        }
+
+        # Group rows by model to handle spacing
+        model_rows = {}
+        for model, context in sort_order:
+            if model not in model_rows:
+                model_rows[model] = []
+            model_rows[model].append(context)
+
+        # Debug log des modèles et leurs contextes
+        logger.debug("\nModel rows:")
+        for model, contexts in model_rows.items():
+            logger.debug(f"{model}: {contexts}")
+
+        # Generate table content
+        for model in model_rows:
+            # Add spacing before new model (except first)
+            if current_model is not None:
+                latex += "        \\\\[2pt]\n"
+            current_model = model
+
+            # Debug log pour chaque modèle
+            logger.debug(f"\nProcessing model: {model}")
+            logger.debug(f"Contexts: {model_rows[model]}")
+
+            # Add each context variant for the model
+            for i, context in enumerate(sorted(model_rows[model], reverse=True)):
+                # Model name only on first row
+                if i == 0:
+                    model_str = f"\\textbf{{{model}}}"
+                    if model in footnoted_models:
+                        model_str += "\\textsuperscript{3}"
+                else:
+                    model_str = ""
+
+                # Context
+                context_str = "\\checkmark" if context == "with_context" else "-"
+
+                # Values
+                values = []
+                for dataset in ["Sentences Books", "LjL", "Sentences Internet"]:
+                    acc = pivoted_acc.loc[(model, context), dataset]
+                    pm = pivoted_pm.loc[(model, context), dataset]
+
+                    if pd.isna(acc):
+                        values.extend(["-", "-"])
+                    else:
+                        # Accuracy cell
+                        intensity = acc
+                        r = int(255 * (1 - intensity))
+                        g = int(255 * (1 - intensity * 0.8))
+                        b = int(255 * (1 - intensity * 0.4))
+                        html_color = f"{r:02x}{g:02x}{b:02x}"
+                        text_color = "white" if intensity > 0.5 else "black"
+                        acc_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{acc:.2f}}}"
+
+                        # PM cell
+                        pm_intensity = min(1, pm / 100)  # Normalize to 0-1 range
+                        r = int(255 * (1 - pm_intensity))
+                        g = int(255 * (1 - pm_intensity * 0.8))
+                        b = int(255 * (1 - pm_intensity * 0.4))
+                        html_color = f"{r:02x}{g:02x}{b:02x}"
+                        text_color = "white" if pm_intensity > 0.5 else "black"
+                        pm_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{pm:.1f}}}"
+
+                        values.extend([acc_cell, pm_cell])
+
+                # Add row
+                latex += (
+                    f"        {model_str} & {context_str} & {' & '.join(values)} \\\\\n"
                 )
-                .background_gradient(cmap="RdYlGn_r", subset=["pairwise_mismatch"])
-                .format(precision=2)
-                .to_latex(
-                    caption=f"Performance metrics for the {dataset_name} dataset",
-                    label=f"tab:{dataset_name.lower()}_metrics",
-                    position="!h",
-                    position_float="centering",
-                    multicol_align="|c|",
-                    hrules=True,
-                )
-            )
 
-            # Add adjustbox for proper centering
-            latex = latex.replace(
-                "\\begin{tabular}", "\\begin{adjustbox}{center}\n\\begin{tabular}"
-            ).replace("\\end{tabular}", "\\end{tabular}\n\\end{adjustbox}")
+        latex += "        \\bottomrule\n"
+        latex += "    \\end{tabular}\n"
+        latex += f"    \\caption{{{caption}}}\n"
+        latex += "    \\label{tab:difficulty_estimation_metrics}\n"
+        latex += "\\end{table}\n\n"
 
-            tables[dataset_name] = latex
+        # Add footnote
+        latex += "\\footnotetext[3]{%\n"
+        latex += "    In this figure, ``GPT-3.5'' corresponds to \\texttt{gpt-3.5-turbo-1106}, "
+        latex += "``GPT-4o'' and ``GPT-4o-mini'' to our fine-tuned models, "
+        latex += "``BERT'' to \\texttt{camembert-base}, "
+        latex += "``Mistral'' to \\texttt{Mistral-7B}, "
+        latex += "and ``Davinci'' to \\texttt{davinci-002}."
+        latex += "}\n"
 
-        logger.info("LaTeX tables created successfully")
-
-        # Save tables
+        # Save table
         output_dir = os.path.join(
             "results",
             "dmkd_additions",
@@ -551,23 +738,12 @@ def create_latex_table() -> Dict[str, str]:
         )
         os.makedirs(output_dir, exist_ok=True)
 
-        # Save LaTeX tables
-        tables_dir = os.path.join(output_dir, "tables")
-        os.makedirs(tables_dir, exist_ok=True)
-        for dataset_name, latex in tables.items():
-            output_path = os.path.join(
-                tables_dir, f"{dataset_name.lower()}_metrics.tex"
-            )
-            with open(output_path, "w") as f:
-                f.write(latex)
-            logger.info(f"Saved LaTeX table for {dataset_name} to {output_path}")
+        output_path = os.path.join(output_dir, "difficulty_estimation_metrics.tex")
+        with open(output_path, "w") as f:
+            f.write(latex)
+        logger.info(f"Saved LaTeX table to {output_path}")
 
-        # Save combined results
-        output_path = os.path.join(output_dir, "combined_metrics.csv")
-        all_results.to_csv(output_path, index=False)
-        logger.info(f"Saved combined metrics to {output_path}")
-
-        return tables
+        return {"combined": latex}
 
     except Exception as e:
         logger.error(f"Error creating LaTeX table: {str(e)}")

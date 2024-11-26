@@ -1,68 +1,348 @@
-57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:583] Creating LaTeX tables
-57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:478] Creating LaTeX table
-57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:213] Loading historical experiment results
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: sentences_CECRL
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 39.7625
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: ljl_CECRL
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 13.6223
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: sentences_no-context
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 61.7542
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: french-difficulty_CECRL
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 48.4146
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: ljl_no-context
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 29.9855
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: french-difficulty_no-context
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 39.3771
-57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:409] Historical results loaded successfully
-57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:432] Saved historical metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/load_old_experiments_metrics/historical_metrics.csv
-57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:86] Starting metrics computation
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk_with_system_predictions.csv
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk on french: 0.5844
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk on french: 34.5229
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi_no_system_predictions.csv
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi on ljl: 0.7506
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi on ljl: 10.8571
-57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u_with_system_predictions.csv
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u on ljl: 0.7506
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u on ljl: 10.8039
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt_no_system_predictions.csv
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt on sentences: 0.7708
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt on sentences: 32.7875
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb_no_system_predictions.csv
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb on sentences: 0.8688
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb on sentences: 15.2625
-57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z_with_system_predictions.csv
-57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z on sentences: 0.9021
-57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z on sentences: 17.8917
-57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF_with_system_predictions.csv
-57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF on french: 0.6156
-57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF on french: 34.3521
-57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf_no_system_predictions.csv
-57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf on french: 0.5823
-57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf on french: 45.5604
-57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB_with_system_predictions.csv
-57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB on sentences: 0.8875
-57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB on sentences: 14.7417
-57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k_no_system_predictions.csv
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k on french: 0.5271
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k on french: 62.1562
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l_with_system_predictions.csv
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l on ljl: 0.7651
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l on ljl: 6.2131
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3_no_system_predictions.csv
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3 on ljl: 0.7312
-57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3 on ljl: 7.2881
-57:32 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:172] Saved current metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/compute_metrics/current_metrics.csv
-57:32 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:174] Metrics computation completed
-57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:542] LaTeX tables created successfully
-57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:563] Saved LaTeX table for SentencesBooks to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/tables/sentencesbooks_metrics.tex
-57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:563] Saved LaTeX table for LjL to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/tables/ljl_metrics.tex
-57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:563] Saved LaTeX table for SentencesInternet to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/tables/sentencesinternet_metrics.tex
-57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:568] Saved combined metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/combined_metrics.csv
-57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:586] All tables saved successfully
+57:25 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:759] Creating LaTeX tables
+57:25 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:495] Creating LaTeX table
+57:25 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:230] Loading historical experiment results
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: cecrl
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: empty
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:378] Looking for Mistral match with key: sentences_CECRL
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:379] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:383] Found Mistral match with pairwise_mismatch: 39.7625
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:378] Looking for Mistral match with key: ljl_CECRL
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:379] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:383] Found Mistral match with pairwise_mismatch: 13.6223
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:378] Looking for Mistral match with key: sentences_no-context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:379] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:383] Found Mistral match with pairwise_mismatch: 61.7542
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:378] Looking for Mistral match with key: french-difficulty_CECRL
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:379] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:383] Found Mistral match with pairwise_mismatch: 48.4146
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:378] Looking for Mistral match with key: ljl_no-context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:379] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:383] Found Mistral match with pairwise_mismatch: 29.9855
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:378] Looking for Mistral match with key: french-difficulty_no-context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:379] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:383] Found Mistral match with pairwise_mismatch: 39.3771
+57:25 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:426] Historical results loaded successfully
+57:25 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:449] Saved historical metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/load_old_experiments_metrics/historical_metrics.csv
+57:25 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:101] Starting metrics computation
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk_with_system_predictions.csv
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=french_difficulty, model=GPT-4o, context=with_context
+57:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk_with_system_predictions.csv
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: with_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o on french_difficulty: 0.5844
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o on french_difficulty: 34.5229
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi_no_system_predictions.csv
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=ljl, model=GPT-4o-mini, context=no_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi_no_system_predictions.csv
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: no_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o-mini on ljl: 0.7506
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o-mini on ljl: 10.8571
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u_with_system_predictions.csv
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=ljl, model=GPT-4o-mini, context=with_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u_with_system_predictions.csv
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: with_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o-mini on ljl: 0.7506
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o-mini on ljl: 10.8039
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt_no_system_predictions.csv
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=sentences, model=GPT-4o, context=no_context
+57:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt_no_system_predictions.csv
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: no_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o on sentences: 0.7708
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o on sentences: 32.7875
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb_no_system_predictions.csv
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=sentences, model=GPT-4o-mini, context=no_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb_no_system_predictions.csv
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: no_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o-mini on sentences: 0.8688
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o-mini on sentences: 15.2625
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z_with_system_predictions.csv
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=sentences, model=GPT-4o, context=with_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z_with_system_predictions.csv
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: with_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o on sentences: 0.9021
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o on sentences: 17.8917
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF_with_system_predictions.csv
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=french_difficulty, model=GPT-4o-mini, context=with_context
+57:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF_with_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: with_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o-mini on french_difficulty: 0.6156
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o-mini on french_difficulty: 34.3521
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf_no_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=french_difficulty, model=GPT-4o-mini, context=no_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf_no_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: no_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o-mini on french_difficulty: 0.5823
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o-mini on french_difficulty: 45.5604
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB_with_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=sentences, model=GPT-4o-mini, context=with_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB_with_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: with_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o-mini on sentences: 0.8875
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o-mini on sentences: 14.7417
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k_no_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=french_difficulty, model=GPT-4o, context=no_context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k_no_system_predictions.csv
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: no_context
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o on french_difficulty: 0.5271
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o on french_difficulty: 62.1562
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l_with_system_predictions.csv
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=ljl, model=GPT-4o, context=with_context
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l_with_system_predictions.csv
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: with_context
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: with_context
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o on ljl: 0.7651
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o on ljl: 6.2131
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:195] Parsing filename: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3_no_system_predictions.csv
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:224] Parsed: dataset=ljl, model=GPT-4o, context=no_context
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:132] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3_no_system_predictions.csv
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:73] Normalizing context: no_context
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:81] Normalized context: no_context
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:159] Accuracy for GPT-4o on ljl: 0.7312
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:160] Pairwise mismatch for GPT-4o on ljl: 7.2881
+57:30 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:187] Saved current metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/compute_metrics/current_metrics.csv
+57:30 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:189] Metrics computation completed
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:503] Historical data:
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:504]          model       context            dataset  accuracy  pairwise_mismatch
+20   CamemBERT    no_context  french-difficulty    0.5229            36.9812
+24  Mistral-7B  with_context  french-difficulty    0.5125            48.4146
+8      GPT-3.5  with_context  french-difficulty    0.4990            51.9792
+11     GPT-3.5    no_context  french-difficulty    0.4854            61.1250
+12     Babbage  with_context  french-difficulty    0.4854            60.9188
+13     Davinci    no_context  french-difficulty    0.4698            76.5188
+15     Davinci  with_context  french-difficulty    0.4698            66.4396
+17     Babbage    no_context  french-difficulty    0.4385            86.4021
+26  Mistral-7B    no_context  french-difficulty    0.3542            39.3771
+30        FKGL    no_context  french-difficulty    0.3458           112.3771
+32         GFI    no_context  french-difficulty    0.3417           112.6271
+33         ARI    no_context  french-difficulty    0.3417           111.5646
+3      GPT-3.5    no_context                ljl    0.7337             9.2736
+4      GPT-3.5  with_context                ljl    0.7240            11.0605
+22  Mistral-7B  with_context                ljl    0.6368            13.6223
+19   CamemBERT    no_context                ljl    0.6247            13.9516
+16     Babbage    no_context                ljl    0.6126            18.3341
+10     Davinci  with_context                ljl    0.6102            18.6925
+9      Davinci    no_context                ljl    0.5860            21.0896
+14     Babbage  with_context                ljl    0.5860            23.7482
+25  Mistral-7B    no_context                ljl    0.4722            29.9855
+27         GFI    no_context                ljl    0.4504            44.0969
+28        FKGL    no_context                ljl    0.4213            54.5375
+29         ARI    no_context                ljl    0.3995            47.0944
+0      GPT-3.5  with_context          sentences    0.8979            13.1125
+1      GPT-3.5    no_context          sentences    0.8667            18.1083
+5      Davinci    no_context          sentences    0.8250            20.9042
+18   CamemBERT    no_context          sentences    0.8229            22.2125
+2      Davinci  with_context          sentences    0.8146            23.8250
+6      Babbage    no_context          sentences    0.8125            21.2625
+7      Babbage  with_context          sentences    0.8125            25.6417
+21  Mistral-7B  with_context          sentences    0.7479            39.7625
+23  Mistral-7B    no_context          sentences    0.6312            61.7542
+31         ARI    no_context          sentences    0.3438            88.2375
+34        FKGL    no_context          sentences    0.3354            99.3167
+35         GFI    no_context          sentences    0.3229           101.9583
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:509] 
+Current data:
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:510]           model       context            dataset  accuracy  pairwise_mismatch
+6   GPT-4o-mini  with_context  french-difficulty    0.6156            34.3521
+0        GPT-4o  with_context  french-difficulty    0.5844            34.5229
+7   GPT-4o-mini    no_context  french-difficulty    0.5823            45.5604
+9        GPT-4o    no_context  french-difficulty    0.5271            62.1562
+10       GPT-4o  with_context                ljl    0.7651             6.2131
+1   GPT-4o-mini    no_context                ljl    0.7506            10.8571
+2   GPT-4o-mini  with_context                ljl    0.7506            10.8039
+11       GPT-4o    no_context                ljl    0.7312             7.2881
+5        GPT-4o  with_context          sentences    0.9021            17.8917
+8   GPT-4o-mini  with_context          sentences    0.8875            14.7417
+4   GPT-4o-mini    no_context          sentences    0.8688            15.2625
+3        GPT-4o    no_context          sentences    0.7708            32.7875
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:540] 
+All results after grouping:
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:541]           model       context            dataset  accuracy  pairwise_mismatch
+11          ARI    no_context  french-difficulty    0.3417           111.5646
+7       Babbage    no_context  french-difficulty    0.4385            86.4021
+4       Babbage  with_context  french-difficulty    0.4854            60.9188
+0     CamemBERT    no_context  french-difficulty    0.5229            36.9812
+5       Davinci    no_context  french-difficulty    0.4698            76.5188
+6       Davinci  with_context  french-difficulty    0.4698            66.4396
+9          FKGL    no_context  french-difficulty    0.3458           112.3771
+10          GFI    no_context  french-difficulty    0.3417           112.6271
+3       GPT-3.5    no_context  french-difficulty    0.4854            61.1250
+2       GPT-3.5  with_context  french-difficulty    0.4990            51.9792
+39       GPT-4o    no_context  french-difficulty    0.5271            62.1562
+37       GPT-4o  with_context  french-difficulty    0.5844            34.5229
+38  GPT-4o-mini    no_context  french-difficulty    0.5823            45.5604
+36  GPT-4o-mini  with_context  french-difficulty    0.6156            34.3521
+8    Mistral-7B    no_context  french-difficulty    0.3542            39.3771
+1    Mistral-7B  with_context  french-difficulty    0.5125            48.4146
+23          ARI    no_context                ljl    0.3995            47.0944
+16      Babbage    no_context                ljl    0.6126            18.3341
+19      Babbage  with_context                ljl    0.5860            23.7482
+15    CamemBERT    no_context                ljl    0.6247            13.9516
+18      Davinci    no_context                ljl    0.5860            21.0896
+17      Davinci  with_context                ljl    0.6102            18.6925
+22         FKGL    no_context                ljl    0.4213            54.5375
+21          GFI    no_context                ljl    0.4504            44.0969
+12      GPT-3.5    no_context                ljl    0.7337             9.2736
+13      GPT-3.5  with_context                ljl    0.7240            11.0605
+43       GPT-4o    no_context                ljl    0.7312             7.2881
+40       GPT-4o  with_context                ljl    0.7651             6.2131
+41  GPT-4o-mini    no_context                ljl    0.7506            10.8571
+42  GPT-4o-mini  with_context                ljl    0.7506            10.8039
+20   Mistral-7B    no_context                ljl    0.4722            29.9855
+14   Mistral-7B  with_context                ljl    0.6368            13.6223
+33          ARI    no_context          sentences    0.3438            88.2375
+29      Babbage    no_context          sentences    0.8125            21.2625
+30      Babbage  with_context          sentences    0.8125            25.6417
+27    CamemBERT    no_context          sentences    0.8229            22.2125
+26      Davinci    no_context          sentences    0.8250            20.9042
+28      Davinci  with_context          sentences    0.8146            23.8250
+34         FKGL    no_context          sentences    0.3354            99.3167
+35          GFI    no_context          sentences    0.3229           101.9583
+25      GPT-3.5    no_context          sentences    0.8667            18.1083
+24      GPT-3.5  with_context          sentences    0.8979            13.1125
+47       GPT-4o    no_context          sentences    0.7708            32.7875
+44       GPT-4o  with_context          sentences    0.9021            17.8917
+46  GPT-4o-mini    no_context          sentences    0.8688            15.2625
+45  GPT-4o-mini  with_context          sentences    0.8875            14.7417
+32   Mistral-7B    no_context          sentences    0.6312            61.7542
+31   Mistral-7B  with_context          sentences    0.7479            39.7625
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:548] Unique context values before mapping:
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:549] ['no_context' 'with_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:573] Unique context values after mapping:
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:574] ['no_context' 'with_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:577] GPT-4o and GPT-4o-mini rows:
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:578]               dataset        model       context  accuracy  pairwise_mismatch
+39  french-difficulty       GPT-4o    no_context    0.5271            62.1562
+37  french-difficulty       GPT-4o  with_context    0.5844            34.5229
+38  french-difficulty  GPT-4o-mini    no_context    0.5823            45.5604
+36  french-difficulty  GPT-4o-mini  with_context    0.6156            34.3521
+43                ljl       GPT-4o    no_context    0.7312             7.2881
+40                ljl       GPT-4o  with_context    0.7651             6.2131
+41                ljl  GPT-4o-mini    no_context    0.7506            10.8571
+42                ljl  GPT-4o-mini  with_context    0.7506            10.8039
+47          sentences       GPT-4o    no_context    0.7708            32.7875
+44          sentences       GPT-4o  with_context    0.9021            17.8917
+46          sentences  GPT-4o-mini    no_context    0.8688            15.2625
+45          sentences  GPT-4o-mini  with_context    0.8875            14.7417
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:654] 
+Model rows:
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] GPT-4o: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] GPT-4o-mini: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] CamemBERT: ['no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] GPT-3.5: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] Mistral-7B: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] Davinci: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] Babbage: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] ARI: ['no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] GFI: ['no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:656] FKGL: ['no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: GPT-4o
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: GPT-4o-mini
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: CamemBERT
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: GPT-3.5
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: Mistral-7B
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: Davinci
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: Babbage
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['with_context', 'no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: ARI
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: GFI
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['no_context']
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:666] 
+Processing model: FKGL
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:667] Contexts: ['no_context']
+57:30 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:744] Saved LaTeX table to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/difficulty_estimation_metrics.tex
+57:30 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:762] All tables saved successfully

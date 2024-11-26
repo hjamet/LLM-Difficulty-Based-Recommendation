@@ -4,11 +4,12 @@
 - Need to compute and compare metrics across different models and datasets
 
 ## Current State
-- Implementation completed and working:
+- Implementation completed and working perfectly:
   1. compute_metrics(): 
      - Processes prediction files
-     - Handles label normalization
-     - Computes accuracy and pairwise mismatch
+     - Fixed model name parsing for fine-tuned models (ft_gpt-4o -> GPT-4o)
+     - Correctly handles with_system/no_system context
+     - Successfully detects context for all models
      - Saves results in compute_metrics/compute_metrics/
   2. load_old_experiments_metrics():
      - Loads historical results from multiple sources
@@ -17,9 +18,13 @@
      - Saves results in compute_metrics/load_old_experiments_metrics/
   3. create_latex_table():
      - Combines current and historical results
-     - Generates formatted LaTeX tables
+     - Shows both with_context and no_context variants
+     - Properly formats model names (GPT-4o, GPT-4o-mini)
+     - Generates clean LaTeX tables with proper spacing
+     - Shows both accuracy and pairwise mismatch scores
      - Saves tables in compute_metrics/create_latex_table/
 - All metrics working correctly and saved properly
+- Fixed all issues with context variants and model naming
 
 ## Technical Details
 ### Data Structure
@@ -33,9 +38,9 @@
 
 ### Model Performance
 - Best performing models by dataset:
-  - SentencesInternet: GPT-4o (acc: 0.9021, pw: 17.8917)
-  - LjL: GPT-4o (acc: 0.7651, pw: 6.2131)
-  - SentencesBooks: GPT-4o-mini (acc: 0.6156, pw: 34.3521)
+  - SentencesInternet: GPT-4o with context (acc: 0.90, pm: 17.9)
+  - LjL: GPT-4o with context (acc: 0.77, pm: 6.2)
+  - SentencesBooks: GPT-4o-mini with context (acc: 0.62, pm: 34.4)
 
 ## Next Steps
 1. Add comprehensive testing

@@ -1,16 +1,16 @@
 # Active Tasks
 ## Testing & Validation
 - [ ] Add comprehensive testing
-  - [ ] Test accuracy calculation
-  - [ ] Test pairwise mismatch calculation
-  - [ ] Test normalization functions
-  - [ ] Test file saving/loading
+  - [ ] Test filename parsing for fine-tuned models
+  - [ ] Test context detection
+  - [ ] Test metric calculations
+  - [ ] Test table generation
   - [ ] Add integration tests
 
 ## Documentation
 - [ ] Add function docstrings
-- [ ] Document normalization rules
-- [ ] Document file structure
+- [ ] Document filename parsing rules
+- [ ] Document context handling
 - [ ] Create usage examples
 
 ## Paper Preparation
@@ -24,20 +24,20 @@
   - [ ] Error analysis
 
 # Recently Completed
-- [x] Implemented file saving structure (2024-03-21)
-  - [x] Added proper directory hierarchy
-  - [x] Organized by function
-  - [x] Added consistent naming
-  - [x] Added logging
+- [x] Fixed all context-related issues (2024-03-21)
+  - [x] Fixed context detection in filenames
+  - [x] Corrected context normalization
+  - [x] Added proper logging
+  - [x] Verified all context variants appear
 
-- [x] Completed metrics computation (2024-03-21)
-  - [x] Added accuracy calculation
-  - [x] Added pairwise mismatch
-  - [x] Fixed normalization issues
-  - [x] Added proper saving
+- [x] Improved model handling (2024-03-21)
+  - [x] Fixed fine-tuned model parsing
+  - [x] Standardized model naming
+  - [x] Corrected GPT-4o casing
+  - [x] Added debug logging
 
-- [x] Generated LaTeX tables (2024-03-21)
-  - [x] Combined all results
-  - [x] Added proper formatting
-  - [x] Fixed duplicate handling
-  - [x] Added table styling
+- [x] Enhanced table generation (2024-03-21)
+  - [x] Added proper spacing
+  - [x] Fixed missing context variants
+  - [x] Enhanced color coding
+  - [x] Added detailed caption
