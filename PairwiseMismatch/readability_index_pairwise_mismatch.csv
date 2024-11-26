@@ -1,0 +1,10 @@
+dataset,model,pairwise_mismatch
+ljl,gfi,44.0969
+ljl,ari,47.0944
+ljl,fkgl,54.5375
+sentences,ari,88.2375
+sentences,fkgl,99.3167
+sentences,gfi,101.9583
+french-difficulty,ari,111.5646
+french-difficulty,fkgl,112.3771
+french-difficulty,gfi,112.6271

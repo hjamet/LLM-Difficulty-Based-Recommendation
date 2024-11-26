@@ -1,36 +1,38 @@
 # Active Tasks
 ## High Priority
-- [ ] Implement compute_metrics()
-  - [ ] Design file loading system
-  - [ ] Implement accuracy calculation
-  - [ ] Add logging for tracking
-  - [ ] Handle different difficulty scales
-  - [ ] Add error handling for missing files
+- [ ] Clean up logging
+  - [ ] Remove unnecessary debug logs
+  - [ ] Keep essential error logging
+  - [ ] Add strategic debug points
+  - [ ] Document logging strategy
 
-- [ ] Implement load_old_experiments_metrics()
-  - [ ] Identify required historical data
-  - [ ] Create data loading structure
-  - [ ] Format data consistently
-  - [ ] Add validation checks
+- [ ] Add comprehensive testing
+  - [ ] Test accuracy calculation
+  - [ ] Test pairwise mismatch calculation
+  - [ ] Test normalization functions
+  - [ ] Add integration tests
 
-- [ ] Implement create_latex_table()
-  - [ ] Design table format
-  - [ ] Create LaTeX generation logic
-  - [ ] Add formatting options
-  - [ ] Implement error handling
+## Documentation
+- [ ] Add function docstrings
+- [ ] Document normalization rules
+- [ ] Document metrics calculation
+- [ ] Create usage examples
 
-## Planning
-- [ ] Test metrics computation
-  - [ ] Verify accuracy calculations
-  - [ ] Compare with manual calculations
-  - [ ] Check format consistency
-
-- [ ] Validate LaTeX output
-  - [ ] Check table formatting
-  - [ ] Verify data alignment
-  - [ ] Test with different datasets
+## Paper Preparation
+- [ ] Generate final tables
+- [ ] Format results for paper
+- [ ] Add error analysis
+- [ ] Document key findings
 
 # Recently Completed
-- [x] Analyzed requirements for metrics computation (2024-03-21)
-- [x] Identified data structures needed (2024-03-21)
-- [x] Planned implementation approach (2024-03-21)
+- [x] Fixed all pairwise mismatch loading (2024-03-21)
+  - [x] Fixed Mistral data loading
+  - [x] Fixed context normalization
+  - [x] Added debug logging
+  - [x] Verified all scores loaded correctly
+
+- [x] Implemented pairwise mismatch calculation (2024-03-21)
+  - [x] Added to compute_metrics()
+  - [x] Tested with new predictions
+  - [x] Verified results consistency
+  - [x] Added to metrics DataFrame
