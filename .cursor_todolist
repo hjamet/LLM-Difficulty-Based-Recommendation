@@ -1,22 +1,36 @@
 # Active Tasks
 ## High Priority
-- [ ] Test updated evaluation script
-  - [ ] Verify sequential prediction processing
-  - [ ] Check empty file handling
-  - [ ] Validate prediction saving
-  - [ ] Monitor memory usage
-- [ ] Add metrics calculation
+- [ ] Implement compute_metrics()
+  - [ ] Design file loading system
   - [ ] Implement accuracy calculation
-  - [ ] Add F1-score computation
-  - [ ] Generate confusion matrices
+  - [ ] Add logging for tracking
+  - [ ] Handle different difficulty scales
+  - [ ] Add error handling for missing files
 
-## Upcoming
-- [ ] Generate comprehensive evaluation report
-- [ ] Analyze performance patterns across datasets
-- [ ] Document best-performing configurations
+- [ ] Implement load_old_experiments_metrics()
+  - [ ] Identify required historical data
+  - [ ] Create data loading structure
+  - [ ] Format data consistently
+  - [ ] Add validation checks
+
+- [ ] Implement create_latex_table()
+  - [ ] Design table format
+  - [ ] Create LaTeX generation logic
+  - [ ] Add formatting options
+  - [ ] Implement error handling
+
+## Planning
+- [ ] Test metrics computation
+  - [ ] Verify accuracy calculations
+  - [ ] Compare with manual calculations
+  - [ ] Check format consistency
+
+- [ ] Validate LaTeX output
+  - [ ] Check table formatting
+  - [ ] Verify data alignment
+  - [ ] Test with different datasets
 
 # Recently Completed
-- [x] Fix batch processing issues (2024-03-20)
-- [x] Improve empty file handling (2024-03-20)
-- [x] Implement robust prediction validation (2024-03-20)
-- [x] Add test main for validation (2024-03-20)
+- [x] Analyzed requirements for metrics computation (2024-03-21)
+- [x] Identified data structures needed (2024-03-21)
+- [x] Planned implementation approach (2024-03-21)

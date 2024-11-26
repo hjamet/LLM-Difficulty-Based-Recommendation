@@ -1,45 +1,49 @@
 # Project Context
 - Working on GPT model fine-tuning for French text difficulty estimation
-- Using CEFR levels (A1-C2) for classification
-- Special case: LJL dataset uses level1-level4 classification
+- Using CEFR levels (A1-C2) and level1-level4 classifications
+- Need to compute and compare metrics across different models and datasets
 
 ## Current State
-- Completed fine-tuning of models:
-  - gpt-4o-mini-2024-07-18
-  - gpt-4o-2024-08-06
-- Datasets used with different difficulty scales:
-  - french_difficulty (A1-C2)
-  - ljl (level1-level4)
-  - sentences (A1-C2)
-- Created and improved evaluation script (gpt_evaluation.py)
-  - Added robust prediction validation
-  - Removed unnecessary batch processing
-  - Enhanced error handling and logging
-  - Added test main for initial validation
-  - Fixed empty predictions file handling
+- Completed model predictions generation with gpt_evaluation.py
+- Need to implement metrics computation and comparison
+- Three main functions to implement:
+  1. compute_metrics(): Process new model predictions
+  2. load_old_experiments_metrics(): Load historical results
+  3. create_latex_table(): Generate formatted LaTeX table
 
 ## Technical Details
 ### Data Structure
-- Each dataset has train/test splits
-- Different difficulty labeling schemes:
+- Prediction files location: results/dmkd_additions/difficulty_estimation/gpt_evaluation/
+- File naming pattern: {dataset}_{model_id}{system_prompt_suffix}_predictions.csv
+- Each file contains:
+  - Original text
+  - True difficulty level
+  - Predicted difficulty level
+
+### Metrics Requirements
+- Primary metric: Accuracy
+- Need to handle different difficulty scales:
   - CEFR (A1-C2) for french_difficulty and sentences
   - Level1-4 for ljl dataset
-- Validation system in place for both schemes
+- Results must be comparable across all models
 
-### Models Configuration
-- System prompt imported from gpt_fine_tuning.py
-- Using OpenAI's fine-tuning API
-- Models trained with temperature=0 for consistency
-- Sequential prediction processing for reliability
-
-### Testing Configuration
-- Initial test with single example per dataset
-- Automatic model discovery from job files
-- System prompt detection from filenames
-- Detailed results logging
+### LaTeX Output Requirements
+- Need to generate properly formatted LaTeX table
+- Should combine both new and historical results
+- Must include:
+  - Model names
+  - Context usage (with/without)
+  - Accuracy scores per dataset
 
 ## Performance Tracking
-- Enhanced logging system implemented
-- Success rate calculation added
-- Validation tracking per dataset type
-- File output with sanitized model IDs
+- Will need to track:
+  - Accuracy scores across all models
+  - Impact of context on performance
+  - Comparison with baseline models
+  - Statistical significance of improvements
+
+## Next Steps
+1. Implement file loading and processing in compute_metrics()
+2. Create data structure for historical results
+3. Design LaTeX table format
+4. Add comprehensive logging

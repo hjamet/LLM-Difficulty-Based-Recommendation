@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from openai import OpenAI
 from tqdm import tqdm
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from src.utilitaries.Logger import Logger
 from dmkd_additions.difficulty_estimation.gpt_fine_tuning import DEFAULT_SYSTEM_PROMPT
 import logging
