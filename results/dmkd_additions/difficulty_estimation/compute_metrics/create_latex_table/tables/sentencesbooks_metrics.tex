@@ -1,0 +1,28 @@
+\begin{table}[!h]
+\centering
+\caption{Performance metrics for the SentencesBooks dataset}
+\label{tab:sentencesbooks_metrics}
+\begin{adjustbox}{center}
+\begin{tabular}{lllrr}
+\toprule
+ &  & dataset & accuracy & pairwise_mismatch \\
+model & context &  &  &  \\
+\midrule
+GPT-4o-mini & - & french-difficulty & \background-color#00441b \color#f1f1f1 0.62 & \background-color#006837 \color#f1f1f1 34.35 \\
+GPT-4o & - & french-difficulty & \background-color#05712f \color#f1f1f1 0.58 & \background-color#006837 \color#f1f1f1 34.52 \\
+CamemBERT & - & french-difficulty & \background-color#3da65a \color#f1f1f1 0.52 & \background-color#08773f \color#f1f1f1 36.98 \\
+Mistral-7B & \checkmark & french-difficulty & \background-color#48ae60 \color#f1f1f1 0.51 & \background-color#54b45f \color#f1f1f1 48.41 \\
+GPT-3.5 & \checkmark & french-difficulty & \background-color#56b567 \color#f1f1f1 0.50 & \background-color#75c465 \color#000000 51.98 \\
+Babbage & \checkmark & french-difficulty & \background-color#65bd6f \color#f1f1f1 0.49 & \background-color#b9e176 \color#000000 60.92 \\
+GPT-3.5 & - & french-difficulty & \background-color#65bd6f \color#f1f1f1 0.49 & \background-color#bbe278 \color#000000 61.12 \\
+\multirow[c]{2}{*}{Davinci} & \checkmark & french-difficulty & \background-color#81ca81 \color#000000 0.47 & \background-color#dcf08f \color#000000 66.44 \\
+ & - & french-difficulty & \background-color#81ca81 \color#000000 0.47 & \background-color#fff3ac \color#000000 76.52 \\
+Babbage & - & french-difficulty & \background-color#a7dba0 \color#000000 0.44 & \background-color#fdbf6f \color#000000 86.40 \\
+Mistral-7B & - & french-difficulty & \background-color#f2faef \color#000000 0.35 & \background-color#108647 \color#f1f1f1 39.38 \\
+FKGL & - & french-difficulty & \background-color#f2faef \color#000000 0.35 & \background-color#a50026 \color#f1f1f1 112.38 \\
+ARI & - & french-difficulty & \background-color#f7fcf5 \color#000000 0.34 & \background-color#ab0626 \color#f1f1f1 111.56 \\
+GFI & - & french-difficulty & \background-color#f7fcf5 \color#000000 0.34 & \background-color#a50026 \color#f1f1f1 112.63 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

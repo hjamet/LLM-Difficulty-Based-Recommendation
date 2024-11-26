@@ -1,38 +1,43 @@
 # Active Tasks
-## High Priority
-- [ ] Clean up logging
-  - [ ] Remove unnecessary debug logs
-  - [ ] Keep essential error logging
-  - [ ] Add strategic debug points
-  - [ ] Document logging strategy
-
+## Testing & Validation
 - [ ] Add comprehensive testing
   - [ ] Test accuracy calculation
   - [ ] Test pairwise mismatch calculation
   - [ ] Test normalization functions
+  - [ ] Test file saving/loading
   - [ ] Add integration tests
 
 ## Documentation
 - [ ] Add function docstrings
 - [ ] Document normalization rules
-- [ ] Document metrics calculation
+- [ ] Document file structure
 - [ ] Create usage examples
 
 ## Paper Preparation
-- [ ] Generate final tables
-- [ ] Format results for paper
-- [ ] Add error analysis
-- [ ] Document key findings
+- [ ] Analyze results
+  - [ ] Compare model performances
+  - [ ] Study context impact
+  - [ ] Identify key findings
+- [ ] Create visualizations
+  - [ ] Performance graphs
+  - [ ] Comparison tables
+  - [ ] Error analysis
 
 # Recently Completed
-- [x] Fixed all pairwise mismatch loading (2024-03-21)
-  - [x] Fixed Mistral data loading
-  - [x] Fixed context normalization
-  - [x] Added debug logging
-  - [x] Verified all scores loaded correctly
+- [x] Implemented file saving structure (2024-03-21)
+  - [x] Added proper directory hierarchy
+  - [x] Organized by function
+  - [x] Added consistent naming
+  - [x] Added logging
 
-- [x] Implemented pairwise mismatch calculation (2024-03-21)
-  - [x] Added to compute_metrics()
-  - [x] Tested with new predictions
-  - [x] Verified results consistency
-  - [x] Added to metrics DataFrame
+- [x] Completed metrics computation (2024-03-21)
+  - [x] Added accuracy calculation
+  - [x] Added pairwise mismatch
+  - [x] Fixed normalization issues
+  - [x] Added proper saving
+
+- [x] Generated LaTeX tables (2024-03-21)
+  - [x] Combined all results
+  - [x] Added proper formatting
+  - [x] Fixed duplicate handling
+  - [x] Added table styling

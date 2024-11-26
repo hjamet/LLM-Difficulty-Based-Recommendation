@@ -1,60 +1,68 @@
-43:24 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:456] Loading historical metrics
-43:24 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:200] Loading historical experiment results
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:348] Looking for Mistral match with key: sentences_CECRL
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:349] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:353] Found Mistral match with pairwise_mismatch: 39.7625
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:348] Looking for Mistral match with key: ljl_CECRL
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:349] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:353] Found Mistral match with pairwise_mismatch: 13.6223
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:348] Looking for Mistral match with key: sentences_no-context
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:349] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:353] Found Mistral match with pairwise_mismatch: 61.7542
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:348] Looking for Mistral match with key: french-difficulty_CECRL
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:349] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:353] Found Mistral match with pairwise_mismatch: 48.4146
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:348] Looking for Mistral match with key: ljl_no-context
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:349] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:353] Found Mistral match with pairwise_mismatch: 29.9855
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:348] Looking for Mistral match with key: french-difficulty_no-context
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:349] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:353] Found Mistral match with pairwise_mismatch: 39.3771
-43:24 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:396] Historical results loaded successfully
-43:24 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:460] Computing current metrics
-43:24 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:86] Starting metrics computation
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk_with_system_predictions.csv
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk on french: 0.5844
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk on french: 34.5229
-43:24 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi_no_system_predictions.csv
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi on ljl: 0.7506
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi on ljl: 10.8571
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u_with_system_predictions.csv
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u on ljl: 0.7506
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u on ljl: 10.8039
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt_no_system_predictions.csv
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt on sentences: 0.7708
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt on sentences: 32.7875
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb_no_system_predictions.csv
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb on sentences: 0.8688
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb on sentences: 15.2625
-43:25 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z_with_system_predictions.csv
-43:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z on sentences: 0.9021
-43:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z on sentences: 17.8917
-43:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF_with_system_predictions.csv
-43:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF on french: 0.6156
-43:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF on french: 34.3521
-43:26 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf_no_system_predictions.csv
-43:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf on french: 0.5823
-43:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf on french: 45.5604
-43:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB_with_system_predictions.csv
-43:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB on sentences: 0.8875
-43:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB on sentences: 14.7417
-43:27 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k_no_system_predictions.csv
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k on french: 0.5271
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k on french: 62.1562
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l_with_system_predictions.csv
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l on ljl: 0.7651
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l on ljl: 6.2131
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3_no_system_predictions.csv
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3 on ljl: 0.7312
-43:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3 on ljl: 7.2881
-43:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:161] Metrics computation completed
+57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:583] Creating LaTeX tables
+57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:478] Creating LaTeX table
+57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:213] Loading historical experiment results
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: sentences_CECRL
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 39.7625
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: ljl_CECRL
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 13.6223
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: sentences_no-context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 61.7542
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: french-difficulty_CECRL
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 48.4146
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: ljl_no-context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 29.9855
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:361] Looking for Mistral match with key: french-difficulty_no-context
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:362] Available Mistral keys: ['ljl_CECRL', 'ljl_no-context', 'french-difficulty_no-context', 'sentences_CECRL', 'french-difficulty_CECRL', 'sentences_no-context']
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:366] Found Mistral match with pairwise_mismatch: 39.3771
+57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:409] Historical results loaded successfully
+57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:432] Saved historical metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/load_old_experiments_metrics/historical_metrics.csv
+57:28 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:86] Starting metrics computation
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk_with_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk on french: 0.5844
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AVjGk3gk on french: 34.5229
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi_no_system_predictions.csv
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi on ljl: 0.7506
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVhn4Kgi on ljl: 10.8571
+57:28 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u_with_system_predictions.csv
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u on ljl: 0.7506
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVh8Le2u on ljl: 10.8039
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt_no_system_predictions.csv
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt on sentences: 0.7708
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AWrsIMAt on sentences: 32.7875
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb_no_system_predictions.csv
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb on sentences: 0.8688
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AWLgSLdb on sentences: 15.2625
+57:29 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z_with_system_predictions.csv
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z on sentences: 0.9021
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AWpWhA6Z on sentences: 17.8917
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF_with_system_predictions.csv
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF on french: 0.6156
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVN0JEdF on french: 34.3521
+57:30 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf_no_system_predictions.csv
+57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf on french: 0.5823
+57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AVgZHFRf on french: 45.5604
+57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: sentences_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB_with_system_predictions.csv
+57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB on sentences: 0.8875
+57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AViOp8kB on sentences: 14.7417
+57:31 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: french_difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k_no_system_predictions.csv
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k on french: 0.5271
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for difficulty_ft_gpt-4o-2024-08-06_university-of-lausanne__AWMZhq4k on french: 62.1562
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l_with_system_predictions.csv
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l on ljl: 0.7651
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AVkDBp9l on ljl: 6.2131
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:117] Processing file: ljl_ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3_no_system_predictions.csv
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:144] Accuracy for ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3 on ljl: 0.7312
+57:32 DEBUG - [dmkd_additions/difficulty_estimation/compute_metrics.py:145] Pairwise mismatch for ft_gpt-4o-2024-08-06_university-of-lausanne__AVlZoXK3 on ljl: 7.2881
+57:32 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:172] Saved current metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/compute_metrics/current_metrics.csv
+57:32 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:174] Metrics computation completed
+57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:542] LaTeX tables created successfully
+57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:563] Saved LaTeX table for SentencesBooks to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/tables/sentencesbooks_metrics.tex
+57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:563] Saved LaTeX table for LjL to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/tables/ljl_metrics.tex
+57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:563] Saved LaTeX table for SentencesInternet to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/tables/sentencesinternet_metrics.tex
+57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:568] Saved combined metrics to results/dmkd_additions/difficulty_estimation/compute_metrics/create_latex_table/combined_metrics.csv
+57:33 INFO - [dmkd_additions/difficulty_estimation/compute_metrics.py:586] All tables saved successfully

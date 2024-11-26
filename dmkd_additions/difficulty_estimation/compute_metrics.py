@@ -158,6 +158,19 @@ def compute_metrics() -> pd.DataFrame:
         by=["dataset", "accuracy"], ascending=[True, False]
     )
 
+    # Save results
+    output_dir = os.path.join(
+        "results",
+        "dmkd_additions",
+        "difficulty_estimation",
+        "compute_metrics",
+        "compute_metrics",
+    )
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, "current_metrics.csv")
+    metrics_df.to_csv(output_path, index=False)
+    logger.info(f"Saved current metrics to {output_path}")
+
     logger.info("Metrics computation completed")
     return metrics_df
 
@@ -405,6 +418,19 @@ def load_old_experiments_metrics() -> pd.DataFrame:
         by=["dataset", "accuracy"], ascending=[True, False]
     )
 
+    # Save results
+    output_dir = os.path.join(
+        "results",
+        "dmkd_additions",
+        "difficulty_estimation",
+        "compute_metrics",
+        "load_old_experiments_metrics",
+    )
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, "historical_metrics.csv")
+    metrics_df.to_csv(output_path, index=False)
+    logger.info(f"Saved historical metrics to {output_path}")
+
     return metrics_df
 
 
@@ -447,34 +473,117 @@ def pairwise_mismatch(y_pred: pd.Series, y_real: pd.Series) -> float:
     return mismatch.mean()
 
 
+def create_latex_table() -> Dict[str, str]:
+    """Create LaTeX table comparing all models performance."""
+    logger.info("Creating LaTeX table")
+
+    try:
+        # Load all results
+        historical_df = load_old_experiments_metrics()
+        current_df = compute_metrics()
+
+        # Combine results and remove duplicates
+        all_results = pd.concat([historical_df, current_df], ignore_index=True)
+        all_results = all_results.drop_duplicates(
+            subset=["dataset", "model", "context"], keep="first"
+        )
+
+        # Create tables by dataset
+        tables = {}
+        for dataset in all_results["dataset"].unique():
+            # Filter dataset results
+            dataset_results = all_results[all_results["dataset"] == dataset].copy()
+
+            # Create multi-index from model and context
+            dataset_results["context"] = dataset_results["context"].map(
+                {"with_context": "\\checkmark", "no_context": "-"}
+            )
+            dataset_results = dataset_results.set_index(["model", "context"])
+
+            # Sort by accuracy and pairwise mismatch
+            dataset_results = dataset_results.sort_values(
+                by=["accuracy", "pairwise_mismatch"], ascending=[False, True]
+            )
+
+            # Format metrics
+            dataset_results = dataset_results.round(2)
+
+            # Rename dataset for table
+            dataset_name = (
+                dataset.replace("french-difficulty", "SentencesBooks")
+                .replace("ljl", "LjL")
+                .replace("sentences", "SentencesInternet")
+            )
+
+            # Create LaTeX table
+            latex = (
+                dataset_results.style.background_gradient(
+                    cmap="Greens", subset=["accuracy"]
+                )
+                .background_gradient(cmap="RdYlGn_r", subset=["pairwise_mismatch"])
+                .format(precision=2)
+                .to_latex(
+                    caption=f"Performance metrics for the {dataset_name} dataset",
+                    label=f"tab:{dataset_name.lower()}_metrics",
+                    position="!h",
+                    position_float="centering",
+                    multicol_align="|c|",
+                    hrules=True,
+                )
+            )
+
+            # Add adjustbox for proper centering
+            latex = latex.replace(
+                "\\begin{tabular}", "\\begin{adjustbox}{center}\n\\begin{tabular}"
+            ).replace("\\end{tabular}", "\\end{tabular}\n\\end{adjustbox}")
+
+            tables[dataset_name] = latex
+
+        logger.info("LaTeX tables created successfully")
+
+        # Save tables
+        output_dir = os.path.join(
+            "results",
+            "dmkd_additions",
+            "difficulty_estimation",
+            "compute_metrics",
+            "create_latex_table",
+        )
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Save LaTeX tables
+        tables_dir = os.path.join(output_dir, "tables")
+        os.makedirs(tables_dir, exist_ok=True)
+        for dataset_name, latex in tables.items():
+            output_path = os.path.join(
+                tables_dir, f"{dataset_name.lower()}_metrics.tex"
+            )
+            with open(output_path, "w") as f:
+                f.write(latex)
+            logger.info(f"Saved LaTeX table for {dataset_name} to {output_path}")
+
+        # Save combined results
+        output_path = os.path.join(output_dir, "combined_metrics.csv")
+        all_results.to_csv(output_path, index=False)
+        logger.info(f"Saved combined metrics to {output_path}")
+
+        return tables
+
+    except Exception as e:
+        logger.error(f"Error creating LaTeX table: {str(e)}")
+        raise
+
+
 if __name__ == "__main__":
     # Configure logging
     logging.basicConfig(level=logging.INFO)
 
     try:
-        # Load historical results
-        logger.info("Loading historical metrics")
-        historical_df = load_old_experiments_metrics()
+        # Create LaTeX tables
+        logger.info("Creating LaTeX tables")
+        tables = create_latex_table()
 
-        # Compute current metrics
-        logger.info("Computing current metrics")
-        current_df = compute_metrics()
-
-        # Combine results
-        all_results = pd.concat([historical_df, current_df], ignore_index=True)
-        all_results = all_results.sort_values(
-            by=["dataset", "accuracy"], ascending=[True, False]
-        )
-
-        # Display results
-        if not all_results.empty:
-            print("\nResults by dataset:")
-            for dataset in all_results["dataset"].unique():
-                print(f"\n{dataset.upper()}:")
-                dataset_results = all_results[all_results["dataset"] == dataset]
-                print(dataset_results.to_string(index=False))
-        else:
-            print("No results found")
+        logger.info("All tables saved successfully")
 
     except Exception as e:
         logger.error(f"Error in main execution: {str(e)}")

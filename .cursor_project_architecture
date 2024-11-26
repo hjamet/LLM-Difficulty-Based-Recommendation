@@ -8,17 +8,20 @@ dmkd_additions/
     │   ├── _parse_filename()          # Filename metadata extraction
     │   ├── pairwise_mismatch()        # Pairwise mismatch calculation
     │   ├── compute_metrics()          # Process new predictions
-    │   └── load_old_experiments_metrics() # Load historical data
-    ├── gpt_evaluation.py         # Prediction generation
+    │   ├── load_old_experiments_metrics() # Load historical data
+    │   └── create_latex_table()       # Generate LaTeX tables
     └── results/                  # Results storage
-        ├── gpt_evaluation/       # New prediction files
-        ├── OpenAiEvaluation/     # OpenAI historical results
-        ├── OpenSourceModelsEvaluation/ # CamemBERT & Mistral results
-        └── PairwiseMismatch/     # Pairwise mismatch results
-            ├── openai_pairwise_mismatch.csv
-            ├── bert_pairwise_mismatch.csv
-            ├── mistral_pairwise_mismatch.csv
-            └── readability_index_pairwise_mismatch.csv
+        └── compute_metrics/      # Metrics computation results
+            ├── compute_metrics/          # Current metrics
+            │   └── current_metrics.csv
+            ├── load_old_experiments_metrics/ # Historical metrics
+            │   └── historical_metrics.csv
+            └── create_latex_table/       # LaTeX tables
+                ├── tables/
+                │   ├── sentencesbooks_metrics.tex
+                │   ├── ljl_metrics.tex
+                │   └── sentencesinternet_metrics.tex
+                └── combined_metrics.csv
 
 # Key Components
 ## Metrics Computation (compute_metrics.py)
@@ -28,19 +31,19 @@ dmkd_additions/
    - Normalizes labels for comparison
    - Calculates accuracy scores
    - Computes pairwise mismatch
-   - Returns formatted DataFrame
+   - Saves results in dedicated directory
 
 2. load_old_experiments_metrics()
    - Loads multiple historical sources
    - Normalizes model and dataset names
    - Successfully loads pairwise mismatch scores
-   - Handles all model types correctly
+   - Saves results in dedicated directory
 
-3. pairwise_mismatch()
-   - Implements pairwise mismatch metric
-   - Handles label encoding
-   - Computes ordering errors
-   - Returns normalized score
+3. create_latex_table()
+   - Combines current and historical results
+   - Generates formatted LaTeX tables
+   - Handles duplicates
+   - Saves tables and combined metrics
 
 ### Utility Functions
 1. _normalize_model_name()
@@ -68,19 +71,18 @@ dmkd_additions/
 2. Results saved as CSV files
 3. compute_metrics.py processes files
    - Normalizes names and labels
-   - Computes accuracy metrics
-   - Calculates pairwise mismatch
+   - Computes metrics
+   - Saves results in proper directories
 4. Historical results loaded and combined
-5. Final results sorted and displayed
+5. LaTeX tables generated and saved
 
 ## Current Status
-- All metrics working correctly
-- All data loading issues resolved
-- Results properly normalized
-- Ready for paper generation
+- All functions working correctly
+- Results properly saved and organized
+- Ready for paper preparation
 
 ## Planned Improvements
-- Clean up logging system
 - Add comprehensive testing
 - Enhance documentation
-- Prepare final paper results
+- Create visualizations
+- Analyze results for paper

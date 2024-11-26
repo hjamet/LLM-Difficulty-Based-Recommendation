@@ -4,55 +4,41 @@
 - Need to compute and compare metrics across different models and datasets
 
 ## Current State
-- Completed implementation of:
+- Implementation completed and working:
   1. compute_metrics(): 
      - Processes prediction files
      - Handles label normalization
      - Computes accuracy and pairwise mismatch
+     - Saves results in compute_metrics/compute_metrics/
   2. load_old_experiments_metrics():
      - Loads historical results from multiple sources
      - Normalizes dataset and model names
      - Successfully loads all pairwise mismatch scores
-- All metrics now working correctly
+     - Saves results in compute_metrics/load_old_experiments_metrics/
+  3. create_latex_table():
+     - Combines current and historical results
+     - Generates formatted LaTeX tables
+     - Saves tables in compute_metrics/create_latex_table/
+- All metrics working correctly and saved properly
 
 ## Technical Details
 ### Data Structure
-- Prediction files location: results/dmkd_additions/difficulty_estimation/gpt_evaluation/
-- File naming pattern: {dataset}_{model_id}{system_prompt_suffix}_predictions.csv
-- Historical results sources:
-  - OpenAI: OpenAiEvaluation/metrics.csv
-  - CamemBERT: OpenSourceModelsEvaluation/bert_metrics.csv
-  - Mistral: OpenSourceModelsEvaluation/mistral_metrics.csv
-  - Readability: PairwiseMismatch/readability_index_classification_metrics.csv
+- Results directory structure:
+  - compute_metrics/compute_metrics/: Current metrics
+  - compute_metrics/load_old_experiments_metrics/: Historical metrics
+  - compute_metrics/create_latex_table/: LaTeX tables and combined metrics
+- File formats:
+  - Metrics: CSV files with dataset, model, context, accuracy, pairwise_mismatch
+  - Tables: LaTeX files with formatted results
 
-### Model Naming Conventions
-- Fine-tuned models:
-  - GPT-4o: Standard GPT-4o models
-  - GPT-4o-mini: Mini version of GPT-4o
-- OpenAI models:
-  - GPT-3.5 (from gpt-3.5-turbo-1106)
-  - Davinci (from davinci-002)
-  - Babbage (from babbage-002)
-- Other models:
-  - CamemBERT
-  - Mistral-7B
-  - Readability indices (ARI, FKGL, GFI)
-
-### Metrics Implementation
-- Accuracy: Standard classification accuracy
-- Pairwise Mismatch: 
-  - Measures ordering errors in predictions
-  - Lower scores indicate better preservation of difficulty ordering
-  - Successfully implemented for all models
-
-## Results Summary
+### Model Performance
 - Best performing models by dataset:
-  - Sentences: GPT-4o (acc: 0.9021, pw: 17.8917)
-  - LJL: GPT-4o (acc: 0.7651, pw: 6.2131)
-  - French-difficulty: GPT-4o-mini (acc: 0.6156, pw: 34.3521)
+  - SentencesInternet: GPT-4o (acc: 0.9021, pw: 17.8917)
+  - LjL: GPT-4o (acc: 0.7651, pw: 6.2131)
+  - SentencesBooks: GPT-4o-mini (acc: 0.6156, pw: 34.3521)
 
 ## Next Steps
-1. Clean up debug logging
-2. Add comprehensive testing
-3. Generate final comparison tables for paper
-4. Add documentation
+1. Add comprehensive testing
+2. Enhance documentation
+3. Analyze results for paper
+4. Create visualizations
