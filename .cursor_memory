@@ -22,9 +22,11 @@
      - Properly formats model names (GPT-4o, GPT-4o-mini)
      - Generates clean LaTeX tables with proper spacing
      - Shows both accuracy and pairwise mismatch scores
+     - Improved color coding: blue scale with inverted intensity for PM
      - Saves tables in compute_metrics/create_latex_table/
 - All metrics working correctly and saved properly
 - Fixed all issues with context variants and model naming
+- Improved visualization with normalized PM colors
 
 ## Technical Details
 ### Data Structure

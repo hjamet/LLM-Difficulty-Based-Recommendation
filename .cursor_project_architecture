@@ -12,6 +12,7 @@ dmkd_additions/
     │   ├── compute_metrics()          # Process new predictions
     │   ├── load_old_experiments_metrics() # Load historical data
     │   └── create_latex_table()       # Generate LaTeX tables
+    │       └── New: Improved color normalization for PM scores
     └── results/                  # Results storage
         └── compute_metrics/      # Metrics computation results
             ├── compute_metrics/          # Current metrics
@@ -40,12 +41,14 @@ dmkd_additions/
    - Shows all context variants
    - Proper spacing between models
    - Correct model naming
-   - Color-coded results
+   - Improved color coding with normalized PM values
+   - Inverted intensity scale for PM scores
 
 ## Current Status
 - All functions working perfectly
 - Context variants properly handled
 - Model names standardized
+- Color coding optimized
 - Ready for paper preparation
 
 ## Planned Improvements
