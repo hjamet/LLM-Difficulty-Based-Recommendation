@@ -688,7 +688,7 @@ def create_latex_table() -> Dict[str, str]:
                     if pd.isna(acc):
                         values.extend(["-", "-"])
                     else:
-                        # Accuracy cell
+                        # Accuracy cell - bleu, plus foncé = meilleur (valeur haute)
                         intensity = acc
                         r = int(255 * (1 - intensity))
                         g = int(255 * (1 - intensity * 0.8))
@@ -697,13 +697,20 @@ def create_latex_table() -> Dict[str, str]:
                         text_color = "white" if intensity > 0.5 else "black"
                         acc_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{acc:.2f}}}"
 
-                        # PM cell
-                        pm_intensity = min(1, pm / 100)  # Normalize to 0-1 range
-                        r = int(255 * (1 - pm_intensity))
-                        g = int(255 * (1 - pm_intensity * 0.8))
-                        b = int(255 * (1 - pm_intensity * 0.4))
+                        # PM cell - même bleu, plus foncé = meilleur (valeur basse)
+                        # Normaliser par rapport aux valeurs min/max du tableau
+                        pm_min = pivoted_pm.min().min()
+                        pm_max = pivoted_pm.max().max()
+                        pm_normalized = (pm - pm_min) / (pm_max - pm_min)
+                        # Inverser l'intensité (1 - normalized pour que les petites valeurs soient foncées)
+                        intensity = 1 - pm_normalized
+
+                        r = int(255 * (1 - intensity))
+                        g = int(255 * (1 - intensity * 0.8))
+                        b = int(255 * (1 - intensity * 0.4))
                         html_color = f"{r:02x}{g:02x}{b:02x}"
-                        text_color = "white" if pm_intensity > 0.5 else "black"
+                        text_color = "white" if intensity > 0.5 else "black"
+                        # Afficher la valeur non normalisée
                         pm_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{pm:.1f}}}"
 
                         values.extend([acc_cell, pm_cell])
