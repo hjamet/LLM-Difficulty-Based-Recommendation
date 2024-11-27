@@ -1,16 +1,16 @@
-11:58 DEBUG - [src/utilitaries/openai_utils.py:17] Setting up OpenAI token
-11:58 DEBUG - [src/utilitaries/openai_utils.py:28] Loading existing OpenAI token
-11:58 INFO - [dmkd_additions/text_simplification/compute_metrics.py:217] Starting metrics computation
-11:58 INFO - [dmkd_additions/text_simplification/compute_metrics.py:23] Starting metrics computation
-11:58 INFO - [dmkd_additions/text_simplification/compute_metrics.py:38] Loading tokenizer and label encoder
-11:59 INFO - [dmkd_additions/text_simplification/compute_metrics.py:49] Loading BERT model
-12:01 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-2024-08-06_university-of-lausanne__AYDSOp5f_predictions.csv
-12:01 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:138] Computing accuracy
-14:03 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:172] Computing similarity
-14:08 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AYDK3AI2_predictions.csv
-14:08 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:138] Computing accuracy
-16:24 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:172] Computing similarity
-16:29 INFO - [dmkd_additions/text_simplification/compute_metrics.py:100] Metrics computation completed
-16:29 INFO - [dmkd_additions/text_simplification/compute_metrics.py:224] 
+29:19 DEBUG - [src/utilitaries/openai_utils.py:17] Setting up OpenAI token
+29:19 DEBUG - [src/utilitaries/openai_utils.py:28] Loading existing OpenAI token
+29:19 INFO - [dmkd_additions/text_simplification/compute_metrics.py:222] Starting metrics computation
+29:19 INFO - [dmkd_additions/text_simplification/compute_metrics.py:23] Starting metrics computation
+29:19 INFO - [dmkd_additions/text_simplification/compute_metrics.py:38] Loading tokenizer and label encoder
+29:20 INFO - [dmkd_additions/text_simplification/compute_metrics.py:49] Loading BERT model
+29:22 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-2024-08-06_university-of-lausanne__AYDSOp5f_predictions.csv
+29:22 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:138] Computing accuracy
+31:01 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:177] Computing similarity
+31:06 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AYDK3AI2_predictions.csv
+31:06 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:138] Computing accuracy
+32:49 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:177] Computing similarity
+32:53 INFO - [dmkd_additions/text_simplification/compute_metrics.py:100] Metrics computation completed
+32:53 INFO - [dmkd_additions/text_simplification/compute_metrics.py:229] 
 Results:
-16:29 INFO - [dmkd_additions/text_simplification/compute_metrics.py:231] Metrics computation completed
+32:53 INFO - [dmkd_additions/text_simplification/compute_metrics.py:236] Metrics computation completed

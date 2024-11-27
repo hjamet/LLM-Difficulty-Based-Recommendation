@@ -93,9 +93,9 @@ def compute_metrics() -> pd.DataFrame:
 
         # Convert to DataFrame and save
         results_df = pd.DataFrame.from_dict(results, orient="index")
-        output_dir = os.path.join(RESULTS_DIR, "metrics")
+        output_dir = os.path.join(RESULTS_DIR, "compute_metrics")
         os.makedirs(output_dir, exist_ok=True)
-        results_df.to_csv(os.path.join(output_dir, "metrics.csv"))
+        results_df.to_csv(os.path.join(output_dir, "compute_metrics.csv"))
 
         logger.info("Metrics computation completed")
         return results_df
@@ -103,24 +103,6 @@ def compute_metrics() -> pd.DataFrame:
     except Exception as e:
         logger.error(f"Error computing metrics: {str(e)}")
         raise
-
-
-def __get_cefr_level(outputs) -> str:
-    """Convert model outputs to CEFR level.
-
-    Uses the same approach as the original BERT model:
-    1. Get probabilities for each level
-    2. Return the most likely level
-    """
-    # Get probabilities from logits
-    predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
-
-    # Get predicted level index
-    pred_idx = torch.argmax(predictions, dim=1)
-
-    # Map index to CEFR level
-    level_map = {0: "A1", 1: "A2", 2: "B1", 3: "B2", 4: "C1", 5: "C2"}
-    return level_map[pred_idx.item()]
 
 
 def __compute_accuracy(
@@ -146,15 +128,20 @@ def __compute_accuracy(
 
     with torch.no_grad():
         outputs = model(**inputs)
-        probas = torch.nn.functional.softmax(outputs.logits, dim=-1)
+        probas = torch.nn.functional.softmax(outputs.logits, dim=-1).cpu().numpy()
 
     # Split predictions
     n = len(df)
-    orig_probas = probas[:n, 1:]  # Remove A1 for original
-    simp_probas = probas[n:, :-1]  # Remove C2 for simplified
+    comparison = {
+        "Original": probas[:n, 1:],  # Remove A1 for original
+        "Simplified": np.cumsum(
+            probas[n:, :-1], axis=1
+        ),  # Remove C2 and cumsum for simplified
+    }
 
     # Calculate accuracy using probability overlap
-    accuracy = torch.sum(orig_probas * simp_probas, dim=1).mean().item()
+    results = (comparison["Original"] * comparison["Simplified"]).sum(axis=1)
+    accuracy = results.mean()
 
     return accuracy
 
