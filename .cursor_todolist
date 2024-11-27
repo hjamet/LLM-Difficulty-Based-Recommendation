@@ -1,43 +1,34 @@
 # Active Tasks
-## Testing & Validation
-- [ ] Add comprehensive testing
-  - [ ] Test filename parsing for fine-tuned models
-  - [ ] Test context detection
-  - [ ] Test metric calculations
-  - [ ] Test table generation
-  - [ ] Add integration tests
+
+## Model Evaluation
+- [ ] GPT-4o Evaluation
+  - [ ] Adapt evaluation pipeline
+  - [ ] Run zero-shot inference
+  - [ ] Run fine-tuned inference
+  - [ ] Save predictions
+  
+- [ ] GPT-4o-mini Evaluation
+  - [ ] Adapt evaluation pipeline
+  - [ ] Run zero-shot inference
+  - [ ] Run fine-tuned inference
+  - [ ] Save predictions
+
+## Table Generation
+- [ ] Update h_CreateFigures.ipynb
+  - [ ] Add color gradients for metrics
+  - [ ] Implement best result highlighting
+  - [ ] Match difficulty estimation style
+  - [ ] Update column formatting
+  - [ ] Add proper spacing
 
 ## Documentation
-- [ ] Add function docstrings
-- [ ] Document filename parsing rules
-- [ ] Document context handling
-- [ ] Create usage examples
-
-## Paper Preparation
-- [ ] Analyze results
-  - [ ] Compare model performances
-  - [ ] Study context impact
-  - [ ] Identify key findings
-- [ ] Create visualizations
-  - [ ] Performance graphs
-  - [ ] Comparison tables
-  - [ ] Error analysis
+- [ ] Document GPT-4o evaluation process
+- [ ] Document table generation updates
+- [ ] Update metrics documentation
 
 # Recently Completed
-- [x] Improved color coding (2024-03-21)
-  - [x] Normalized PM values for consistent scale
-  - [x] Inverted intensity for PM (lower is better)
-  - [x] Maintained same blue palette
-  - [x] Adjusted text color thresholds
-
-- [x] Fixed all context-related issues (2024-03-21)
-  - [x] Fixed context detection in filenames
-  - [x] Corrected context normalization
-  - [x] Added proper logging
-  - [x] Verified all context variants appear
-
-- [x] Enhanced table generation (2024-03-21)
-  - [x] Added proper spacing
-  - [x] Fixed missing context variants
-  - [x] Enhanced color coding
-  - [x] Added detailed caption
+- [x] Initial text simplification pipeline (2024-03-21)
+  - [x] Dataset creation with GPT-4
+  - [x] Mistral-7B fine-tuning
+  - [x] Basic evaluation metrics
+  - [x] Initial results visualization

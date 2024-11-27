@@ -1,51 +1,56 @@
 # Project Context
-- Working on GPT model fine-tuning for French text difficulty estimation
-- Using CEFR levels (A1-C2) and level1-level4 classifications
-- Need to compute and compare metrics across different models and datasets
+- Text simplification project for French texts
+- Goal: Simplify texts while preserving meaning, reducing CEFR level by one step
+- Previous work:
+  1. Dataset Creation (a_DatasetCreation.ipynb):
+     - Used GPT-4 to generate training data
+     - 30 sentences per CEFR level (A2->A1, B1->A2, etc.)
+     - Each sentence with different topic
+     - Structured prompt for consistent generation
+
+  2. Model Training:
+     - Fine-tuned Mistral-7B (b_FineTuningMistral.ipynb)
+     - Fine-tuned OpenAI models (e_OpenAIFineTuning.ipynb)
+       - Davinci
+       - GPT-3.5
+     - Used LoRA for efficient training
+     - System prompt with CEFR context
+
+  3. Evaluation (c_MistralEvaluation.ipynb, f_OpenAIEvaluation.ipynb):
+     - Zero-shot and fine-tuned performance
+     - Multiple models compared
+     - Metrics saved in results/text_simplification/
 
 ## Current State
-- Implementation completed and working perfectly:
-  1. compute_metrics(): 
-     - Processes prediction files
-     - Fixed model name parsing for fine-tuned models (ft_gpt-4o -> GPT-4o)
-     - Correctly handles with_system/no_system context
-     - Successfully detects context for all models
-     - Saves results in compute_metrics/compute_metrics/
-  2. load_old_experiments_metrics():
-     - Loads historical results from multiple sources
-     - Normalizes dataset and model names
-     - Successfully loads all pairwise mismatch scores
-     - Saves results in compute_metrics/load_old_experiments_metrics/
-  3. create_latex_table():
-     - Combines current and historical results
-     - Shows both with_context and no_context variants
-     - Properly formats model names (GPT-4o, GPT-4o-mini)
-     - Generates clean LaTeX tables with proper spacing
-     - Shows both accuracy and pairwise mismatch scores
-     - Improved color coding: blue scale with inverted intensity for PM
-     - Saves tables in compute_metrics/create_latex_table/
-- All metrics working correctly and saved properly
-- Fixed all issues with context variants and model naming
-- Improved visualization with normalized PM colors
+- Need to extend evaluation to GPT-4o models
+- Need to update visualization style
+- Have working pipeline for:
+  - Data generation
+  - Model fine-tuning
+  - Evaluation
+  - Results visualization
 
 ## Technical Details
-### Data Structure
-- Results directory structure:
-  - compute_metrics/compute_metrics/: Current metrics
-  - compute_metrics/load_old_experiments_metrics/: Historical metrics
-  - compute_metrics/create_latex_table/: LaTeX tables and combined metrics
-- File formats:
-  - Metrics: CSV files with dataset, model, context, accuracy, pairwise_mismatch
-  - Tables: LaTeX files with formatted results
+### Training Format
+- System prompt explaining CEFR levels
+- Input: Original text with CEFR level
+- Output: Simplified text one level lower
+- JSON format for different models
 
-### Model Performance
-- Best performing models by dataset:
-  - SentencesInternet: GPT-4o with context (acc: 0.90, pm: 17.9)
-  - LjL: GPT-4o with context (acc: 0.77, pm: 6.2)
-  - SentencesBooks: GPT-4o-mini with context (acc: 0.62, pm: 34.4)
+### Evaluation Pipeline
+1. Zero-shot testing
+2. Fine-tuning preparation
+3. Model training
+4. Fine-tuned evaluation
+5. Results comparison
 
 ## Next Steps
-1. Add comprehensive testing
-2. Enhance documentation
-3. Analyze results for paper
-4. Create visualizations
+1. GPT-4o Models:
+   - Use existing pipeline
+   - Follow same evaluation protocol
+   - Compare with previous models
+
+2. Table Updates:
+   - Match difficulty estimation style
+   - Add color gradients
+   - Implement best result highlighting

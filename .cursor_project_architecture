@@ -1,58 +1,55 @@
 # Project Structure
-dmkd_additions/
-└── difficulty_estimation/
-    ├── compute_metrics.py         # Metrics computation
-    │   ├── _normalize_model_name()    # Model name standardization
-    │   ├── _normalize_dataset_name()  # Dataset name standardization
-    │   ├── _normalize_context()       # Context standardization
-    │   │   └── Fixed: Properly detects with_system/no_system
-    │   ├── _parse_filename()          # Filename metadata extraction
-    │   │   └── Fixed: Correctly handles all model variants
-    │   ├── pairwise_mismatch()        # Pairwise mismatch calculation
-    │   ├── compute_metrics()          # Process new predictions
-    │   ├── load_old_experiments_metrics() # Load historical data
-    │   └── create_latex_table()       # Generate LaTeX tables
-    │       └── New: Improved color normalization for PM scores
-    └── results/                  # Results storage
-        └── compute_metrics/      # Metrics computation results
-            ├── compute_metrics/          # Current metrics
-            │   └── current_metrics.csv
-            ├── load_old_experiments_metrics/ # Historical metrics
-            │   └── historical_metrics.csv
-            └── create_latex_table/       # LaTeX tables
-                └── difficulty_estimation_metrics.tex
+dmkd_additions/text_simplification/
+├── a_DatasetCreation.ipynb         # Dataset preparation
+│   ├── download_data()             # Load training data
+│   ├── format_data()              # Prepare for training
+│   └── encode_dataset()           # Tokenize inputs
+│
+├── b_FineTuningMistral.ipynb      # Model training
+│   ├── load_model()               # Initialize with LoRA
+│   ├── train_mistral()            # Training function
+│   └── ray_launcher()             # Cluster execution
+│
+├── c_MistralEvaluation.ipynb      # Model evaluation
+│   ├── evaluate_mistral()         # Evaluation pipeline
+│   ├── compute_predictions()      # Generate outputs
+│   └── format_results()           # Save predictions
+│
+├── h_CreateFigures.ipynb          # Results visualization (to update)
+│   ├── create_metrics_table()     # Add color gradients
+│   ├── create_example_table()     # Match new style
+│   └── save_tables()             # Export LaTeX
+│
+└── results/                      # Results storage
+    ├── metrics/                  # Evaluation scores
+    ├── predictions/              # Model outputs
+    └── figures/                  # Generated tables
 
-# Key Components
-## Metrics Computation (compute_metrics.py)
-### Core Functions
-1. compute_metrics()
-   - Scans for prediction files
-   - Correctly handles all model variants
-   - Properly detects context
-   - Calculates accuracy and PM scores
+# Components
+## Evaluation Pipeline
+1. Data Preparation
+   - Load test sentences
+   - Balance across levels
+   - Tokenize inputs
 
-2. _parse_filename()
-   - Handles ft_ prefix for fine-tuned models
-   - Correctly extracts with_system/no_system
-   - Standardizes model naming
-   - Maintains proper casing
+2. Model Inference
+   - Support multiple models
+   - Handle both modes (zero-shot/fine-tuned)
+   - Generate predictions
 
-3. create_latex_table()
-   - Shows all context variants
-   - Proper spacing between models
-   - Correct model naming
-   - Improved color coding with normalized PM values
-   - Inverted intensity scale for PM scores
+3. Results Processing
+   - Compute metrics
+   - Format predictions
+   - Save outputs
 
-## Current Status
-- All functions working perfectly
-- Context variants properly handled
-- Model names standardized
-- Color coding optimized
-- Ready for paper preparation
+## Table Generation
+- Current:
+  - Basic metrics display
+  - Simple formatting
+  - Example showcase
 
-## Planned Improvements
-- Add comprehensive testing
-- Enhance documentation
-- Create visualizations
-- Analyze results for paper
+- To Add:
+  - Color gradients
+  - Best result highlighting
+  - Consistent styling
+  - Proper spacing

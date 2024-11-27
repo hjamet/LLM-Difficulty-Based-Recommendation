@@ -491,7 +491,7 @@ def pairwise_mismatch(y_pred: pd.Series, y_real: pd.Series) -> float:
 
 
 def create_latex_table() -> Dict[str, str]:
-    """Create LaTeX table comparing all models performance."""
+    """Create LaTeX table comparing performance metrics across all models."""
     logger.info("Creating LaTeX table")
 
     try:
@@ -612,11 +612,12 @@ def create_latex_table() -> Dict[str, str]:
             "accuracy (Acc.) and pairwise mismatch (PM). "
             "Accuracy ranges from 0 to 1, higher is better. "
             "PM measures the violation of the difficulty ordering between pairs of sentences "
-            "(e.g., an A1 sentence predicted as more difficult than a C2 sentence), "
-            "ranging from 0 to 100, lower is better. "
+            "(e.g., an A1 sentence predicted as more difficult than a C2 sentence). "
+            "A PM score of 0 indicates perfect ordering, while higher scores indicate more ordering errors. "
             "System Prompt indicates whether the model was given explicit CEFR level descriptions (\\checkmark) "
             "or not (-). "
-            "Models are sorted by their average PM score across all datasets."
+            "Models are sorted by their average PM score across all datasets. "
+            "\\textbf{\\underline{Bold and underlined}} values indicate the best score for each metric and dataset."
         )
 
         # Create LaTeX table
@@ -688,6 +689,10 @@ def create_latex_table() -> Dict[str, str]:
                     if pd.isna(acc):
                         values.extend(["-", "-"])
                     else:
+                        # Get best values for this dataset
+                        best_acc = pivoted_acc[dataset].max()
+                        best_pm = pivoted_pm[dataset].min()  # Lower is better for PM
+
                         # Accuracy cell - bleu, plus foncé = meilleur (valeur haute)
                         intensity = acc
                         r = int(255 * (1 - intensity))
@@ -695,14 +700,19 @@ def create_latex_table() -> Dict[str, str]:
                         b = int(255 * (1 - intensity * 0.4))
                         html_color = f"{r:02x}{g:02x}{b:02x}"
                         text_color = "white" if intensity > 0.5 else "black"
-                        acc_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{acc:.2f}}}"
+
+                        # Add bold and underline for best accuracy
+                        acc_str = f"{acc:.2f}"
+                        if (
+                            abs(acc - best_acc) < 0.0001
+                        ):  # Using small epsilon for float comparison
+                            acc_str = f"\\textbf{{\\underline{{{acc_str}}}}}"
+                        acc_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{acc_str}}}"
 
                         # PM cell - même bleu, plus foncé = meilleur (valeur basse)
-                        # Normaliser par rapport aux valeurs min/max du tableau
                         pm_min = pivoted_pm.min().min()
                         pm_max = pivoted_pm.max().max()
                         pm_normalized = (pm - pm_min) / (pm_max - pm_min)
-                        # Inverser l'intensité (1 - normalized pour que les petites valeurs soient foncées)
                         intensity = 1 - pm_normalized
 
                         r = int(255 * (1 - intensity))
@@ -710,8 +720,14 @@ def create_latex_table() -> Dict[str, str]:
                         b = int(255 * (1 - intensity * 0.4))
                         html_color = f"{r:02x}{g:02x}{b:02x}"
                         text_color = "white" if intensity > 0.5 else "black"
-                        # Afficher la valeur non normalisée
-                        pm_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{pm:.1f}}}"
+
+                        # Add bold and underline for best PM
+                        pm_str = f"{pm:.1f}"
+                        if (
+                            abs(pm - best_pm) < 0.0001
+                        ):  # Using small epsilon for float comparison
+                            pm_str = f"\\textbf{{\\underline{{{pm_str}}}}}"
+                        pm_cell = f"\\cellcolor[HTML]{{{html_color}}}\\textcolor{{{text_color}}}{{{pm_str}}}"
 
                         values.extend([acc_cell, pm_cell])
 
