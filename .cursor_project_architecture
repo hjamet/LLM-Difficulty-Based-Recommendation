@@ -1,55 +1,48 @@
 # Project Structure
 dmkd_additions/text_simplification/
-├── a_DatasetCreation.ipynb         # Dataset preparation
-│   ├── download_data()             # Load training data
-│   ├── format_data()              # Prepare for training
-│   └── encode_dataset()           # Tokenize inputs
-│
-├── b_FineTuningMistral.ipynb      # Model training
-│   ├── load_model()               # Initialize with LoRA
-│   ├── train_mistral()            # Training function
-│   └── ray_launcher()             # Cluster execution
-│
-├── c_MistralEvaluation.ipynb      # Model evaluation
-│   ├── evaluate_mistral()         # Evaluation pipeline
-│   ├── compute_predictions()      # Generate outputs
-│   └── format_results()           # Save predictions
-│
-├── h_CreateFigures.ipynb          # Results visualization (to update)
-│   ├── create_metrics_table()     # Add color gradients
-│   ├── create_example_table()     # Match new style
-│   └── save_tables()             # Export LaTeX
+├── download_data.py               # Data download (✓ implemented)
+├── gpt_fine_tuning.py            # Model training (✓ implemented)
+├── gpt_evaluation.py             # Model evaluation (to implement)
+│   ├── generate_predictions()    # Main evaluation function
+│   │   ├── Input: model_id, dataset, system_prompt
+│   │   └── Output: predictions DataFrame
+│   └── __main__                  # Evaluation script
+│       ├── Test both models
+│       └── Save results properly
 │
 └── results/                      # Results storage
-    ├── metrics/                  # Evaluation scores
-    ├── predictions/              # Model outputs
-    └── figures/                  # Generated tables
+    ├── gpt_fine_tuning/         # Fine-tuning results (✓ done)
+    │   ├── backups/             # Configuration backups
+    │   └── *_job.json           # Job details
+    └── gpt_evaluation/          # Evaluation results
+        ├── predictions/         # Model predictions
+        │   ├── zero_shot/      # Zero-shot results
+        │   └── fine_tuned/     # Fine-tuned results
+        └── metrics/            # Evaluation metrics
 
 # Components
 ## Evaluation Pipeline
 1. Data Preparation
-   - Load test sentences
-   - Balance across levels
-   - Tokenize inputs
+   - Load test datasets
+   - Track CEFR levels
+   - Format for simplification
 
-2. Model Inference
-   - Support multiple models
-   - Handle both modes (zero-shot/fine-tuned)
+2. Model Evaluation
+   - System prompt + simple user prompt
    - Generate predictions
+   - Save results by model/dataset
 
 3. Results Processing
-   - Compute metrics
-   - Format predictions
-   - Save outputs
+   - Consistent file naming
+   - Include metadata
+   - Enable analysis
 
-## Table Generation
-- Current:
-  - Basic metrics display
-  - Simple formatting
-  - Example showcase
+## Integration Points
+1. With download_data.py:
+   - Access to test datasets
+   - Consistent data format
 
-- To Add:
-  - Color gradients
-  - Best result highlighting
-  - Consistent styling
-  - Proper spacing
+2. With gpt_fine_tuning.py:
+   - Access to model IDs
+   - Reuse system prompt
+   - Consistent formats

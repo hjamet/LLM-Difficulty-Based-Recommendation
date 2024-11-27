@@ -1,0 +1,9 @@
+{
+    "job_id": "ftjob-sWLl41GcMtk9x5dlKgV9IEr4",
+    "model_name": "gpt-4o-2024-08-06",
+    "training_file_id": "file-KAtWdpx8DMZV72jDj2YjwQ",
+    "status": "succeeded",
+    "created_at": 1732717760,
+    "finished_at": 1732718243,
+    "fine_tuned_model": "ft:gpt-4o-2024-08-06:university-of-lausanne::AYDSOp5f"
+}

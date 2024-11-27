@@ -32,7 +32,7 @@ def signal_handler(signum, frame):
     """
     logger.warning("Received interrupt signal. Cleaning up...")
     if global_client:
-        __cancel_all_jobs(global_client)
+        _cancel_all_jobs(global_client)
     logger.info("Cleanup complete. Exiting...")
     exit(1)
 
@@ -213,12 +213,12 @@ def fine_tune_gpt(
     except Exception as e:
         logger.error(f"Error during fine-tuning: {str(e)}")
         if client:
-            __cancel_all_jobs(client)
+            _cancel_all_jobs(client)
         raise
     finally:
         # Always try to cancel any remaining jobs in case of error
         if client:
-            __cancel_all_jobs(client)
+            _cancel_all_jobs(client)
         global_client = None  # Clear global client reference
 
 
@@ -386,7 +386,7 @@ def __test_predictions(model_id: str, dataset_name: str, system_prompt: bool):
     logger.info("Test predictions completed")
 
 
-def __cancel_all_jobs(client: OpenAI) -> None:
+def _cancel_all_jobs(client: OpenAI) -> None:
     """
     Cancels all running fine-tuning jobs.
 

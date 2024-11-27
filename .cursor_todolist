@@ -1,34 +1,37 @@
 # Active Tasks
 
-## Model Evaluation
-- [ ] GPT-4o Evaluation
-  - [ ] Adapt evaluation pipeline
-  - [ ] Run zero-shot inference
-  - [ ] Run fine-tuned inference
-  - [ ] Save predictions
-  
-- [ ] GPT-4o-mini Evaluation
-  - [ ] Adapt evaluation pipeline
-  - [ ] Run zero-shot inference
-  - [ ] Run fine-tuned inference
-  - [ ] Save predictions
+## Implement gpt_evaluation.py
+- [ ] Core Implementation
+  - [ ] Define generate_predictions() function
+    - [ ] Add system prompt handling
+    - [ ] Track CEFR levels for simplification
+    - [ ] Format predictions consistently
+  - [ ] Implement main evaluation script
+    - [ ] Test both GPT-4o models
+    - [ ] Handle zero-shot and fine-tuned cases
+    - [ ] Save results properly
 
-## Table Generation
-- [ ] Update h_CreateFigures.ipynb
-  - [ ] Add color gradients for metrics
-  - [ ] Implement best result highlighting
-  - [ ] Match difficulty estimation style
-  - [ ] Update column formatting
-  - [ ] Add proper spacing
+- [ ] Testing & Validation
+  - [ ] Test with french_difficulty dataset
+  - [ ] Test with sentences dataset
+  - [ ] Verify prediction format
+  - [ ] Validate results storage
 
 ## Documentation
-- [ ] Document GPT-4o evaluation process
-- [ ] Document table generation updates
-- [ ] Update metrics documentation
+- [ ] Document evaluation process
+  - [ ] Explain prompt format
+  - [ ] Detail CEFR level handling
+  - [ ] Describe results structure
+- [ ] Add usage examples
 
 # Recently Completed
-- [x] Initial text simplification pipeline (2024-03-21)
-  - [x] Dataset creation with GPT-4
-  - [x] Mistral-7B fine-tuning
-  - [x] Basic evaluation metrics
-  - [x] Initial results visualization
+- [x] Decided on prompt format (2024-03-21)
+  - [x] Using system prompt + simple user prompt
+  - [x] Consistent with fine-tuning approach
+  - [x] Clean separation of instructions/content
+
+- [x] Model Fine-tuning (2024-03-21)
+  - [x] Implemented gpt_fine_tuning.py
+  - [x] Fine-tuned GPT-4o models
+  - [x] Added proper logging
+  - [x] Saved model details

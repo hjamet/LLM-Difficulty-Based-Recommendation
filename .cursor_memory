@@ -1,56 +1,45 @@
 # Project Context
 - Text simplification project for French texts
 - Goal: Simplify texts while preserving meaning, reducing CEFR level by one step
-- Previous work:
-  1. Dataset Creation (a_DatasetCreation.ipynb):
-     - Used GPT-4 to generate training data
-     - 30 sentences per CEFR level (A2->A1, B1->A2, etc.)
-     - Each sentence with different topic
-     - Structured prompt for consistent generation
-
-  2. Model Training:
-     - Fine-tuned Mistral-7B (b_FineTuningMistral.ipynb)
-     - Fine-tuned OpenAI models (e_OpenAIFineTuning.ipynb)
-       - Davinci
-       - GPT-3.5
-     - Used LoRA for efficient training
-     - System prompt with CEFR context
-
-  3. Evaluation (c_MistralEvaluation.ipynb, f_OpenAIEvaluation.ipynb):
-     - Zero-shot and fine-tuned performance
-     - Multiple models compared
-     - Metrics saved in results/text_simplification/
 
 ## Current State
-- Need to extend evaluation to GPT-4o models
-- Need to update visualization style
-- Have working pipeline for:
-  - Data generation
-  - Model fine-tuning
-  - Evaluation
-  - Results visualization
+- Implemented data pipeline and fine-tuning
+- Ready to implement evaluation pipeline
+- Decision made on prompt format:
+  - Using system prompt + simple user prompt
+  - System prompt explains task and CEFR levels
+  - User prompt is just the text to simplify
 
 ## Technical Details
-### Training Format
-- System prompt explaining CEFR levels
-- Input: Original text with CEFR level
-- Output: Simplified text one level lower
-- JSON format for different models
+### Evaluation Requirements
+1. Input Data:
+   - Use french_difficulty and sentences datasets
+   - 100 sentences per level (except A1)
+   - Need to track original CEFR level for simplification target
 
-### Evaluation Pipeline
-1. Zero-shot testing
-2. Fine-tuning preparation
-3. Model training
-4. Fine-tuned evaluation
-5. Results comparison
+2. Model Evaluation:
+   - Use system prompt consistently
+   - Format:
+     ```python
+     messages = [
+         {"role": "system", "content": DEFAULT_SYSTEM_PROMPT},
+         {"role": "user", "content": text_to_simplify}
+     ]
+     ```
+   - Save predictions with metadata (original level, target level)
+
+3. Results Organization:
+   - Path: results/dmkd_additions/text_simplification/gpt_evaluation/
+   - Separate directories for predictions and metrics
+   - Include model and dataset info in filenames
 
 ## Next Steps
-1. GPT-4o Models:
-   - Use existing pipeline
-   - Follow same evaluation protocol
-   - Compare with previous models
+1. Implement generate_predictions():
+   - Handle system prompt
+   - Track CEFR levels
+   - Save formatted results
 
-2. Table Updates:
-   - Match difficulty estimation style
-   - Add color gradients
-   - Implement best result highlighting
+2. Add evaluation script:
+   - Test both models
+   - Both zero-shot and fine-tuned
+   - Save results consistently
