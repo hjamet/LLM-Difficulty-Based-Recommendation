@@ -2,47 +2,44 @@
 dmkd_additions/text_simplification/
 ├── download_data.py               # Data download (✓ implemented)
 ├── gpt_fine_tuning.py            # Model training (✓ implemented)
-├── gpt_evaluation.py             # Model evaluation (to implement)
-│   ├── generate_predictions()    # Main evaluation function
-│   │   ├── Input: model_id, dataset, system_prompt
-│   │   └── Output: predictions DataFrame
-│   └── __main__                  # Evaluation script
-│       ├── Test both models
-│       └── Save results properly
+├── gpt_evaluation.py             # Model evaluation (✓ implemented)
+├── compute_metrics.py            # Metrics computation (to implement)
+│   ├── compute_metrics()         # Main metrics calculation
+│   │   ├── BERT accuracy
+│   │   ├── BERT similarity
+│   │   └── Combined score (w1=0.5)
+│   ├── load_old_experiments_metrics()
+│   └── create_latex_table()
 │
 └── results/                      # Results storage
-    ├── gpt_fine_tuning/         # Fine-tuning results (✓ done)
-    │   ├── backups/             # Configuration backups
-    │   └── *_job.json           # Job details
-    └── gpt_evaluation/          # Evaluation results
-        ├── predictions/         # Model predictions
-        │   ├── zero_shot/      # Zero-shot results
-        │   └── fine_tuned/     # Fine-tuned results
-        └── metrics/            # Evaluation metrics
+    ├── gpt_fine_tuning/         # Fine-tuning results
+    ├── gpt_evaluation/          # Model predictions
+    └── metrics/                 # Evaluation metrics
+        ├── raw/                 # Raw metric calculations
+        └── tables/              # LaTeX tables
 
 # Components
-## Evaluation Pipeline
-1. Data Preparation
-   - Load test datasets
-   - Track CEFR levels
-   - Format for simplification
+## Metrics Pipeline
+1. Data Loading
+   - Load predictions
+   - Load BERT model
+   - Prepare data structures
 
-2. Model Evaluation
-   - System prompt + simple user prompt
-   - Generate predictions
-   - Save results by model/dataset
+2. Metric Calculation
+   - BERT for accuracy
+   - BERT embeddings for similarity
+   - Fixed w1=0.5 for combination
 
 3. Results Processing
-   - Consistent file naming
-   - Include metadata
-   - Enable analysis
+   - Format for comparison
+   - Generate LaTeX tables
+   - Save in consistent format
 
 ## Integration Points
-1. With download_data.py:
-   - Access to test datasets
-   - Consistent data format
+1. With difficulty_estimation:
+   - Use same BERT model
+   - Match metric format
 
-2. With gpt_fine_tuning.py:
-   - Access to model IDs
-   - Reuse system prompt
-   - Consistent formats
+2. With gpt_evaluation:
+   - Load predictions
+   - Track model versions

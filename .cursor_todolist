@@ -1,37 +1,33 @@
 # Active Tasks
 
-## Implement gpt_evaluation.py
-- [ ] Core Implementation
-  - [ ] Define generate_predictions() function
-    - [ ] Add system prompt handling
-    - [ ] Track CEFR levels for simplification
-    - [ ] Format predictions consistently
-  - [ ] Implement main evaluation script
-    - [ ] Test both GPT-4o models
-    - [ ] Handle zero-shot and fine-tuned cases
-    - [ ] Save results properly
+## Implement compute_metrics.py
+- [ ] Core Functions
+  - [ ] compute_metrics()
+    - [ ] Load BERT model from HuggingFace
+    - [ ] Calculate accuracy scores
+    - [ ] Calculate BERT similarity
+    - [ ] Combine with w1=0.5
+  - [ ] load_old_experiments_metrics()
+    - [ ] Load Mistral results
+    - [ ] Load GPT results
+  - [ ] create_latex_table()
+    - [ ] Format results
+    - [ ] Generate LaTeX code
 
 - [ ] Testing & Validation
-  - [ ] Test with french_difficulty dataset
-  - [ ] Test with sentences dataset
-  - [ ] Verify prediction format
-  - [ ] Validate results storage
+  - [ ] Test with GPT-4o predictions
+  - [ ] Compare with old results
+  - [ ] Verify metric calculations
 
 ## Documentation
-- [ ] Document evaluation process
-  - [ ] Explain prompt format
-  - [ ] Detail CEFR level handling
-  - [ ] Describe results structure
-- [ ] Add usage examples
+- [ ] Document metric calculation
+  - [ ] Explain BERT usage
+  - [ ] Detail formula with w1=0.5
+  - [ ] Add usage examples
 
 # Recently Completed
-- [x] Decided on prompt format (2024-03-21)
-  - [x] Using system prompt + simple user prompt
-  - [x] Consistent with fine-tuning approach
-  - [x] Clean separation of instructions/content
-
-- [x] Model Fine-tuning (2024-03-21)
-  - [x] Implemented gpt_fine_tuning.py
-  - [x] Fine-tuned GPT-4o models
-  - [x] Added proper logging
-  - [x] Saved model details
+- [x] Implemented Evaluation Pipeline (2024-03-21)
+  - [x] download_data.py
+  - [x] gpt_fine_tuning.py
+  - [x] gpt_evaluation.py
+  - [x] Generated predictions

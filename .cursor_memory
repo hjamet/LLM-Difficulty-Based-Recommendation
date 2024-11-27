@@ -3,43 +3,43 @@
 - Goal: Simplify texts while preserving meaning, reducing CEFR level by one step
 
 ## Current State
-- Implemented data pipeline and fine-tuning
-- Ready to implement evaluation pipeline
-- Decision made on prompt format:
-  - Using system prompt + simple user prompt
-  - System prompt explains task and CEFR levels
-  - User prompt is just the text to simplify
+- Core pipeline implemented
+- Ready to implement metrics computation
 
 ## Technical Details
-### Evaluation Requirements
-1. Input Data:
-   - Use french_difficulty and sentences datasets
-   - 100 sentences per level (except A1)
-   - Need to track original CEFR level for simplification target
+### Metrics from d_Metrics.ipynb
+1. Accuracy Metric (BERT):
+   - Uses BERT model from difficulty_estimation
+   - Measures if simplified text is at correct level
+   - Score between 0 and 1
+   - Downloaded from HuggingFace
 
-2. Model Evaluation:
-   - Use system prompt consistently
-   - Format:
-     ```python
-     messages = [
-         {"role": "system", "content": DEFAULT_SYSTEM_PROMPT},
-         {"role": "user", "content": text_to_simplify}
-     ]
-     ```
-   - Save predictions with metadata (original level, target level)
+2. Similarity Metric (BERT only):
+   - Uses BERT embeddings cosine similarity
+   - Measures meaning preservation
+   - Score between 0 and 1
+   - Ignore BLEU/ROUGE alternatives
 
-3. Results Organization:
-   - Path: results/dmkd_additions/text_simplification/gpt_evaluation/
-   - Separate directories for predictions and metrics
-   - Include model and dataset info in filenames
+3. Combined Metric Formula:
+   ```
+   score = (2 * w1 * A * (1-w1) * S) / (w1 * A + (1-w1) * S)
+   where:
+   - w1 = 0.5 (fixed)
+   - A: accuracy score from BERT
+   - S: similarity score from BERT embeddings
+   ```
 
-## Next Steps
-1. Implement generate_predictions():
-   - Handle system prompt
-   - Track CEFR levels
-   - Save formatted results
+### Implementation Plan
+1. Core Functions:
+   - compute_metrics(): Main function
+     - Load BERT model
+     - Calculate accuracy
+     - Calculate similarity
+     - Combine with w1=0.5
+   - load_old_experiments_metrics()
+   - create_latex_table()
 
-2. Add evaluation script:
-   - Test both models
-   - Both zero-shot and fine-tuned
-   - Save results consistently
+2. Data Flow:
+   - Input: Predictions from gpt_evaluation.py
+   - Process: Calculate metrics using BERT
+   - Output: Combined scores in standard format
