@@ -1,0 +1,32 @@
+\begin{table}[!h]
+    \centering
+    \small
+    \begin{tabular}{lcrrr}
+        \toprule
+        \textbf{Model} & \textbf{FT} & \textbf{Acc.} & \textbf{Sim.} & \textbf{Score} \\
+        \midrule
+        \textbf{Mistral\_ft} & \checkmark & \cellcolor[HTML]{003299}\textcolor{white}{\textbf{\underline{0.59}}} & \cellcolor[HTML]{0c3c9d}\textcolor{white}{0.91} & \cellcolor[HTML]{bcc9e4}\textcolor{black}{\textbf{\underline{0.26}}} \\
+        \\[2pt]
+        \textbf{GPT-3.5\_ft} & \checkmark & \cellcolor[HTML]{224ea6}\textcolor{white}{0.57} & \cellcolor[HTML]{0c3c9d}\textcolor{white}{0.91} & \cellcolor[HTML]{bcc9e4}\textcolor{black}{0.26} \\
+        \\[2pt]
+        \textbf{GPT-3.5}$^3$ & - & \cellcolor[HTML]{6584c1}\textcolor{white}{0.53} & \cellcolor[HTML]{003299}\textcolor{white}{\textbf{\underline{0.93}}} & \cellcolor[HTML]{bdcae4}\textcolor{black}{0.26} \\
+        \\[2pt]
+        \textbf{GPT-4}$^3$ & - & \cellcolor[HTML]{879fcf}\textcolor{black}{0.51} & \cellcolor[HTML]{003299}\textcolor{white}{\textbf{\underline{0.93}}} & \cellcolor[HTML]{bdcae4}\textcolor{black}{0.26} \\
+        \\[2pt]
+        \textbf{Mistral}$^3$ & - & \cellcolor[HTML]{ccd6ea}\textcolor{black}{0.47} & \cellcolor[HTML]{003299}\textcolor{white}{\textbf{\underline{0.93}}} & \cellcolor[HTML]{bfcce5}\textcolor{black}{0.25} \\
+        \\[2pt]
+        \textbf{GPT-4o}$^3$ & - & \cellcolor[HTML]{dce3f1}\textcolor{black}{0.46} & \cellcolor[HTML]{1846a2}\textcolor{white}{0.89} & \cellcolor[HTML]{c1cee6}\textcolor{black}{0.24} \\
+        \\[2pt]
+        \textbf{Davinci\_ft} & \checkmark & \cellcolor[HTML]{ffffff}\textcolor{black}{0.44} & \cellcolor[HTML]{3c63b1}\textcolor{white}{0.83} & \cellcolor[HTML]{c5d0e7}\textcolor{black}{0.23} \\
+        \\[2pt]
+        \textbf{GPT-4o-Mini}$^3$ & \checkmark & \cellcolor[HTML]{466bb5}\textcolor{white}{0.55} & \cellcolor[HTML]{edf1f8}\textcolor{black}{0.54} & \cellcolor[HTML]{d2dbed}\textcolor{black}{0.17} \\
+        \\[2pt]
+        \textbf{GPT-4o}$^3$ & - & \cellcolor[HTML]{dce3f1}\textcolor{black}{0.46} & \cellcolor[HTML]{1846a2}\textcolor{white}{0.89} & \cellcolor[HTML]{c1cee6}\textcolor{black}{0.24} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Text simplification metrics for all models. For each model, we report three metrics: Simplification Accuracy (Acc.), Semantic Similarity (Sim.), and their Weighted Score (Score). All metrics range from 0 to 1, higher is better. Fine-tuned (FT) indicates whether the model was fine-tuned on our dataset (\checkmark) or used as-is (-). Models are sorted by their weighted score. \textbf{\underline{Bold and underlined}} values indicate the best score for each metric.}
+    \label{tab:text_simplification_metrics}
+\end{table}
+
+\footnotetext[3]{%
+    In this figure, ``GPT-3.5'' corresponds to \texttt{gpt-3.5-turbo-1106}, ``GPT-4o'' and ``GPT-4o-Mini'' to our fine-tuned models, ``Mistral'' to \texttt{Mistral-7B}, and ``Davinci'' to \texttt{davinci-002}.}

@@ -46,6 +46,7 @@ nltk = "^3.8.1"
 rouge-score = "^0.1.2"
 pandas = "2.1.4"
 protobuf = "^4.25.4"
+colorama = "^0.4.6"
 
 [build-system]
 requires = ["poetry-core"]

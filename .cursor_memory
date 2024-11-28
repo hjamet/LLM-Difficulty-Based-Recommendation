@@ -4,7 +4,8 @@
 
 ## Current State
 - Core pipeline implemented
-- Ready to implement metrics computation
+- Metrics computation implemented
+- LaTeX table generation working
 
 ## Technical Details
 ### Metrics from d_Metrics.ipynb
@@ -24,22 +25,22 @@
    ```
    score = (2 * w1 * A * (1-w1) * S) / (w1 * A + (1-w1) * S)
    where:
-   - w1 = 0.5 (fixed)
+   - w1 = 0.8 (fixed)
    - A: accuracy score from BERT
    - S: similarity score from BERT embeddings
    ```
 
-### Implementation Plan
+### Implementation Status
 1. Core Functions:
-   - compute_metrics(): Main function
-     - Load BERT model
-     - Calculate accuracy
-     - Calculate similarity
-     - Combine with w1=0.5
-   - load_old_experiments_metrics()
-   - create_latex_table()
+   - compute_metrics(): ✓ Implemented
+     - Load BERT model ✓
+     - Calculate accuracy ✓
+     - Calculate similarity ✓
+     - Combine with w1=0.8 ✓
+   - load_old_experiments_metrics(): ✓ Implemented (hardcoded)
+   - create_latex_table(): ✓ Implemented
 
 2. Data Flow:
    - Input: Predictions from gpt_evaluation.py
    - Process: Calculate metrics using BERT
-   - Output: Combined scores in standard format
+   - Output: Combined scores in LaTeX table with blue scale colors

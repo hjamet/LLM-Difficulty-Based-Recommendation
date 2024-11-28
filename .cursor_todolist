@@ -1,28 +1,30 @@
 # Active Tasks
 
 ## Implement compute_metrics.py
-- [ ] Core Functions
-  - [ ] compute_metrics()
-    - [ ] Load BERT model from HuggingFace
-    - [ ] Calculate accuracy scores
-    - [ ] Calculate BERT similarity
-    - [ ] Combine with w1=0.5
-  - [ ] load_old_experiments_metrics()
+- [x] Core Functions
+  - [x] compute_metrics()
+    - [x] Load BERT model from HuggingFace
+    - [x] Calculate accuracy scores
+    - [x] Calculate BERT similarity
+    - [x] Combine with w1=0.8
+  - [x] load_old_experiments_metrics()
+    - [ ] TODO: Replace hardcoded values with proper loading from saved results
     - [ ] Load Mistral results
     - [ ] Load GPT results
-  - [ ] create_latex_table()
-    - [ ] Format results
-    - [ ] Generate LaTeX code
+  - [x] create_latex_table()
+    - [x] Format results
+    - [x] Generate LaTeX code with blue scale colors
+    - [x] Match difficulty_estimation style
 
 - [ ] Testing & Validation
-  - [ ] Test with GPT-4o predictions
-  - [ ] Compare with old results
+  - [x] Test with GPT-4o predictions
+  - [x] Compare with old results
   - [ ] Verify metric calculations
 
 ## Documentation
 - [ ] Document metric calculation
   - [ ] Explain BERT usage
-  - [ ] Detail formula with w1=0.5
+  - [ ] Detail formula with w1=0.8
   - [ ] Add usage examples
 
 # Recently Completed
@@ -31,3 +33,5 @@
   - [x] gpt_fine_tuning.py
   - [x] gpt_evaluation.py
   - [x] Generated predictions
+- [x] Implemented load_old_experiments_metrics() with hardcoded values (2024-03-22)
+- [x] Implemented create_latex_table() with blue scale colors (2024-03-22)

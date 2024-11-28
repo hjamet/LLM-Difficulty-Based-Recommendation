@@ -3,43 +3,44 @@ dmkd_additions/text_simplification/
 ├── download_data.py               # Data download (✓ implemented)
 ├── gpt_fine_tuning.py            # Model training (✓ implemented)
 ├── gpt_evaluation.py             # Model evaluation (✓ implemented)
-├── compute_metrics.py            # Metrics computation (to implement)
-│   ├── compute_metrics()         # Main metrics calculation
-│   │   ├── BERT accuracy
-│   │   ├── BERT similarity
-│   │   └── Combined score (w1=0.5)
-│   ├── load_old_experiments_metrics()
-│   └── create_latex_table()
+├── compute_metrics.py            # Metrics computation (✓ implemented)
+│   ├── compute_metrics()         # Main metrics calculation (✓)
+│   │   ├── BERT accuracy (✓)
+│   │   ├── BERT similarity (✓)
+│   │   └── Combined score (w1=0.8) (✓)
+│   ├── load_old_experiments_metrics() (✓ hardcoded)
+│   └── create_latex_table() (✓)
 │
 └── results/                      # Results storage
     ├── gpt_fine_tuning/         # Fine-tuning results
     ├── gpt_evaluation/          # Model predictions
-    └── metrics/                 # Evaluation metrics
-        ├── raw/                 # Raw metric calculations
-        └── tables/              # LaTeX tables
+    └── compute_metrics/         # Evaluation metrics
+        ├── simplification_metrics.csv  # Raw metrics
+        └── latex/                      # LaTeX tables
 
 # Components
 ## Metrics Pipeline
 1. Data Loading
-   - Load predictions
-   - Load BERT model
-   - Prepare data structures
+   - Load predictions ✓
+   - Load BERT model ✓
+   - Prepare data structures ✓
 
 2. Metric Calculation
-   - BERT for accuracy
-   - BERT embeddings for similarity
-   - Fixed w1=0.5 for combination
+   - BERT for accuracy ✓
+   - BERT embeddings for similarity ✓
+   - Fixed w1=0.8 for combination ✓
 
 3. Results Processing
-   - Format for comparison
-   - Generate LaTeX tables
-   - Save in consistent format
+   - Format for comparison ✓
+   - Generate LaTeX tables with blue scale ✓
+   - Save in consistent format ✓
 
 ## Integration Points
 1. With difficulty_estimation:
-   - Use same BERT model
-   - Match metric format
+   - Use same BERT model ✓
+   - Match metric format ✓
+   - Match LaTeX style ✓
 
 2. With gpt_evaluation:
-   - Load predictions
-   - Track model versions
+   - Load predictions ✓
+   - Track model versions ✓

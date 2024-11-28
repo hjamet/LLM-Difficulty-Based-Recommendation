@@ -1,16 +1,29 @@
-29:19 DEBUG - [src/utilitaries/openai_utils.py:17] Setting up OpenAI token
-29:19 DEBUG - [src/utilitaries/openai_utils.py:28] Loading existing OpenAI token
-29:19 INFO - [dmkd_additions/text_simplification/compute_metrics.py:222] Starting metrics computation
-29:19 INFO - [dmkd_additions/text_simplification/compute_metrics.py:23] Starting metrics computation
-29:19 INFO - [dmkd_additions/text_simplification/compute_metrics.py:38] Loading tokenizer and label encoder
-29:20 INFO - [dmkd_additions/text_simplification/compute_metrics.py:49] Loading BERT model
-29:22 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-2024-08-06_university-of-lausanne__AYDSOp5f_predictions.csv
-29:22 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:138] Computing accuracy
-31:01 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:177] Computing similarity
-31:06 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AYDK3AI2_predictions.csv
-31:06 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:138] Computing accuracy
-32:49 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:177] Computing similarity
-32:53 INFO - [dmkd_additions/text_simplification/compute_metrics.py:100] Metrics computation completed
-32:53 INFO - [dmkd_additions/text_simplification/compute_metrics.py:229] 
-Results:
-32:53 INFO - [dmkd_additions/text_simplification/compute_metrics.py:236] Metrics computation completed
+42:40 INFO - [dmkd_additions/text_simplification/compute_metrics.py:433] Starting metrics computation
+42:40 INFO - [dmkd_additions/text_simplification/compute_metrics.py:437] 
+Creating LaTeX table...
+42:40 INFO - [dmkd_additions/text_simplification/compute_metrics.py:276] Creating LaTeX table
+42:45 INFO - [dmkd_additions/text_simplification/compute_metrics.py:23] Starting metrics computation
+42:45 INFO - [dmkd_additions/text_simplification/compute_metrics.py:38] Loading tokenizer and label encoder
+42:45 INFO - [dmkd_additions/text_simplification/compute_metrics.py:49] Loading BERT model
+42:48 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-2024-08-06_university-of-lausanne__AYDSOp5f_predictions.csv
+42:48 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:119] Computing accuracy
+42:52 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:170] Computing similarity
+42:57 INFO - [dmkd_additions/text_simplification/compute_metrics.py:74] Processing test_set_ft_gpt-4o-mini-2024-07-18_university-of-lausanne__AYDK3AI2_predictions.csv
+42:57 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:119] Computing accuracy
+43:00 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:170] Computing similarity
+43:05 INFO - [dmkd_additions/text_simplification/compute_metrics.py:102] Saved metrics to results/dmkd_additions/text_simplification/compute_metrics/simplification_metrics.csv
+43:05 INFO - [dmkd_additions/text_simplification/compute_metrics.py:104] Metrics computation completed
+43:05 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:305] All results after deduplication:
+43:05 DEBUG - [dmkd_additions/text_simplification/compute_metrics.py:306]              Accuracy  Similarity  Fine_tuned     Score
+Mistral_ft   0.590000    0.910000        True  0.262703
+GPT-3.5_ft   0.570000    0.910000        True  0.260163
+GPT-3.5      0.530000    0.930000       False  0.258570
+GPT-4        0.510000    0.930000       False  0.255515
+Mistral      0.470000    0.930000       False  0.248883
+GPT-4o       0.460000    0.890000       False  0.239941
+Davinci_ft   0.440000    0.830000        True  0.225606
+GPT-4o-Mini  0.548377    0.539453        True  0.173189
+GPT-4o       0.566637    0.511024        True  0.166802
+43:05 INFO - [dmkd_additions/text_simplification/compute_metrics.py:423] Saved LaTeX table to results/dmkd_additions/text_simplification/compute_metrics/latex/text_simplification_metrics.tex
+43:05 INFO - [dmkd_additions/text_simplification/compute_metrics.py:439] LaTeX table created successfully
+43:05 INFO - [dmkd_additions/text_simplification/compute_metrics.py:445] Metrics computation completed
