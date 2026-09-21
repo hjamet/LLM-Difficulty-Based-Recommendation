@@ -29,9 +29,22 @@ scratch
 
 .python-version
 
-# Results directory, but keep dmkd_additions
+# Results and Evaluation Data (Preserved for DMKD Revision)
 results/*
 !results/dmkd_additions/
+!results/dmkd_additions/**
+!results/text_simplification/
+!results/text_simplification/**
+
+# Data whitelisting
+!data/
+data/*
+!data/datasets_reference/
+!data/datasets_reference/**
+!data/results/
+!data/results/**
+!data/results/dmkd_additions/
+!data/results/dmkd_additions/**
 
 # Hugging Face repository
 FLDE/
