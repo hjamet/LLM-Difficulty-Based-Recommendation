@@ -52,3 +52,11 @@ FLDE/
 # Cursor
 .cursorignore
 .cursorrules
+
+# Multi-agent system & logs
+.agents/
+logs/app.log
+*.tmp
+
+# Streamlit annotation study (anti-conflict)
+dmkd_additions/text_simplification/reviews/annotations_consolidated.csv
