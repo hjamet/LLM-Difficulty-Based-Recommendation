@@ -1,0 +1,279 @@
+\subsection{Recommendation}\label{sec:recommendation_results}
+
+Here, we illustrate the recommendation accuracy and other related metrics when using LLM-enhanced recommendation models. We evaluate the models across diverse set including both publicly available and proprietary datasets:
+
+\begin{itemize}
+    \item \textbf{Zeeguu} \cite{Lungu18}:  We used data log files from the Zeeguu Language Learning Dataset\footnote{\url{https://github.com/zeeguu/data-releases}} as for the previous tasks. Since we have the history of articles that each user browsed or read, embeddings were generated using the complete content of each article. The dataset provides a unique perspective on user engagement with linguistic content, essential for applications in language learning.
+    
+    \item \textbf{ml-100k} \cite{movielens}:  We use an augmented version of Movielens\footnote{\url{https://www.kaggle.com/datasets/lamarockzz/enhanced-movielens-100k/}} containing additional information on the movies which helps us generate the item embeddings  (\autoref{embeddings}).
+    \item \textbf{Goodreads} \cite{goodreads1,goodreads2}: For Goodreads, we use only the children's book reviews. 
+    \item \textbf{Tomplay} \cite{tomplay}: The Tomplay dataset is a proprietary music education dataset. This data is unique in its focus on musical sheet interactions, reflecting user engagement in a musical learning environment. As shown in \autoref{tab:datasets}, we keep a subset of the total number interactions (as explained in \autoref{subsec:data_preprocessing}). 
+    
+\end{itemize}
+
+In \autoref{tab:datasets}, we summarize information about these datasets, as used in our experiments, after any post-processing.
+
+
+\begin{table}[ht]
+\centering
+\caption{Overview of datasets used for the recommendation task}
+\label{tab:datasets}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Dataset} & \textbf{\# Users} & \textbf{\# Items} & \textbf{\# Interactions} & \textbf{Sparsity} & \textbf{Test data}  \\
+\midrule
+Zeeguu        & 1,574 & 21,030 & 25,227 & 99.92\% & 20.77\%\\
+ml-100k          & 942 & 1,447 & 55,375 & 95.94\% & 20.01\%\\ %vérifié le 23/01/24
+Goodreads        & 39,628 & 92,131 & 504,585 & 99.99\% & 22.37\%\\ % vérifié le 16/01/24
+Tomplay          & 35,028 & 30,050 & 724,651 & 99.93\% & 19.96\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Data pre-processing}
+\label{subsec:data_preprocessing}
+
+
+ We separated the datasets into training and test sets. The models are trained based on the interactions of training set, and they are tested on the test set interactions.
+ 
+ For train-test split, we applied the following pre-processing:
+\begin{enumerate}
+    \item Users with a single interaction have been excluded.
+    \item For users with more than one interaction, we aimed for an 80/20 ratio between training and testing sets, while ensuring at least one interaction per user in the test set. The actual percentage of data allocated to the test set is shown in \autoref{tab:datasets}.
+\end{enumerate}
+
+For the \textbf{ml-100k} and \textbf{Goodreads} datasets, only interactions with ratings above 4 were retained. These ratings were then modified by subtracting 3 to align them with a scale indicative of positive feedback.
+In the processing of the \textbf{Tomplay} dataset, we initially sampled only the most recent interaction of a user with each item. Subsequently, we limited the data to the latest 30 items per user, focusing on capturing their most current preferences.
+
+
+\subsubsection{Embeddings}
+\label{embeddings}
+
+We used LLM-based embedding to represent both the items and the users. Item embeddings comprised of BERT and ADA v2, both known for their effectiveness in capturing semantic information. These embeddings provide a rich, high-dimensional representation of text data, crucial for the performance of our recommendation models. Regarding BERT, we used the \textit{paraphrase-xlm-r-multilingual-v1}\footnote{\url{https://huggingface.co/sentence-transformers/paraphrase-xlm-r-multilingual-v1}} model (inspired by \cite{tomplay}) available from Hugging Face. This model, part of the Sentence Transformers library, maps sentences and paragraphs into a 768-dimensional dense vector space. It is particularly adept at tasks like clustering and semantic search due to its ability to capture nuanced meanings in text. The model utilizes the XLMRobertaModel Transformer with a maximum sequence length of 128 and includes a pooling layer to aggregate word embeddings into a single sentence embedding. This pooling layer employs mean pooling of the token embeddings, which helps in capturing the essence of the entire sentence in the vector representation. Another item embeddings we used, ADA v2, offers embeddings that excel in capturing a broad spectrum of linguistic features and subtleties. These are accessible through the OpenAI API and are instrumental in understanding complex text structures, rendering them highly suitable for the contextual demands of our recommendation system.
+
+For the construction of user embeddings, we employ an aggregation approach based on the set of items each user has interacted with. Specifically, we compute the mean embeddings of the last $n$ items viewed by a user, experimenting with various values of $n$. Our empirical results indicate that smaller values of $n$, such as 1 or 2, generally yield better performance. This method circumvents the need for explicit user information, which can often be difficult to acquire, by leveraging the available item embeddings to infer user preferences. Thus, the user embeddings are effectively defined by the content they engage with, reflecting their implicit interests and behaviors.
+
+
+In the generation of embeddings for our datasets, we use specific content tailored to the nature of each dataset. Here is a summary of the content used for each:
+
+\begin{enumerate}
+    \item \textbf{Zeeguu:} Embeddings are generated using the content of each article (the real content of the item).
+
+    \item \textbf{ml-100k:} Embeddings are created by concatenating the movie's title, summary, release date, cast, director, genres, runtime, rating, and the number of ratings.
+
+    \item \textbf{Goodreads:} Embeddings include the book's title, description, publication date, publisher, format, number of pages, text reviews count, country code, language code, average rating, and ratings count.
+
+    \item \textbf{Tomplay:} Embeddings are generated using the music piece's title, composer, style, type of accompaniment, level, and instruments.
+\end{enumerate}
+
+% For each dataset, the ADA v2 embeddings are truncated to 8000 tokens due to the context length limitation of 8192 tokens. This truncation prioritize the most significant information to ensure the generation of effective embeddings.
+
+\subsubsection{Models}
+\label{subsec:models}
+
+We evaluate a diverse range of models on our datasets, representative of various approaches in recommendation system design, from collaborative filtering and content-based methods to advanced graph-based techniques. For brevity, we summarize these models in \autoref{tab:model-summary}.
+
+
+
+% Models table
+\begin{table}[htbp]
+\caption{Summary of Recommendation Models}
+\label{tab:model-summary}
+%\resizebox{\columnwidth}{!}{%
+\begin{tabular}{ll}
+\toprule
+\textbf{Category} & \textbf{Description} \\
+\midrule
+\textbf{Collaborative Filtering} & \\
+ALS \cite{als1, als2} & Alternates between solving user and item matrices. \\
+BPR \cite{bpr} & Optimizes pairwise item rankings from user history. \\
+LMF \cite{lmf} & Uncovers latent features for future preference prediction. \\
+\midrule
+\textbf{Content-based} & \\
+KNN & Recommends items based on nearest feature similarity using \\ & the BERT and ADA embeddings (see \autoref{embeddings}). \\
+\midrule
+\textbf{Graph-based} & \\
+LightGCN \cite{lightgcn} & A simplified GCN with two initialization methods: \\
+ & Xavier: Random initialization to aid training convergence.
+\\
+ & Pretrained (see \autoref{embeddings}): Employs BERT and ADA embeddings. \\
+\bottomrule
+\end{tabular}%
+% }
+\end{table}
+
+
+For our experiments, we adopted a rigorous approach to optimize the performance of each recommendation model. Using grid search combined with early stopping (patience parameter set to 10) and monitoring NDCG@5 as the evaluation metric, we fine-tuned each model to select the hyperparameter combination that yielded the best results. \textcolor{red}{Formally, Normalized Discounted Cumulative Gain at rank $K=5$ ($\text{NDCG}@5$) is defined as $\text{NDCG}@5 = \frac{\text{DCG}@5}{\text{IDCG}@5}$, where
+\begin{equation}\label{eq:dcg_def}
+\text{DCG}@5 = \sum_{r=1}^{5} \frac{2^{\text{rel}_r} - 1}{\log_2(r + 1)},
+\end{equation}
+$\text{rel}_r \in \{0, 1\}$ denotes the binary relevance of the item ranked at position $r$ for a given test user, and $\text{IDCG}@5$ is the ideal $\text{DCG}@5$ achieved by sorting the user's ground-truth test items first. In our LightGCN ablation, we compare two initialization regimes for the layer-0 embedding table $\mathbf{E}^{(0)} \in \mathbb{R}^{(|\mathcal{U}|+|\mathcal{I}|) \times d}$: (1) standard Xavier uniform initialization, which draws weights independently from
+\begin{equation}\label{eq:xavier_init}
+W \sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}},\, +\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}\right)
+\end{equation}
+without prior semantic knowledge, and (2) LLM-pretrained initialization, which sets $\mathbf{e}_i^{(0)}$ and $\mathbf{e}_u^{(0)}$ to the semantic vectors defined in Equations~(\ref{eq:item_emb})--(\ref{eq:user_emb}). Warm-starting $\mathbf{E}^{(0)}$ with LLM embeddings injects semantic proximity into the bipartite graph from epoch 0, mitigating cold-start sparsity for items with few interactions.}
+
+For \textbf{ALS}, \textbf{BPR}, and \textbf{LMF}, we utilized the Implicit library\footnote{\url{https://benfred.github.io/implicit/}}. For \textbf{LightGCN}, we employed the Microsoft Recommenders library\footnote{\url{https://github.com/recommenders-team/recommenders}} optimized for GPU usage. Models using pre-trained embeddings underwent further codebase adaptations to integrate these features effectively. The hyperparameters tested are summarized in Table~\ref{tab:hyperparameters}. We note, that because of the sheer amount of parameters tested for this experimental setup, the duration of the recommendation experiments alone exceeded four weeks of full computational runtime.
+
+
+% Hyperparameters table using tabularx
+\begin{table}[ht]
+\centering
+\caption{Hyperparameters tested for ALS, BPR, LMF, LightGCN, and KNN}
+\label{tab:hyperparameters}
+\begin{tabularx}{\columnwidth}{lX}
+\toprule
+\textbf{Model} & \textbf{Hyperparameters} \\
+\midrule
+ALS & Factors (20, 50, 100); Regularization (0.001, 0.01, 0.05, 0.1); Alpha (1, 5, 10, 40, 50) \\
+BPR & Factors (20, 50, 100); Regularization (0.001, 0.01, 0.05, 0.1); Learning Rate (0.001, 0.01, 0.05, 0.1); Negative Sample Verification (True/False) \\
+LMF & Factors (20, 50, 100); Regularization (0.05, 0.1, 0.5, 0.6, 1); Learning Rate (0.05, 0.1, 0.5, 1); Negative Proportion (10, 30, 50) \\
+LightGCN & Layers (1 to 10); Neighbours (1, 2, 3, 5, 20, 30, 50); Learning Rate (0.0005, 0.001, 0.01, 0.05, 0.1) \\
+KNN & Neighbours (1, 2, 3, 4, 5, 10, 20, 30, 50, 100) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Results}
+
+
+
+\begin{table}[ht]
+\centering
+\begin{minipage}{\textwidth} 
+\caption{Evaluation results}
+\label{tab:evaluation_results}
+% \resizebox{\textwidth}{!}{%
+% \begin{adjustbox}{width=\textwidth}
+% \begin{tabular}{lccccccc}
+\tiny % Reduce font size
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} lccccccc}
+% \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l l S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]}
+
+\toprule
+\rotatebox{45}{\textbf{Dataset}} & \rotatebox{45}{\textbf{Model}} & \rotatebox{45}{\textbf{Recall@5}} & \rotatebox{45}{\textbf{Precision@5}} & \rotatebox{45}{\textbf{F1@5}} & \rotatebox{45}{\textbf{NDCG@5}} & \rotatebox{45}{\textbf{MRR@5}} & \rotatebox{45}{\textbf{MAP@5}} \\
+
+\midrule
+% Results for Zeeguu
+\multirow{9}{*}{\rotatebox{45}{Zeeguu}} & ALS       & 0.0626 & 0.0236 & 0.0309 & 0.0595 & 0.0774 &  0.0498\\
+          & BPR       & 0.0182  & 0.0061 & 0.0082 & 0.0168 & 0.0191 & 0.0146 \\
+          & LMF       & 0.0251 & 0.0084 & 0.0116 & 0.0235	& 0.0291 & 0.0202 \\
+          & KNN  ADA & 0.0357 & 0.0122 & 0.0155 & 0.0290 & 0.0324 & 0.0232 \\ 
+          & KNN BERT & 0.0170 & 0.0050	& 0.0066 & 0.0143 & 0.0159 & 0.0121 \\ 
+          & LightGCN ADA & \textbf{0.0721} & \textbf{0.0274} & \textbf{0.0352} & \textbf{0.0666} & \textbf{0.0843} & \textbf{0.0550} \\
+          & LightGCN Xavier ADA & 0.0630 & 0.0238 & 0.0308 & 0.0594 & 0.0759 & 0.0498 \\
+          & LightGCN BERT & 0.0659 & 0.0249 & 0.0323 & 0.0609 & 0.0788 & 0.0501 \\
+          & LightGCN Xavier BERT & 0.0622 & 0.0231 & 0.0300 & 0.0599 & 0.0765 & 0.0508 \\
+\midrule
+% Results for ml-100k
+\multirow{9}{*}{\rotatebox{45}{ml-100k}}   & ALS & 0.0767 & 0.1285 & 0.0806 & 0.1414	& 0.2504 & 0.0850 \\
+          & BPR       & 0.0551 & 0.0975 & 0.0580 & 0.1084	& 0.1995 & 0.0634 \\
+          & LMF       & 0.0381 & 0.0635 & 0.0400 & 0.0704	& 0.1419 & 0.0379 \\
+          & KNN ADA      & 0.0188 & 0.0323 & 0.0196	& 0.0384 & 0.0781 & 0.0222 \\ 
+          & KNN BERT & 0.0116 & 0.0189 & 0.0117	& 0.0234 & 0.0495 & 0.0135 \\ 
+          & LightGCN ADA & \textbf{0.0903} & \textbf{0.1348}	& \textbf{0.0882} & \textbf{0.1556} & 0.2682 & \textbf{0.0975} \\
+          & LightGCN Xavier ADA & 0.0881 & 0.1346 & 0.0869 & 0.1548 & 0.2720 & 0.0958 \\
+          & LightGCN BERT &  0.0855 &	0.1316 & 0.0847 & 0.1547 & \textbf{0.2761} & 0.0971 \\
+          & LightGCN Xavier BERT & 0.0855 & 0.1323 & 0.0847	& 0.1508 & 0.2636 & 0.0922 \\
+\midrule
+% Results for Goodreads
+\multirow{9}{*}{\rotatebox{45}{Goodreads}} & ALS       & 0.0634 & 0.0156	& 0.0237 & 0.0447 & 0.0419 & 0.0366 \\
+          & BPR       & 0.0447 & 0.0114 & 0.0168 & 0.0323	& 0.0323 & 0.0261 \\
+          & LMF       & 0.0432 & 0.0099 & 0.0155 & 0.0280	& 0.0245 & 0.0221 \\
+          & KNN ADA & 0.0175 & 0.0050 & 0.0070 & 0.0127 & 0.0127 & 0.0101 \\
+          & KNN BERT & 0.0100 & 0.0029 & 0.0040 & 0.0075 & 0.0078 & 0.0060 \\
+          & LightGCN ADA & \textbf{0.0732}	& \textbf{0.0183} & \textbf{0.0275} & \textbf{0.0513} & \textbf{0.0481} & \textbf{0.0415} \\
+          & LightGCN Xavier ADA & 0.0603 & 0.0155 & 0.0231 & 0.0432 & 0.0415 & 0.0352 \\
+          & LightGCN BERT & 0.0673	& 0.0170 & 0.0254 & 0.0473 & 0.0449 & 0.0382 \\
+          & LightGCN Xavier BERT & 0.0570 & 0.0149 & 0.0220 & 0.0416 & 0.0405 & 0.0340 \\
+\midrule
+% Results for Tomplay
+ \multirow{9}{*}{\rotatebox{45}{Tomplay}}   & ALS       & 0.0875 & 0.0598	& 0.0650 & 0.0838 & 0.1408 & 0.0528 \\
+        & BPR       & 0.0295 & 0.0236 & 0.0246 & 0.0306 & 0.0583 & 0.0178 \\
+        & LMF       & 0.0327 & 0.0249 & 0.0263 & 0.0323 & 0.0598 & 0.0187 \\
+ & KNN ADA  & 0.0269 & 0.0170 & 0.0188 & 0.0242 & 0.0379 & 0.0156 \\
+        & KNN BERT  & 0.0323 & 0.0209 & 0.0229 & 0.0314	& 0.0514 & 0.0210 \\
+         & LightGCN ADA & 0.0958 & 0.0646	& 0.0706 & 0.0924 & 0.1541 & 0.0595 \\
+         & LightGCN Xavier ADA  & 0.0943 & 0.0643 & 0.0699 & 0.0910 & 0.1528 & 0.0581 \\
+          & LightGCN BERT  & \textbf{0.0984} & \textbf{0.0660} & \textbf{0.0722}	& \textbf{0.0947} & \textbf{0.1582} & \textbf{0.0608} \\
+          & LightGCN Xavier BERT & 0.0966 & 0.0656	& 0.0715 & 0.0936	& 0.1566 & 0.0601 \\
+          
+\bottomrule
+% \end{tabular}%
+\end{tabular*}
+% \end{adjustbox}
+% }
+\end{minipage}
+\end{table}
+
+The optimal hyperparameters for each model and dataset, identified through grid search and early stopping, are summarized in \textcolor{red}{\autoref{tab:hyperparameters} (with per-dataset optimal selections documented in the companion repository)}. These values represent the configuration that achieved the highest NDCG@5 scores, thus ensuring each model's performance is maximized for comparison.
+
+% \begin{table}[ht]
+% \centering
+% \caption{Evaluation Results}
+% \label{tab:evaluation_results}
+% \small % Taille de police réduite pour que tout tienne sur une page
+% \begin{tabular}{l|*{8}{>{\centering\arraybackslash}p{1.5cm}}}
+% \toprule
+% \textbf{Metric} & \rotatebox{45}{\textbf{ALS (Zeeguu)}} & \rotatebox{45}{\textbf{BPR (Zeeguu)}} & \rotatebox{45}{\textbf{LMF (Zeeguu)}} & \rotatebox{45}{\textbf{KNN ADA (Zeeguu)}} & \rotatebox{45}{\textbf{LightGCN ADA (Zeeguu)}} & \rotatebox{45}{\textbf{ALS (ml-100k)}} & \rotatebox{45}{\textbf{BPR (ml-100k)}} & \rotatebox{45}{\textbf{LightGCN ADA (ml-100k)}} \\
+% \midrule
+% Recall@5    & 0.0626 & 0.0182 & 0.0251 & 0.0357 & \textbf{0.0721} & 0.0767 & 0.0551 & \textbf{0.0903} \\
+% Precision@5 & 0.0236 & 0.0061 & 0.0084 & 0.0122 & \textbf{0.0274} & 0.1285 & 0.0975 & \textbf{0.1348} \\
+% F1@5        & 0.0309 & 0.0082 & 0.0116 & 0.0155 & \textbf{0.0352} & 0.0806 & 0.0580 & \textbf{0.0882} \\
+% NDCG@5      & 0.0595 & 0.0168 & 0.0235 & 0.0290 & \textbf{0.0666} & 0.1414 & 0.1084 & \textbf{0.1556} \\
+% MRR@5       & 0.0774 & 0.0191 & 0.0291 & 0.0324 & \textbf{0.0843} & 0.2504 & 0.1995 & 0.2682 \\
+% MAP@5       & 0.0498 & 0.0146 & 0.0202 & 0.0232 & \textbf{0.0550} & 0.0850 & 0.0634 & \textbf{0.0975} \\
+% \bottomrule
+% \end{tabular}
+% \footnotesize
+% Note: The values in parentheses indicate the dataset used (e.g., Zeeguu, ml-100k).
+% \end{table}
+
+\begin{table}[ht]
+\centering
+\caption{NDCG@5 Improvement: Percentage increase for ADA and BERT embeddings over their respective Xavier initializations in LightGCN.}
+\label{tab:increase_ndcg}
+\begin{tabular}{lcc}
+\toprule
+Dataset & ADA Increase (\%) & BERT Increase (\%) \\
+\midrule
+Zeeguu & 12.12 & 1.67 \\
+ml-100k & 0.52 & 2.59 \\
+Goodreads & 18.75 & 13.7 \\
+Tomplay & 1.54 & 1.18 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+In \autoref{tab:evaluation_results}, we observe a consistent enhancement in LightGCN's performance when leveraging pre-trained embeddings over Xavier initialization. This improvement is uniform across all four datasets and both embedding methodologies (BERT and ADA).
+
+
+
+
+The LightGCN architecture, with the Xavier initialization, achieves results on par with ALS. However, when initialized with pre-trained LLM-based embeddings, we observe significant improvements in performance, especially for datasets like Zeeguu, where the embedding input is text-rich, comprising the full content of articles. This advantage is also evident in the Goodreads dataset, where the embeddings are constructed from comprehensive book descriptions and other textual metadata, underlining the effectiveness of high-fidelity content in generating embeddings.
+
+\autoref{tab:increase_ndcg} highlights that the most substantial enhancements in NDCG@5 are witnessed with datasets enriched with detailed textual content. ADA, with its advanced LLM capabilities, demonstrates exceptional proficiency in capturing the nuances of such content, leading to notable gains, particularly in the Zeeguu dataset. This suggests that the improvements are not merely a factor of dataset sparsity but are significantly influenced by the quality and quantity of textual information processed by the embedding.
+
+However, in the case of the Tomplay dataset, we see a unique outcome where BERT embeddings outperform OpenAI's ADA. Here, the more compact BERT embeddings seem to encapsulate better the dataset's essence, despite the latter's less descriptive text content compared to Zeeguu and Goodreads. Nonetheless, for both BERT and ADA, pre-trained embeddings outperform the Xavier initialization, reinforcing the superiority of pre-trained embeddings in enhancing recommendation quality across varying dataset characteristics.
+
+It is worth noting that while KNN, a purely content-based approach, achieves comparable results to collaborative filtering methods, the integration of both approaches within a single model yields even better outcomes. Specifically, hybrid methods like LightGCN with LLM-enhanced embeddings can leverage the strengths of both content-based and collaborative filtering techniques, leading to improved recommendation quality. This combination enables the model to capture a more comprehensive range of user-item interactions and delivers recommendations that are both contextually relevant and highly personalized, without increasing model complexity.
+
+\subsubsection{Varying the number of layers}
+
+
+
+In \autoref{fig:graph_ada}, we examine the impact of increasing the number of layers in the LLM-enhanced graph-based LightGCN model on the Zeeguu dataset. Given the sparse nature of this dataset, the addition of more layers enhances the recommendation quality by enabling the model to capture information from distant neighbours, thereby enriching the representation of user-item interactions.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/ndcg_ada.pdf}
+    % \includegraphics[width=0.49\textwidth]{figures/ndcg_graph_xavier_ada.pdf}
+    \caption{[Zeeguu dataset] NDCG@5 for varying number of layers for the LLM-enhanced LightGCN recommendation model.}
+    \label{fig:graph_ada}
+\end{figure}
+
+This analysis was conducted under a unified framework where all models were trained with a learning rate of 0.001 and a single neighbour for user embedding definition. These settings were previously identified to provide good results. Notably, the improvement with additional layers is observed for both pretrained and Xavier-initialized models, suggesting that this enhancement is a characteristic of the dataset rather than the embedding initialization method.
+
+While additional layers contribute to improved recommendation quality, especially for sparse datasets like Zeeguu, LightGCN's effectiveness even with fewer layers demonstrates its ability to leverage both content-based and collaborative signals efficiently. This reinforces the suitability of a smaller, hybrid model for maintaining high performance without the computational demands of larger architectures. \textcolor{red}{From a practical deployment standpoint, we recommend three concrete guidelines: (1) on text-rich, high-sparsity domains such as article or book recommendation (Zeeguu, Goodreads, sparsity $>99.9\%$), initialize LightGCN with 1536-dimensional OpenAI ADA embeddings ($L = 3$ to $5$ propagation layers, $n \in \{1, 2\}$ recent items for user profile aggregation), which yields $+12.12\%$ to $+18.75\%$ NDCG@5 gains over Xavier initialization; (2) on structured metadata catalogues with short textual fields (Tomplay, ml-100k), use compact 768-dimensional multilingual BERT embeddings, which match or exceed proprietary API embeddings at zero inference cost; and (3) under strict latency or cold-start constraints where graph training is infeasible, deploy cosine KNN over ADA embeddings with $k \in [10, 20]$ neighbors as a lightweight fallback.}

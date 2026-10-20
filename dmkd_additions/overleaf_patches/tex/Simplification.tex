@@ -1,0 +1,112 @@
+\section{Text Simplification}\label{sec:simplification}
+
+\subsection{Motivation}
+
+In the context of a foreign language learning app, we explore the scenario where we have discovered content matching the user's interests (such as sports or politics), but it is more advanced than their current language proficiency level. Text simplification has proven to be an essential tool for helping non-native learners and those struggling with reading comprehension problems \cite{automated_althanyyan_2021}. However, recent studies show that automatic text simplification (ATS) systems must be carefully tailored to specific proficiency levels, as their effectiveness varies across different learner groups \cite{odo2022effect}.
+
+Evaluating text simplification systems is a complex task requiring robust metrics to account for both readability and semantic preservation. Traditional n-gram based metrics such as \textbf{BLEU} (Bilingual Evaluation Understudy) or \textbf{ROUGE} (Recall-Oriented Understudy for Gisting Evaluation), though popular in translation tasks, have limitations when applied to text simplification. This is due to the fundamental requirement of simplification to alter the text structure while maintaining the same meaning \cite{automated_althanyyan_2021} \cite{rethinking_scialom_2021}. The \textbf{SARI} (System output Against References and Input sentence) metric, designed specifically for simplification tasks, measures the quality of words added, deleted, and kept by the system. However, recent work has highlighted limitations of these operation-specific metrics for evaluating multi-operation simplifications that require more general simplicity judgments \cite{alvamanchego2021unsuitability}. Current research explores new evaluation approaches that combine multiple criteria - grammaticality, meaning preservation, and simplicity - into unified metrics \cite{ajlouni2023towards}.
+
+While text summarization and text simplification may appear similar as both involve altering the original text, their objectives are distinct. Summarization aims to condense a text by trimming down its length and retaining only the main points. Simplification seeks to lower the linguistic complexity, making content more accessible \cite{rethinking_scialom_2021}. Unlike summarization, simplification deals with adjusting the text to a particular knowledge or comprehension level, with term familiarity being a more effective metric than traditional syllable-based measures for assessing actual text difficulty \cite{kauchak2016moving}.
+
+The hybrid task of combining both text summarization and simplification has been investigated in the context of generating summaries for lay audiences. This task, known as "lay summarization," aims to render complex scientific content accessible to a general audience, requiring the extraction of key points and simultaneously a reduction in linguistic complexity \cite{lay_vinzelberg_2023,divide_chaturvedi_2020}. Transformer models based on \textbf{BERT} \cite{Bert2019} and \textbf{PEGASUS} \cite{zhang2020pegasus} have been used in this context.
+
+Recent advancements in Large Language Models (LLMs) have greatly contributed to the field of text simplification \cite{language_radford_2019}, particularly by improving the quality and fluency of simplified texts. However, the efficacy of these models varies, and not all are equally suited for the task, calling for evaluation and fine-tuning on specialized datasets \cite{sentence_shatilov_2021}. A recent analysis by \cite{sentence_feng_2023} highlights that when evaluated on public datasets, contemporary LLMs like \textbf{GPT-3} can match or even outperform systems explicitly designed for text simplification.
+
+\subsection{Our approach}
+
+\subsubsection{Sentence-by-sentence simplification}
+
+We model simplification in a similar way as for content difficulty estimation. However, instead of predicting the level of difficulty, we predict the simplified sentence token by token. We provide labeled examples of original and simplified sentences and fine-tune a pre-trained LLM.
+
+Because we only instruction-tune LLMs, we need to provide very few pairs of examples, since the LLMs have already encapsulated large amounts of textual knowledge. Recent research has shown that task-specific models can be trained using as little as 0.5\% of the original task dataset, with a 2\% performance improvement over those trained on full task-related data \cite{Chen2023Maybe}. In our experiments, we only post-train the LLMs using 125 pair sentences, and show large improvements compared to the zero-shot LLM counterpart.
+
+Our goal is to assist learners in improving their language skills by reading content close to their knowledge/experience level. Therefore, simplification of a given text is approached as a sentence-by-sentence simplification, and not as a complete synthesis of new text. This granular approach offers several advantages:
+
+First, it provides greater flexibility by allowing users to request simplification selectively for specific sentences they find challenging while maintaining the original form of sentences they can already understand. This selective approach helps prevent over-simplification which could hinder the learning process. Second, our approach focuses on reformulating individual sentences using simpler synonyms and syntactic structures without altering the text's overall structure or content organization. By preserving the original flow and pedagogical progression of the text while making individual sentences more accessible, learners can better grasp complex ideas progressively. Finally, sentence-level simplification enables more precise evaluation of both semantic preservation and simplification effectiveness, as metrics can be computed and validated at a more granular level. This granular evaluation helps ensure that each simplified sentence maintains its original meaning while being genuinely simpler. 
+
+
+% A demonstration of an interface presenting the methods for difficulty estimation and automatic text simplification can be consulted \href{https://streamable.com/5oiwg9}{\fbox{here}}.
+
+
+\subsection{Evaluation metric}
+
+A key challenge in text simplification involves evaluating and balancing the trade-off between preserving the meaning and semantics of the original text and achieving effective simplification. The more we simplify, the more we may lose the original meaning, depending on the complexity of the original text. To evaluate these conflicting aspects, we introduce two metrics: simplification accuracy and semantic similarity.
+
+\noindent\rule{\textwidth}{0.4pt}
+
+Given a set of original sentences $\mathcal{O}$, their simplified versions $\mathcal{T}$ generated by a model $m$ ($\mathcal{O} \overset{m}{\longrightarrow} \mathcal{T}$), and $\mathbf{e}(\cdot) \in \mathbb{R}^d$ as the contextualized sentence embedding representation extracted via mean pooling over CamemBERT token representations, we formally define our evaluation metrics below:
+
+\textbf{Simplification accuracy} $(A) \in [0, 1]$: defined as the average across difficulty thresholds of the product of cumulative probabilities of belonging to each class between the original sentence $x \in \mathcal{O}$ (from level \textit{A2} to \textit{C2}) and the simplified sentence $\hat{x} \in \mathcal{T}$ (from level \textit{A1} to \textit{C1}). It represents the expected probability that the simplified text is \textit{at least one} difficulty level lower than the original.
+
+\textbf{Semantic Similarity} $S \in [0, 1]$: a real number capturing the preservation of semantic meaning of the simplified sentence $\hat{x}$ with respect to the original sentence $x$. \textcolor{red}{Formally, $S(x, \hat{x})$ is defined as the cosine similarity between their contextualized embedding vectors $\mathbf{e}(x), \mathbf{e}(\hat{x}) \in \mathbb{R}^d$:}
+\textcolor{red}{\begin{equation}
+    S(x, \hat{x}) = \frac{\mathbf{e}(x) \cdot \mathbf{e}(\hat{x})}{\|\mathbf{e}(x)\|_2 \, \|\mathbf{e}(\hat{x})\|_2} = \frac{\sum_{m=1}^{d} e_m(x)\, e_m(\hat{x})}{\sqrt{\sum_{m=1}^{d} e_m(x)^2} \sqrt{\sum_{m=1}^{d} e_m(\hat{x})^2}}.
+    \label{eq:semantic_similarity}
+\end{equation}}
+For a test set of sentence pairs, we report the mean similarity $S$. Note that this measure allows sentences to use different lexical choices while retaining a high similarity score if their vectors remain close in the semantic embedding space.
+
+\textbf{Weighted-score}: We integrate both aspects, simplification accuracy and semantic similarity, into a single weighted harmonic mean inspired by the \textit{F1-score}:
+\textcolor{red}{\begin{equation}
+    w\text{-Score} = 2 \times \frac{w_1 A \times w_2 S}{w_1 A + w_2 S},
+    \label{eq:w_score}
+\end{equation}}
+where $w_2 = 1 - w_1$. The coefficients $w_1$ and $w_2$ balance the relative contribution of the two components. Note that we always report $A$ and $S$ alongside $w\text{-Score}$ (see Table~\ref{tab:text_simplification_metrics}) to distinguish the specific trade-offs of each model.
+
+While $S$ is computed directly via Equation~\ref{eq:semantic_similarity}, evaluating the simplification accuracy $A$ requires estimating the difficulty distribution of both the original text $x$ and its simplified rewrite $\hat{x}$. We address this by using our fine-tuned \textbf{CamemBERT} classifier as a calibrated \textit{proxy} evaluator. Denoting $\mathbf{o} = (o_1, \dots, o_6)$ as the proxy model's predicted class probabilities for the original sentence across CEFR levels $(\texttt{A1}, \dots, \texttt{C2})$ and $\mathbf{s} = (s_1, \dots, s_6)$ as the predicted class probabilities for the simplified sentence (where $\sum_{j=1}^6 o_j = 1$ and $\sum_{k=1}^6 s_k = 1$), we compute:
+\textcolor{red}{\begin{equation}
+    A = \frac{1}{5} \sum_{i=2}^{6} \left( \sum_{j=i}^{6} o_j \right) \left( \sum_{k=1}^{i-1} s_k \right).
+    \label{eq:simplification_accuracy}
+\end{equation}}
+\textcolor{red}{More generally, for any language learning framework defined over $K \ge 2$ ordered proficiency levels $L = \{1, 2, \dots, K\}$ (for instance, ACTFL with $K=5$ or \texttt{LjL} with $K=4$), Equation~\ref{eq:simplification_accuracy} generalizes directly to $A_K \in [0, 1]$ by averaging over all $K - 1$ interior difficulty boundaries:}
+\textcolor{red}{\begin{equation}
+    A_K(x, \hat{x}) = \frac{1}{K - 1} \sum_{i=2}^{K} \underbrace{\left( \sum_{j=i}^{K} o_j \right)}_{P(Y_{\text{orig}} \ge i)} \underbrace{\left( \sum_{k=1}^{i-1} s_k \right)}_{P(Y_{\text{simp}} < i)}.
+    \label{eq:simplification_accuracy_general}
+\end{equation}}
+
+\textcolor{red}{\noindent\textbf{Step-by-Step Numerical Example ($K = 6$):} Consider an original B2 sentence $x$ with proxy probability distribution $\mathbf{o} = (0.00, 0.05, 0.15, 0.60, 0.15, 0.05)$ across $(\texttt{A1}, \dots, \texttt{C2})$, and its simplified version $\hat{x}$ with $\mathbf{s} = (0.10, 0.30, 0.50, 0.10, 0.00, 0.00)$. At each boundary $i \in \{2, \dots, 6\}$, we multiply the cumulative probability $O_{\ge i} = \sum_{j=i}^6 o_j$ that the original is at least level $i$ by the cumulative probability $S_{< i} = \sum_{k=1}^{i-1} s_k$ that the simplification is strictly easier than level $i$: for $i=2$ (\texttt{A2}), $1.00 \times 0.10 = 0.100$; for $i=3$ (\texttt{B1}), $0.95 \times 0.40 = 0.380$; for $i=4$ (\texttt{B2}), $0.80 \times 0.90 = 0.720$; for $i=5$ (\texttt{C1}), $0.20 \times 1.00 = 0.200$; and for $i=6$ (\texttt{C2}), $0.05 \times 1.00 = 0.050$. Averaging these five products via Equation~\ref{eq:simplification_accuracy} gives $A = (0.100 + 0.380 + 0.720 + 0.200 + 0.050)/5 = 0.290$.}
+
+This formulation, taking into account the full probability distribution of the original text, eliminates any constant level bias of the proxy model. A simplified version of the code used to calculate this metric is detailed in Listing~\ref{cod:simplification}.
+
+\begin{listing}
+    \begin{minted}[bgcolor=black, breaklines, fontsize=\small]{python}
+def get_simplification_accuracy(df: pd.DataFrame) -> pd.Series:
+    # Get predictions
+    logits = get_bert_difficulty_prediction(
+        pd.concat([df["Original"], df["Simplified"]], axis=0)
+    )
+
+    comparison = {
+        "Original": logits[: len(logits) // 2, 1:], # Remove the first column
+        "Simplified": np.cumsum(logits[len(logits) // 2 :, :-1], axis=1), # Remove the last column
+    }
+    # The probability that the text is at each level is multiplied by the probability that its simplified version is at least one level lower.
+    results = (comparison["Original"] * comparison["Simplified"]).sum(axis=1)
+
+    return results
+\end{minted}
+    \label{cod:simplification}
+    \caption{Simplified version of the python code used to calculate the accuracy of the simplification. Each example corresponds to the average result that could be expected by the model on the test data.}
+\end{listing}
+
+\subsubsection[Estimation of coefficients w1 and w2]{Estimation of coefficients w\textsubscript{1} and w\textsubscript{2}}
+
+To obtain a principled value of the coefficients $w_1$ and $w_2$, we construct two boundary calibration sets from the \texttt{sentencesBooks} corpus \textcolor{red}{($N = 2{,}400$ labeled sentences)}:
+
+\begin{itemize}
+    \item \textbf{Perfect Similitude}: This set consists of pairs of perfectly identical sentences. The ``simplified'' version of each sentence is identical to the original, guaranteeing maximum semantic similarity ($y_1 = 1.000$) and baseline non-simplification accuracy ($x_1$).
+    \item \textbf{Perfect Simplification}: This set consists of random sentence pairs arranged so that the ground-truth CEFR level of the second sentence is strictly lower than that of the first sentence, yielding a higher proxy simplification accuracy ($x_2$) while reducing semantic similarity to the baseline floor of unrelated French sentences ($y_2$).
+\end{itemize}
+
+We then equate the weighted harmonic score (Equation~\ref{eq:w_score}) across these two boundary regimes so that neither regime dominates by scale alone. Solving for $w_1$ yields:
+\textcolor{red}{\begin{equation}
+    w_1^* = \frac{y_1 - y_2}{(x_2 - x_1) + (y_1 - y_2)} = \frac{\Delta S}{\Delta S + \Delta A},
+    \label{eq:w1_calibration}
+\end{equation}}
+where:
+\begin{itemize}
+    \item $x_1$ and $x_2$ denote the mean simplification accuracy $A$ on \textbf{Perfect Similitude} and \textbf{Perfect Simplification} ($\Delta A = x_2 - x_1 \approx 0.046$),
+    \item $y_1 = 1.000$ and $y_2 \approx 0.810$ denote the mean cosine similarity $S$ on \textbf{Perfect Similitude} and \textbf{Perfect Simplification} ($\Delta S = y_1 - y_2 = 0.190$).
+\end{itemize}
+
+\textcolor{red}{Equation~\ref{eq:w1_calibration} reveals the analytical reason why $w_1^* = \frac{0.190}{0.190 + 0.046} = 0.8055 \approx 0.80$ ($w_2^* \approx 0.20$): because contextualized transformer embeddings such as CamemBERT occupy a narrow anisotropic cone in $\mathbb{R}^{768}$, even completely unrelated French sentences exhibit a high baseline cosine similarity floor of $S_0 = y_2 \approx 0.810$, compressing the effective range of $S$ to $[0.810, 1.000]$ ($\Delta S = 0.190$). The weight $w_1 \approx 0.80$ therefore acts as a range-normalizing scaling factor that compensates for embedding anisotropy rather than under-weighting meaning preservation. Furthermore, as we demonstrate empirically across all 9 LLM configurations and 1,000 test pairs from both \texttt{sentencesBooks} and \texttt{sentencesInternet} in Section~\ref{sec:experiments} (\autoref{fig:sensitivity_and_ranks}), the relative ranking of all evaluated models remains strictly invariant (Spearman rank correlation $\rho = 1.0000$, with zero rank crossovers) across the entire operational interval $w_1 \in [0.15, 0.85]$.}
+

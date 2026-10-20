@@ -1,0 +1,62 @@
+\section{Introduction}
+
+Foreign language acquisition is a critical skill in our increasingly interconnected world. Research has consistently demonstrated that reading texts in a foreign language significantly enhances language learning \cite{reading_wright_2006, Frances2020The}, particularly when the content aligns with the reader's interests \cite{interestbased_asgari_2019, Schiefele1999Interest,Chodkiewicz2016On}. However, a significant challenge persists in identifying and providing appropriate reading materials that are both engaging and matched to the learner's proficiency level.
+
+While numerous online language learning platforms exist, such as \href{https://www.duolingo.com/}{\underline{Duolingo}}, \href{https://www.frantastique.com/}{\underline{Frantastique}}, and \href{https://readlang.com/}{\underline{ReadLang}}, they often face limitations in personalization and content relevance. These platforms typically incorporate gamification elements to enhance user engagement and retention \cite{tuncay2020app}. However, they frequently lack the ability to tailor content to individual learners' interests and may not consistently offer relevant, contemporary material.
+
+A critical hurdle in language learning is the appropriate matching of content difficulty to the learner's current knowledge level. Content that is overly simplistic may lead to boredom and disengagement, while excessively challenging material can be discouraging and demotivating. Therefore, personalizing content based on both the learner's interests and proficiency level is crucial for maintaining motivation and optimizing the learning process \cite{2006Penetrating}.
+
+To address these challenges, we propose a comprehensive end-to-end solution that encompasses content curation, difficulty estimation, text simplification, and personalized recommendations. Our system provides a holistic approach to language learning by automating the entire pipeline from discovering relevant content to delivering it to learners in an optimal format. This integrated solution distinguishes itself from existing platforms by addressing not just individual components but the complete learning experience.
+
+Our method focuses on four primary objectives:
+
+\begin{enumerate}
+    \item Curating engaging, contemporary content from the web that aligns with learners' interests.
+    \item Estimating the difficulty of foreign language content with high accuracy.
+    \item Reducing this difficulty while preserving the text's semantic content, when necessary.
+    \item Recommending appropriate texts based on the learner's proficiency level and interests.
+\end{enumerate}
+
+This approach enables the identification, adaptation, and recommendation of appropriate contemporary content in the target language, thereby enhancing learner motivation and engagement. Our system comprises four essential components:
+
+\begin{enumerate}
+    \item \textbf{A content curation mechanism:} This component automatically discovers and filters relevant content from various online sources, ensuring a steady stream of fresh, engaging materials that align with learners' interests.
+
+    \item \textbf{A model for evaluating text complexity:} This component accurately assesses the linguistic difficulty of a given text, allowing for the discovery of content that matches the user's foreign language proficiency.
+
+    \item \textbf{A model for text simplification:} This component reduces the linguistic complexity of a text while maintaining its core meaning. This capability increases the volume of available content and improves the relevance of potential recommendations by making more challenging texts accessible to learners at various proficiency levels.
+
+    \item \textbf{A recommendation system:} This component leverages the outputs of the text complexity and simplification models to suggest appropriate reading materials tailored to each learner's proficiency level and interests.
+\end{enumerate}
+
+We hypothesize that these tasks can significantly benefit from the use of Large Language Models (LLMs). To test this hypothesis, we have evaluated the performance of small, specialized models (ranging from less than 1B to 8B parameters) in comparison with larger, more general models (70B+ parameters) across all components.
+
+Our research methodology involved developing LLM-driven methods for text difficulty estimation, simplification, and recommendation, measuring their performance against state-of-the-art models. \textcolor{red}{While our experimental validation, corpora, and encoder baselines (such as CamemBERT) focus specifically on French texts, the underlying three-stage architecture and evaluation metrics are transferable to other target languages provided that language-specific pre-trained encoders and CEFR-aligned training pairs are substituted.}
+The main \textbf{contributions} of this work are as follows:
+
+\begin{itemize}
+    \item A machine learning solution for estimating foreign text difficulty that demonstrates higher accuracy compared to traditional readability metrics. This model provides a more nuanced and context-aware assessment of text complexity, enabling more precise content matching for language learners. We evaluate and compare the performance of several state-of-the-art LLMs (including GPT, Bert and Mistral) fine-tuned on this specific task, demonstrating significant improvements over traditional approaches.
+
+    \item The development and evaluation of fine-tuned LLMs for simplifying French texts. We conduct extensive experiments comparing different models on various datasets, demonstrating the effectiveness of fine-tuning approaches for text simplification tasks.
+
+    \item An evaluation framework for text simplification that quantifies the trade-off between semantic preservation and linguistic simplification. This framework provides a more nuanced assessment of simplification quality, enabling better comparison of different approaches and more informed model selection.
+
+    \item A recommendation system that synergistically integrates text difficulty estimation and simplification capabilities to enhance language learning recommendations. By leveraging embeddings computed during difficulty estimation and expanding the available content through text simplification, our system provides more accurate and diverse recommendations. This integrated approach not only addresses the cold-start problem but also ensures that recommended content is precisely matched to learners' proficiency levels, demonstrating significant improvements in recommendation accuracy and content coverage compared to existing methods.
+
+    \item A comparative performance analysis of models of different sizes, both with and without fine-tuning, on the tasks of text difficulty estimation, simplification, and recommendation. This analysis provides insights into the trade-offs between model size, specialization, and performance in the context of language learning applications.
+\end{itemize}
+
+This research opens new perspectives for personalizing language learning by combining accurate text difficulty estimation, adaptive simplification, and intelligent content recommendation. By leveraging the power of LLMs, our approach offers a more sophisticated and tailored learning experience, potentially addressing the limitations of existing language learning platforms and methodologies. \textcolor{red}{As illustrated in \autoref{fig:framework}, our architecture connects these modules into a unified pipeline: (1) candidate French documents pass through the difficulty estimation module to receive a CEFR level from A1 to C2; (2) documents that match a learner's topical interests but exceed their current proficiency are rewritten sentence by sentence toward a lower CEFR target by the simplification module; and (3) the recommendation engine combines dense LLM item embeddings with historical user-item interactions via KNN or LightGCN graph propagation to suggest personalized reading materials.}
+
+\textcolor{red}{\subsection*{Extension Beyond the RecSys 2024 Short Paper}
+This manuscript significantly extends our preliminary 5-page short paper presented at RecSys 2024 \cite{jamet2024evaluation}. Specifically, the novel contributions exclusive to this journal version are: (1) the integration and fine-tuning of open-weights \textbf{Mistral-7B} (via LoRA and DeepSpeed) alongside frontier \textbf{GPT-4o} and \textbf{GPT-4o-mini} models across both difficulty estimation and text simplification; (2) the mathematical formalization and normalization of the Pairwise Mismatch metric ($PM_{\text{norm}} \in [0, 1]$), complemented by Quadratic Weighted Kappa (QWK), Mean Absolute Error (MAE), non-parametric bootstrap standard errors ($B=1{,}000$), paired Wilcoxon signed-rank significance tests, and confusion matrix dispersion analyses; (3) the generalized $K$-level simplification accuracy metric ($A_K$), the analytical derivation of the harmonic weight $w_1^* = 0.8055$ compensating for CamemBERT embedding anisotropy ($S_0 \approx 0.810$), empirical proof of strict rank invariance ($\rho = 1.0000$) over $w_1 \in [0.15, 0.85]$, and an 8-step iterative simplification convergence analysis; (4) a double-blind \textit{Split-and-Overlap} human qualitative evaluation across $N = 150$ stratified French sentence pairs; and (5) the complete mathematical formalization of LLM-initialized KNN and LightGCN graph propagation, a GNN layer-depth ablation (1 to 10 layers), and two interactive learning interfaces (\textit{Monjoor} and our web-based iterative simplification tool).}
+
+% Adding the framework figure
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/framework.png}
+    \caption{Overview of our framework for language learning. The system includes three main components: (1) difficulty estimation of texts based on CEFR levels, using traditional metrics and LLMs, (2) text simplification that preserves meaning while reducing complexity, and (3) a recommendation system that combines collaborative and content-based filtering to suggest texts suited to learners.}
+    \label{fig:framework}
+\end{figure}
+
+In the following sections, we will detail our methodology, present our experimental results, and discuss the implications of our findings for the field of computer-assisted language learning. We will first describe our approach to text difficulty estimation (Section~\ref{sec:difficulty_estimation}), followed by our method for text simplification (Section~\ref{sec:simplification}). Section~\ref{sec:recommendation} presents our recommendation system that integrates these components. In Section~\ref{sec:experiments}, we detail our experimental setup and results, comparing the performance of various models and configurations across all three tasks. Section~\ref{sec:discussion} discusses the implications of our findings, their potential impact on language learning technologies, and concludes with a summary of our contributions and suggestions for future research directions in this rapidly evolving domain.

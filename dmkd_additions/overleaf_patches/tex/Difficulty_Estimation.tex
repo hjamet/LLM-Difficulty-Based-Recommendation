@@ -1,0 +1,153 @@
+\section{Text Difficulty Estimation}\label{sec:difficulty_estimation}
+
+\subsection{Motivation}
+
+From a pedagogical perspective, our solution builds upon the well-established theory of \textit{extensive reading} \cite{daybamford2002,krashen2004power}. This approach, which involves reading large amounts of easily comprehensible material, constitutes a crucial means of reinforcing one's language skills. Extensive reading has been shown to improve not only reading and vocabulary skills but also yield comprehensive improvements across all areas of language competence \cite{Nation2019Teaching}. However, it is essential to find content that is appropriate for the learner's knowledge level of the foreign language, as reading materials that are too difficult can lead to frustration and demotivation \cite{Schulz1981Literature}. Indeed, foreign language learners often face significant reading challenges, with vocabulary being their most serious handicap \cite{Yorio1971Some}. This underscores the importance of carefully selecting and adapting reading materials to match learners' proficiency levels while maintaining meaningful content.
+
+Approaches to estimating the difficulty of foreign language texts have evolved significantly over time, reflecting advancements in both linguistic theory and computational capabilities:
+
+\subsubsection{Traditional Readability Formulas}
+
+One early approach uses "readability" formulas\footnote{Note that these readability formulas are primarily targeted to estimate the difficulty of a text for native speakers rather than for second language learners \cite{xia2019text}. These methods were initially developed for the English language, and progressively have been extended for other languages such as French, Chinese and Italian \cite{okinina2020ctap,chen2016ctap}.}. These are regression approaches that calculate the complexity of a text based on various text features, including sentence length and word frequency. Some commonly used readability formulas include:
+
+\begin{itemize}
+    \item \textbf{Gunning Fog Index} (1952): This formula considers sentence length and the percentage of complex words. It is calculated as:
+    \[0.4 \left[\left( \frac{\text{words}}{\text{sentences}} \right) + 100 \left( \frac{\text{complex words}}{\text{words}} \right)\right]\]
+    
+    \item \textbf{Automated readability index} (1967): This formula considers characters per word and words per sentence:
+    \[4.71 \left(\frac{{\text{characters}}}{\text{words}}\right) + 0.5 \left(\frac{{\text{words}}}{\text{sentences}}\right) - 21.43\]
+    
+    \item \textbf{Flesch-Kincaid Grade Level} (1975): This formula uses average sentence length and syllables per word:
+    \[206.835 - 1.015 \left( \frac{\text{total words}}{\text{total sentences}} \right) - 84.6 \left( \frac{\text{total syllables}}{\text{total words}} \right)\]
+\end{itemize}
+
+While these formulas provide a quick estimate, they have significant limitations. They often fail to capture the nuances of language difficulty, especially for non-native speakers, and don't account for factors like cultural context, idiomatic expressions, or the reader's background knowledge \cite{greenfield}.
+
+\subsubsection{Machine Learning Approaches}
+
+More recent approaches leverage machine learning techniques to predict difficulty levels based on various linguistic features \cite{chen2016ctap,franccois2012ai}. These methods can analyze a wider range of text characteristics, including syntactic complexity, lexical diversity, and semantic features.
+
+A particularly notable advancement in this field is the integration of pre-trained word- and sentence-embeddings into text readability architectures \cite{wilkens2022fabra,imperial2021bert,lee2022editable,opencorporaFrench2022}. These embeddings capture semantic and syntactic information about words and sentences, allowing for a more nuanced understanding of text difficulty. They can account for context and word relationships that simple readability formulas might miss.
+
+For instance, \cite{imperial2021bert} demonstrated that BERT-based models outperform traditional readability formulas in predicting text difficulty for second language learners. Similarly, \cite{wilkens2022fabra} showed that combining word embeddings with traditional linguistic features can significantly improve readability assessment for French texts. \textcolor{red}{In a foundational study on neural readability assessment, Martinc et al.\ \cite{martinc2021supervised} evaluated supervised and unsupervised neural language models across multiple readability benchmarks, demonstrating the importance of ordinal agreement metrics such as Quadratic Weighted Kappa (QWK) to account for the ordered nature of proficiency levels.}
+
+\cite{lee2022editable} proposed an innovative approach using an editable learner model for text recommendation in language learning. This model allows for dynamic updates based on the learner's progress, providing more personalized difficulty estimations.
+
+However, our review indicates that prior research has not yet fully investigated the predictive accuracy of difficulty estimation using the most recent Large Language Models (LLMs), particularly in the context of foreign language learning.
+
+\subsection{Our approach}
+
+Building on these previous approaches, we propose a novel method using LLMs for difficulty estimation. \textcolor{red}{Our methodological contribution in this module is twofold: first, we systematically compare fine-tuned encoder-only representations (CamemBERT) against instruction-prompted and fine-tuned autoregressive LLMs ranging from 1B to over 70B parameters on French CEFR benchmarks; second, we introduce a normalized pairwise ranking metric ($PM_{\text{norm}} \in [0, 1]$) alongside QWK and MAE to evaluate how well classifiers and continuous readability formulas preserve relative difficulty orderings.} We model this task as a classification problem:
+
+Let \(\mathcal{D}\) be the set of documents, and \(Y\) the random variable representing the linguistic difficulty class. We aim to predict the Common European Framework of Reference for Languages (CEFR) difficulty level of a text. The CEFR is a widely-used international standard for describing language ability, with levels ranging from A1 (beginner) to C2 (mastery) \cite{council2001common}:
+
+\begin{itemize}
+    \item A1, A2: Basic user (easy texts)
+    \item B1, B2: Independent user (intermediate level)
+    \item C1, C2: Proficient user (advanced level)
+\end{itemize}
+
+Our classifier $f: \mathcal{D} \rightarrow Y$ maps a document \(d \in \mathcal{D}\) to a difficulty class \(y \in Y\). We build this classifier using text-label pairs, where the label corresponds to the linguistic difficulty.
+
+We utilize three main types of language models for our difficulty estimation task:
+
+\subsubsection{BERT-based Models}
+For French language processing, we leverage \textbf{CamemBERT} \cite{martin-etal-2020-camembert}, a RoBERTa architecture trained specifically on French texts. BERT's fundamental innovation lies in its bidirectional deep representations pre-training from unlabeled text by jointly conditioning on both left and right context in all layers \cite{Devlin2019BERT}. This bidirectional context understanding is particularly valuable for difficulty estimation, as the complexity of a word often depends on its surrounding context.
+
+BERT's architecture captures rich structural information about language through multiple layers \cite{Jawahar2019What}, from surface features to syntactic patterns and semantic relationships, making it particularly effective at understanding linguistic nuances. This capability is crucial for assessing text difficulty, as it allows the model to consider both lexical complexity and syntactic structures simultaneously.
+
+CamemBERT's specialized training on a large French corpus (rather than multilingual data) makes it especially attuned to French linguistic patterns. This specialization is significant because BERT-based models have demonstrated superior performance in language-specific tasks \cite{Gonzalez2020Comparing}, particularly in capturing nuanced features like idiomatic expressions and cultural references that significantly impact text difficulty. Recent studies have shown that such specialized BERT models achieve state-of-the-art performance in various language understanding tasks \cite{Gao2019Target}, with particularly strong results in classification tasks similar to our difficulty estimation objective \cite{Aftan2023Survey}.
+
+\subsubsection{GPT Models}
+The \textbf{GPT} family of models represents a significant advancement in language understanding through their transformer-based architecture and extensive pretraining \cite{GPT,GPT3}. These models process text sequentially, similar to human reading patterns, and have demonstrated remarkable capabilities across various domains \cite{douglas2023llm}. A comprehensive analysis of GPT-3 and GPT-3.5 series models has shown their effectiveness in natural language understanding tasks \cite{ye2023comprehensive}, with performance often approaching human-level capabilities.
+
+GPT models' key strength lies in their ability to understand context across long sequences of text, making them particularly effective at assessing overall document coherence and complexity. Recent studies have demonstrated that these models can solve challenging reasoning problems \cite{binz2022cognitive} and perform well in multilingual tasks \cite{hendy2023translation}. This makes them especially suitable for our difficulty estimation task, as they can capture both surface-level features and deeper semantic relationships that contribute to text complexity.
+
+In our experiments, we evaluate four variants of the GPT family, ordered by increasing computational capabilities and performance \cite{ye2023comprehensive,openai_gpt-4_2023}:
+\begin{itemize}
+    \item \textbf{Davinci}: The most capable GPT-3 model, offering strong baseline performance while being computationally efficient
+    \item \textbf{GPT-3.5}: Provides enhanced capabilities through reinforcement learning from human feedback, significantly outperforming its predecessors
+    \item \textbf{GPT-4o-mini}: A lightweight version of GPT-4, optimized for efficient deployment while maintaining strong performance
+    \item \textbf{GPT-4o}: The most advanced model in our evaluation, featuring state-of-the-art reasoning capabilities and multilingual understanding
+\end{itemize}
+
+\subsubsection{Mistral-7B}
+\textbf{Mistral-7B} is a 7.3B parameter open-source language model that incorporates two key architectural innovations: Grouped-query attention (GQA) for faster inference and Sliding Window Attention (SWA) for efficient processing of longer sequences. The model has demonstrated strong performance in zero-shot tasks \cite{Rebei2023Fine}, particularly in structured classification tasks similar to our difficulty estimation objective.
+
+A notable advantage of Mistral-7B is its strong multilingual capabilities, with particularly robust performance on French language tasks. This is crucial for our application, as most existing language models are primarily trained and evaluated on English data. Recent evaluations have shown that Mistral-7B outperforms significantly larger models, including Llama 2 13B, while maintaining efficient resource usage \cite{jindal2024birbal}. This balance of performance and efficiency makes it particularly suitable for production deployments in educational contexts.
+
+Released under the Apache 2.0 license, Mistral-7B offers complete flexibility for research and deployment. This openness, combined with its strong performance on French language tasks, makes it an ideal choice for our difficulty estimation framework, where accurate processing of French text is essential.
+
+\textcolor{red}{\subsubsection{System Prompt Design}
+\label{subsubsec:system_prompt}
+To guide LLMs in evaluating text difficulty according to CEFR standards, we evaluated our models both with and without an explicit system prompt. While the original prompt used with French texts was written in French, we provide its English translation below for readability. This prompt template was selected based on validation performance with GPT-3.5 and applied consistently across all prompted model configurations:}
+
+\begin{quote}
+\textcolor{red}{\textit{You are a language assessor using the Common European Framework of Reference for Languages (CEFR). Your task is to assign a language proficiency score to this text, using the CEFR levels from A1 (beginner) to C2 (advanced/native). Evaluate this text and assign it the corresponding CEFR score.}}
+\end{quote}
+
+\subsection{Evaluation Metrics}
+\label{subsec:difficulty_metrics}
+
+\subsubsection{Pairwise Mismatch and Ordinal Ranking Metrics}
+Traditional accuracy metrics, while commonly used, may not fully capture the nature of text difficulty assessment. The key insight is that text difficulty is inherently relative: what matters most is not only exact classification, but also the correct ordering of texts by their difficulty level \textcolor{red}{\cite{martinc2021supervised}. In ordinal readability assessment, integer regression metrics such as Mean Absolute Error ($\text{MAE} = \frac{1}{N}\sum_{i=1}^N |y_i - \hat{y}_i|$) and Mean Squared Error ($\text{MSE} = \frac{1}{N}\sum_{i=1}^N (y_i - \hat{y}_i)^2$) penalize errors linearly or quadratically by class distance, while Quadratic Weighted Kappa (QWK) \cite{martinc2021supervised} normalizes squared class deviations against chance agreement:}
+\textcolor{red}{\begin{equation}
+\text{QWK} = 1 - \frac{\sum_{u=1}^{K}\sum_{u'=1}^{K} W_{u,u'} C_{u,u'}}{\sum_{u=1}^{K}\sum_{u'=1}^{K} W_{u,u'} E_{u,u'}}, \quad \text{where } W_{u,u'} = \frac{(u - u')^2}{(K - 1)^2} \text{ and } E_{u,u'} = \frac{1}{N}\left(\sum_{c=1}^{K} C_{u,c}\right)\left(\sum_{r=1}^{K} C_{r,u'}\right).
+\label{eq:qwk_definition}
+\end{equation}}
+
+\textcolor{red}{To complement QWK and MAE with a direct measure of pairwise ranking inversions across a corpus of $N$ test documents}, we introduce the normalized Pairwise Mismatch ($PM_{\text{norm}}$) metric. Let us first define the space of $K$ ordered labels $L = \{1, \dots, K\}$ equipped with an order relation $<_{diff}$ representing increasing difficulty levels. For datasets annotated with the $K=6$ CEFR labels, we map $\{A1, A2, B1, B2, C1, C2\}$ to $\{1, 2, 3, 4, 5, 6\}$ with:
+\begin{equation}
+L = \{A1, A2, B1, B2, C1, C2\}, \quad A1 <_{diff} A2 <_{diff} B1 <_{diff} B2 <_{diff} C1 <_{diff} C2.
+\label{eq:cefr_order}
+\end{equation}
+
+\textcolor{red}{Let $y_i \in \{1, \dots, K\}$ and $\hat{y}_i \in \{1, \dots, K\}$ denote the true and predicted ordinal difficulty indices for test document $i \in \{1, \dots, N\}$, and let $C \in \mathbb{N}^{K \times K}$ denote the resulting confusion matrix where entry $C_{u,u'} = \sum_{i=1}^N \mathds{1}_{\{y_i = u \,\land\, \hat{y}_i = u'\}}$ counts the test instances with true level $u$ and predicted level $u'$ (including the main diagonal $C_{u,u}$ of exact classification matches, with $\sum_{u=1}^K \sum_{u'=1}^K C_{u,u'} = N$). When comparing all $\binom{N}{2} = \frac{N(N-1)}{2}$ distinct document pairs $(i, j)$, any instance in cell $(u, u')$ paired with an instance in cell $(v, v')$ where $v < u$ (strictly easier true level) and $v' > u'$ (strictly harder predicted level) forms a strict pairwise inversion. Because there are $C_{u,u'}$ instances in the first cell and $C_{v,v'}$ instances in the second cell, they generate $C_{u,u'} \times C_{v,v'}$ inverted pairs. Counting ties on one dimension ($v < u$ with $v' = u'$, or $v = u$ with $v' > u'$) with a half-weight penalty of $\frac{1}{2}$ and normalizing by the total number of pairs $\binom{N}{2}$ yields $PM_{\text{norm}} \in [0, 1]$:}
+\textcolor{red}{\begin{equation}
+PM_{\text{norm}} = \frac{1}{\binom{N}{2}} \sum_{u=1}^{K} \sum_{u'=1}^{K} C_{u,u'} \left( \sum_{v=1}^{u-1} \sum_{v'=u'+1}^{K} C_{v,v'} + \frac{1}{2} \sum_{v=1}^{u-1} C_{v,u'} + \frac{1}{2} \sum_{v'=u'+1}^{K} C_{u,v'} \right).
+\label{eq:pm_norm}
+\end{equation}}
+
+\textcolor{red}{\autoref{fig:pm_explanation} illustrates this confusion-matrix formulation visually. For any reference cell $(u, u')$ with count $C_{u,u'}$ (including diagonal exact matches $C_{u,u}$), the cells in the upper-right region ($v < u$ and $v' > u'$, highlighted in red) correspond to documents that are genuinely easier than level $u$ but predicted as more difficult than level $u'$, producing $C_{u,u'} \times C_{v,v'}$ strict ordering mismatches. Cells sharing the same column ($v < u, v' = u'$) or row ($v = u, v' > u'$) represent partial ordering violations (ties) weighted by $\frac{1}{2}$, whereas cells in the lower-left region ($v > u, v' > u'$ or $v < u, v' < u'$, highlighted in green) preserve the true difficulty ordering.}
+
+This formulation has several important properties:
+\begin{itemize}
+    \item It applies equally well to classification and regression tasks, enabling direct comparison between different types of models on the same dataset.
+    \item \textcolor{red}{Being normalized by $\binom{N}{2} = \frac{N(N-1)}{2}$, $PM_{\text{norm}}$ is bounded in $[0, 1]$ (or $[0\%, 100\%]$) and is strictly invariant to dataset size $N$, allowing direct comparison across datasets of different cardinalities.}
+    \item A score of $0$ indicates perfect ordering preservation, while $1$ indicates complete inversion of all document pairs.
+\end{itemize}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{figures/pairwise_mismatch.jpg}
+    \caption{Visual explanation of the Pairwise Mismatch metric using a confusion matrix of a difficulty classifier. The metric evaluates ordering violations between pairs of predictions, where arrows crossing indicate mismatches in the relative ordering of difficulty levels.}
+    \label{fig:pm_explanation}
+\end{figure}
+
+\textcolor{red}{Algorithm~\ref{alg:pm_computation} details the exact computation of $PM_{\text{norm}}$ using the confusion matrix counts $C_{u,u'}$ defined in Equation~\ref{eq:pm_norm}:}
+
+\begin{algorithm}[H]
+\caption{\textcolor{red}{Normalized Pairwise Mismatch ($PM_{\text{norm}}$) Computation}}
+\label{alg:pm_computation}
+\begin{algorithmic}[1]
+\Require \textcolor{red}{True ordinal labels $y = (y_1, \dots, y_N) \in \{1, \dots, K\}^N$, predicted labels $\hat{y} = (\hat{y}_1, \dots, \hat{y}_N) \in \{1, \dots, K\}^N$}
+\Ensure \textcolor{red}{Normalized Pairwise Mismatch score $PM_{\text{norm}} \in [0, 1]$}
+\State \textcolor{red}{Initialize confusion matrix counts $C_{u,u'} \gets 0$ for all $u, u' \in \{1, \dots, K\}$ \Comment{Includes diagonal exact matches $C_{u,u}$}}
+\For{\textcolor{red}{$i = 1$ to $N$}}
+    \State \textcolor{red}{$C_{y_i, \hat{y}_i} \gets C_{y_i, \hat{y}_i} + 1$}
+\EndFor
+\State \textcolor{red}{$M_{\text{total}} \gets 0$ \Comment{Total weighted pairwise ordering violations}}
+\For{\textcolor{red}{$u = 1$ to $K$}}
+    \For{\textcolor{red}{$u' = 1$ to $K$}}
+        \If{\textcolor{red}{$C_{u,u'} > 0$}}
+            \State \textcolor{red}{$S_{\text{strict}} \gets \sum_{v=1}^{u-1} \sum_{v'=u'+1}^{K} C_{v,v'}$ \Comment{Strict inversions ($v < u$ and $v' > u'$)}}
+            \State \textcolor{red}{$S_{\text{tie}} \gets \frac{1}{2}\sum_{v=1}^{u-1} C_{v,u'} + \frac{1}{2}\sum_{v'=u'+1}^{K} C_{u,v'}$ \Comment{Tied predictions or tied true labels}}
+            \State \textcolor{red}{$M_{\text{total}} \gets M_{\text{total}} + C_{u,u'} \times (S_{\text{strict}} + S_{\text{tie}})$}
+        \EndIf
+    \EndFor
+\EndFor
+\State \textcolor{red}{$P_{\text{total}} \gets \frac{N(N - 1)}{2}$ \Comment{Total number of distinct pairs $\binom{N}{2}$}}
+\State \textcolor{red}{$PM_{\text{norm}} \gets \frac{M_{\text{total}}}{P_{\text{total}}}$}
+\State \Return \textcolor{red}{$PM_{\text{norm}}$}
+\end{algorithmic}
+\end{algorithm}

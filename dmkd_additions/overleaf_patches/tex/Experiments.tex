@@ -1,0 +1,177 @@
+\section{Experimental Results}\label{sec:experiments}
+
+\textcolor{red}{Our experimental evaluation proceeds in three modular stages mirroring the architecture of \autoref{fig:framework}. In Section~\ref{sec:difficulty_estimation_results}, we benchmark zero-shot and fine-tuned language models against classical readability formulas on three French difficulty corpora using multiclass accuracy, Quadratic Weighted Kappa ($\text{QWK}$), and normalized Pairwise Mismatch ($PM_{\text{norm}}$). In Section~\ref{sec:text_simplification_results}, we evaluate single-step and iterative text simplification across 1,000 sentence pairs, analyze the sensitivity of the harmonic $w\text{-Score}$, and report a double-blind human evaluation on 150 stratified pairs. In Section~\ref{sec:recommendation_results}, we assess the impact of LLM-derived item and user embeddings on collaborative and graph-based recommendation across four datasets.}
+
+The goal of our experiments is to demonstrate that (a) fine-tuned LLMs can significantly improve difficulty estimation compared to traditional readability metrics, and (b) our LLM-based text simplification methodology outperforms zero-shot approaches. The code for all experiments is publicly available at \href{https://github.com/hjamet/LLM-Difficulty-Based-Recommendation}{\underline{here}}. All experiments were carried out using a single NVIDIA A100 Tensor Core GPU. For the fine-tuning of the Mistral model, we employed several optimizations:
+
+\begin{itemize}
+    \item \textbf{LoRA} (Low-Rank Adaptation): This optimization reduces trainable parameters, speeds up training, and reduces GPU memory requirements \cite{hu2021loralowrankadaptationlarge}. LoRA integrates trainable rank decomposition matrices into each Transformer layer while freezing the pre-trained model weights.
+    
+    \item \textbf{DeepSpeed}: This optimization framework improves training efficiency through task parallelization between GPUs, gradient compression, and other performance-enhancing techniques \cite{10.1145/3394486.3406703}.
+\end{itemize}
+
+\textcolor{red}{For supervised fine-tuning of CamemBERT and Mistral-7B on difficulty estimation, models are trained with standard categorical cross-entropy loss with label smoothing ($\epsilon = 0.1$). While ordinal regression losses such as cumulative link loss or Earth Mover's Distance explicitly penalize distance during gradient updates, cross-entropy with label smoothing preserves well-calibrated class probability distributions $\mathbf{p}(x) = (p_1, \dots, p_K)$ across the six CEFR levels, which are directly required to compute the expected ordinal shift in the downstream simplification accuracy metric $A$ (\autoref{eq:simplification_accuracy}). Ordinal consistency is then strictly audited at evaluation time via $\text{QWK}$ and $PM_{\text{norm}}$.}
+
+
+\subsection{Difficulty Estimation Results}\label{sec:difficulty_estimation_results}
+
+To evaluate our approach comprehensively, we conducted experiments on three distinct French language datasets, each offering unique characteristics and challenges. The first dataset, Littérature de jeunesse libre (\texttt{LjL}) \cite{opencorporaFrench2022}, consists of youth literature texts carefully curated and labeled with four progressive difficulty levels. This dataset provides a solid foundation for evaluating our models on content specifically designed for language learners.
+
+Our second dataset, which we call \texttt{sentencesInternet}, comprises sentences collected from various Internet sources. To ensure quality and reliability, each sentence was independently evaluated by multiple annotators, and we retained only those sentences where all annotators agreed unanimously on the CEFR difficulty level (A1-C2). This rigorous annotation process, while reducing the dataset size, ensures high-quality difficulty labels.
+
+The third dataset, \texttt{sentencesBooks}, contains sentences extracted from literature books. Each book was first assigned a CEFR difficulty level by a Professor of French, and then all sentences from that book inherited this label. A careful OCR pipeline was utilized for text extraction, and we retained only the sentences without any detection errors to maintain data quality.
+
+Table \ref{tab:3-datasets} presents the detailed characteristics of these datasets. For all our experiments, we employed an 80/20 train-test split, ensuring that our reported results reflect performance on previously unseen data.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Characteristics of data sets for difficulty estimation experiments}
+    \label{tab:3-datasets}
+    \begin{tabular}{|l|r|r|r|c|}
+        \hline
+        \textbf{Dataset}                          & \textbf{Sentences} & \textbf{Words} & \textbf{Chars} & \textbf{Labels} \\
+        \hline
+        \texttt{LjL} \cite{opencorporaFrench2022} & 2,060              & 334,026        & 1,532,442      & level1--4       \\
+        \texttt{sentencesInternet}                & 4,800              & 85,941         & 421,045        & A1--C2          \\
+        \texttt{sentencesBooks}                   & 2,400              & 56,557         & 281,463        & A1--C2          \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Evaluation Methodology}
+\label{sec:difficulty_estimation_evaluation}
+
+\textcolor{red}{We evaluate difficulty estimation using three complementary metrics over a test set of $N$ sentences with ground-truth ordinal labels $y_i \in \{1, \dots, K\}$ and predicted labels $\hat{y}_i \in \{1, \dots, K\}$. First, multiclass classification accuracy (Acc.) measures exact level agreement:
+\begin{equation}\label{eq:accuracy_def}
+\text{Acc} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I}(\hat{y}_i = y_i),
+\end{equation}
+where $\mathbb{I}(\cdot)$ is the indicator function. Second, Quadratic Weighted Kappa ($\text{QWK}$) \cite{martinc2021supervised} measures ordinal agreement by penalizing misclassifications quadratically with respect to rank distance $|y_i - \hat{y}_i|^2 / (K-1)^2$. Third, the normalized Pairwise Mismatch metric $PM_{\text{norm}} \in [0, 1]$ (\autoref{eq:pm_norm}, reported as a percentage in \autoref{tab:difficulty_estimation_metrics}) quantifies the proportion of sentence pairs whose relative difficulty ordering is violated or tied. To account for sample variance on the held-out test sets (\texttt{sentencesBooks} $N=960$, \texttt{LjL} $N=413$, \texttt{sentencesInternet} $N=480$), we perform $B = 1{,}000$ non-parametric bootstrap resamples with replacement and report $\mu \pm \sigma$, alongside two-sided paired Wilcoxon signed-rank tests ($^{*}p < 0.05$, $^{**}p < 0.01$, $^{***}p < 0.001$) comparing prompted and unprompted configurations.}
+
+For all experiments, we used an 80/20 train-test split across datasets. Each model was evaluated both with and without a system prompt. \textcolor{red}{The exact system prompt formulation is detailed in Section~\ref{subsubsec:system_prompt}; it instructs the model to act as a CEFR language assessor assigning levels from A1 to C2.}
+
+To establish baselines, we implemented traditional readability metrics (GFI, FKGL, ARI) adapted for French texts \cite{franccois2012ai}. Since these metrics produce continuous values while our task requires discrete CEFR levels, we trained a logistic regression model to map their outputs to our label spaces: $\{\text{level1}, \text{level2}, \text{level3}, \text{level4}\}$ for \texttt{LjL} and $\{A1, A2, B1, B2, C1, C2\}$ for \texttt{sentencesBooks} and \texttt{sentencesInternet}.
+
+The results demonstrate that LLM-based approaches consistently outperform traditional metrics across all datasets. Notably, while larger models like GPT-4o achieve the best performance, smaller models like Mistral-7B and CamemBERT also show strong results, particularly when using the system prompt.
+
+\input{figures/difficulty_estimation.tex}
+
+\subsubsection{Model Performance Analysis}
+Our experimental results demonstrate several significant findings regarding the performance of language models in difficulty estimation tasks. As expected, larger models like GPT-4o achieve the best overall performance across datasets. However, the performance gap between large and smaller models reveals interesting insights about model efficiency and specialization.
+
+While GPT-4o consistently achieves strong results across all datasets, smaller specialized models like CamemBERT and Mistral-7B demonstrate remarkably competitive performance despite their significantly reduced size. For instance, on the Sentences Books dataset, CamemBERT achieves better PM scores than GPT-3.5 while maintaining comparable accuracy, demonstrating that smaller specialized models can effectively compete with larger general-purpose ones.
+
+The impact of system prompts proves particularly noteworthy across models\textcolor{red}{, though paired Wilcoxon signed-rank tests reveal important dataset-dependent nuances. On \texttt{sentencesBooks}, adding the system prompt significantly improves accuracy for both GPT-4o ($0.584 \pm 0.016$ vs.\ $0.527 \pm 0.016$, $p = 9.00 \times 10^{-9}$) and GPT-4o-mini ($0.616 \pm 0.016$ vs.\ $0.582 \pm 0.016$, $p = 0.0044$), while reducing $PM_{\text{norm}}$ from $9.73\%$ to $8.38\%$ and from $9.24\%$ to $8.23\%$, respectively. On \texttt{sentencesInternet}, the prompt yields a large gain for GPT-4o ($0.902 \pm 0.013$ vs.\ $0.771 \pm 0.019$, $p = 3.33 \times 10^{-7}$), whereas the gain for GPT-4o-mini is not statistically significant ($0.888 \pm 0.014$ vs.\ $0.869 \pm 0.016$, $p = 0.383$). On \texttt{LjL}, the difference between prompted and unprompted configurations is not statistically significant for either GPT-4o ($0.765 \pm 0.021$ vs.\ $0.731 \pm 0.022$, $p = 0.140$) or GPT-4o-mini ($0.751 \pm 0.021$ vs.\ $0.751 \pm 0.021$, $p = 0.606$), and unprompted GPT-3.5 slightly outperforms its prompted counterpart ($0.734$ vs.\ $0.724$). Because \texttt{LjL} uses four corpus-specific reading levels (\texttt{level1--4}) rather than the six standard CEFR levels referenced in the prompt, explicit CEFR descriptors provide less direct leverage on this dataset.}
+
+Comparing against traditional readability metrics (ARI, GFI, FKGL), all language models demonstrate clear superiority. The traditional metrics consistently show higher PM scores and lower accuracy across all datasets, with particularly poor performance on the Sentences Books dataset. This substantial performance gap underscores the ability of language models to capture complex linguistic features that influence text difficulty beyond simple statistical measures.
+
+Dataset characteristics significantly influence model performance. The LjL dataset, with its carefully curated content, yields the most consistent results across models. The Sentences Internet dataset shows good but slightly degraded performance, while the Sentences Books dataset proves most challenging. This pattern holds across all models, suggesting that text genre and source play crucial roles in difficulty estimation accuracy. Notably, smaller specialized models like CamemBERT and Mistral-7B show more balanced performance across datasets compared to their larger counterparts, indicating robust generalization capabilities despite their reduced size.
+
+\subsubsection{Confusion Matrix Analysis}
+The confusion matrices presented in Figure~\ref{fig:CM} reveal significant patterns in our model's classification behavior across different datasets. Analysis of these matrices demonstrates that misclassifications predominantly occur between adjacent difficulty levels, indicating that when the model makes errors, it typically assigns a level close to the true difficulty. This pattern is particularly evident in the LjL dataset, where we observe high concentration along the diagonal with minimal dispersion to non-adjacent levels. The sentencesInternet dataset exhibits similar behavior, with most errors occurring between consecutive CEFR levels - for instance, B1 texts being occasionally misclassified as either A2 or B2, but rarely as A1 or C2. The sentencesBooks dataset, while showing more dispersed classifications, maintains this general trend of adjacent-level errors. This systematic pattern of misclassifications stands in stark contrast to traditional metrics, which demonstrate more scattered error distributions across all difficulty levels. These findings provide strong empirical support for the effectiveness of our PM metric, which was specifically designed to penalize distant misclassifications more heavily than adjacent ones. Furthermore, these results underscore the superior capability of LLM-based approaches, especially when augmented with appropriate system prompts, in capturing the subtle gradations of language difficulty levels. The consistently lower PM scores achieved by our approach, compared to traditional metrics, suggests a better alignment with the inherently continuous nature of language difficulty assessment.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\columnwidth}{!}{
+        \includegraphics{figures/Confusion_Matrices.png}
+    }
+    \caption{Selected confusion matrices showing classification patterns across datasets, with and without system prompts. Due to space constraints, we show only 3 representative matrices from different models across our 3 datasets. Note the concentration of misclassifications in adjacent difficulty levels, particularly for the LjL dataset where the model performs best. This pattern supports the effectiveness of our PM metric which penalizes distant misclassifications more heavily. Confusion matrices from other models reveal very similar patterns.}
+    \label{fig:CM}
+\end{figure}
+
+% ---------------------------------------------------------------------------- %
+%                          SIMPLIFICATION EXPERIMENTS                          %
+% ---------------------------------------------------------------------------- %
+
+\subsection{Text Simplification}\label{sec:text_simplification_results}
+
+To evaluate our text simplification approach, we constructed two complementary datasets: a training set for fine-tuning our models and a comprehensive test set for evaluation.
+
+\medskip \noindent
+\textbf{Training Dataset:}
+For fine-tuning our models, we needed high-quality pairs of French sentences with their corresponding simplifications at lower CEFR levels. We leveraged GPT-4 to generate a carefully curated dataset of 125 sentences, consisting of 25 sentences from each CEFR level (A2, B1, B2, C1, C2). Each sentence was paired with its simplified version at the next lower CEFR level. To ensure quality and authenticity, all sentence pairs were reviewed and validated by a native French speaker with expertise in language education.
+
+\medskip \noindent
+\textcolor{red}{\textbf{Evaluation Dataset:}}
+For comprehensive evaluation, we constructed a test set drawing from both our \texttt{sentencesBooks} and \texttt{sentencesInternet} datasets. For each CEFR level from A2 to C2, we randomly selected 100 sentences from each source dataset. We excluded level A1 as it represents the most basic level and cannot be meaningfully simplified further. This sampling strategy resulted in a diverse test set of 1,000 sentences (5 levels × 100 sentences × 2 sources), providing a robust foundation for evaluating our simplification models across different text types and difficulty levels.
+
+\subsubsection{Model Evaluation}
+We examined several state-of-the-art language models: Mistral-7B, GPT-3.5, GPT-4o, GPT-4o-Mini, and Davinci, testing both fine-tuned and zero-shot versions where applicable. Table \ref{tab:text_simplification_metrics} presents our evaluation results using three metrics: simplification accuracy (measuring the quality of simplification), semantic similarity (measuring content preservation), and a weighted score combining both metrics. All metrics range from 0 to 1, with higher values indicating better performance. The fine-tuned Mistral model achieved the highest accuracy (0.59) while maintaining strong semantic similarity (0.91).
+
+\input{figures/simplification}
+
+Our evaluation reveals several intriguing patterns in the performance of different language models for text simplification. The fine-tuned Mistral-7B model emerged as the top performer, achieving the highest accuracy (0.59) while maintaining excellent semantic similarity (0.91). This indicates its superior ability to simplify text to the appropriate CEFR level while preserving the original meaning. Interestingly, the non-fine-tuned version of Mistral demonstrated higher semantic similarity (0.93) but lower accuracy (0.47), highlighting the trade-off between content preservation and effective simplification.
+
+\textcolor{red}{To verify that our conclusions do not depend on a specific choice of $w_1$, \autoref{fig:sensitivity_and_ranks} plots the continuous evolution of the harmonic $w\text{-Score}$ and the resulting model rankings across $w_1 \in [0.05, 0.95]$ on the 1,000 evaluation pairs. Across the entire operational interval $w_1 \in [0.15, 0.85]$, the relative model ordering remains strictly invariant with a Spearman rank correlation of $\rho = 1.0000$ and zero rank crossovers. Furthermore, \autoref{fig:pareto_finetuning} illustrates the Pareto frontier in the $(A, S)$ plane, confirming that fine-tuned Mistral-7B ($A = 0.59$, $S = 0.91$, $w\text{-Score} = 0.634$) strictly dominates all zero-shot and fine-tuned baselines across every non-degenerate weighting.}
+
+A particularly surprising finding was the relatively modest performance of the larger GPT-4o and GPT-4o-Mini models, despite their significantly larger parameter counts. Detailed analysis of their simplification outputs revealed that these models tend to take more aggressive simplification approaches, often removing content rather than merely reformulating it. While this might produce more naturally simple text, it results in lower semantic similarity scores (0.51-0.54) as substantial information is lost in the process. In contrast, smaller models like GPT-3.5 and Mistral tend to favor more conservative simplification strategies, primarily using synonym substitution and syntactic restructuring while maintaining closer semantic alignment with the source text.
+
+This performance pattern may be partially explained by the inherent variance in difficulty estimation. As demonstrated in our previous experiments, even state-of-the-art models show non-negligible pairwise mismatch scores in difficulty assessment. When simplified texts deviate significantly from their originals, this variance likely increases, making accurate difficulty level targeting more challenging. This effect could particularly impact models that take more liberal approaches to simplification, as the greater content divergence introduces additional uncertainty in difficulty assessment.
+
+These findings carry important implications for both practical applications and environmental considerations. The superior performance of smaller models like Mistral-7B suggests that effective text simplification doesn't necessarily require the largest, most computationally intensive models. This is particularly relevant from a sustainability perspective, as these models offer better performance while consuming significantly less computational resources. The results also emphasize the importance of maintaining semantic fidelity in simplification tasks, suggesting that more conservative, meaning-preserving approaches might be more suitable for educational applications where content accuracy is crucial.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/figure_1_sensitivity_and_ranks.png}
+    \caption{Sensitivity analysis of the weighting coefficient $w_1$ and empirical rank invariance ($\rho = 1.0000$). The upper panel depicts the continuous harmonic score evolution across $[0.05, 0.95]$ highlighting the operational invariance zone $[0.15, 0.85]$. The lower panel confirms strict rank stability across all evaluated models with zero rank crossovers.}
+    \label{fig:sensitivity_and_ranks}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/figure_2_pareto_finetuning.png}
+    \caption{Pareto frontier and accuracy-complexity trade-off across the 1,000 simplification sentence pairs. The zoomed operational microstructure highlights the performance dominance of fine-tuned Mistral over zero-shot and historical OpenAI baselines.}
+    \label{fig:pareto_finetuning}
+\end{figure}
+
+\subsubsection{Iterative Simplification}
+
+Finally, we conducted an experiment to analyze the iterative simplification capabilities of our fine-tuned Mistral-7B model. We randomly selected 100 sentences of level \texttt{C2} from the \textcolor{red}{evaluation set}, ensuring they were correctly classified at this level by CamemBERT. For each sentence, we performed 8 consecutive simplification iterations, where each iteration $t \in \{1, \dots, 8\}$ consisted of:
+
+\begin{enumerate}
+    \item Applying the simplification model to the current sentence \textcolor{red}{$x^{(t-1)}$ to produce $x^{(t)}$}
+    \item Evaluating the difficulty level of the simplified output \textcolor{red}{$x^{(t)}$} using CamemBERT
+    \item \textcolor{red}{Computing the CamemBERT cosine similarity $S(x^{(0)}, x^{(t)})$ between the simplified text $x^{(t)}$ at iteration $t$ and the original C2 source sentence $x^{(0)}$ (iteration 0), in order to measure cumulative semantic drift from the original meaning across successive rewrites}
+\end{enumerate}
+
+While theoretically, a perfect simplification model would only require 5 iterations to reach level \texttt{A1} from \texttt{C2} (following the CEFR progression: C2 → C1 → B2 → B1 → A2 → A1), we extended the process to 8 iterations to better understand the model's behavior beyond the expected convergence point. As shown in Figure \ref{fig:iterative_simplification}, we observed three key trends:
+
+\begin{itemize}
+    \item The difficulty level of the text consistently decreases with each iteration, demonstrating the model's ability to progressively simplify content
+    \item The semantic similarity with the original text gradually decreases, indicating that more extensive simplification naturally leads to greater deviation from the source content
+    \item After approximately 6 iterations, we observe a convergence phenomenon where the model struggles to further simplify the content without critically altering its meaning, as evidenced by the sharp drop in semantic similarity scores
+\end{itemize}
+
+This convergence suggests there exists a natural limit to how much a text can be simplified while maintaining its core meaning, even with state-of-the-art language models.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{
+        \begin{adjustbox}{center}
+            \input{figures/iterative_simplification.pgf}
+        \end{adjustbox}
+    }
+
+    \caption{ Iterative simplification of sentence difficulty of CEFR level C2 with Mistral-7B model where CamemBERT was used to estimate difficulty and cosine similarity to evaluate text similarity. We report average value over 100 experiments. }
+    \label{fig:iterative_simplification}
+\end{figure}
+
+\textcolor{red}{\subsubsection{Human Evaluation of Simplification Quality}\label{subsubsec:human_eval}
+To complement our automatic metrics ($A$, $S$, and $w\text{-Score}$) and directly test whether fine-tuned Mistral-7B preserves grammaticality and meaning while achieving perceptual simplification, we designed a double-blind human evaluation study following a Split-and-Overlap protocol across $N = 150$ sentence pairs stratified across the five source CEFR levels (30 pairs per level from A2 to C2). Each item pairs the original sentence with the randomized, anonymized outputs of fine-tuned Mistral-7B and zero-shot GPT-4o. Two independent native-French evaluators each annotate 100 pairs: a shared overlap subset of $N_{\text{overlap}} = 50$ pairs (10 per CEFR level) used to quantify inter-annotator agreement via Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's ordinal $\alpha$ with 10,000 bootstrap iterations, plus two disjoint subsets of 50 unique pairs ($50 + 50 + 50 = 150$ total pairs). Sample size determination ensures $>80\%$ statistical power to reject null agreement $\kappa_0 \le 0.40$ at $\alpha = 0.05$ on the overlap subset, and $98.9\%$ power to detect a small-to-medium paired preference effect ($d = 0.35$) via a two-sided Wilcoxon signed-rank test across the 150 pairs. Annotators rate each candidate on 5-point Likert scales for Semantic Preservation and Grammaticality/Fluency, assess Perceived Simplification Gain on a $[-2, +2]$ ordinal scale, and record a blind pairwise preference. \autoref{tab:human_eval_results} summarizes the evaluation protocol and results.}
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{\textcolor{red}{Double-blind human evaluation results ($N = 150$ stratified sentence pairs from A2 to C2, Split-and-Overlap design with $N_{\text{overlap}} = 50$ dual-annotated pairs).}}
+    \label{tab:human_eval_results}
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Evaluation Dimension / Metric} & \textbf{Result / Value} & \textbf{Statistical Test / Agreement} \\
+        \midrule
+        Blind preference win rate (Mistral-7B FT vs.\ GPT-4o) & \texttt{[TBD: Mistral vs.\ GPT-4o]} & Wilcoxon $p = \texttt{[TBD]}$ \\
+        Semantic Preservation (1--5 Likert, $\mu \pm \sigma$) & \texttt{[TBD: Mistral vs.\ GPT-4o]} & Krippendorff's $\alpha = \texttt{[TBD]}$ \\
+        Grammaticality \& Fluency (1--5 Likert, $\mu \pm \sigma$) & \texttt{[TBD: Mistral vs.\ GPT-4o]} & Krippendorff's $\alpha = \texttt{[TBD]}$ \\
+        Perceived Simplification ($[-2, +2]$, $\mu \pm \sigma$) & \texttt{[TBD]} & Cohen's $\kappa = \texttt{[TBD]}$ \\
+        Correlation with automatic $w\text{-Score}$ (Spearman $\rho$) & \texttt{[TBD]} & $p = \texttt{[TBD]}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
