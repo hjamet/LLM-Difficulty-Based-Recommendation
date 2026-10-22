@@ -42,7 +42,7 @@
     urlcolor=blue!60!black
 }
 
-\graphicspath{{../../paper/figures/}{../overleaf_patches/figures/}{./}}
+\graphicspath{{../../../_attachments/}{../../paper/figures/}{../overleaf_patches/figures/}{./}}
 
 % Macros for final human evaluation numbers (Task T14, N=150 stratified pairs)
 \newcommand{\HumanKappaPref}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{pref}}$]}}}
@@ -54,7 +54,9 @@
 \newcommand{\HumanMeaningGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
 
 \newcommand{\revquote}[2]{%
-    \vspace{0.1cm}\noindent{\small\textbf{#1:} \textit{``#2''}}\vspace{0.05cm}\par
+    \par\vspace{0.32cm}\nopagebreak[4]%
+    \noindent\textcolor{gray!45}{\rule{\textwidth}{0.4pt}}\par\nopagebreak[4]\vspace{0.14cm}%
+    \noindent{\small\interlinepenalty=10000\textbf{#1:} \textit{``#2''}\par}\nopagebreak[4]\vspace{0.12cm}%
 }
 
 \title{\vspace{-1.2cm}\textbf{\large Point-by-Point Response to the Action Editor and Reviewers}\\[0.2em]
@@ -93,6 +95,7 @@ To test whether explicit CEFR system prompts improve prediction accuracy over un
 \renewcommand{\arraystretch}{0.92}
 \caption{Complete statistical evaluation of text difficulty estimation across all three French datasets (revised Table 2). Values for GPT-4o and GPT-4o-mini report mean $\pm$ bootstrap standard error ($\sigma$, $B = 1{,}000$ resamples). Acc.: multiclass accuracy; F1: Macro-F1; MAE: Mean Absolute Error in CEFR steps; QWK: Quadratic Weighted Kappa; $PM_{\text{norm}}$: normalized Pairwise Mismatch rate (\%). Wilcoxon signed-rank test markers compare prompted against unprompted variants ($^{**}p < 0.01$, $^{***}p < 0.001$, $\text{ns}$: $p \ge 0.05$).}
 \label{tab:rebuttal_table2}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llcccccc}
 \toprule
 \textbf{Dataset} & \textbf{Model} & \textbf{Prompt} & \textbf{Acc.\ ($\mu \pm \sigma$)} & \textbf{Macro-F1} & \textbf{MAE} & \textbf{QWK ($\mu \pm \sigma$)} & \textbf{$PM_{\text{norm}}$ (\%)} \\
@@ -109,7 +112,7 @@ To test whether explicit CEFR system prompts improve prediction accuracy over un
  & Davinci & \checkmark / - & $0.470 / 0.470$ & - & - & - & $6.93\% / 7.98\%$ \\
  & FKGL / GFI / ARI & - & $0.346 / 0.342 / 0.342$ & - & - & - & $11.72 / 11.74 / 11.63\%$ \\
 \midrule
-\multirow{9}{*}{\textbf{LjL ($N=413$)}} 
+\multirow{10}{*}{\textbf{LjL ($N=413$)}} 
  & GPT-4o & \checkmark & $\mathbf{0.765 \pm 0.021}^{\text{ns}}$ & $0.773 \pm 0.021$ & $0.245 \pm 0.022$ & $0.863 \pm 0.016$ & $6.74 \pm 0.67\%$ \\
  & GPT-4o & - & $0.731 \pm 0.022$ & $0.745 \pm 0.022$ & $0.272 \pm 0.023$ & $0.837 \pm 0.017$ & $8.32 \pm 0.75\%$ \\
  & GPT-4o-mini & \checkmark & $0.751 \pm 0.021^{\text{ns}}$ & $0.756 \pm 0.022$ & $0.278 \pm 0.025$ & $0.818 \pm 0.023$ & $8.55 \pm 0.85\%$ \\
@@ -117,21 +120,24 @@ To test whether explicit CEFR system prompts improve prediction accuracy over un
  & GPT-3.5 & - / \checkmark & $0.734 / 0.724$ & - & - & - & $\mathbf{2.25\%} / 2.68\%$ \\
  & Mistral-7B & \checkmark / - & $0.637 / 0.472$ & - & - & - & $3.31\% / 7.28\%$ \\
  & CamemBERT & - & $0.625$ & - & - & - & $3.39\%$ \\
- & Babbage / Davinci & \checkmark / - & $0.586 / 0.613$ ; $0.610 / 0.586$ & - & - & - & $5.76\% / 4.45\%$ ; $4.54\% / 5.12\%$ \\
+ & Babbage-002 (FT) & \checkmark / - & $0.586 / 0.613$ & - & - & - & $5.76\% / 4.45\%$ \\
+ & Davinci-002 (FT) & \checkmark / - & $0.610 / 0.586$ & - & - & - & $4.54\% / 5.12\%$ \\
  & GFI / FKGL / ARI & - & $0.450 / 0.421 / 0.400$ & - & - & - & $10.70 / 13.24 / 11.43\%$ \\
 \midrule
-\multirow{9}{*}{\textbf{Sentences Internet}} 
+\multirow{10}{*}{\textbf{Sentences Internet}} 
  & GPT-4o & \checkmark & $\mathbf{0.902 \pm 0.013}^{***}$ & $\mathbf{0.903 \pm 0.013}$ & $0.208 \pm 0.032$ & $0.904 \pm 0.018$ & $5.24 \pm 0.86\%$ \\
  & GPT-4o & - & $0.771 \pm 0.019$ & $0.769 \pm 0.019$ & $0.456 \pm 0.045$ & $0.794 \pm 0.027$ & $10.41 \pm 1.11\%$ \\
  & GPT-4o-mini & \checkmark & $0.888 \pm 0.014^{\text{ns}}$ & $0.887 \pm 0.014$ & $\mathbf{0.204 \pm 0.031}$ & $\mathbf{0.915 \pm 0.017}$ & $4.81 \pm 0.82\%$ \\
  & GPT-4o-mini & - & $0.869 \pm 0.016$ & $0.869 \pm 0.016$ & $0.225 \pm 0.031$ & $0.914 \pm 0.016$ & $5.17 \pm 0.80\%$ \\
  & GPT-3.5 & \checkmark / - & $0.898 / 0.867$ & - & - & - & $\mathbf{2.74\%} / 3.78\%$ \\
  & CamemBERT & - & $0.823$ & - & - & - & $4.64\%$ \\
- & Davinci / Babbage & \checkmark / - & $0.815 / 0.825$ ; $0.813 / 0.813$ & - & - & - & $4.97\% / 4.36\%$ ; $5.35\% / 4.44\%$ \\
+ & Davinci-002 (FT) & \checkmark / - & $0.815 / 0.825$ & - & - & - & $4.97\% / 4.36\%$ \\
+ & Babbage-002 (FT) & \checkmark / - & $0.813 / 0.813$ & - & - & - & $5.35\% / 4.44\%$ \\
  & Mistral-7B & \checkmark / - & $0.748 / 0.631$ & - & - & - & $8.30\% / 12.89\%$ \\
  & ARI / FKGL / GFI & - & $0.344 / 0.335 / 0.323$ & - & - & - & $18.42 / 20.73 / 21.29\%$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 \subsection{AE.2: Analytical and Multi-Model Justification of Weight $w_1$ (Task T07)}
@@ -139,9 +145,11 @@ To test whether explicit CEFR system prompts improve prediction accuracy over un
 
 \noindent\textbf{Response:}
 We expanded both the theoretical derivation and the multi-model empirical validation of $w_1$ across all 9 simplification systems and 1,000 test sentence pairs (500 from \texttt{Sentences Books} and 500 from \texttt{Sentences Internet}). Analytically, $w_1^* = 0.8055$ compensates for the anisotropy of contextualized CamemBERT embeddings: unrelated French sentences exhibit a high cosine similarity floor $S_0 = y_2 \approx 0.810$, whereas identical sentences yield $y_1 = 1.000$, compressing the effective semantic similarity range to $\Delta S = y_1 - y_2 = 0.190$. Over the same boundary regimes, the proxy simplification accuracy shift spans $\Delta A = x_2 - x_1 \approx 0.046$. Equalizing the marginal contributions yields:
-\begin{equation}
-w_1^* = \frac{\Delta S}{\Delta S + \Delta A} = \frac{y_1 - y_2}{(x_2 - x_1) + (y_1 - y_2)} = \frac{0.190}{0.190 + 0.046} = 0.8055 \approx 0.80, \quad w_2^* = 1 - w_1^* = 0.1945 \approx 0.20.
-\label{eq:rebuttal_w1_derivation}
+\begin{equation}\label{eq:rebuttal_w1_derivation}
+\begin{aligned}
+w_1^* &= \frac{\Delta S}{\Delta S + \Delta A} = \frac{y_1 - y_2}{(x_2 - x_1) + (y_1 - y_2)} = \frac{0.190}{0.190 + 0.046} = 0.8055 \approx 0.80, \\
+w_2^* &= 1 - w_1^* = 0.1945 \approx 0.20.
+\end{aligned}
 \end{equation}
 To verify that model comparisons do not depend on a narrow choice of $w_1$, we swept $w_1 \in [0.05, 0.95]$ across all 9 fine-tuned and zero-shot LLMs on the 1,000 test pairs. As shown in Figure~\ref{fig:rebuttal_sensitivity_pareto}, the relative ranking of all models remains strictly invariant across the operational interval $w_1 \in [0.15, 0.85]$ (Spearman rank correlation $\rho = 1.0000$, zero rank crossovers).
 
@@ -149,7 +157,7 @@ To verify that model comparisons do not depend on a narrow choice of $w_1$, we s
     \centering
     \begin{minipage}[t]{0.485\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{figure_1_sensitivity_and_ranks.png}
+        \includegraphics[width=0.98\textwidth]{figure_1_sensitivity_and_ranks.png}
     \end{minipage}\hfill
     \begin{minipage}[t]{0.485\textwidth}
         \centering
@@ -163,7 +171,7 @@ To verify that model comparisons do not depend on a narrow choice of $w_1$, we s
 \revquote{Action Editor (AE.3)}{Both reviewers ask for the components in Section 4 to be properly described and formalised rather than outlined, this concerns Figures 3, 4 and especially 5. Reviewer 1 lists a number of places where figures lack in-text citations and explanations (Figures 1 and 2), where metric definitions are introduced without being defined (Section 6.1.1, accuracy and pairwise mismatch), and where the text appears unfinished (Section 6.3.4). Please also state the novel contribution explicitly in the methodology section.}
 
 \noindent\textbf{Response:}
-Every equation in the manuscript is now formally defined, numbered, and cross-referenced, and every figure (Figures 1 to 9) is cited and explained in prose: (1) Figures 1 and 2 are cited via \texttt{\textbackslash autoref\{fig:framework\}} and \texttt{\textbackslash autoref\{fig:pm\_explanation\}} with step-by-step explanations (Responses R1.1, R1.2); (2) $PM_{\text{norm}} \in [0, 1]$ and Algorithm 1 are formalized using confusion matrix variables $C_{u,u'}$ including diagonal exact matches $C_{u,u}$ (Responses R2.2, R2.3); (3) $S$, $A_K$, and $w\text{-Score}$ are numbered with a 6-level numerical walkthrough (Responses R2.4, R2.5); (4) Section 4.2 formalizes LLM embedding extraction (Figure 3), cosine KNN scoring (Figure 4), and LightGCN bipartite graph propagation (Figure 5), alongside $\text{NDCG}@5$ and Xavier initialization (Responses R1.3, R2.7, R2.15, R2.16); and (5) Accuracy is formally defined in Section 6.1.1 and the reference to Table 9 (\texttt{\textbackslash autoref\{tab:best\_hyperparameters\}}) is fixed in Section 6.3.4 (Responses R1.5, R1.6).
+Every equation in the manuscript is now formally defined, numbered, and cross-referenced, and every figure (Figures 1 to 9) is cited and explained in prose: (1) Figures 1 and 2 are cited directly as ``Figure 1'' and ``Figure 2'' with step-by-step explanations (Responses R1.1, R1.2); (2) $PM_{\text{norm}} \in [0, 1]$ and Algorithm 1 are formalized using confusion matrix variables $C_{u,u'}$ including diagonal exact matches $C_{u,u}$ (Responses R2.2, R2.3); (3) $S$, $A_K$, and $w\text{-Score}$ are numbered with a 6-level numerical walkthrough (Responses R2.4, R2.5); (4) Section 4.2 formalizes LLM embedding extraction (Figure 3), cosine KNN scoring (Figure 4), and LightGCN bipartite graph propagation (Figure 5), alongside $\text{NDCG}@5$ and Xavier initialization (Responses R1.3, R2.7, R2.15, R2.16); and (5) Accuracy is formally defined in Section 6.1.1 and the reference to Table 9 in the Appendix is fixed in Section 6.3.4 (Responses R1.5, R1.6).
 
 \subsection{AE.4: Human Qualitative Evaluation and Claim Moderation on p.\ 18 (Tasks T14, T15)}
 \revquote{Action Editor (AE.4)}{Reviewer 2 observes that neither the individual components nor the system as a whole are evaluated qualitatively by human judges. For a system whose output is generated text, a human assessment of simplification quality would substantially strengthen the paper. Related to this: the claim on p.\ 18 that simplified texts reduce complexity ``through careful word choice, syntactic restructuring, and discourse simplification'' needs to be either demonstrated or toned down, as written it is not supported.}
@@ -171,13 +179,14 @@ Every equation in the manuscript is now formally defined, numbered, and cross-re
 \noindent\textbf{Response:}
 First, we toned down the unsupported claim in Section 5 (p.\ 18, \texttt{tex/UI.tex}, line 27):
 \begin{quote}
-\textcolor{red}{\textit{``Each simplified version aims to preserve the core meaning of the source text while reducing its estimated CEFR complexity; since these transformations emerge implicitly from fine-tuning on parallel sentence pairs rather than from explicit syntactic rules, we evaluate both automatic semantic similarity and human-judged meaning preservation in Section 6 (\texttt{\textbackslash ref\{sec:experiments\}}).''}}
+\textcolor{red}{\textit{``Each simplified version aims to preserve the core meaning of the source text while reducing its estimated CEFR complexity; since these transformations emerge implicitly from fine-tuning on parallel sentence pairs rather than from explicit syntactic rules, we evaluate both automatic semantic similarity and human-judged meaning preservation in Section 6.''}}
 \end{quote}
 Second, we implemented a double-blind human evaluation study using a stratified \textit{Split-and-Overlap} protocol over $N = 150$ French sentence pairs (30 pairs per CEFR level from A2 to C2; 75 pairs comparing fine-tuned Mistral-7B vs.\ fine-tuned GPT-3.5, and 75 pairs comparing fine-tuned GPT-4o vs.\ fine-tuned GPT-4o-mini). Two independent evaluators each annotate $M = 100$ randomized, anonymized A/B pairs (50 shared pairs evaluated by both judges to compute Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's $\alpha$, plus $2 \times 50$ unique pairs). Judges record (1) pairwise simplification preference (Model A, Model B, or Tie) and (2) categorical meaning preservation (\textit{Yes}, \textit{Partial/Unclear}, or \textit{No}). With $n_{\text{shared}} = 50$, statistical power is $\ge 80\%$ to reject $\kappa \le 0.40$ at $\alpha = 0.05$ for target $\kappa \ge 0.70$ ($\text{SE} \le 0.062$), and $N = 150$ yields $98.9\%$ power for a paired Wilcoxon test at $d = 0.35$. Table~\ref{tab:rebuttal_human_study} presents the protocol and results table added to Section 6.2.5.
 
 \begin{table}[!htbp]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{4.5pt}
 \renewcommand{\arraystretch}{0.92}
 \caption{Stratified double-blind human evaluation protocol and empirical results across $N = 150$ sentence pairs (30 per CEFR level A2 to C2; $n_{\text{shared}} = 50$ double-annotated overlap pairs + $2 \times 50$ unique pairs).}
 \label{tab:rebuttal_human_study}
@@ -220,7 +229,7 @@ We added a dedicated subsection in Section 1 (\texttt{tex/Introduction.tex}) and
 \renewcommand{\arraystretch}{0.92}
 \caption{Comparison between the RecSys 2024 short paper \cite{jamet2024evaluation} and the present DMKD journal extension.}
 \label{tab:rebuttal_recsys_delta}
-\begin{tabular}{p{2.9cm}p{5.6cm}p{7.1cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{5.5cm}>{\raggedright\arraybackslash}p{7.0cm}}
 \toprule
 \textbf{Dimension} & \textbf{RecSys 2024 Short Paper (5 pages)} & \textbf{DMKD Journal Extension (Current Work)} \\
 \midrule
@@ -246,25 +255,25 @@ We added a dedicated subsection in Section 1 (\texttt{tex/Introduction.tex}) and
 \revquote{Reviewer 1 (R1.1)}{Write an explanation of Figure 1 with an in-text citation of Figure 1 missing.}
 
 \noindent\textbf{Response:}
-We added an explicit citation \texttt{\textbackslash autoref\{fig:framework\}} and walkthrough paragraph in Section 1 (\texttt{tex/Introduction.tex}):
+We added an explicit citation to Figure 1 and a walkthrough paragraph in Section 1 (\texttt{tex/Introduction.tex}):
 \begin{quote}
-\textcolor{red}{\textit{``As illustrated in Figure 1 (\texttt{\textbackslash autoref\{fig:framework\}}), our architecture connects these modules into a unified pipeline. First, candidate French documents collected from web and literary sources pass through the difficulty estimation module, which assigns a CEFR proficiency label from A1 to C2 using fine-tuned LLMs and readability baselines. Second, whenever a document that matches a learner's topical interests exceeds their current proficiency level, the text simplification module rewrites the content sentence by sentence toward a lower CEFR target while preserving semantic fidelity. Third, the recommendation engine combines semantic item embeddings extracted from the text with historical user-item interactions via K-Nearest Neighbors (KNN) or LightGCN graph propagation to deliver personalized reading suggestions.''}}
+\textcolor{red}{\textit{``As illustrated in Figure 1, our architecture connects these modules into a unified pipeline. First, candidate French documents collected from web and literary sources pass through the difficulty estimation module, which assigns a CEFR proficiency label from A1 to C2 using fine-tuned LLMs and readability baselines. Second, whenever a document that matches a learner's topical interests exceeds their current proficiency level, the text simplification module rewrites the content sentence by sentence toward a lower CEFR target while preserving semantic fidelity. Third, the recommendation engine combines semantic item embeddings extracted from the text with historical user-item interactions via K-Nearest Neighbors (KNN) or LightGCN graph propagation to deliver personalized reading suggestions.''}}
 \end{quote}
 
 \subsection{R1.2: In-Text Citation and Explanation of Figure 2 (Task T17)}
 \revquote{Reviewer 1 (R1.2)}{Write a short paragraph explaining Figure 2 with an in-text citation of Figure 2 missing for Visual explanation of the Pairwise Mismatch metric}
 
 \noindent\textbf{Response:}
-We added a dedicated paragraph in Section 2.3.1 (\texttt{tex/Difficulty\_Estimation.tex}) citing \texttt{\textbackslash autoref\{fig:pm\_explanation\}} and explaining the confusion-matrix example step by step:
+We added a dedicated paragraph in Section 2.3.1 (\texttt{tex/Difficulty\_Estimation.tex}) citing Figure 2 and explaining the confusion-matrix example step by step:
 \begin{quote}
-\textcolor{red}{\textit{``Figure 2 (\texttt{\textbackslash autoref\{fig:pm\_explanation\}}) illustrates how pairwise ordering violations arise within a confusion matrix whose rows index true difficulty levels $u \in \{1, \dots, K\}$ and columns index predicted levels $u' \in \{1, \dots, K\}$. For a reference cell $(u, u')$ with count $C_{u,u'}$, any test instance falling in the upper-right quadrant ($v < u$ and $v' > u'$, shaded in red) has a strictly easier true level but receives a strictly harder predicted level, creating $C_{u,u'} \times C_{v,v'}$ strict inversions. Similarly, cells sharing the same predicted column ($v \neq u, v' = u'$) or the same true row ($v = u, v' \neq u'$) represent ties on one dimension and contribute a half-weight penalty of $\frac{1}{2} C_{u,u'} C_{v,u'}$ to the total mismatch count.''}}
+\textcolor{red}{\textit{``Figure 2 illustrates how pairwise ordering violations arise within a confusion matrix whose rows index true difficulty levels $u \in \{1, \dots, K\}$ and columns index predicted levels $u' \in \{1, \dots, K\}$. For a reference cell $(u, u')$ with count $C_{u,u'}$, any test instance falling in the upper-right quadrant ($v < u$ and $v' > u'$, shaded in red) has a strictly easier true level but receives a strictly harder predicted level, creating $C_{u,u'} \times C_{v,v'}$ strict inversions. Similarly, cells sharing the same predicted column ($v \neq u, v' = u'$) or the same true row ($v = u, v' \neq u'$) represent ties on one dimension and contribute a half-weight penalty of $\frac{1}{2} C_{u,u'} C_{v,u'}$ to the total mismatch count.''}}
 \end{quote}
 
 \subsection{R1.3: Detailed Explanation of Embedding Generation in Section 4.2 (Task T20)}
 \revquote{Reviewer 1 (R1.3)}{In Section 4.2 generate the embeddings explanation missing in detail.}
 
 \noindent\textbf{Response:}
-We expanded Section 4.2 (\texttt{tex/RS.tex}) to formally specify the item and user embedding generation pipeline depicted in Figure 3 (\texttt{\textbackslash autoref\{fig:init\_embeddings\}}). For each item $i \in \mathcal{I}$, we construct a structured textual description $d_i$ by concatenating its metadata fields (full article text for \texttt{Zeeguu}; title, summary, cast, director, genres, and ratings for \texttt{ml-100k}; book title, description, publisher, and metadata for \texttt{Goodreads}; score title, composer, style, level, and instrument for \texttt{Tomplay}). A pre-trained encoder $\phi_{\text{LLM}}$ maps $d_i$ into a dense vector $\mathbf{e}_i^{(0)} \in \mathbb{R}^d$:
+We expanded Section 4.2 (\texttt{tex/RS.tex}) to formally specify the item and user embedding generation pipeline depicted in Figure 3. For each item $i \in \mathcal{I}$, we construct a structured textual description $d_i$ by concatenating its metadata fields (full article text for \texttt{Zeeguu}; title, summary, cast, director, genres, and ratings for \texttt{ml-100k}; book title, description, publisher, and metadata for \texttt{Goodreads}; score title, composer, style, level, and instrument for \texttt{Tomplay}). A pre-trained encoder $\phi_{\text{LLM}}$ maps $d_i$ into a dense vector $\mathbf{e}_i^{(0)} \in \mathbb{R}^d$:
 \begin{equation}
 \mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i) = \frac{1}{|T_i|} \sum_{t=1}^{|T_i|} \mathbf{h}_{i,t} \in \mathbb{R}^d, \qquad
 \mathbf{e}_u^{(0)} = \frac{1}{|\mathcal{H}_u^{(n)}|} \sum_{i \in \mathcal{H}_u^{(n)}} \mathbf{e}_i^{(0)} \in \mathbb{R}^d,
@@ -296,13 +305,13 @@ where $N$ denotes the total number of test instances in the evaluation split ($N
 \revquote{Reviewer 1 (R1.6)}{In Section 6.3.4, the optimal hyperparameters for each model and dataset, identified through grid search and early stopping, are summarized in``? Why was a question mark added? Is there a section detail missing?}
 
 \noindent\textbf{Response:}
-The `??` in the compiled PDF was caused by an unresolved LaTeX reference to Table 9 in the Appendix (\texttt{\textbackslash autoref\{tab:best\_hyperparameters\}}). We verified that \texttt{\textbackslash label\{tab:best\_hyperparameters\}} in \texttt{tex/Appendix.tex} (line 9) and \texttt{\textbackslash autoref\{tab:best\_hyperparameters\}} in \texttt{tex/Experiments\_RS.tex} (line 201) match and resolve cleanly to ``Table 9''.
+The \texttt{??} in the compiled PDF was caused by an unresolved cross-reference to Table 9 in the Appendix. We verified that the table label in \texttt{tex/Appendix.tex} (line 9) and the in-text reference in \texttt{tex/Experiments\_RS.tex} (line 201) match and resolve cleanly to ``Table 9''.
 
 \subsection{R1.7: Article Structure and Narrative Flow (Task T28)}
 \revquote{Reviewer 1 (R1.7)}{Work on the paper structure of article flow for readers' perspective.}
 
 \noindent\textbf{Response:}
-We revised the transitions across all sections to maintain a unified mathematical notation and narrative progression: Section 1 introduces the pipeline (\texttt{\textbackslash autoref\{fig:framework\}}) and demarcates the journal extension from RecSys 2024; Sections 2, 3, and 4 formalize Difficulty Estimation ($PM_{\text{norm}}$), Text Simplification ($A_K, S, w\text{-Score}$), and Recommendation ($\mathbf{e}_i^{(0)}, \mathbf{e}_u^{(0)}$, KNN, LightGCN); Section 5 presents the two interactive interfaces; and Section 6 evaluates each module in the exact same order.
+We revised the transitions across all sections to maintain a unified mathematical notation and narrative progression: Section 1 introduces the pipeline (Figure 1) and demarcates the journal extension from RecSys 2024; Sections 2, 3, and 4 formalize Difficulty Estimation ($PM_{\text{norm}}$), Text Simplification ($A_K, S, w\text{-Score}$), and Recommendation ($\mathbf{e}_i^{(0)}, \mathbf{e}_u^{(0)}$, KNN, LightGCN); Section 5 presents the two interactive interfaces; and Section 6 evaluates each module in the exact same order.
 
 \subsection{R1.8: Explicit Statement of Novelty in the Methodology Sections (Task T21)}
 \revquote{Reviewer 1 (R1.8)}{Elaborating on your work for novelty or research contributions in the specific text of the methodology section or proposed model section is a required change.}
@@ -366,11 +375,12 @@ Diagonal cells $C_{u,u}$ (exact matches) are explicitly included in the outer su
 
 \noindent\textbf{Response:}
 In Section 3.3 (\texttt{tex/Simplification.tex}), we numbered all equations, added the cosine similarity formula for Semantic Similarity $S$, generalized Simplification Accuracy to $A_K$ for any ordered scale $L = \{1, \dots, K\}$ ($K \ge 2$, covering CEFR with $K=6$, ACTFL with $K=5$, or \texttt{LjL} with $K=4$), and included a step-by-step numerical example. Given original sentence $x \in \mathcal{O}$, simplified sentence $\hat{x} = m(x) \in \mathcal{T}$, CamemBERT embeddings $\mathbf{e}(x), \mathbf{e}(\hat{x}) \in \mathbb{R}^d$, and proxy class probability vectors $\mathbf{o}, \mathbf{s} \in \Delta^{K-1}$:
-\begin{equation}
-S(x, \hat{x}) = \frac{\mathbf{e}(x) \cdot \mathbf{e}(\hat{x})}{\|\mathbf{e}(x)\|_2 \, \|\mathbf{e}(\hat{x})\|_2}, \qquad
-A_K(x, \hat{x}) = \frac{1}{K - 1} \sum_{i=2}^{K} \left( \sum_{j=i}^{K} o_j \right) \left( \sum_{k=1}^{i-1} s_k \right), \qquad
-w\text{-Score} = \frac{2 w_1 A_K w_2 S}{w_1 A_K + w_2 S},
-\label{eq:rebuttal_S_AK_wscore}
+\begin{equation}\label{eq:rebuttal_S_AK_wscore}
+\begin{aligned}
+S(x, \hat{x}) &= \frac{\mathbf{e}(x) \cdot \mathbf{e}(\hat{x})}{\|\mathbf{e}(x)\|_2 \, \|\mathbf{e}(\hat{x})\|_2}, \qquad
+A_K(x, \hat{x}) = \frac{1}{K - 1} \sum_{i=2}^{K} \left( \sum_{j=i}^{K} o_j \right) \left( \sum_{k=1}^{i-1} s_k \right), \\
+w\text{-Score} &= \frac{2 w_1 A_K w_2 S}{w_1 A_K + w_2 S},
+\end{aligned}
 \end{equation}
 where $w_2 = 1 - w_1$. At each boundary $i \in \{2, \dots, K\}$, $O_{\ge i} = \sum_{j=i}^{K} o_j = P(Y_{\text{orig}} \ge i)$ is the probability that $x$ has difficulty at least $i$, and $S_{< i} = \sum_{k=1}^{i-1} s_k = P(Y_{\text{simp}} < i)$ is the probability that $\hat{x}$ is strictly easier than $i$.
 
@@ -435,11 +445,12 @@ In Section 6.2.4 (\texttt{tex/Experiments.tex}), we clarified that at each itera
 
 \noindent\textbf{Response:}
 In Section 6.3.3 (\texttt{tex/Experiments\_RS.tex}), before its first mention, we added the formal definitions of $\text{DCG}_u@K$, $\text{IDCG}_u@K$, and $\text{NDCG}@K$ (for $K = 5$), followed by the Glorot (Xavier) uniform initialization distribution:
-\begin{equation}
-\text{DCG}_u@K = \sum_{r=1}^{K} \frac{2^{\text{rel}_{u, \pi_u(r)}} - 1}{\log_2(r + 1)}, \quad
-\text{NDCG}@K = \frac{1}{|\mathcal{U}_{\text{test}}|} \sum_{u \in \mathcal{U}_{\text{test}}} \frac{\text{DCG}_u@K}{\text{IDCG}_u@K}, \quad
-e_{j,m}^{(0)} \sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}, +\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}\right).
-\label{eq:rebuttal_ndcg_xavier}
+\begin{equation}\label{eq:rebuttal_ndcg_xavier}
+\begin{aligned}
+\text{DCG}_u@K &= \sum_{r=1}^{K} \frac{2^{\text{rel}_{u, \pi_u(r)}} - 1}{\log_2(r + 1)}, \qquad
+\text{NDCG}@K = \frac{1}{|\mathcal{U}_{\text{test}}|} \sum_{u \in \mathcal{U}_{\text{test}}} \frac{\text{DCG}_u@K}{\text{IDCG}_u@K}, \\
+e_{j,m}^{(0)} &\sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}},\, +\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}\right).
+\end{aligned}
 \end{equation}
 We explain that Xavier initialization assigns random, semantics-free layer-0 vectors, which suffers under extreme interaction sparsity (\texttt{Zeeguu} $99.92\%$, \texttt{Goodreads} $99.99\%$). Replacing random draws with pre-trained LLM embeddings $\mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i)$ clusters semantically related texts at layer 0 prior to BPR optimization, yielding $+12.12\%$ ($\text{NDCG}@5$) on \texttt{Zeeguu} and $+18.75\%$ on \texttt{Goodreads}.
 
@@ -453,13 +464,13 @@ At the end of Section 6.3.4 (\texttt{tex/Experiments\_RS.tex}), we added concret
 \revquote{Reviewer 2 (R2.18)}{The claims of a language-agnostic approach on p.\ 33 (and elsewhere) are somewhat exaggerated, as many of the used components are French-specific. The approach's findings are useful for other languages, but the formulation shall be adapted.}
 
 \noindent\textbf{Response:}
-We revised both Section 1 (\texttt{tex/Introduction.tex}, line 34) and Section 7 (\texttt{tex/Conclusion.tex}, line 11) to state explicitly that our empirical validation, corpora, and CamemBERT encoder are French-specific, while the methodological architecture ($PM_{\text{norm}}$, $A_K/S$, and LLM-initialized LightGCN) can be transferred to other languages by substituting target-language encoders and CEFR-labeled training pairs.
+We revised both Section 1 (line 34 of \texttt{tex/Introduction.tex}) and Section 7 (line 11 of \texttt{tex/Conclusion.tex}) to state explicitly that our empirical validation, corpora, and CamemBERT encoder are French-specific, while the methodological architecture ($PM_{\text{norm}}$, $A_K/S$, and LLM-initialized LightGCN) can be transferred to other languages by substituting target-language encoders and CEFR-labeled training pairs.
 
 \subsection{R2.19, R2.20, R2.21 \& R2.22: Minor Comments (Links, Duplicate Prompt p.\ 20, Reference p.\ 29, and BibTeX)}
 \revquote{Reviewer 2 (R2.19--R2.22)}{Some of the links provided in the paper do not work. The prompt on p.\ 20 is repeated from p.\ 8. Remove it and provide a reference. On p.\ 29, there are missing references (??). References must be improved (replace arXiv with published variants, remove redundant conference fields, capitalize acronyms).}
 
 \noindent\textbf{Response:}
-We addressed all four minor points: (1) verified all external URLs across the manuscript; (2) uncommented Section 2.2.4 (\texttt{\textbackslash label\{subsubsec:system\_prompt\}}) in \texttt{tex/Difficulty\_Estimation.tex} and replaced the duplicate quote block on p.\ 20 (\texttt{tex/Experiments.tex}) with a reference to Section 2.2.4 (\texttt{\textbackslash ref\{subsubsec:system\_prompt\}}); (3) resolved the `??` on p.\ 29 via \texttt{\textbackslash autoref\{tab:best\_hyperparameters\}} pointing to Table 9 in the Appendix; and (4) cleaned \texttt{bibliography.bib} to replace arXiv preprints with peer-reviewed proceedings (ICLR, SIGIR, NAACL, ACL, ICML, RecSys, \textit{Computational Linguistics}), strip redundant conference metadata, and protect acronym capitalization (\texttt{\{LLM\}}, \texttt{\{BERT\}}, \texttt{\{CEFR\}}, \texttt{\{LightGCN\}}).
+We addressed all four minor points: (1) verified all external URLs across the manuscript; (2) uncommented Section 2.2.4 in \texttt{tex/Difficulty\_Estimation.tex} and replaced the duplicate quote block on p.\ 20 (\texttt{tex/Experiments.tex}) with a cross-reference to Section 2.2.4; (3) resolved the \texttt{??} on p.\ 29 so that it points cleanly to Table 9 in the Appendix; and (4) cleaned \texttt{bibliography.bib} to replace arXiv preprints with peer-reviewed proceedings (ICLR, SIGIR, NAACL, ACL, ICML, RecSys, \textit{Computational Linguistics}), strip redundant conference metadata, and protect acronym capitalization (LLM, BERT, CEFR, LightGCN).
 
 \vspace{-0.2cm}
 \begin{thebibliography}{9}

@@ -24,10 +24,19 @@ PRESERVATION_CHOICES = [
     "« Je ne sais pas / Flou »",
 ]
 
+# Protocole à 3 boutons discrets pour la question 1 : « Le contenu est-il plus simple ? »
+SIMPLER_CHOICES = [
+    "« Oui » (plus simple)",
+    "« Non » (pas plus simple)",
+    "« Je ne sais pas / Flou »",
+]
+
 __all__ = [
     "CEFR_LEVELS",
     "PRESERVATION_CHOICES",
+    "SIMPLER_CHOICES",
     "normalize_preservation_choice",
+    "normalize_simpler_choice",
     "find_repo_root",
     "clean_sentence",
     "load_raw_datasets",
@@ -72,6 +81,26 @@ def normalize_preservation_choice(val: Any) -> str:
     raise ValueError(
         f"Valeur invalide pour la préservation du sens : '{val}'. "
         f"Options valides attendues : {PRESERVATION_CHOICES}"
+    )
+
+
+def normalize_simpler_choice(val: Any) -> str:
+    """Normalise les choix pour la question 'Le contenu est-il plus simple ?' de façon Fail-Fast."""
+    if val is None or pd.isna(val):
+        return SIMPLER_CHOICES[0]
+    s = str(val).strip()
+    if s in SIMPLER_CHOICES:
+        return s
+    s_lower = s.lower()
+    if "oui" in s_lower or "yes" in s_lower:
+        return SIMPLER_CHOICES[0]
+    if "non" in s_lower or "no" in s_lower:
+        return SIMPLER_CHOICES[1]
+    if "flou" in s_lower or "sais pas" in s_lower or "unsure" in s_lower or "unclear" in s_lower or "?" in s_lower:
+        return SIMPLER_CHOICES[2]
+    raise ValueError(
+        f"Valeur invalide pour la simplicité du contenu : '{val}'. "
+        f"Options valides attendues : {SIMPLER_CHOICES}"
     )
 
 
@@ -406,7 +435,7 @@ def save_atomic_dataframe(df: pd.DataFrame, target_path: Path) -> None:
     1. Écriture sur un fichier temporaire .tmp
     2. Flush applicatif f.flush()
     3. Verrouillage physique os.fsync(f.fileno())
-    4. Substitution atomique os.replace()
+    4. Substitution atomique os.replace() avec retries sous Windows
     """
     target_path = Path(target_path)
     target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -417,7 +446,16 @@ def save_atomic_dataframe(df: pd.DataFrame, target_path: Path) -> None:
         f.flush()
         os.fsync(f.fileno())
 
-    os.replace(tmp_path, target_path)
+    # Sous Windows, un watcher (ex: Streamlit) ou un scanner peut verrouiller brièvement le fichier
+    for attempt in range(10):
+        try:
+            os.replace(tmp_path, target_path)
+            break
+        except PermissionError:
+            if attempt == 9:
+                raise
+            import time
+            time.sleep(0.05)
 
 
 def get_annotator_filepath(repo_root: Path, annotator: str) -> Path:
@@ -436,21 +474,30 @@ def get_annotator_filepath(repo_root: Path, annotator: str) -> Path:
 def load_annotator_data(repo_root: Path, annotator: str) -> pd.DataFrame:
     """Charge les annotations existantes pour un annotateur donné."""
     filepath = get_annotator_filepath(repo_root, annotator)
+    canonical_columns = [
+        "pair_id",
+        "annotator",
+        "timestamp",
+        "preferred_option",  # 'A' ou 'B'
+        "preferred_model",  # nom du modèle choisi
+        "content_simpler_a",  # « Oui » (plus simple), « Non » (pas plus simple), « Je ne sais pas / Flou »
+        "content_simpler_b",  # « Oui » (plus simple), « Non » (pas plus simple), « Je ne sais pas / Flou »
+        "meaning_preservation_a",  # « Oui » (conservé), « Non » (non conservé), « Je ne sais pas / Flou »
+        "meaning_preservation_b",  # « Oui » (conservé), « Non » (non conservé), « Je ne sais pas / Flou »
+        "notes",
+    ]
     if not filepath.is_file():
-        # Retourne un DataFrame vide avec les colonnes requises
+        # Retourne un DataFrame vide avec les colonnes requises typées object
         return pd.DataFrame(
-            columns=[
-                "pair_id",
-                "annotator",
-                "timestamp",
-                "preferred_option",  # 'A' ou 'B'
-                "preferred_model",  # nom du modèle choisi
-                "meaning_preservation_a",  # « Oui » (conservé), « Non » (non conservé), « Je ne sais pas / Flou »
-                "meaning_preservation_b",  # « Oui » (conservé), « Non » (non conservé), « Je ne sais pas / Flou »
-                "notes",
-            ]
+            {col: pd.Series(dtype="object") for col in canonical_columns}
         )
-    return pd.read_csv(filepath)
+    df = pd.read_csv(filepath)
+    # Rétrocompatibilité : ajouter content_simpler_a / content_simpler_b si manquantes
+    if "content_simpler_a" not in df.columns:
+        df["content_simpler_a"] = SIMPLER_CHOICES[0]
+    if "content_simpler_b" not in df.columns:
+        df["content_simpler_b"] = SIMPLER_CHOICES[0]
+    return df
 
 
 def save_single_annotation(
@@ -458,6 +505,8 @@ def save_single_annotation(
     annotator: str,
     pair_row: pd.Series,
     preferred_option: str,
+    content_simpler_a: str = SIMPLER_CHOICES[0],
+    content_simpler_b: str = SIMPLER_CHOICES[0],
     meaning_preservation_a: Optional[Any] = None,
     meaning_preservation_b: Optional[Any] = None,
     notes: str = "",
@@ -472,6 +521,9 @@ def save_single_annotation(
         raise ValueError(
             f"Option préférée invalide : {preferred_option} (attendu 'A' ou 'B')"
         )
+
+    norm_simpler_a = normalize_simpler_choice(content_simpler_a)
+    norm_simpler_b = normalize_simpler_choice(content_simpler_b)
 
     val_a = meaning_preservation_a if meaning_preservation_a is not None else fidelity_score_a
     val_b = meaning_preservation_b if meaning_preservation_b is not None else fidelity_score_b
@@ -492,6 +544,8 @@ def save_single_annotation(
         "timestamp": datetime.now().isoformat(),
         "preferred_option": preferred_option,
         "preferred_model": preferred_model,
+        "content_simpler_a": norm_simpler_a,
+        "content_simpler_b": norm_simpler_b,
         "meaning_preservation_a": norm_a,
         "meaning_preservation_b": norm_b,
         "notes": str(notes).strip() if notes is not None else "",
@@ -501,7 +555,7 @@ def save_single_annotation(
         # Mise à jour in-situ
         idx = df[df["pair_id"] == pair_id].index[0]
         for k, v in new_record.items():
-            df.at[idx, k] = v
+            df.loc[idx, k] = v
     else:
         # Ajout
         df = pd.concat([df, pd.DataFrame([new_record])], ignore_index=True)
@@ -541,6 +595,10 @@ def consolidate_annotations(
 
     if frames:
         merged = pd.concat(frames, ignore_index=True)
+        if "content_simpler_a" not in merged.columns:
+            merged["content_simpler_a"] = SIMPLER_CHOICES[0]
+        if "content_simpler_b" not in merged.columns:
+            merged["content_simpler_b"] = SIMPLER_CHOICES[0]
     else:
         merged = pd.DataFrame(
             columns=[
@@ -549,6 +607,8 @@ def consolidate_annotations(
                 "timestamp",
                 "preferred_option",
                 "preferred_model",
+                "content_simpler_a",
+                "content_simpler_b",
                 "meaning_preservation_a",
                 "meaning_preservation_b",
                 "notes",
@@ -691,7 +751,55 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
         columns=[f"Maxime: {c}" for c in all_categories],
     )
 
-    # 2. Accord sur la Préservation du Sens (3 Boutons Discrets)
+    # 2. Accord sur la Simplicité du Contenu (Question 1 : « Le contenu est-il plus simple ? »)
+    h_simpler_ratings = []
+    m_simpler_ratings = []
+
+    for i in range(n_common):
+        h_s_a = normalize_simpler_choice(sub_h.iloc[i].get("content_simpler_a"))
+        h_s_b = normalize_simpler_choice(sub_h.iloc[i].get("content_simpler_b"))
+        m_s_a = normalize_simpler_choice(sub_m.iloc[i].get("content_simpler_a"))
+        m_s_b = normalize_simpler_choice(sub_m.iloc[i].get("content_simpler_b"))
+
+        h_simpler_ratings.extend([h_s_a, h_s_b])
+        m_simpler_ratings.extend([m_s_a, m_s_b])
+
+    n_simpler_ratings = len(h_simpler_ratings)
+    simpler_agree_cnt = sum(
+        1 for a, b in zip(h_simpler_ratings, m_simpler_ratings) if a == b
+    )
+    simpler_observed_agreement = (
+        simpler_agree_cnt / n_simpler_ratings if n_simpler_ratings > 0 else 0.0
+    )
+
+    simpler_cohen_k = float(
+        cohen_kappa_score(
+            h_simpler_ratings, m_simpler_ratings, labels=SIMPLER_CHOICES
+        )
+    )
+
+    # Fleiss' Kappa pour la simplicité (matrice N_ratings x 3)
+    simpler_to_idx = {cat: idx for idx, cat in enumerate(SIMPLER_CHOICES)}
+    counts_matrix_simpler = np.zeros(
+        (n_simpler_ratings, len(SIMPLER_CHOICES)), dtype=int
+    )
+    for row_i, (ch, cm) in enumerate(zip(h_simpler_ratings, m_simpler_ratings)):
+        counts_matrix_simpler[row_i, simpler_to_idx[ch]] += 1
+        counts_matrix_simpler[row_i, simpler_to_idx[cm]] += 1
+
+    simpler_fleiss_k = compute_fleiss_kappa(counts_matrix_simpler)
+
+    # Matrice de confusion 3x3 sur la simplicité
+    conf_mat_simpler = confusion_matrix(
+        h_simpler_ratings, m_simpler_ratings, labels=SIMPLER_CHOICES
+    )
+    conf_df_simpler = pd.DataFrame(
+        conf_mat_simpler,
+        index=[f"Henri : {c}" for c in SIMPLER_CHOICES],
+        columns=[f"Maxime : {c}" for c in SIMPLER_CHOICES],
+    )
+
+    # 3. Accord sur la Préservation du Sens (Question 2 : « Le sens est-il conservé ? »)
     # Pour chaque paire partagée, on compare l'évaluation de l'Option A et de l'Option B
     h_pres_ratings = []
     m_pres_ratings = []
@@ -784,7 +892,14 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
             "fleiss_kappa": fleiss_k,
             "categories": all_categories,
             "confusion_matrix_df": conf_df,
-            # Accord Préservation du Sens (3 boutons discrets)
+            # Accord Simplicité du Contenu (Question 1)
+            "simpler_agreement": simpler_observed_agreement,
+            "simpler_observed_agreement": simpler_observed_agreement,
+            "simpler_cohen_kappa": simpler_cohen_k,
+            "simpler_fleiss_kappa": simpler_fleiss_k,
+            "simpler_confusion_matrix": conf_df_simpler,
+            "simpler_confusion_matrix_df": conf_df_simpler,
+            # Accord Préservation du Sens (Question 2)
             "meaning_observed_agreement": meaning_observed_agreement,
             "meaning_cohen_kappa": meaning_cohen_k,
             "meaning_fleiss_kappa": meaning_fleiss_k,
@@ -797,11 +912,7 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
 
 
 def compute_model_performance(repo_root: Optional[Path] = None) -> pd.DataFrame:
-    """Calcule les taux de préservation du sens et de préférence par modèle de simplification.
-
-    - Taux de préservation du sens : proportion des évaluations où le modèle a reçu « Oui » (conservé).
-    - Taux de préférence : proportion où le modèle a été sélectionné comme le plus simple.
-    """
+    """Calcule les taux de préservation du sens, de simplicité et de préférence par modèle."""
     if repo_root is None:
         repo_root = find_repo_root()
     else:
@@ -818,7 +929,13 @@ def compute_model_performance(repo_root: Optional[Path] = None) -> pd.DataFrame:
     ]
 
     stats = {
-        m: {"eval_count": 0, "oui_count": 0, "pref_count": 0} for m in models
+        m: {
+            "eval_count": 0,
+            "simpler_oui_count": 0,
+            "sens_oui_count": 0,
+            "pref_count": 0,
+        }
+        for m in models
     }
 
     if not df_ann.empty:
@@ -833,6 +950,12 @@ def compute_model_performance(repo_root: Optional[Path] = None) -> pd.DataFrame:
             mod_a = pool_map[pid]["model_a"]
             mod_b = pool_map[pid]["model_b"]
             pref_opt = str(row.get("preferred_option", "")).strip().upper()
+            simpler_a = normalize_simpler_choice(
+                row.get("content_simpler_a")
+            )
+            simpler_b = normalize_simpler_choice(
+                row.get("content_simpler_b")
+            )
             pres_a = normalize_preservation_choice(
                 row.get("meaning_preservation_a")
             )
@@ -843,32 +966,47 @@ def compute_model_performance(repo_root: Optional[Path] = None) -> pd.DataFrame:
             # Modèle A
             if mod_a in stats:
                 stats[mod_a]["eval_count"] += 1
+                if simpler_a == SIMPLER_CHOICES[0]:
+                    stats[mod_a]["simpler_oui_count"] += 1
                 if pres_a == PRESERVATION_CHOICES[0]:
-                    stats[mod_a]["oui_count"] += 1
+                    stats[mod_a]["sens_oui_count"] += 1
                 if pref_opt == "A":
                     stats[mod_a]["pref_count"] += 1
 
             # Modèle B
             if mod_b in stats:
                 stats[mod_b]["eval_count"] += 1
+                if simpler_b == SIMPLER_CHOICES[0]:
+                    stats[mod_b]["simpler_oui_count"] += 1
                 if pres_b == PRESERVATION_CHOICES[0]:
-                    stats[mod_b]["oui_count"] += 1
+                    stats[mod_b]["sens_oui_count"] += 1
                 if pref_opt == "B":
                     stats[mod_b]["pref_count"] += 1
 
     records = []
     for m in models:
         cnt = stats[m]["eval_count"]
-        pres_pct = (stats[m]["oui_count"] / cnt * 100.0) if cnt > 0 else 0.0
+        simpler_pct = (stats[m]["simpler_oui_count"] / cnt * 100.0) if cnt > 0 else 0.0
+        pres_pct = (stats[m]["sens_oui_count"] / cnt * 100.0) if cnt > 0 else 0.0
         pref_pct = (stats[m]["pref_count"] / cnt * 100.0) if cnt > 0 else 0.0
         records.append(
             {
                 "Modèle": m,
+                "Taux de Meilleure Simplification (%)": round(pref_pct, 1),
+                "Taux de Contenu Plus Simple (%)": round(simpler_pct, 1),
+                "Taux de Sens Conservé (%)": round(pres_pct, 1),
                 "Taux de Préservation du Sens (%)": round(pres_pct, 1),
                 "Taux de Préférence (%)": round(pref_pct, 1),
                 "Total Évaluations": cnt,
-                "Nb 'Oui' (Sens)": stats[m]["oui_count"],
+                "Nb 'Oui' (Plus Simple)": stats[m]["simpler_oui_count"],
+                "Nb 'Oui' (Sens)": stats[m]["sens_oui_count"],
                 "Nb Préféré": stats[m]["pref_count"],
+                "simpler_rate": round(simpler_pct, 1),
+                "preference_rate": round(pref_pct, 1),
+                "meaning_preservation_rate": round(pres_pct, 1),
+                "simpler_yes_count": stats[m]["simpler_oui_count"],
+                "meaning_preserved_count": stats[m]["sens_oui_count"],
+                "preferred_count": stats[m]["pref_count"],
             }
         )
 

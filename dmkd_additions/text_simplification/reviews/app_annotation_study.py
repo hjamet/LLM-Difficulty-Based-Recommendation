@@ -32,7 +32,9 @@ try:
         consolidate_annotations,
         CEFR_LEVELS,
         PRESERVATION_CHOICES,
+        SIMPLER_CHOICES,
         normalize_preservation_choice,
+        normalize_simpler_choice,
     )
 except ImportError:
     from annotation_engine import (
@@ -44,7 +46,9 @@ except ImportError:
         consolidate_annotations,
         CEFR_LEVELS,
         PRESERVATION_CHOICES,
+        SIMPLER_CHOICES,
         normalize_preservation_choice,
+        normalize_simpler_choice,
     )
 
 try:
@@ -65,9 +69,13 @@ except ImportError:
                 [
                     {
                         "Modèle": m,
+                        "Taux de Meilleure Simplification (%)": 0.0,
+                        "Taux de Contenu Plus Simple (%)": 0.0,
+                        "Taux de Sens Conservé (%)": 0.0,
                         "Taux de Préservation du Sens (%)": 0.0,
                         "Taux de Préférence (%)": 0.0,
                         "Total Évaluations": 0,
+                        "Nb 'Oui' (Plus Simple)": 0,
                         "Nb 'Oui' (Sens)": 0,
                         "Nb Préféré": 0,
                     }
@@ -91,12 +99,11 @@ st.set_page_config(
 st.markdown(
     """
 <style>
-    /* Masquage complet du header Streamlit natif pour éviter de masquer le haut de la page */
+    /* En-tête transparent ultra-compact qui laisse accessible le menu en haut à droite */
     header[data-testid="stHeader"] {
-        display: none !important;
-        height: 0px !important;
+        background: transparent !important;
+        height: 2.2rem !important;
     }
-    #MainMenu { visibility: hidden; }
     footer { visibility: hidden; }
 
     /* Centrage équilibré et padding réajusté pour écran large (max-width: 1100px) */
@@ -117,7 +124,7 @@ st.markdown(
         font-size: 1.05rem;
         line-height: 1.45;
         margin-bottom: 12px;
-        color: #1a202c;
+        color: #1a202c !important;
     }
 
     /* Cartes des Simplifications A et B */
@@ -130,22 +137,26 @@ st.markdown(
         margin-bottom: 8px;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
+        color: #1a202c !important;
     }
     .option-box-a {
         background-color: #f7fafc;
         border: 2px solid #cbd5e0;
         border-top: 4px solid #3182ce;
+        color: #1a202c !important;
     }
     .option-box-b {
         background-color: #f7fafc;
         border: 2px solid #cbd5e0;
         border-top: 4px solid #805ad5;
+        color: #1a202c !important;
     }
     /* Carte mise en valeur avec illumination verte lorsqu'elle est choisie */
     .option-box-selected {
         border: 3px solid #28a745 !important;
         background-color: #f6ffed !important;
         box-shadow: 0 0 12px rgba(40, 167, 69, 0.25) !important;
+        color: #1a202c !important;
     }
     .card-title {
         font-weight: 700;
@@ -153,14 +164,23 @@ st.markdown(
         margin-bottom: 6px;
     }
 
-    /* Style optimisé pour les 3 boutons discrets de fidélité sémantique (Sens A/B) */
+    /* Empêcher le thème sombre de forcer du texte blanc dans les cartes à fond clair */
+    .source-box, .source-box p,
+    .option-box, .option-box p, .option-box div:not(.card-title) {
+        color: #1a202c !important;
+    }
+
+    /* Style optimisé pour les boutons discrets (Simplicité et Sens A/B) */
+    .stRadio {
+        margin-bottom: 2px !important;
+    }
     div[role="radiogroup"] {
         display: flex !important;
         flex-direction: row !important;
-        gap: 8px !important;
+        gap: 6px !important;
         justify-content: center !important;
-        margin-top: 4px !important;
-        margin-bottom: 6px !important;
+        margin-top: 2px !important;
+        margin-bottom: 4px !important;
     }
     div[role="radiogroup"] > label {
         flex: 1 1 0 !important;
@@ -175,15 +195,30 @@ st.markdown(
         cursor: pointer !important;
         transition: all 0.15s ease-in-out !important;
         box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+        color: #1a202c !important;
     }
-    div[role="radiogroup"] > label:hover {
+    div[role="radiogroup"] > label,
+    div[role="radiogroup"] > label p,
+    div[role="radiogroup"] > label div,
+    div[role="radiogroup"] > label span {
+        color: #1a202c !important;
+    }
+    div[role="radiogroup"] > label:hover,
+    div[role="radiogroup"] > label:hover p,
+    div[role="radiogroup"] > label:hover div,
+    div[role="radiogroup"] > label:hover span {
         border-color: #3182ce !important;
         background-color: #ebf8ff !important;
+        color: #1a365d !important;
     }
-    div[role="radiogroup"] > label:has(input:checked) {
+    div[role="radiogroup"] > label:has(input:checked),
+    div[role="radiogroup"] > label:has(input:checked) p,
+    div[role="radiogroup"] > label:has(input:checked) div,
+    div[role="radiogroup"] > label:has(input:checked) span {
         border-color: #2b6cb0 !important;
-        background-color: #ebf8ff !important;
-        color: #2b6cb0 !important;
+        background-color: #bee3f8 !important;
+        color: #1a365d !important;
+        font-weight: 700 !important;
     }
     div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] {
         width: 100% !important;
@@ -218,7 +253,7 @@ if "annotator" not in st.session_state or st.session_state.annotator not in [
     st.title("🔬 Étude DMKD — Simplification de Texte")
     st.subheader("Sélectionnez votre profil d'annotateur")
     st.markdown(
-        "<p style='color: #4a5568; font-size: 1.1rem; max-width: 650px; margin: 0 auto 30px auto;'>"
+        "<p style='color: var(--text-color, #4a5568); opacity: 0.92; font-size: 1.1rem; max-width: 650px; margin: 0 auto 30px auto;'>"
         "Bienvenue dans le protocole d'évaluation en double aveugle (CECRL A2-C2). "
         "Veuillez choisir votre identité ci-dessous pour accéder à vos 100 phrases assignées."
         "</p>",
@@ -230,10 +265,10 @@ if "annotator" not in st.session_state or st.session_state.annotator not in [
     with col_henri:
         st.markdown(
             """
-            <div style="background-color: #f7fafc; border: 2px solid #cbd5e0; border-top: 5px solid #3182ce; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 15px;">
+            <div style="background-color: #f7fafc; border: 2px solid #cbd5e0; border-top: 5px solid #3182ce; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 15px; color: #1a202c !important;">
                 <div style="font-size: 2.8rem; margin-bottom: 8px;">👤</div>
                 <h3 style="margin-top: 0; color: #2b6cb0;">Henri Jamet</h3>
-                <p style="color: #718096; font-size: 0.95rem; margin-bottom: 0;">100 phrases assignées<br/>(50 partagées + 50 réparties)</p>
+                <p style="color: #2d3748 !important; font-size: 0.95rem; margin-bottom: 0;">100 phrases assignées<br/>(50 partagées + 50 réparties)</p>
             </div>
             """,
             unsafe_allow_html=True,
@@ -250,10 +285,10 @@ if "annotator" not in st.session_state or st.session_state.annotator not in [
     with col_maxime:
         st.markdown(
             """
-            <div style="background-color: #f7fafc; border: 2px solid #cbd5e0; border-top: 5px solid #805ad5; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 15px;">
+            <div style="background-color: #f7fafc; border: 2px solid #cbd5e0; border-top: 5px solid #805ad5; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 15px; color: #1a202c !important;">
                 <div style="font-size: 2.8rem; margin-bottom: 8px;">👤</div>
                 <h3 style="margin-top: 0; color: #6b46c1;">Maxime Manderlier</h3>
-                <p style="color: #718096; font-size: 0.95rem; margin-bottom: 0;">100 phrases assignées<br/>(50 partagées + 50 réparties)</p>
+                <p style="color: #2d3748 !important; font-size: 0.95rem; margin-bottom: 0;">100 phrases assignées<br/>(50 partagées + 50 réparties)</p>
             </div>
             """,
             unsafe_allow_html=True,
@@ -394,6 +429,38 @@ with tab_eval:
         unsafe_allow_html=True,
     )
 
+    # Récupération des valeurs existantes pour la simplicité (si déjà annotée)
+    raw_simpler_a = (
+        existing_record.get("content_simpler_a")
+        if existing_record
+        else None
+    )
+    raw_simpler_b = (
+        existing_record.get("content_simpler_b")
+        if existing_record
+        else None
+    )
+
+    idx_simpler_a = None
+    if existing_record and raw_simpler_a is not None and not pd.isna(raw_simpler_a):
+        def_simpler_a = normalize_simpler_choice(raw_simpler_a)
+        if "non" in def_simpler_a.lower():
+            idx_simpler_a = 1
+        elif "flou" in def_simpler_a.lower() or "sais pas" in def_simpler_a.lower() or "unsure" in def_simpler_a.lower():
+            idx_simpler_a = 2
+        elif "oui" in def_simpler_a.lower():
+            idx_simpler_a = 0
+
+    idx_simpler_b = None
+    if existing_record and raw_simpler_b is not None and not pd.isna(raw_simpler_b):
+        def_simpler_b = normalize_simpler_choice(raw_simpler_b)
+        if "non" in def_simpler_b.lower():
+            idx_simpler_b = 1
+        elif "flou" in def_simpler_b.lower() or "sais pas" in def_simpler_b.lower() or "unsure" in def_simpler_b.lower():
+            idx_simpler_b = 2
+        elif "oui" in def_simpler_b.lower():
+            idx_simpler_b = 0
+
     # Récupération des valeurs existantes pour la préservation du sens (si déjà annotée)
     raw_pres_a = (
         existing_record.get("meaning_preservation_a")
@@ -406,36 +473,44 @@ with tab_eval:
         else None
     )
 
-    idx_a = None
+    idx_pres_a = None
     if existing_record and raw_pres_a is not None and not pd.isna(raw_pres_a):
         def_pres_a = normalize_preservation_choice(raw_pres_a)
         if "non" in def_pres_a.lower():
-            idx_a = 1
+            idx_pres_a = 1
         elif "flou" in def_pres_a.lower() or "sais pas" in def_pres_a.lower():
-            idx_a = 2
+            idx_pres_a = 2
         elif "oui" in def_pres_a.lower():
-            idx_a = 0
+            idx_pres_a = 0
 
-    idx_b = None
+    idx_pres_b = None
     if existing_record and raw_pres_b is not None and not pd.isna(raw_pres_b):
         def_pres_b = normalize_preservation_choice(raw_pres_b)
         if "non" in def_pres_b.lower():
-            idx_b = 1
+            idx_pres_b = 1
         elif "flou" in def_pres_b.lower() or "sais pas" in def_pres_b.lower():
-            idx_b = 2
+            idx_pres_b = 2
         elif "oui" in def_pres_b.lower():
-            idx_b = 0
+            idx_pres_b = 0
 
-    # ANNOTATION 3 & 4 : 2 COLONNES CÔTE-À-CÔTE AVEC BOUTONS INTÉGRÉS & CARTES MISES EN VALEUR
+    # Consigne explicite pour les annotateurs
+    st.markdown(
+        "<div style='text-align: center; font-size: 0.95rem; font-weight: 600; color: var(--text-color, #4a5568); opacity: 0.92; margin-bottom: 10px;'>"
+        "🌟 Choisissez la meilleure simplification (tout confondu), puis répondez aux 2 questions sous chaque proposition."
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+    # 2 COLONNES CÔTE-À-CÔTE AVEC BOUTONS INTÉGRÉS & CARTES MISES EN VALEUR
     col_a, col_b = st.columns(2)
 
     # 🅰️ Colonne A
     with col_a:
         is_a_selected = selected_pref == "A"
         btn_label_a = (
-            "✅ Simplification A sélectionnée (La plus simple)"
+            "✅ Simplification A sélectionnée (La meilleure)"
             if is_a_selected
-            else "🌟 Choisir Simplification A (Plus simple)"
+            else "🌟 Choisir Simplification A (La meilleure)"
         )
         btn_type_a = "primary" if is_a_selected else "secondary"
         if st.button(
@@ -462,11 +537,18 @@ with tab_eval:
             unsafe_allow_html=True,
         )
 
-        # ANNOTATION 4 : 3 boutons discrets directement sous l'encadré
-        pres_a = st.radio(
-            "Sens A fidèlement préservé ?",
+        # Deux questions sous la carte A dans l'ordre exact demandé
+        simpler_a = st.radio(
+            "1. Le contenu est-il plus simple ?",
             options=["« Oui »", "« Non »", "« Flou »"],
-            index=idx_a,
+            index=idx_simpler_a,
+            horizontal=True,
+            key=f"simpler_a_{annotator_key}_{pair_id}",
+        )
+        pres_a = st.radio(
+            "2. Le sens est-il conservé ?",
+            options=["« Oui »", "« Non »", "« Flou »"],
+            index=idx_pres_a,
             horizontal=True,
             key=f"pres_a_{annotator_key}_{pair_id}",
         )
@@ -475,9 +557,9 @@ with tab_eval:
     with col_b:
         is_b_selected = selected_pref == "B"
         btn_label_b = (
-            "✅ Simplification B sélectionnée (La plus simple)"
+            "✅ Simplification B sélectionnée (La meilleure)"
             if is_b_selected
-            else "🌟 Choisir Simplification B (Plus simple)"
+            else "🌟 Choisir Simplification B (La meilleure)"
         )
         btn_type_b = "primary" if is_b_selected else "secondary"
         if st.button(
@@ -504,18 +586,23 @@ with tab_eval:
             unsafe_allow_html=True,
         )
 
-        # ANNOTATION 4 : 3 boutons discrets directement sous l'encadré
-        pres_b = st.radio(
-            "Sens B fidèlement préservé ?",
+        # Deux questions sous la carte B dans l'ordre exact demandé
+        simpler_b = st.radio(
+            "1. Le contenu est-il plus simple ?",
             options=["« Oui »", "« Non »", "« Flou »"],
-            index=idx_b,
+            index=idx_simpler_b,
+            horizontal=True,
+            key=f"simpler_b_{annotator_key}_{pair_id}",
+        )
+        pres_b = st.radio(
+            "2. Le sens est-il conservé ?",
+            options=["« Oui »", "« Non »", "« Flou »"],
+            index=idx_pres_b,
             horizontal=True,
             key=f"pres_b_{annotator_key}_{pair_id}",
         )
 
-    # ANNOTATION 5 & 6 : ÉPURATION DES ACTIONS DU BAS
-    # Suppression complète des commentaires qualitatifs et du bouton passer
-    # Un seul grand bouton bien visible : '💾 Enregistrer & Suivant ➡️'
+    # ÉPURATION DES ACTIONS DU BAS
     st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
     if st.button(
         "💾 Enregistrer & Suivant ➡️",
@@ -525,11 +612,13 @@ with tab_eval:
     ):
         if (
             selected_pref not in ["A", "B"]
+            or simpler_a is None
+            or simpler_b is None
             or pres_a is None
             or pres_b is None
         ):
             st.error(
-                "⚠️ Veuillez évaluer la préservation du sens (A et B) et désigner la simplification la plus simple avant de continuer."
+                "⚠️ Veuillez évaluer les deux questions (simplicité et sens) pour A et B, et désigner la meilleure simplification avant d'enregistrer."
             )
         else:
             save_single_annotation(
@@ -537,6 +626,8 @@ with tab_eval:
                 annotator=annotator_key,
                 pair_row=current_row,
                 preferred_option=selected_pref,
+                content_simpler_a=simpler_a,
+                content_simpler_b=simpler_b,
                 meaning_preservation_a=pres_a,
                 meaning_preservation_b=pres_b,
                 notes="",
@@ -663,11 +754,11 @@ with tab_telemetry:
 
     st.markdown("---")
 
-    # ANNOTATION 9 : GRAPHIQUE À BARRES DE PERFORMANCE DES MODÈLES
+    # Performance comparative des modèles de simplification
     st.subheader("📊 Performance Comparative des Modèles de Simplification")
     st.markdown(
-        "Comparaison des 4 modèles selon deux métriques clés : "
-        "le **Taux de Préservation du Sens** (% de choix *« Oui »*) et le **Taux de Préférence** (% sélectionné comme le plus simple)."
+        "Comparaison des 4 modèles selon trois métriques clés : "
+        "le **Taux de Meilleure Simplification**, le **Taux de Contenu Plus Simple** (% de choix *« Oui »*) et le **Taux de Sens Conservé** (% de choix *« Oui »*)."
     )
 
     df_model_perf = compute_model_performance(repo_root)
@@ -676,8 +767,12 @@ with tab_telemetry:
     st.bar_chart(
         df_model_perf,
         x="Modèle",
-        y=["Taux de Préservation du Sens (%)", "Taux de Préférence (%)"],
-        color=["#2b6cb0", "#28a745"],
+        y=[
+            "Taux de Meilleure Simplification (%)",
+            "Taux de Contenu Plus Simple (%)",
+            "Taux de Sens Conservé (%)",
+        ],
+        color=["#805ad5", "#2b6cb0", "#28a745"],
         stack=False,
         use_container_width=True,
     )
@@ -687,9 +782,11 @@ with tab_telemetry:
         df_model_perf[
             [
                 "Modèle",
-                "Taux de Préservation du Sens (%)",
-                "Taux de Préférence (%)",
+                "Taux de Meilleure Simplification (%)",
+                "Taux de Contenu Plus Simple (%)",
+                "Taux de Sens Conservé (%)",
                 "Total Évaluations",
+                "Nb 'Oui' (Plus Simple)",
                 "Nb 'Oui' (Sens)",
                 "Nb Préféré",
             ]
@@ -700,12 +797,68 @@ with tab_telemetry:
 
     st.markdown("---")
 
-    # ANNOTATION 8 : Suppression de l'alerte bleue st.info('Aucune paire partagée...')
     # Affichage des métriques IAA uniquement si au moins 1 paire commune a été annotée
     if iaa_stats.get("status") != "no_overlap_annotated":
-        # 1. Accord Préservation du Sens
+        # 1. Accord Préférence Globale (Meilleure Simplification)
+        st.subheader("🌟 1. Accord sur la Meilleure Simplification (Choix Forcé A vs B)")
+        pref_c1, pref_c2, pref_c3 = st.columns(3)
+        with pref_c1:
+            st.metric(
+                "Accord Observé (Po)",
+                f"{iaa_stats['observed_agreement']*100:.1f}%",
+            )
+        with pref_c2:
+            st.metric(
+                "Cohen's Kappa (κ_pref)",
+                f"{iaa_stats['cohen_kappa']:.4f}",
+            )
+        with pref_c3:
+            st.metric(
+                "Fleiss' Kappa (κ_Fleiss)",
+                f"{iaa_stats['fleiss_kappa']:.4f}",
+            )
+
+        st.markdown("#### 🔲 Matrice de Confusion des Préférences de Modèles")
+        st.dataframe(
+            iaa_stats["confusion_matrix_df"], use_container_width=True
+        )
+
+        st.markdown("---")
+
+        # 2. Accord Simplicité du Contenu
         st.subheader(
-            "🤝 Accord sur la Préservation du Sens (3 Boutons Discrets)"
+            "✨ 2. Accord sur la Simplicité du Contenu (Question 1 : « Le contenu est-il plus simple ? »)"
+        )
+        simp_c1, simp_c2, simp_c3 = st.columns(3)
+        with simp_c1:
+            st.metric(
+                "Accord Observé (Po)",
+                f"{iaa_stats['simpler_agreement']*100:.1f}%",
+            )
+        with simp_c2:
+            st.metric(
+                "Cohen's Kappa (κ_simple)",
+                f"{iaa_stats['simpler_cohen_kappa']:.4f}",
+            )
+        with simp_c3:
+            st.metric(
+                "Fleiss' Kappa (κ_Fleiss)",
+                f"{iaa_stats['simpler_fleiss_kappa']:.4f}",
+            )
+
+        st.markdown(
+            "#### 🔲 Matrice de Confusion — Simplicité du Contenu (Henri vs Maxime)"
+        )
+        st.dataframe(
+            iaa_stats["simpler_confusion_matrix_df"],
+            use_container_width=True,
+        )
+
+        st.markdown("---")
+
+        # 3. Accord Préservation du Sens
+        st.subheader(
+            "🤝 3. Accord sur la Préservation du Sens (Question 2 : « Le sens est-il conservé ? »)"
         )
         pres_c1, pres_c2, pres_c3 = st.columns(3)
         with pres_c1:
@@ -748,32 +901,6 @@ with tab_telemetry:
         st.dataframe(
             iaa_stats["meaning_confusion_matrix_df"],
             use_container_width=True,
-        )
-
-        st.markdown("---")
-
-        # 2. Accord Préférence Globale
-        st.subheader("🎯 Accord sur la Préférence Globale (Choix Forcé A vs B)")
-        pref_c1, pref_c2, pref_c3 = st.columns(3)
-        with pref_c1:
-            st.metric(
-                "Accord Observé (Po)",
-                f"{iaa_stats['observed_agreement']*100:.1f}%",
-            )
-        with pref_c2:
-            st.metric(
-                "Cohen's Kappa (κ_pref)",
-                f"{iaa_stats['cohen_kappa']:.4f}",
-            )
-        with pref_c3:
-            st.metric(
-                "Fleiss' Kappa (κ_Fleiss)",
-                f"{iaa_stats['fleiss_kappa']:.4f}",
-            )
-
-        st.markdown("#### 🔲 Matrice de Confusion des Préférences de Modèles")
-        st.dataframe(
-            iaa_stats["confusion_matrix_df"], use_container_width=True
         )
 
     # ANNOTATION 7 : Suppression complète de la section 'Données Brutes & Téléchargement des Annotations'
