@@ -448,7 +448,7 @@ with tab_eval:
         def_simpler_a = normalize_simpler_choice(raw_simpler_a)
         if "non" in def_simpler_a.lower():
             idx_simpler_a = 1
-        elif "flou" in def_simpler_a.lower() or "sais pas" in def_simpler_a.lower() or "unsure" in def_simpler_a.lower():
+        elif "flou" in def_simpler_a.lower() or "sais pas" in def_simpler_a.lower() or "unsure" in def_simpler_a.lower() or "partiel" in def_simpler_a.lower():
             idx_simpler_a = 2
         elif "oui" in def_simpler_a.lower():
             idx_simpler_a = 0
@@ -458,7 +458,7 @@ with tab_eval:
         def_simpler_b = normalize_simpler_choice(raw_simpler_b)
         if "non" in def_simpler_b.lower():
             idx_simpler_b = 1
-        elif "flou" in def_simpler_b.lower() or "sais pas" in def_simpler_b.lower() or "unsure" in def_simpler_b.lower():
+        elif "flou" in def_simpler_b.lower() or "sais pas" in def_simpler_b.lower() or "unsure" in def_simpler_b.lower() or "partiel" in def_simpler_b.lower():
             idx_simpler_b = 2
         elif "oui" in def_simpler_b.lower():
             idx_simpler_b = 0
@@ -480,7 +480,7 @@ with tab_eval:
         def_pres_a = normalize_preservation_choice(raw_pres_a)
         if "non" in def_pres_a.lower():
             idx_pres_a = 1
-        elif "flou" in def_pres_a.lower() or "sais pas" in def_pres_a.lower():
+        elif "flou" in def_pres_a.lower() or "sais pas" in def_pres_a.lower() or "partiel" in def_pres_a.lower():
             idx_pres_a = 2
         elif "oui" in def_pres_a.lower():
             idx_pres_a = 0
@@ -490,7 +490,7 @@ with tab_eval:
         def_pres_b = normalize_preservation_choice(raw_pres_b)
         if "non" in def_pres_b.lower():
             idx_pres_b = 1
-        elif "flou" in def_pres_b.lower() or "sais pas" in def_pres_b.lower():
+        elif "flou" in def_pres_b.lower() or "sais pas" in def_pres_b.lower() or "partiel" in def_pres_b.lower():
             idx_pres_b = 2
         elif "oui" in def_pres_b.lower():
             idx_pres_b = 0
@@ -542,14 +542,14 @@ with tab_eval:
         # Deux questions sous la carte A dans l'ordre exact demandé
         simpler_a = st.radio(
             "1. Le contenu est-il plus simple ?",
-            options=["« Oui »", "« Non »", "« Flou »"],
+            options=["Oui", "Non", "Partiellement"],
             index=idx_simpler_a,
             horizontal=True,
             key=f"simpler_a_{annotator_key}_{pair_id}",
         )
         pres_a = st.radio(
             "2. Le sens est-il conservé ?",
-            options=["« Oui »", "« Non »", "« Flou »"],
+            options=["Oui", "Non", "Partiellement"],
             index=idx_pres_a,
             horizontal=True,
             key=f"pres_a_{annotator_key}_{pair_id}",
@@ -591,14 +591,14 @@ with tab_eval:
         # Deux questions sous la carte B dans l'ordre exact demandé
         simpler_b = st.radio(
             "1. Le contenu est-il plus simple ?",
-            options=["« Oui »", "« Non »", "« Flou »"],
+            options=["Oui", "Non", "Partiellement"],
             index=idx_simpler_b,
             horizontal=True,
             key=f"simpler_b_{annotator_key}_{pair_id}",
         )
         pres_b = st.radio(
             "2. Le sens est-il conservé ?",
-            options=["« Oui »", "« Non »", "« Flou »"],
+            options=["Oui", "Non", "Partiellement"],
             index=idx_pres_b,
             horizontal=True,
             key=f"pres_b_{annotator_key}_{pair_id}",
