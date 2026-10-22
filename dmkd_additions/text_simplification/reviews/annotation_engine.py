@@ -65,7 +65,7 @@ def normalize_preservation_choice(val: Any) -> str:
         return PRESERVATION_CHOICES[0]
     if "non" in s_lower or "no" in s_lower:
         return PRESERVATION_CHOICES[1]
-    if "flou" in s_lower or "sais pas" in s_lower or "unclear" in s_lower or "?" in s_lower:
+    if "flou" in s_lower or "sais pas" in s_lower or "unclear" in s_lower or "?" in s_lower or "partiel" in s_lower:
         return PRESERVATION_CHOICES[2]
     # Rétrocompatibilité avec d'anciens scores Likert (1-5)
     try:
@@ -96,7 +96,7 @@ def normalize_simpler_choice(val: Any) -> str:
         return SIMPLER_CHOICES[0]
     if "non" in s_lower or "no" in s_lower:
         return SIMPLER_CHOICES[1]
-    if "flou" in s_lower or "sais pas" in s_lower or "unsure" in s_lower or "unclear" in s_lower or "?" in s_lower:
+    if "flou" in s_lower or "sais pas" in s_lower or "unsure" in s_lower or "unclear" in s_lower or "?" in s_lower or "partiel" in s_lower:
         return SIMPLER_CHOICES[2]
     raise ValueError(
         f"Valeur invalide pour la simplicité du contenu : '{val}'. "
@@ -663,7 +663,7 @@ def compute_fleiss_kappa(categories_counts: np.ndarray) -> float:
 def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
     """Calcule toutes les métriques d'accord inter-annotateurs (Cohen's Kappa,
 
-    Fleiss' Kappa, concordance observée, matrices de confusion) sur les 30 paires partagées.
+    Fleiss' Kappa, concordance observée, matrices de confusion) sur les 50 paires partagées.
     """
     pool_df = get_or_create_pool(repo_root)
     shared_pool = pool_df[pool_df["split_assignment"] == "both"].copy()
