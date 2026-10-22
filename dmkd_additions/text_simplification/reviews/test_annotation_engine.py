@@ -19,9 +19,11 @@ from dmkd_additions.text_simplification.reviews.annotation_engine import (
     save_single_annotation,
     load_annotator_data,
     compute_fleiss_kappa,
+    compute_krippendorff_alpha_ordinal,
     compute_iaa_metrics,
     consolidate_annotations,
     compute_model_performance,
+    generate_latex_human_study_macros,
     CEFR_LEVELS,
     PRESERVATION_CHOICES,
     SIMPLER_CHOICES,
@@ -227,6 +229,41 @@ def run_tests():
         assert "Taux de Préférence (%)" in df_perf.columns
         assert "simpler_rate" in df_perf.columns
         assert df_perf["Total Évaluations"].sum() > 0
+
+        # 10. Test compute_krippendorff_alpha & generate_latex_human_study_macros
+        # Accord parfait
+        krip_perfect = compute_krippendorff_alpha_ordinal([0, 1, 2, 2, 1], [0, 1, 2, 2, 1])
+        assert np.isclose(krip_perfect, 1.0)
+        # Valeurs constantes
+        krip_const = compute_krippendorff_alpha_ordinal([2, 2, 2], [2, 2, 2])
+        assert np.isclose(krip_const, 1.0)
+        # Sur les 5 paires simulees
+        assert "krippendorff_alpha" in iaa_sim
+        krip_sim = iaa_sim["krippendorff_alpha"]
+        assert krip_sim is not None
+        assert -1.0 <= krip_sim <= 1.0
+        print(f"10. compute_krippendorff_alpha: OK -> perfect={krip_perfect:.4f}, sim={krip_sim:.4f}")
+
+        # generate_latex_human_study_macros
+        res_macros = generate_latex_human_study_macros(repo_root=repo_root, force_partial=True)
+        assert "macros_dict" in res_macros
+        assert len(res_macros["macros_dict"]) == 10
+        expected_keys = [
+            "HumanKappaPref",
+            "HumanKappaSimpler",
+            "HumanKappaMeaning",
+            "HumanAlphaKrip",
+            "HumanWinMistral",
+            "HumanWinGPTFour",
+            "HumanSimplerMistral",
+            "HumanSimplerGPTFour",
+            "HumanMeaningMistral",
+            "HumanMeaningGPTFour",
+        ]
+        for ek in expected_keys:
+            assert ek in res_macros["macros_dict"], f"Cle manquante dans macros_dict : {ek}"
+            assert f"\\newcommand{{\\{ek}}}" in res_macros["latex_commands_block"]
+        print("   generate_latex_human_study_macros: OK -> 10 macros validees")
 
         print("\n=== TOUS LES TESTS DE L'ENGINE SONT PASSÉS AVEC SUCCÈS ! ===")
 

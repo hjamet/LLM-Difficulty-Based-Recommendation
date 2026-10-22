@@ -35,6 +35,7 @@ try:
         SIMPLER_CHOICES,
         normalize_preservation_choice,
         normalize_simpler_choice,
+        generate_latex_human_study_macros,
     )
 except ImportError:
     from annotation_engine import (
@@ -49,6 +50,7 @@ except ImportError:
         SIMPLER_CHOICES,
         normalize_preservation_choice,
         normalize_simpler_choice,
+        generate_latex_human_study_macros,
     )
 
 try:
@@ -794,6 +796,25 @@ with tab_telemetry:
         use_container_width=True,
         hide_index=True,
     )
+
+    with st.expander("📄 Export LaTeX Direct (Response_to_Reviewers.tex & Experiments.tex)", expanded=False):
+        st.markdown(
+            "Ce bloc génère les 10 macros LaTeX officielles alignées avec le protocole d'annotation humaine (T14). "
+            "Dès que les 150 paires sont annotées (ou en activant la prévisualisation ci-dessous), les macros injectent les pourcentages réels."
+        )
+        preview_partial = st.checkbox(
+            "Prévisualiser les macros avec les données partielles actuelles",
+            value=False,
+            help="Si cochée, calcule les pourcentages sur les annotations existantes même si l'étude n'est pas encore complète.",
+        )
+        latex_data = generate_latex_human_study_macros(repo_root, force_partial=preview_partial)
+        if latex_data["is_complete"]:
+            st.success("✅ Étude d'annotation complète ! Toutes les macros contiennent les valeurs consolidées définitives.")
+        elif preview_partial:
+            st.info("ℹ️ Prévisualisation partielle activée (valeurs intermédiaires basées sur les annotations disponibles).")
+        else:
+            st.warning("⏳ Étude en cours (valeurs en attente [TBD] tant que l'ensemble des 150 paires n'est pas annoté).")
+        st.code(latex_data["latex_commands_block"], language="latex")
 
     st.markdown("---")
 

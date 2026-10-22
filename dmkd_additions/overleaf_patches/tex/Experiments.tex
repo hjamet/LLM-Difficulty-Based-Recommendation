@@ -41,11 +41,11 @@ Table \ref{tab:3-datasets} presents the detailed characteristics of these datase
 \subsubsection{Evaluation Methodology}
 \label{sec:difficulty_estimation_evaluation}
 
-\textcolor{red}{We evaluate difficulty estimation using three complementary metrics over a test set of $N$ sentences with ground-truth ordinal labels $y_i \in \{1, \dots, K\}$ and predicted labels $\hat{y}_i \in \{1, \dots, K\}$. First, multiclass classification accuracy (Acc.) measures exact level agreement:
-\begin{equation}\label{eq:accuracy_def}
+\textcolor{red}{We evaluate difficulty estimation using three complementary metrics over a test set of $N$ sentences with ground-truth ordinal labels $y_i \in \{1, \dots, K\}$ and predicted labels $\hat{y}_i \in \{1, \dots, K\}$. First, multiclass classification accuracy (Acc.) measures exact level agreement:}
+{\color{red}\begin{equation}\label{eq:accuracy_def}
 \text{Acc} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I}(\hat{y}_i = y_i),
-\end{equation}
-where $\mathbb{I}(\cdot)$ is the indicator function. Second, Quadratic Weighted Kappa ($\text{QWK}$) \cite{martinc2021supervised} measures ordinal agreement by penalizing misclassifications quadratically with respect to rank distance $|y_i - \hat{y}_i|^2 / (K-1)^2$. Third, the normalized Pairwise Mismatch metric $PM_{\text{norm}} \in [0, 1]$ (\autoref{eq:pm_norm}, reported as a percentage in \autoref{tab:difficulty_estimation_metrics}) quantifies the proportion of sentence pairs whose relative difficulty ordering is violated or tied. To account for sample variance on the held-out test sets (\texttt{sentencesBooks} $N=960$, \texttt{LjL} $N=413$, \texttt{sentencesInternet} $N=480$), we perform $B = 1{,}000$ non-parametric bootstrap resamples with replacement and report $\mu \pm \sigma$, alongside two-sided paired Wilcoxon signed-rank tests ($^{*}p < 0.05$, $^{**}p < 0.01$, $^{***}p < 0.001$) comparing prompted and unprompted configurations.}
+\end{equation}}
+\textcolor{red}{where $\mathbb{I}(\cdot)$ is the indicator function. Second, Quadratic Weighted Kappa ($\text{QWK}$) \cite{martinc2021supervised} measures ordinal agreement by penalizing misclassifications quadratically with respect to rank distance $|y_i - \hat{y}_i|^2 / (K-1)^2$. Third, the normalized Pairwise Mismatch metric $PM_{\text{norm}} \in [0, 1]$ (\autoref{eq:pm_norm}, reported as a percentage in \autoref{tab:difficulty_estimation_metrics}) quantifies the proportion of sentence pairs whose relative difficulty ordering is violated or tied. To account for sample variance on the held-out test sets (\texttt{sentencesBooks} $N=960$, \texttt{LjL} $N=413$, \texttt{sentencesInternet} $N=480$), we perform $B = 1{,}000$ non-parametric bootstrap resamples with replacement and report $\mu \pm \sigma$, alongside two-sided paired Wilcoxon signed-rank tests ($^{*}p < 0.05$, $^{**}p < 0.01$, $^{***}p < 0.001$) comparing prompted and unprompted configurations.}
 
 For all experiments, we used an 80/20 train-test split across datasets. Each model was evaluated both with and without a system prompt. \textcolor{red}{The exact system prompt formulation is detailed in Section~\ref{subsubsec:system_prompt}; it instructs the model to act as a CEFR language assessor assigning levels from A1 to C2.}
 
@@ -112,20 +112,20 @@ These findings carry important implications for both practical applications and 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/figure_1_sensitivity_and_ranks.png}
-    \caption{Sensitivity analysis of the weighting coefficient $w_1$ and empirical rank invariance ($\rho = 1.0000$). The upper panel depicts the continuous harmonic score evolution across $[0.05, 0.95]$ highlighting the operational invariance zone $[0.15, 0.85]$. The lower panel confirms strict rank stability across all evaluated models with zero rank crossovers.}
+    \caption{\textcolor{red}{Sensitivity analysis of the weighting coefficient $w_1$ and empirical rank invariance ($\rho = 1.0000$). The upper panel depicts the continuous harmonic score evolution across $[0.05, 0.95]$ highlighting the operational invariance zone $[0.15, 0.85]$. The lower panel confirms strict rank stability across all evaluated models with zero rank crossovers.}}
     \label{fig:sensitivity_and_ranks}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/figure_2_pareto_finetuning.png}
-    \caption{Pareto frontier and accuracy-complexity trade-off across the 1,000 simplification sentence pairs. The zoomed operational microstructure highlights the performance dominance of fine-tuned Mistral over zero-shot and historical OpenAI baselines.}
+    \caption{\textcolor{red}{Pareto frontier and accuracy-complexity trade-off across the 1,000 simplification sentence pairs. The zoomed operational microstructure highlights the performance dominance of fine-tuned Mistral over zero-shot and historical OpenAI baselines.}}
     \label{fig:pareto_finetuning}
 \end{figure}
 
 \subsubsection{Iterative Simplification}
 
-Finally, we conducted an experiment to analyze the iterative simplification capabilities of our fine-tuned Mistral-7B model. We randomly selected 100 sentences of level \texttt{C2} from the \textcolor{red}{evaluation set}, ensuring they were correctly classified at this level by CamemBERT. For each sentence, we performed 8 consecutive simplification iterations, where each iteration $t \in \{1, \dots, 8\}$ consisted of:
+Finally, we conducted an experiment to analyze the iterative simplification capabilities of our fine-tuned Mistral-7B model. We randomly selected 100 sentences of level \texttt{C2} from the \textcolor{red}{evaluation set}, ensuring they were correctly classified at this level by CamemBERT. For each sentence, we performed 8 consecutive simplification iterations, where each iteration \textcolor{red}{$t \in \{1, \dots, 8\}$} consisted of:
 
 \begin{enumerate}
     \item Applying the simplification model to the current sentence \textcolor{red}{$x^{(t-1)}$ to produce $x^{(t)}$}
@@ -155,23 +155,47 @@ This convergence suggests there exists a natural limit to how much a text can be
     \label{fig:iterative_simplification}
 \end{figure}
 
-\textcolor{red}{\subsubsection{Human Evaluation of Simplification Quality}\label{subsubsec:human_eval}
-To complement our automatic metrics ($A$, $S$, and $w\text{-Score}$) and directly test whether fine-tuned Mistral-7B preserves grammaticality and meaning while achieving perceptual simplification, we designed a double-blind human evaluation study following a Split-and-Overlap protocol across $N = 150$ sentence pairs stratified across the five source CEFR levels (30 pairs per level from A2 to C2). Each item pairs the original sentence with the randomized, anonymized outputs of fine-tuned Mistral-7B and zero-shot GPT-4o. Two independent native-French evaluators each annotate 100 pairs: a shared overlap subset of $N_{\text{overlap}} = 50$ pairs (10 per CEFR level) used to quantify inter-annotator agreement via Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's ordinal $\alpha$ with 10,000 bootstrap iterations, plus two disjoint subsets of 50 unique pairs ($50 + 50 + 50 = 150$ total pairs). Sample size determination ensures $>80\%$ statistical power to reject null agreement $\kappa_0 \le 0.40$ at $\alpha = 0.05$ on the overlap subset, and $98.9\%$ power to detect a small-to-medium paired preference effect ($d = 0.35$) via a two-sided Wilcoxon signed-rank test across the 150 pairs. Annotators rate each candidate on 5-point Likert scales for Semantic Preservation and Grammaticality/Fluency, assess Perceived Simplification Gain on a $[-2, +2]$ ordinal scale, and record a blind pairwise preference. \autoref{tab:human_eval_results} summarizes the evaluation protocol and results.}
+% Macros for final human evaluation numbers (Task T14, N=150 stratified pairs)
+\providecommand{\HumanKappaPref}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{pref}}$]}}}
+\providecommand{\HumanKappaSimpler}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{simp}}$]}}}
+\providecommand{\HumanKappaMeaning}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{sem}}$]}}}
+\providecommand{\HumanAlphaKrip}{\textcolor{blue}{\textbf{[TBD: $\alpha_{\text{Krip}}$]}}}
+\providecommand{\HumanWinMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\providecommand{\HumanWinGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\providecommand{\HumanSimplerMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\providecommand{\HumanSimplerGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\providecommand{\HumanMeaningMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\providecommand{\HumanMeaningGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
 
-\begin{table}[htbp]
+\subsubsection{\textcolor{red}{Human Evaluation of Simplification Quality}}\label{subsubsec:human_eval}
+\textcolor{red}{To complement our automatic metrics ($A$, $S$, and $w\text{-Score}$) and directly evaluate the qualitative perception of text simplification, we conducted a double-blind human evaluation study using a stratified \textit{Split-and-Overlap} protocol across $N = 150$ French sentence pairs (30 pairs per CEFR level from A2 to C2; 75 pairs comparing fine-tuned Mistral-7B vs.\ fine-tuned GPT-3.5, and 75 pairs comparing fine-tuned GPT-4o vs.\ fine-tuned GPT-4o-mini). Two independent evaluators each annotate $M = 100$ randomized, anonymized A/B pairs (a shared overlap subset of $n_{\text{shared}} = 50$ pairs evaluated by both judges to compute inter-annotator agreement via Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's $\alpha$, plus two disjoint subsets of 50 unique pairs, totaling $50 + 50 + 50 = 150$ pairs). Judges record (1) blind pairwise simplification preference (forced choice between Model A and Model B), (2) perceived content simplification (\textit{Yes}, \textit{Unclear}, or \textit{No}), and (3) categorical meaning preservation (\textit{Yes}, \textit{Unclear}, or \textit{No}). With $n_{\text{shared}} = 50$, statistical power is $\ge 80\%$ to reject $\kappa \le 0.40$ at $\alpha = 0.05$ for target $\kappa \ge 0.70$ ($\text{SE} \le 0.062$), and $N = 150$ yields $98.9\%$ power for a paired Wilcoxon test at $d = 0.35$. \autoref{tab:human_eval_results} presents the evaluation protocol and results.}
+
+{\color{red}\begin{table}[htbp]
     \centering
     \small
-    \caption{\textcolor{red}{Double-blind human evaluation results ($N = 150$ stratified sentence pairs from A2 to C2, Split-and-Overlap design with $N_{\text{overlap}} = 50$ dual-annotated pairs).}}
+    \caption{\textcolor{red}{Stratified double-blind human evaluation protocol and empirical results across $N = 150$ sentence pairs (30 per CEFR level A2 to C2; $n_{\text{shared}} = 50$ double-annotated overlap pairs + $2 \times 50$ unique pairs).}}
     \label{tab:human_eval_results}
-    \begin{tabular}{lcc}
+    \begin{tabular}{llcc}
         \toprule
-        \textbf{Evaluation Dimension / Metric} & \textbf{Result / Value} & \textbf{Statistical Test / Agreement} \\
+        \textbf{Evaluation Dimension} & \textbf{Metric / Comparison} & \textbf{Sample Size} & \textbf{Result} \\
         \midrule
-        Blind preference win rate (Mistral-7B FT vs.\ GPT-4o) & \texttt{[TBD: Mistral vs.\ GPT-4o]} & Wilcoxon $p = \texttt{[TBD]}$ \\
-        Semantic Preservation (1--5 Likert, $\mu \pm \sigma$) & \texttt{[TBD: Mistral vs.\ GPT-4o]} & Krippendorff's $\alpha = \texttt{[TBD]}$ \\
-        Grammaticality \& Fluency (1--5 Likert, $\mu \pm \sigma$) & \texttt{[TBD: Mistral vs.\ GPT-4o]} & Krippendorff's $\alpha = \texttt{[TBD]}$ \\
-        Perceived Simplification ($[-2, +2]$, $\mu \pm \sigma$) & \texttt{[TBD]} & Cohen's $\kappa = \texttt{[TBD]}$ \\
-        Correlation with automatic $w\text{-Score}$ (Spearman $\rho$) & \texttt{[TBD]} & $p = \texttt{[TBD]}$ \\
+        \multirow{4}{*}{\textbf{Inter-Annotator Agreement}} 
+         & Simplification Preference (Cohen's $\kappa$) & $n_{\text{shared}} = 50$ & \HumanKappaPref \\
+         & Perceived Content Simplification (Cohen's $\kappa$) & $n_{\text{shared}} = 50$ & \HumanKappaSimpler \\
+         & Meaning Preservation (Cohen's $\kappa$) & $n_{\text{shared}} = 50$ & \HumanKappaMeaning \\
+         & Overall Ordinal Consistency (Krippendorff's $\alpha$) & $n_{\text{shared}} = 50$ & \HumanAlphaKrip \\
+        \midrule
+        \multirow{2}{*}{\textbf{Pairwise Win Rate (\%)}} 
+         & Fine-tuned Mistral-7B vs.\ Fine-tuned GPT-3.5 & $n = 75$ pairs & \HumanWinMistral \\
+         & Fine-tuned GPT-4o vs.\ Fine-tuned GPT-4o-mini & $n = 75$ pairs & \HumanWinGPTFour \\
+        \midrule
+        \multirow{2}{*}{\textbf{Perceived Simpler Content}}
+         & Fine-tuned Mistral-7B (``Yes'' rate) & $n = 75$ pairs & \HumanSimplerMistral \\
+         & Fine-tuned GPT-4o (``Yes'' rate) & $n = 75$ pairs & \HumanSimplerGPTFour \\
+        \midrule
+        \multirow{2}{*}{\textbf{Meaning Preservation Rate (\%)}} 
+         & Fine-tuned Mistral-7B (``Yes'' rate) & $n = 75$ pairs & \HumanMeaningMistral \\
+         & Fine-tuned GPT-4o (``Yes'' rate) & $n = 75$ pairs & \HumanMeaningGPTFour \\
         \bottomrule
     \end{tabular}
-\end{table}
+\end{table}}

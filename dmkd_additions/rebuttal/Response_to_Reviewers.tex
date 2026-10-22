@@ -46,10 +46,13 @@
 
 % Macros for final human evaluation numbers (Task T14, N=150 stratified pairs)
 \newcommand{\HumanKappaPref}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{pref}}$]}}}
+\newcommand{\HumanKappaSimpler}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{simp}}$]}}}
 \newcommand{\HumanKappaMeaning}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{sem}}$]}}}
 \newcommand{\HumanAlphaKrip}{\textcolor{blue}{\textbf{[TBD: $\alpha_{\text{Krip}}$]}}}
 \newcommand{\HumanWinMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
 \newcommand{\HumanWinGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\newcommand{\HumanSimplerMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\newcommand{\HumanSimplerGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
 \newcommand{\HumanMeaningMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
 \newcommand{\HumanMeaningGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
 
@@ -171,7 +174,7 @@ To verify that model comparisons do not depend on a narrow choice of $w_1$, we s
 \revquote{Action Editor (AE.3)}{Both reviewers ask for the components in Section 4 to be properly described and formalised rather than outlined, this concerns Figures 3, 4 and especially 5. Reviewer 1 lists a number of places where figures lack in-text citations and explanations (Figures 1 and 2), where metric definitions are introduced without being defined (Section 6.1.1, accuracy and pairwise mismatch), and where the text appears unfinished (Section 6.3.4). Please also state the novel contribution explicitly in the methodology section.}
 
 \noindent\textbf{Response:}
-Every equation in the manuscript is now formally defined, numbered, and cross-referenced, and every figure (Figures 1 to 9) is cited and explained in prose: (1) Figures 1 and 2 are cited directly as ``Figure 1'' and ``Figure 2'' with step-by-step explanations (Responses R1.1, R1.2); (2) $PM_{\text{norm}} \in [0, 1]$ and Algorithm 1 are formalized using confusion matrix variables $C_{u,u'}$ including diagonal exact matches $C_{u,u}$ (Responses R2.2, R2.3); (3) $S$, $A_K$, and $w\text{-Score}$ are numbered with a 6-level numerical walkthrough (Responses R2.4, R2.5); (4) Section 4.2 formalizes LLM embedding extraction (Figure 3), cosine KNN scoring (Figure 4), and LightGCN bipartite graph propagation (Figure 5), alongside $\text{NDCG}@5$ and Xavier initialization (Responses R1.3, R2.7, R2.15, R2.16); and (5) Accuracy is formally defined in Section 6.1.1 and the reference to Table 9 in the Appendix is fixed in Section 6.3.4 (Responses R1.5, R1.6).
+Every equation in the manuscript is now formally defined, numbered, and cross-referenced, and every figure (Figures 1 to 12 in the revised manuscript) is cited and explained in prose: (1) Figures 1 and 2 are cited directly as ``Figure 1'' and ``Figure 2'' with step-by-step explanations (Responses R1.1, R1.2); (2) $PM_{\text{norm}} \in [0, 1]$ and Algorithm 1 are formalized using confusion matrix variables $C_{u,u'}$ including diagonal exact matches $C_{u,u}$ (Responses R2.2, R2.3); (3) $S$, $A_K$, and $w\text{-Score}$ are numbered with a 6-level numerical walkthrough (Responses R2.4, R2.5); (4) Section 4.2 formalizes LLM embedding extraction (Figure 3), cosine KNN scoring (Figure 4), and LightGCN bipartite graph propagation (Figure 5), alongside $\text{NDCG}@5$ and Xavier initialization (Responses R1.3, R2.7, R2.15, R2.16); and (5) Accuracy is formally defined in Section 6.1.1 and the cross-references to Table 8 (\texttt{tab:hyperparameters}) and Table 11 (formerly Table 9, \texttt{tab:best\_hyperparameters} in the Appendix) are fixed in Section 6.3.4 (Responses R1.5, R1.6).
 
 \subsection{AE.4: Human Qualitative Evaluation and Claim Moderation on p.\ 18 (Tasks T14, T15)}
 \revquote{Action Editor (AE.4)}{Reviewer 2 observes that neither the individual components nor the system as a whole are evaluated qualitatively by human judges. For a system whose output is generated text, a human assessment of simplification quality would substantially strengthen the paper. Related to this: the claim on p.\ 18 that simplified texts reduce complexity ``through careful word choice, syntactic restructuring, and discourse simplification'' needs to be either demonstrated or toned down, as written it is not supported.}
@@ -181,7 +184,7 @@ First, we toned down the unsupported claim in Section 5 (p.\ 18, \texttt{tex/UI.
 \begin{quote}
 \textcolor{red}{\textit{``Each simplified version aims to preserve the core meaning of the source text while reducing its estimated CEFR complexity; since these transformations emerge implicitly from fine-tuning on parallel sentence pairs rather than from explicit syntactic rules, we evaluate both automatic semantic similarity and human-judged meaning preservation in Section 6.''}}
 \end{quote}
-Second, we implemented a double-blind human evaluation study using a stratified \textit{Split-and-Overlap} protocol over $N = 150$ French sentence pairs (30 pairs per CEFR level from A2 to C2; 75 pairs comparing fine-tuned Mistral-7B vs.\ fine-tuned GPT-3.5, and 75 pairs comparing fine-tuned GPT-4o vs.\ fine-tuned GPT-4o-mini). Two independent evaluators each annotate $M = 100$ randomized, anonymized A/B pairs (50 shared pairs evaluated by both judges to compute Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's $\alpha$, plus $2 \times 50$ unique pairs). Judges record (1) pairwise simplification preference (Model A, Model B, or Tie) and (2) categorical meaning preservation (\textit{Yes}, \textit{Partial/Unclear}, or \textit{No}). With $n_{\text{shared}} = 50$, statistical power is $\ge 80\%$ to reject $\kappa \le 0.40$ at $\alpha = 0.05$ for target $\kappa \ge 0.70$ ($\text{SE} \le 0.062$), and $N = 150$ yields $98.9\%$ power for a paired Wilcoxon test at $d = 0.35$. Table~\ref{tab:rebuttal_human_study} presents the protocol and results table added to Section 6.2.5.
+Second, we implemented a double-blind human evaluation study using a stratified \textit{Split-and-Overlap} protocol over $N = 150$ French sentence pairs (30 pairs per CEFR level from A2 to C2; 75 pairs comparing fine-tuned Mistral-7B vs.\ fine-tuned GPT-3.5, and 75 pairs comparing fine-tuned GPT-4o vs.\ fine-tuned GPT-4o-mini). Two independent evaluators each annotate $M = 100$ randomized, anonymized A/B pairs (50 shared pairs evaluated by both judges to compute Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's $\alpha$, plus $2 \times 50$ unique pairs). Judges record (1) blind pairwise simplification preference (forced choice between Model A and Model B), (2) perceived content simplification (\textit{Yes}, \textit{Unclear}, or \textit{No}), and (3) categorical meaning preservation (\textit{Yes}, \textit{Unclear}, or \textit{No}). With $n_{\text{shared}} = 50$, statistical power is $\ge 80\%$ to reject $\kappa \le 0.40$ at $\alpha = 0.05$ for target $\kappa \ge 0.70$ ($\text{SE} \le 0.062$), and $N = 150$ yields $98.9\%$ power for a paired Wilcoxon test at $d = 0.35$. Table~\ref{tab:rebuttal_human_study} presents the protocol and results table added to Section 6.2.3 (\texttt{\textbackslash label\{\allowbreak subsubsec:\allowbreak human\_eval\}}).
 
 \begin{table}[!htbp]
 \centering
@@ -194,14 +197,19 @@ Second, we implemented a double-blind human evaluation study using a stratified 
 \toprule
 \textbf{Evaluation Dimension} & \textbf{Metric / Comparison} & \textbf{Sample Size} & \textbf{Result} \\
 \midrule
-\multirow{3}{*}{\textbf{Inter-Annotator Agreement}} 
+\multirow{4}{*}{\textbf{Inter-Annotator Agreement}} 
  & Simplification Preference (Cohen's $\kappa$) & $n_{\text{shared}} = 50$ & \HumanKappaPref \\
+ & Perceived Content Simplification (Cohen's $\kappa$) & $n_{\text{shared}} = 50$ & \HumanKappaSimpler \\
  & Meaning Preservation (Cohen's $\kappa$) & $n_{\text{shared}} = 50$ & \HumanKappaMeaning \\
  & Overall Ordinal Consistency (Krippendorff's $\alpha$) & $n_{\text{shared}} = 50$ & \HumanAlphaKrip \\
 \midrule
 \multirow{2}{*}{\textbf{Pairwise Win Rate (\%)}} 
  & Fine-tuned Mistral-7B vs.\ Fine-tuned GPT-3.5 & $n = 75$ pairs & \HumanWinMistral \\
  & Fine-tuned GPT-4o vs.\ Fine-tuned GPT-4o-mini & $n = 75$ pairs & \HumanWinGPTFour \\
+\midrule
+\multirow{2}{*}{\textbf{Perceived Simpler Content}}
+ & Fine-tuned Mistral-7B (``Yes'' rate) & $n = 75$ pairs & \HumanSimplerMistral \\
+ & Fine-tuned GPT-4o (``Yes'' rate) & $n = 75$ pairs & \HumanSimplerGPTFour \\
 \midrule
 \multirow{2}{*}{\textbf{Meaning Preservation Rate (\%)}} 
  & Fine-tuned Mistral-7B (``Yes'' rate) & $n = 75$ pairs & \HumanMeaningMistral \\
@@ -305,7 +313,7 @@ where $N$ denotes the total number of test instances in the evaluation split ($N
 \revquote{Reviewer 1 (R1.6)}{In Section 6.3.4, the optimal hyperparameters for each model and dataset, identified through grid search and early stopping, are summarized in``? Why was a question mark added? Is there a section detail missing?}
 
 \noindent\textbf{Response:}
-The \texttt{??} in the compiled PDF was caused by an unresolved cross-reference to Table 9 in the Appendix. We verified that the table label in \texttt{tex/Appendix.tex} (line 9) and the in-text reference in \texttt{tex/Experiments\_RS.tex} (line 201) match and resolve cleanly to ``Table 9''.
+The \texttt{??} in the initial compiled PDF was caused by an unresolved cross-reference in Section 6.3.4 (\texttt{tex/Experiments\_RS.tex}). We fixed the in-text reference to point explicitly to \texttt{\textbackslash autoref\{tab:\allowbreak hyperparameters\}} (Table 8, hyperparameter search grid) and \texttt{\textbackslash autoref\{tab:\allowbreak best\_hyperparameters\}} in \texttt{tex/Appendix.tex} (which resolves cleanly to Table 11 in the revised manuscript, formerly Table 9 prior to inserting the two new evaluation tables in Section 6).
 
 \subsection{R1.7: Article Structure and Narrative Flow (Task T28)}
 \revquote{Reviewer 1 (R1.7)}{Work on the paper structure of article flow for readers' perspective.}
@@ -420,7 +428,7 @@ It is achieved implicitly via sequence-to-sequence fine-tuning on parallel CEFR 
 \revquote{Reviewer 2 (R2.9)}{Neither individual components nor the system as a whole are qualitatively evaluated by humans... this is a serious drawback of the study that has to be amended.}
 
 \noindent\textbf{Response:}
-As detailed in Response \textbf{AE.4} and Table~\ref{tab:rebuttal_human_study}, we added Section 6.2.5 reporting a double-blind \textit{Split-and-Overlap} human study on $N = 150$ stratified French sentence pairs (30 per CEFR level A2 to C2, with $n_{\text{shared}} = 50$ overlap pairs annotated by two independent judges to quantify Cohen's $\kappa$ and Krippendorff's $\alpha$).
+As detailed in Response \textbf{AE.4} and Table~\ref{tab:rebuttal_human_study}, we added Section 6.2.3 (\texttt{\textbackslash label\{\allowbreak subsubsec:\allowbreak human\_eval\}}) reporting a double-blind \textit{Split-and-Overlap} human study on $N = 150$ stratified French sentence pairs (30 per CEFR level A2 to C2, with $n_{\text{shared}} = 50$ overlap pairs annotated by two independent judges to quantify Cohen's $\kappa$ and Krippendorff's $\alpha$).
 
 \subsection{R2.10: Training Loss Function vs.\ Ordinal Difference Amplitude (Task T08)}
 \revquote{Reviewer 2 (R2.10)}{It is not clear if and how the training loss function incorporates the amplitude of the differences between scores. This is only hinted at on p.\ 23 but must be much better explained.}
@@ -438,7 +446,7 @@ As shown in Table~\ref{tab:rebuttal_table2} (Response \textbf{AE.1}), we compute
 \revquote{Reviewer 2 (R2.13 \& R2.14)}{In iterative simplification (Section 6.2.4), it is not clear what the results of item 3 show, and how they are further processed. Can you improve Fig.\ 9 by showing where, on average, CEFR levels appear?}
 
 \noindent\textbf{Response:}
-In Section 6.2.4 (\texttt{tex/Experiments.tex}), we clarified that at each iteration $t \in \{1, \dots, 8\}$ across the 100 C2 sentences $x_m^{(0)}$, Step 3 computes the anchor cosine similarity $S_m^{(0 \to t)} = \frac{\mathbf{e}(x_m^{(0)}) \cdot \mathbf{e}(x_m^{(t)})}{\|\mathbf{e}(x_m^{(0)})\|_2 \|\mathbf{e}(x_m^{(t)})\|_2}$ against the initial unsimplified sentence $x_m^{(0)}$ to measure cumulative semantic drift. Its mean $\bar{S}^{(t)}$ (red curve in Figure 9) stays high through iteration 5 ($\bar{S}^{(5)} = 0.85$) before dropping after iteration 6, serving as a stopping criterion in our interface whenever $S_m^{(0 \to t)} < S_0 = 0.81$. We also added the average CEFR level thresholds ($1=\text{A1}$ to $6=\text{C2}$) crossed by the mean trajectory $\bar{y}^{(t)}$ in Figure 9: starting at $\bar{y}^{(0)} = 6.00$ (C2), it crosses C1 ($\le 5.0$) at $t = 1$ ($\bar{y}^{(1)} = 4.62$), B2 ($\le 4.0$) at $t = 2$ ($\bar{y}^{(2)} = 3.85$), B1 ($\le 3.0$) at $t = 4$ ($\bar{y}^{(4)} = 2.91$), and plateaus near A2 ($\approx 2.15$) for $t \in [6, 8]$.
+In Section 6.2.2 (formerly Section 6.2.4 in the initial submission, \texttt{tex/Experiments.tex}), we clarified that at each iteration $t \in \{1, \dots, 8\}$ across the 100 C2 sentences $x_m^{(0)}$, Step 3 computes the anchor cosine similarity $S_m^{(0 \to t)} = \frac{\mathbf{e}(x_m^{(0)}) \cdot \mathbf{e}(x_m^{(t)})}{\|\mathbf{e}(x_m^{(0)})\|_2 \|\mathbf{e}(x_m^{(t)})\|_2}$ against the initial unsimplified sentence $x_m^{(0)}$ to measure cumulative semantic drift. Its mean $\bar{S}^{(t)}$ (red curve in Figure 11 (formerly Figure 9)) stays high through iteration 5 ($\bar{S}^{(5)} = 0.85$) before dropping after iteration 6, serving as a stopping criterion in our interface whenever $S_m^{(0 \to t)} < S_0 = 0.81$. We also added the average CEFR level thresholds ($1=\text{A1}$ to $6=\text{C2}$) crossed by the mean trajectory $\bar{y}^{(t)}$ in Figure 11 (formerly Figure 9): starting at $\bar{y}^{(0)} = 6.00$ (C2), it crosses C1 ($\le 5.0$) at $t = 1$ ($\bar{y}^{(1)} = 4.62$), B2 ($\le 4.0$) at $t = 2$ ($\bar{y}^{(2)} = 3.85$), B1 ($\le 3.0$) at $t = 4$ ($\bar{y}^{(4)} = 2.91$), and plateaus near A2 ($\approx 2.15$) for $t \in [6, 8]$.
 
 \subsection{R2.15 \& R2.16: Formal Definition of NDCG@5 and Xavier Initialization on p.\ 30 (Task T23)}
 \revquote{Reviewer 2 (R2.15 \& R2.16)}{The metric NDCG@5 shall be explained in the text prior to its first use. On p.\ 30 (or before), better explain Xavier initialization and the proposed improvement.}
@@ -470,7 +478,7 @@ We revised both Section 1 (line 34 of \texttt{tex/Introduction.tex}) and Section
 \revquote{Reviewer 2 (R2.19--R2.22)}{Some of the links provided in the paper do not work. The prompt on p.\ 20 is repeated from p.\ 8. Remove it and provide a reference. On p.\ 29, there are missing references (??). References must be improved (replace arXiv with published variants, remove redundant conference fields, capitalize acronyms).}
 
 \noindent\textbf{Response:}
-We addressed all four minor points: (1) verified all external URLs across the manuscript; (2) uncommented Section 2.2.4 in \texttt{tex/Difficulty\_Estimation.tex} and replaced the duplicate quote block on p.\ 20 (\texttt{tex/Experiments.tex}) with a cross-reference to Section 2.2.4; (3) resolved the \texttt{??} on p.\ 29 so that it points cleanly to Table 9 in the Appendix; and (4) cleaned \texttt{bibliography.bib} to replace arXiv preprints with peer-reviewed proceedings (ICLR, SIGIR, NAACL, ACL, ICML, RecSys, \textit{Computational Linguistics}), strip redundant conference metadata, and protect acronym capitalization (LLM, BERT, CEFR, LightGCN).
+We addressed all four minor points: (1) verified all external URLs across the manuscript; (2) uncommented Section 2.2.4 in \texttt{tex/Difficulty\_Estimation.tex} and replaced the duplicate quote block on p.\ 20 (\texttt{tex/Experiments.tex}) with a cross-reference to Section 2.2.4; (3) resolved the \texttt{??} on p.\ 29 so that it points cleanly to Table 8 and Table 11 (formerly Table 9 in the initial submission) in the Appendix; and (4) cleaned \texttt{bibliography.bib} to replace arXiv preprints with peer-reviewed proceedings (ICLR, SIGIR, NAACL, ACL, ICML, RecSys, \textit{Computational Linguistics}), strip redundant conference metadata, and protect acronym capitalization (LLM, BERT, CEFR, LightGCN).
 
 \vspace{-0.2cm}
 \begin{thebibliography}{9}

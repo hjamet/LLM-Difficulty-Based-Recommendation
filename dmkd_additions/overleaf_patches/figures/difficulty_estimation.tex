@@ -1,38 +1,81 @@
 \begin{table}[!htbp]
     \centering
-    \scriptsize
-    \setlength{\tabcolsep}{2.2pt}
-    \begin{tabular}{lc ccc ccc ccc}
+    \small
+    \setlength{\tabcolsep}{2.8pt}
+    \begin{tabular}{lccccccc}
+        \toprule
+        & & \multicolumn{2}{c}{\textbf{Sentences Books}} & \multicolumn{2}{c}{\textbf{LjL}} & \multicolumn{2}{c}{\textbf{Sentences Internet}} \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        \textbf{Model} & \textbf{System Prompt} & Acc. & \textcolor{red}{$PM_{\text{norm}}$ (\%)} & Acc. & \textcolor{red}{$PM_{\text{norm}}$ (\%)} & Acc. & \textcolor{red}{$PM_{\text{norm}}$ (\%)} \\
+        \midrule
+        \textbf{GPT-4o} & \checkmark & \cellcolor[HTML]{6b88c3}\textcolor{white}{0.58}\textcolor{red}{$^{***}$} & \cellcolor[HTML]{4369b4}\textcolor{red}{8.4} & \cellcolor[HTML]{3a61b0}\textcolor{white}{\textbf{\underline{0.77}}} & \cellcolor[HTML]{003299}\textcolor{red}{6.7} & \cellcolor[HTML]{1947a3}\textcolor{white}{\textbf{\underline{0.90}}\textcolor{red}{$^{***}$}} & \cellcolor[HTML]{1c49a4}\textcolor{red}{5.2} \\
+         & - & \cellcolor[HTML]{7792c8}\textcolor{white}{0.53} & \cellcolor[HTML]{869ece}\textcolor{red}{9.7} & \cellcolor[HTML]{446ab4}\textcolor{white}{0.73} & \cellcolor[HTML]{02359a}\textcolor{red}{8.3} & \cellcolor[HTML]{3a61b0}\textcolor{white}{0.77} & \cellcolor[HTML]{3f65b2}\textcolor{red}{10.4} \\
+        \\[2pt]
+        \textbf{GPT-4o-mini} & \checkmark & \cellcolor[HTML]{6080bf}\textcolor{white}{\textbf{\underline{0.62}}\textcolor{red}{$^{**}$}} & \cellcolor[HTML]{4369b4}\textcolor{red}{8.2} & \cellcolor[HTML]{3f65b2}\textcolor{white}{0.75} & \cellcolor[HTML]{0b3b9d}\textcolor{red}{8.5} & \cellcolor[HTML]{1c49a4}\textcolor{white}{0.89} & \cellcolor[HTML]{1443a1}\textcolor{red}{4.8} \\
+         & - & \cellcolor[HTML]{6b88c3}\textcolor{white}{0.58} & \cellcolor[HTML]{5e7ebe}\textcolor{red}{9.2} & \cellcolor[HTML]{3f65b2}\textcolor{white}{0.75} & \cellcolor[HTML]{0b3c9d}\textcolor{red}{6.5} & \cellcolor[HTML]{214da6}\textcolor{white}{0.87} & \cellcolor[HTML]{1544a1}\textcolor{red}{5.2} \\
+        \\[2pt]
+        \textbf{CamemBERT} & - & \cellcolor[HTML]{7a94c9}\textcolor{white}{0.52} & \cellcolor[HTML]{496eb6}\textcolor{red}{\textbf{\underline{3.9}}} & \cellcolor[HTML]{6080bf}\textcolor{white}{0.62} & \cellcolor[HTML]{1241a0}\textcolor{red}{3.4} & \cellcolor[HTML]{2d57ab}\textcolor{white}{0.82} & \cellcolor[HTML]{2651a8}\textcolor{red}{4.6} \\
+        \\[2pt]
+        \textbf{GPT-3.5} & \checkmark & \cellcolor[HTML]{7f99cc}\textcolor{black}{0.50} & \cellcolor[HTML]{6d8ac4}\textcolor{red}{5.4} & \cellcolor[HTML]{476cb5}\textcolor{white}{0.72} & \cellcolor[HTML]{0b3c9d}\textcolor{red}{2.7} & \cellcolor[HTML]{1947a3}\textcolor{white}{\textbf{\underline{0.90}}} & \cellcolor[HTML]{10409f}\textcolor{red}{\textbf{\underline{2.7}}} \\
+         & - & \cellcolor[HTML]{829bcd}\textcolor{black}{0.49} & \cellcolor[HTML]{839ccd}\textcolor{red}{6.4} & \cellcolor[HTML]{446ab4}\textcolor{white}{0.73} & \cellcolor[HTML]{07389b}\textcolor{red}{\textbf{\underline{2.3}}} & \cellcolor[HTML]{214da6}\textcolor{white}{0.87} & \cellcolor[HTML]{1c49a4}\textcolor{red}{3.8} \\
+        \\[2pt]
+        \textbf{Mistral-7B} & \checkmark & \cellcolor[HTML]{7c96ca}\textcolor{white}{0.51} & \cellcolor[HTML]{6583c1}\textcolor{red}{5.0} & \cellcolor[HTML]{5b7cbd}\textcolor{white}{0.64} & \cellcolor[HTML]{1141a0}\textcolor{red}{3.3} & \cellcolor[HTML]{3f65b2}\textcolor{white}{0.75} & \cellcolor[HTML]{5073b9}\textcolor{red}{8.3} \\
+         & - & \cellcolor[HTML]{a5b7db}\textcolor{black}{0.35} & \cellcolor[HTML]{4f72b8}\textcolor{red}{4.1} & \cellcolor[HTML]{879fcf}\textcolor{black}{0.47} & \cellcolor[HTML]{3960af}\textcolor{red}{7.3} & \cellcolor[HTML]{5e7ebe}\textcolor{white}{0.63} & \cellcolor[HTML]{859dce}\textcolor{red}{12.9} \\
+        \\[2pt]
+        \textbf{Davinci} & \checkmark & \cellcolor[HTML]{879fcf}\textcolor{black}{0.47} & \cellcolor[HTML]{90a6d2}\textcolor{red}{6.9} & \cellcolor[HTML]{6382c0}\textcolor{white}{0.61} & \cellcolor[HTML]{1d4aa4}\textcolor{red}{4.5} & \cellcolor[HTML]{3059ac}\textcolor{white}{0.81} & \cellcolor[HTML]{2a54a9}\textcolor{red}{5.0} \\
+         & - & \cellcolor[HTML]{879fcf}\textcolor{black}{0.47} & \cellcolor[HTML]{a8b9dc}\textcolor{red}{8.0} & \cellcolor[HTML]{6886c2}\textcolor{white}{0.59} & \cellcolor[HTML]{234fa7}\textcolor{red}{5.1} & \cellcolor[HTML]{2d57ab}\textcolor{white}{0.82} & \cellcolor[HTML]{234fa7}\textcolor{red}{4.4} \\
+        \\[2pt]
+        \textbf{Babbage} & \checkmark & \cellcolor[HTML]{829bcd}\textcolor{black}{0.49} & \cellcolor[HTML]{839bcd}\textcolor{red}{6.4} & \cellcolor[HTML]{6886c2}\textcolor{white}{0.59} & \cellcolor[HTML]{2954a9}\textcolor{red}{5.8} & \cellcolor[HTML]{3059ac}\textcolor{white}{0.81} & \cellcolor[HTML]{2e58ab}\textcolor{red}{5.4} \\
+         & - & \cellcolor[HTML]{8ea5d2}\textcolor{black}{0.44} & \cellcolor[HTML]{c0cce5}\textcolor{red}{9.0} & \cellcolor[HTML]{6382c0}\textcolor{white}{0.61} & \cellcolor[HTML]{1c4aa4}\textcolor{red}{4.5} & \cellcolor[HTML]{3059ac}\textcolor{white}{0.81} & \cellcolor[HTML]{244fa7}\textcolor{red}{4.4} \\
+        \\[2pt]
+        \textbf{ARI} & - & \cellcolor[HTML]{a8b9dc}\textcolor{black}{0.34} & \cellcolor[HTML]{fcfdfe}\textcolor{red}{11.6} & \cellcolor[HTML]{99add6}\textcolor{black}{0.40} & \cellcolor[HTML]{6281c0}\textcolor{red}{11.4} & \cellcolor[HTML]{a8b9dc}\textcolor{black}{0.34} & \cellcolor[HTML]{c4d0e7}\textcolor{red}{18.4} \\
+        \\[2pt]
+        \textbf{GFI} & - & \cellcolor[HTML]{a8b9dc}\textcolor{black}{0.34} & \cellcolor[HTML]{ffffff}\textcolor{red}{11.7} & \cellcolor[HTML]{8ca3d1}\textcolor{black}{0.45} & \cellcolor[HTML]{5a7bbd}\textcolor{red}{10.7} & \cellcolor[HTML]{adbdde}\textcolor{black}{0.32} & \cellcolor[HTML]{e5eaf4}\textcolor{red}{21.3} \\
+        \\[2pt]
+        \textbf{FKGL} & - & \cellcolor[HTML]{a5b7db}\textcolor{black}{0.35} & \cellcolor[HTML]{fefefe}\textcolor{red}{11.7} & \cellcolor[HTML]{93a9d4}\textcolor{black}{0.42} & \cellcolor[HTML]{738fc7}\textcolor{red}{13.2} & \cellcolor[HTML]{a8b9dc}\textcolor{black}{0.34} & \cellcolor[HTML]{dfe5f2}\textcolor{red}{20.7} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Difficulty estimation metrics for all datasets. \textcolor{red}{For each model and dataset, we report classification Accuracy (Acc.) and formally normalized Pairwise Mismatch ($PM_{\text{norm}}$, \%), measuring difficulty ordering violations scaled over $\binom{N}{2}$ with ties counted as $0.5$. Lower $PM_{\text{norm}}$ indicates superior ordinal ranking consistency. System Prompt indicates whether explicit CEFR descriptions were provided (\checkmark) or not (-). Asterisks indicate paired Wilcoxon signed-rank significance against unprompted baselines ($^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$).} \textbf{\underline{Bold and underlined}} values indicate the best score per metric and dataset. Models used: GPT-3.5 (gpt-3.5-turbo-1106), GPT-4o (gpt-4o-2024-08-06), GPT-4o-mini (gpt-4o-mini-2024-07-18), CamemBERT (camembert-base), Mistral (Mistral-7B), and Davinci (davinci-002).}
+    \label{tab:difficulty_estimation_metrics}
+\end{table}
+
+{\color{red}\begin{table*}[!htbp]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccccccccccc}
         \toprule
         & & \multicolumn{3}{c}{\textbf{Sentences Books} ($N=960$)} & \multicolumn{3}{c}{\textbf{LjL} ($N=413$)} & \multicolumn{3}{c}{\textbf{Sentences Internet} ($N=480$)} \\
         \cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
-        \textbf{Model} & \textbf{Prompt} & Acc. & \textcolor{red}{QWK} & \textcolor{red}{$PM_{\text{norm}}$ (\%)} & Acc. & \textcolor{red}{QWK} & \textcolor{red}{$PM_{\text{norm}}$ (\%)} & Acc. & \textcolor{red}{QWK} & \textcolor{red}{$PM_{\text{norm}}$ (\%)} \\
+        \textbf{Model} & \textbf{Prompt} & Acc. & QWK & $PM_{\text{norm}}$ (\%) & Acc. & QWK & $PM_{\text{norm}}$ (\%) & Acc. & QWK & $PM_{\text{norm}}$ (\%) \\
         \midrule
-        \textbf{GPT-4o} & \checkmark & \textcolor{red}{$0.584 \pm 0.016^{***}$} & \textcolor{red}{$\mathbf{\underline{0.891 \pm 0.007}}$} & \textcolor{red}{$8.38 \pm 0.40$} & \textcolor{red}{$\mathbf{\underline{0.765 \pm 0.021}}$} & \textcolor{red}{$0.863 \pm 0.016$} & \textcolor{red}{$6.74 \pm 0.67$} & \textcolor{red}{$\mathbf{\underline{0.902 \pm 0.013}}^{***}$} & \textcolor{red}{$0.904 \pm 0.018$} & \textcolor{red}{$5.24 \pm 0.86$} \\
-         & - & \textcolor{red}{$0.527 \pm 0.016$} & \textcolor{red}{$0.853 \pm 0.009$} & \textcolor{red}{$9.73 \pm 0.44$} & \textcolor{red}{$0.731 \pm 0.022$} & \textcolor{red}{$0.837 \pm 0.017$} & \textcolor{red}{$8.32 \pm 0.75$} & \textcolor{red}{$0.771 \pm 0.019$} & \textcolor{red}{$0.794 \pm 0.027$} & \textcolor{red}{$10.41 \pm 1.11$} \\
-        \\[1pt]
-        \textbf{GPT-4o-mini} & \checkmark & \textcolor{red}{$\mathbf{\underline{0.616 \pm 0.016}}^{**}$} & \textcolor{red}{$0.888 \pm 0.008$} & \textcolor{red}{$8.23 \pm 0.44$} & \textcolor{red}{$0.751 \pm 0.021$} & \textcolor{red}{$0.818 \pm 0.023$} & \textcolor{red}{$8.55 \pm 0.85$} & \textcolor{red}{$0.888 \pm 0.014$} & \textcolor{red}{$\mathbf{\underline{0.915 \pm 0.017}}$} & \textcolor{red}{$4.81 \pm 0.82$} \\
-         & - & \textcolor{red}{$0.582 \pm 0.016$} & \textcolor{red}{$0.881 \pm 0.009$} & \textcolor{red}{$9.24 \pm 0.46$} & \textcolor{red}{$0.751 \pm 0.021$} & \textcolor{red}{$\mathbf{\underline{0.873 \pm 0.014}}$} & \textcolor{red}{$6.46 \pm 0.65$} & \textcolor{red}{$0.869 \pm 0.016$} & \textcolor{red}{$0.914 \pm 0.016$} & \textcolor{red}{$5.17 \pm 0.80$} \\
-        \\[1pt]
-        \textbf{CamemBERT} & - & $0.523$ & -- & \textcolor{red}{$\mathbf{\underline{3.86}}$} & $0.625$ & -- & \textcolor{red}{$3.39$} & $0.823$ & -- & \textcolor{red}{$4.64$} \\
-        \\[1pt]
-        \textbf{GPT-3.5} & \checkmark & $0.499$ & -- & \textcolor{red}{$5.42$} & $0.724$ & -- & \textcolor{red}{$2.68$} & $0.898$ & -- & \textcolor{red}{$\mathbf{\underline{2.74}}$} \\
-         & - & $0.485$ & -- & \textcolor{red}{$6.37$} & $0.734$ & -- & \textcolor{red}{$\mathbf{\underline{2.25}}$} & $0.867$ & -- & \textcolor{red}{$3.78$} \\
-        \\[1pt]
-        \textbf{Mistral-7B} & \checkmark & $0.513$ & -- & \textcolor{red}{$5.05$} & $0.637$ & -- & \textcolor{red}{$3.31$} & $0.750$ & -- & \textcolor{red}{$8.31$} \\
-         & - & $0.354$ & -- & \textcolor{red}{$4.11$} & $0.472$ & -- & \textcolor{red}{$7.28$} & $0.629$ & -- & \textcolor{red}{$12.90$} \\
-        \\[1pt]
-        \textbf{Davinci} & \checkmark & $0.470$ & -- & \textcolor{red}{$6.93$} & $0.610$ & -- & \textcolor{red}{$4.54$} & $0.810$ & -- & \textcolor{red}{$4.97$} \\
-         & - & $0.470$ & -- & \textcolor{red}{$7.98$} & $0.591$ & -- & \textcolor{red}{$5.12$} & $0.825$ & -- & \textcolor{red}{$4.36$} \\
-        \\[1pt]
-        \textbf{Babbage} & \checkmark & $0.485$ & -- & \textcolor{red}{$6.35$} & $0.591$ & -- & \textcolor{red}{$5.75$} & $0.810$ & -- & \textcolor{red}{$5.35$} \\
-         & - & $0.439$ & -- & \textcolor{red}{$9.01$} & $0.610$ & -- & \textcolor{red}{$4.44$} & $0.810$ & -- & \textcolor{red}{$4.45$} \\
-        \\[1pt]
-        \textbf{ARI} & - & $0.342$ & -- & \textcolor{red}{$11.63$} & $0.400$ & -- & \textcolor{red}{$11.43$} & $0.344$ & -- & \textcolor{red}{$18.42$} \\
-        \textbf{GFI} & - & $0.342$ & -- & \textcolor{red}{$11.74$} & $0.450$ & -- & \textcolor{red}{$10.70$} & $0.323$ & -- & \textcolor{red}{$21.29$} \\
-        \textbf{FKGL} & - & $0.346$ & -- & \textcolor{red}{$11.72$} & $0.421$ & -- & \textcolor{red}{$13.24$} & $0.335$ & -- & \textcolor{red}{$20.73$} \\
+        \textbf{GPT-4o} & \checkmark & $0.58 \pm 0.02^{***}$ & $\mathbf{\underline{0.89 \pm 0.01}}$ & $8.4 \pm 0.4$ & $\mathbf{\underline{0.77 \pm 0.02}}$ & $0.86 \pm 0.02$ & $6.7 \pm 0.7$ & $\mathbf{\underline{0.90 \pm 0.01}}^{***}$ & $0.90 \pm 0.02$ & $5.2 \pm 0.9$ \\
+         & - & $0.53 \pm 0.02$ & $0.85 \pm 0.01$ & $9.7 \pm 0.4$ & $0.73 \pm 0.02$ & $0.84 \pm 0.02$ & $8.3 \pm 0.7$ & $0.77 \pm 0.02$ & $0.79 \pm 0.03$ & $10.4 \pm 1.1$ \\
+        \\[2pt]
+        \textbf{GPT-4o-mini} & \checkmark & $\mathbf{\underline{0.62 \pm 0.02}}^{**}$ & $0.89 \pm 0.01$ & $8.2 \pm 0.4$ & $0.75 \pm 0.02$ & $0.82 \pm 0.02$ & $8.5 \pm 0.8$ & $0.89 \pm 0.01$ & $\mathbf{\underline{0.92 \pm 0.02}}$ & $4.8 \pm 0.8$ \\
+         & - & $0.58 \pm 0.02$ & $0.88 \pm 0.01$ & $9.2 \pm 0.5$ & $0.75 \pm 0.02$ & $\mathbf{\underline{0.87 \pm 0.01}}$ & $6.5 \pm 0.6$ & $0.87 \pm 0.02$ & $0.91 \pm 0.02$ & $5.2 \pm 0.8$ \\
+        \\[2pt]
+        \textbf{CamemBERT} & - & $0.52$ & - & $\mathbf{\underline{3.9}}$ & $0.62$ & - & $3.4$ & $0.82$ & - & $4.6$ \\
+        \\[2pt]
+        \textbf{GPT-3.5} & \checkmark & $0.50$ & - & $5.4$ & $0.72$ & - & $2.7$ & $0.90$ & - & $\mathbf{\underline{2.7}}$ \\
+         & - & $0.49$ & - & $6.4$ & $0.73$ & - & $\mathbf{\underline{2.3}}$ & $0.87$ & - & $3.8$ \\
+        \\[2pt]
+        \textbf{Mistral-7B} & \checkmark & $0.51$ & - & $5.0$ & $0.64$ & - & $3.3$ & $0.75$ & - & $8.3$ \\
+         & - & $0.35$ & - & $4.1$ & $0.47$ & - & $7.3$ & $0.63$ & - & $12.9$ \\
+        \\[2pt]
+        \textbf{Davinci} & \checkmark & $0.47$ & - & $6.9$ & $0.61$ & - & $4.5$ & $0.81$ & - & $5.0$ \\
+         & - & $0.47$ & - & $8.0$ & $0.59$ & - & $5.1$ & $0.82$ & - & $4.4$ \\
+        \\[2pt]
+        \textbf{Babbage} & \checkmark & $0.49$ & - & $6.4$ & $0.59$ & - & $5.8$ & $0.81$ & - & $5.4$ \\
+         & - & $0.44$ & - & $9.0$ & $0.61$ & - & $4.5$ & $0.81$ & - & $4.4$ \\
+        \\[2pt]
+        \textbf{ARI} & - & $0.34$ & - & $11.6$ & $0.40$ & - & $11.4$ & $0.34$ & - & $18.4$ \\
+        \\[2pt]
+        \textbf{GFI} & - & $0.34$ & - & $11.7$ & $0.45$ & - & $10.7$ & $0.32$ & - & $21.3$ \\
+        \\[2pt]
+        \textbf{FKGL} & - & $0.35$ & - & $11.7$ & $0.42$ & - & $13.2$ & $0.34$ & - & $20.7$ \\
         \bottomrule
     \end{tabular}
-    \caption{Difficulty estimation metrics across all three datasets. We report classification accuracy (Acc., higher is better), \textcolor{red}{Quadratic Weighted Kappa (QWK, higher is better), and normalized Pairwise Mismatch $PM_{\text{norm}}$ (in \%, lower is better; see \autoref{eq:pm_norm}). For GPT-4o and GPT-4o-mini, values represent $\mu \pm \sigma$ across $B = 1{,}000$ non-parametric bootstrap resamples of the test split. Superscripts indicate two-sided paired Wilcoxon signed-rank significance comparing System Prompt (\checkmark) vs.\ no prompt (-): $^{**}p < 0.01$, $^{***}p < 0.001$ (on \texttt{LjL}, prompt differences are not statistically significant: $p = 0.140$ for GPT-4o and $p = 0.606$ for GPT-4o-mini).} \textbf{\underline{Bold and underlined}} values denote the best score per metric and dataset.}
-    \label{tab:difficulty_estimation_metrics}
-\end{table}
+    \caption{\textcolor{red}{Complete statistical evaluation of difficulty estimation models across datasets (DMKD revision). Metrics reported as mean $\pm$ bootstrap standard error ($\sigma$, $B=1000$). Acc.: classification accuracy; QWK: Quadratic Weighted Kappa on ordinal CEFR classes; $PM_{\text{norm}}$: normalized Pairwise Mismatch (\%; see \autoref{eq:pm_norm}). Asterisks denote two-sided paired Wilcoxon signed-rank significance against unprompted variants ($^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$; on \texttt{LjL}, prompt differences are not statistically significant: $p = 0.140$ for GPT-4o and $p = 0.606$ for GPT-4o-mini).}}
+    \label{tab:difficulty_estimation_metrics_detailed}
+\end{table*}}

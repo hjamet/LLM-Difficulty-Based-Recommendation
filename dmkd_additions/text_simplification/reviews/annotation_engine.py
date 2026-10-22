@@ -48,8 +48,10 @@ __all__ = [
     "save_single_annotation",
     "consolidate_annotations",
     "compute_fleiss_kappa",
+    "compute_krippendorff_alpha_ordinal",
     "compute_iaa_metrics",
     "compute_model_performance",
+    "generate_latex_human_study_macros",
 ]
 
 
@@ -660,6 +662,62 @@ def compute_fleiss_kappa(categories_counts: np.ndarray) -> float:
     return float(kappa)
 
 
+
+def compute_krippendorff_alpha_ordinal(
+    ratings_h: List[int], ratings_m: List[int]
+) -> float:
+    """Calcule le coefficient Alpha de Krippendorff ordinal (m=2 observateurs).
+
+    ratings_h, ratings_m : listes de scores discrets ordonnés (ex: 0, 1, 2)
+    associés aux mêmes n unités d'évaluation.
+    """
+    if len(ratings_h) != len(ratings_m):
+        raise ValueError("ratings_h et ratings_m doivent avoir la même longueur.")
+    n = len(ratings_h)
+    if n == 0:
+        return 1.0
+
+    all_vals = list(ratings_h) + list(ratings_m)
+    if len(set(all_vals)) <= 1:
+        return 1.0
+
+    if ratings_h == ratings_m:
+        return 1.0
+
+    categories = sorted(list(set(all_vals)))
+    counts = {c: all_vals.count(c) for c in categories}
+
+    # Distance ordinale de Krippendorff : delta_ord(c, k) = sum_{g=min(c,k)}^{max(c,k)} n_g - (n_c + n_k)/2
+    delta = {}
+    for c in categories:
+        for k in categories:
+            if c == k:
+                delta[(c, k)] = 0.0
+            else:
+                c_min, c_max = min(c, k), max(c, k)
+                in_between = [g for g in categories if c_min <= g <= c_max]
+                sum_ng = sum(counts[g] for g in in_between)
+                d_val = sum_ng - (counts[c] + counts[k]) / 2.0
+                delta[(c, k)] = float(d_val)
+
+    # Désaccord observé D_o
+    d_o = sum((delta[(h, m)]) ** 2 for h, m in zip(ratings_h, ratings_m)) / float(n)
+
+    # Désaccord attendu D_e
+    total_obs = 2 * n
+    denom_de = float(total_obs * (total_obs - 1))
+    sum_de = 0.0
+    for c in categories:
+        for k in categories:
+            sum_de += counts[c] * counts[k] * ((delta[(c, k)]) ** 2)
+    d_e = sum_de / denom_de
+
+    if np.isclose(d_e, 0.0):
+        return 1.0 if np.isclose(d_o, 0.0) else 0.0
+
+    alpha = 1.0 - (d_o / d_e)
+    return float(alpha)
+
 def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
     """Calcule toutes les métriques d'accord inter-annotateurs (Cohen's Kappa,
 
@@ -694,6 +752,8 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
 
     if n_common == 0:
         result["status"] = "no_overlap_annotated"
+        result["krippendorff_alpha"] = None
+        result["cohen_kappa_pref"] = None
         return result
 
     # Filtrer et aligner dans le même ordre de pair_id
@@ -865,6 +925,49 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
         columns=[f"Maxime : {c}" for c in PRESERVATION_CHOICES],
     )
 
+    # 4. Accord Ordinal Global (Krippendorff's Alpha sur simplicité et sens combinés)
+    def _to_ordinal_score(val_str: Any) -> int:
+        s = str(val_str).lower()
+        if "oui" in s or "yes" in s:
+            return 2
+        if "flou" in s or "sais pas" in s or "unclear" in s or "unsure" in s or "?" in s:
+            return 1
+        if "non" in s or "no" in s:
+            return 0
+        try:
+            f = float(s)
+            if f >= 4.0:
+                return 2
+            elif f <= 2.0:
+                return 0
+            return 1
+        except (ValueError, TypeError):
+            return 1
+
+    h_ord_all: List[int] = []
+    m_ord_all: List[int] = []
+    for i in range(n_common):
+        h_s_a = normalize_simpler_choice(sub_h.iloc[i].get("content_simpler_a"))
+        h_s_b = normalize_simpler_choice(sub_h.iloc[i].get("content_simpler_b"))
+        m_s_a = normalize_simpler_choice(sub_m.iloc[i].get("content_simpler_a"))
+        m_s_b = normalize_simpler_choice(sub_m.iloc[i].get("content_simpler_b"))
+        h_m_a = normalize_preservation_choice(
+            sub_h.iloc[i].get("meaning_preservation_a", sub_h.iloc[i].get("fidelity_score_a"))
+        )
+        h_m_b = normalize_preservation_choice(
+            sub_h.iloc[i].get("meaning_preservation_b", sub_h.iloc[i].get("fidelity_score_b"))
+        )
+        m_m_a = normalize_preservation_choice(
+            sub_m.iloc[i].get("meaning_preservation_a", sub_m.iloc[i].get("fidelity_score_a"))
+        )
+        m_m_b = normalize_preservation_choice(
+            sub_m.iloc[i].get("meaning_preservation_b", sub_m.iloc[i].get("fidelity_score_b"))
+        )
+        h_ord_all.extend([_to_ordinal_score(h_s_a), _to_ordinal_score(h_s_b), _to_ordinal_score(h_m_a), _to_ordinal_score(h_m_b)])
+        m_ord_all.extend([_to_ordinal_score(m_s_a), _to_ordinal_score(m_s_b), _to_ordinal_score(m_m_a), _to_ordinal_score(m_m_b)])
+
+    krip_alpha = compute_krippendorff_alpha_ordinal(h_ord_all, m_ord_all)
+
     # Statistiques par modèle (% Oui, % Non, % Flou)
     model_stats = []
     for mod_name, ratings in model_evaluations.items():
@@ -889,6 +992,8 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
             # Accord Préférence Globale
             "observed_agreement": observed_agreement,
             "cohen_kappa": cohen_k,
+            "cohen_kappa_pref": cohen_k,
+            "krippendorff_alpha": round(krip_alpha, 4),
             "fleiss_kappa": fleiss_k,
             "categories": all_categories,
             "confusion_matrix_df": conf_df,
@@ -1012,3 +1117,99 @@ def compute_model_performance(repo_root: Optional[Path] = None) -> pd.DataFrame:
 
     return pd.DataFrame(records)
 
+
+def generate_latex_human_study_macros(
+    repo_root: Optional[Path] = None, force_partial: bool = False
+) -> Dict[str, Any]:
+    """Génère le dictionnaire et le bloc des 10 macros LaTeX pour Response_to_Reviewers.tex et Experiments.tex."""
+    if repo_root is None:
+        repo_root = find_repo_root()
+    else:
+        repo_root = Path(repo_root)
+
+    iaa = compute_iaa_metrics(repo_root)
+    df_perf = compute_model_performance(repo_root)
+
+    henri_count = int(iaa.get("henri_total_annotated", 0))
+    maxime_count = int(iaa.get("maxime_total_annotated", 0))
+    overlap_count = int(iaa.get("annotated_shared_pairs", 0))
+
+    is_complete = (henri_count >= 100 and maxime_count >= 100 and overlap_count >= 50)
+    use_actual_values = is_complete or force_partial
+
+    perf_map: Dict[str, Any] = {}
+    if not df_perf.empty and "Modèle" in df_perf.columns:
+        perf_map = df_perf.set_index("Modèle").to_dict(orient="index")
+
+    mistral_data = perf_map.get("Mistral-7B-FT", {})
+    gpt4o_data = perf_map.get("GPT-4o-FT", {})
+
+    win_mistral = mistral_data.get("preference_rate", 0.0)
+    win_gpt4o = gpt4o_data.get("preference_rate", 0.0)
+    simpler_mistral = mistral_data.get("simpler_rate", 0.0)
+    simpler_gpt4o = gpt4o_data.get("simpler_rate", 0.0)
+    meaning_mistral = mistral_data.get("meaning_preservation_rate", 0.0)
+    meaning_gpt4o = gpt4o_data.get("meaning_preservation_rate", 0.0)
+
+    k_pref = iaa.get("cohen_kappa_pref", iaa.get("cohen_kappa"))
+    k_simp = iaa.get("simpler_cohen_kappa")
+    k_sem = iaa.get("meaning_cohen_kappa")
+    alpha_krip = iaa.get("krippendorff_alpha")
+
+    macros: Dict[str, str] = {}
+
+    if overlap_count > 0 and use_actual_values:
+        macros["HumanKappaPref"] = f"{k_pref:.2f}" if k_pref is not None else r"\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{pref}}$]}}"
+        macros["HumanKappaSimpler"] = f"{k_simp:.2f}" if k_simp is not None else r"\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{simp}}$]}}"
+        macros["HumanKappaMeaning"] = f"{k_sem:.2f}" if k_sem is not None else r"\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{sem}}$]}}"
+        macros["HumanAlphaKrip"] = f"{alpha_krip:.2f}" if alpha_krip is not None else r"\textcolor{blue}{\textbf{[TBD: $\alpha_{\text{Krip}}$]}}"
+    else:
+        macros["HumanKappaPref"] = r"\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{pref}}$]}}"
+        macros["HumanKappaSimpler"] = r"\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{simp}}$]}}"
+        macros["HumanKappaMeaning"] = r"\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{sem}}$]}}"
+        macros["HumanAlphaKrip"] = r"\textcolor{blue}{\textbf{[TBD: $\alpha_{\text{Krip}}$]}}"
+
+    if use_actual_values and (henri_count > 0 or maxime_count > 0):
+        macros["HumanWinMistral"] = f"{win_mistral:.1f}\\%"
+        macros["HumanWinGPTFour"] = f"{win_gpt4o:.1f}\\%"
+        macros["HumanSimplerMistral"] = f"{simpler_mistral:.1f}\\%"
+        macros["HumanSimplerGPTFour"] = f"{simpler_gpt4o:.1f}\\%"
+        macros["HumanMeaningMistral"] = f"{meaning_mistral:.1f}\\%"
+        macros["HumanMeaningGPTFour"] = f"{meaning_gpt4o:.1f}\\%"
+    else:
+        macros["HumanWinMistral"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanWinGPTFour"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanSimplerMistral"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanSimplerGPTFour"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanMeaningMistral"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanMeaningGPTFour"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+
+    order = [
+        "HumanKappaPref",
+        "HumanKappaSimpler",
+        "HumanKappaMeaning",
+        "HumanAlphaKrip",
+        "HumanWinMistral",
+        "HumanWinGPTFour",
+        "HumanSimplerMistral",
+        "HumanSimplerGPTFour",
+        "HumanMeaningMistral",
+        "HumanMeaningGPTFour",
+    ]
+
+    latex_lines = [
+        "% Macros for final human evaluation numbers (Task T14, N=150 stratified pairs)"
+    ]
+    for key in order:
+        latex_lines.append(f"\\newcommand{{\\{key}}}{{{macros[key]}}}")
+
+    latex_commands_block = "\n".join(latex_lines)
+
+    return {
+        "is_complete": is_complete,
+        "henri_count": henri_count,
+        "maxime_count": maxime_count,
+        "overlap_count": overlap_count,
+        "macros_dict": macros,
+        "latex_commands_block": latex_commands_block,
+    }
