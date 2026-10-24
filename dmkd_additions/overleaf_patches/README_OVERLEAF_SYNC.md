@@ -31,7 +31,19 @@ Once co-author validation (Prof. Michalis Vlachos) is complete, copy each file b
    - **Tasks covered**: `T16` (moderation of the language-agnostic claim in Section 7), `T14` (updated limitations paragraph referencing the 150-pair double-blind human evaluation and future longitudinal classroom studies).
 
 9. `dmkd_additions/overleaf_patches/figures/difficulty_estimation.tex` $\rightarrow$ `paper/figures/difficulty_estimation.tex`
-   - **Tasks covered**: `T03`, `T10`, `T11` (updated Table 2 reporting $\mu \pm \sigma$ across $B=1,000$ bootstrap resamples, QWK, normalized $PM_{\text{norm}}$ in %, and paired Wilcoxon significance markers $^{**}, ^{***}$).
+   - **Tasks covered**: `T03`, `T10`, `T11` (updated Table 2 reporting $\mu \pm \sigma$ across $B=1,000$ bootstrap resamples, QWK, normalized $PM_{\text{norm}}$ in %, and paired Wilcoxon significance markers $^{**}, ^{***}$), wrapped in `\resizebox` to resolve Overfull \hbox.
+
+10. `dmkd_additions/overleaf_patches/figures/iterative_simplification.pgf` $\rightarrow$ `paper/figures/iterative_simplification.pgf`
+   - **Tasks covered**: `T18` (added light-gray dashed horizontal reference lines for CEFR levels B1, B2, C1, C2 across the plot box width).
+
+## Layout & Overfull \hbox Resolutions
+All 6 `Overfull \hbox` warnings have been eliminated:
+1. `Difficulty_Estimation.tex` (eq. `qwk_definition`, was +91.62pt): split across two lines using `aligned`.
+2. `Difficulty_Estimation.tex` (inline label list, was +3.45pt): tightened to `\{1, \dots, 6\}` with `$<_{\text{diff}}>$`.
+3. `figures/difficulty_estimation.tex` Table 1 (was +48.50pt): wrapped in `\resizebox{\columnwidth}{!}{...}`.
+4. `figures/difficulty_estimation.tex` Table 2 (was +185.40pt): wrapped in `\resizebox{\textwidth}{!}{...}`.
+5. `Experiments.tex` Table `tab:human_eval_results` (was +137.15pt): wrapped in `\resizebox{\columnwidth}{!}{...}`.
+6. `Experiments_RS.tex` Table `tab:model-summary` (was +35.69pt): uncommented `\resizebox{\columnwidth}{!}{...}` and split Xavier equation.
 
 ## Bibliography Note (`T26`, `T27`, `T28`)
-When synchronizing with Overleaf, also add the two new BibTeX entries (`martinc2021supervised` and `jamet2024evaluation`) to `paper/bibliography.bib` and fix the malformed entries (`Lungu18` title braces, `als1` pages `263--272`, `camembert` title capitalization `{CamemBERT}`) as documented in Section 3 (`R2.22`) of `dmkd_additions/rebuttal/Response_to_Reviewers.tex`.
+When synchronizing with Overleaf, also add the two new BibTeX entries (`martinc2021supervised` and `jamet2024evaluation`) to `paper/bibliography.bib` and fix the malformed entries (`Lungu18` title braces, `als1` pages `263--272`, `camembert` title capitalization `{CamemBERT}`) as documented in Section 3 (`R2.22`) of `dmkd_additions/rebuttal/Response_to_Reviewers.tex`. Protected acronyms in title fields (`{LoRA}`, `{LightGCN}`) and updated `hu2021loralowrankadaptationlarge` to ICLR 2022 proceedings.

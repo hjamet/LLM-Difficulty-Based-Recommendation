@@ -79,8 +79,7 @@ We evaluate a diverse range of models on our datasets, representative of various
 \begin{table}[htbp]
 \caption{Summary of Recommendation Models}
 \label{tab:model-summary}
-%\resizebox{\columnwidth}{!}{%
-\begin{tabular}{ll}
+\begin{tabularx}{\columnwidth}{lX}
 \toprule
 \textbf{Category} & \textbf{Description} \\
 \midrule
@@ -90,16 +89,14 @@ BPR \cite{bpr} & Optimizes pairwise item rankings from user history. \\
 LMF \cite{lmf} & Uncovers latent features for future preference prediction. \\
 \midrule
 \textbf{Content-based} & \\
-KNN & Recommends items based on nearest feature similarity using \\ & the BERT and ADA embeddings (see \autoref{embeddings}). \\
+KNN & Recommends items based on nearest feature similarity using the BERT and ADA embeddings (see \autoref{embeddings}). \\
 \midrule
 \textbf{Graph-based} & \\
 LightGCN \cite{lightgcn} & A simplified GCN with two initialization methods: \\
- & Xavier: Random initialization to aid training convergence.
-\\
+ & Xavier: Random initialization to aid training convergence. \\
  & Pretrained (see \autoref{embeddings}): Employs BERT and ADA embeddings. \\
 \bottomrule
-\end{tabular}%
-% }
+\end{tabularx}
 \end{table}
 
 
@@ -109,7 +106,10 @@ For our experiments, we adopted a rigorous approach to optimize the performance 
 \end{equation}}
 \textcolor{red}{$\text{rel}_r \in \{0, 1\}$ denotes the binary relevance of the item ranked at position $r$ for a given test user, and $\text{IDCG}@5$ is the ideal $\text{DCG}@5$ achieved by sorting the user's ground-truth test items first. In our LightGCN ablation, we compare two initialization regimes for the layer-0 embedding table $\mathbf{E}^{(0)} \in \mathbb{R}^{(|\mathcal{U}|+|\mathcal{I}|) \times d}$: (1) standard Xavier uniform initialization, which draws weights independently from}
 {\color{red}\begin{equation}\label{eq:xavier_init}
-W \sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}},\, +\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}\right)
+\begin{aligned}
+W \sim \mathcal{U}\Bigg( &-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}},\, \\
+&+\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}\Bigg)
+\end{aligned}
 \end{equation}}
 \textcolor{red}{without prior semantic knowledge, and (2) LLM-pretrained initialization, which sets $\mathbf{e}_i^{(0)}$ and $\mathbf{e}_u^{(0)}$ to the semantic vectors defined in Equations~(\ref{eq:item_embedding_init})--(\ref{eq:user_embedding_init}). Warm-starting $\mathbf{E}^{(0)}$ with LLM embeddings injects semantic proximity into the bipartite graph from epoch 0, mitigating cold-start sparsity for items with few interactions.}
 

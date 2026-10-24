@@ -77,6 +77,11 @@ def main():
         help="Injecte les macros dans Response_to_Reviewers.tex et Experiments.tex.",
     )
     parser.add_argument(
+        "--clean",
+        action="store_true",
+        help="Calculer et injecter les métriques en excluant les 11 paires atypiques (NaN regex, prompt leak, A==B).",
+    )
+    parser.add_argument(
         "--force",
         action="store_true",
         help="Force l'injection des valeurs partielles meme si l'etude n'est pas complete.",
@@ -93,18 +98,30 @@ def main():
     repo_root = Path(args.repo_root) if args.repo_root else find_repo_root()
     force_partial = args.preview_partial or args.force
 
-    res = generate_latex_human_study_macros(repo_root, force_partial=force_partial)
+    res_raw = generate_latex_human_study_macros(repo_root, force_partial=force_partial, exclude_anomalies=False)
+    res_clean = generate_latex_human_study_macros(repo_root, force_partial=force_partial, exclude_anomalies=True)
 
-    print("=" * 70)
-    print("ETUDE D'ANNOTATION HUMAINE DMKD (T14) - BILAN DES DONNEES")
-    print(f"  * Progression Henri   : {res['henri_count']} / 100")
-    print(f"  * Progression Maxime  : {res['maxime_count']} / 100")
-    print(f"  * Paires Communes     : {res['overlap_count']} / 50")
-    print(f"  * Statut Completude   : {'COMPLETE (150/150 paires)' if res['is_complete'] else 'EN COURS (partielle)'}")
-    print("=" * 70)
+    res = res_clean if args.clean else res_raw
+
+    print("=" * 75)
+    print("ETUDE D'ANNOTATION HUMAINE DMKD (T14) - BILAN COMPARATIF DES DONNEES")
+    print("=" * 75)
+    print("1. POOL COMPLET (N=150, n_shared=50) :")
+    print(f"  * Progression Henri   : {res_raw['henri_count']} / 100")
+    print(f"  * Progression Maxime  : {res_raw['maxime_count']} / 100")
+    print(f"  * Paires Communes     : {res_raw['overlap_count']} / 50")
+    print(f"  * Statut Completude   : {'COMPLETE (150/150 paires)' if res_raw['is_complete'] else 'EN COURS (partielle)'}")
+    print()
+    print("2. POOL NETTOYE HORS ANOMALIES (N_clean=139, n_shared_clean=48) :")
+    print("  * Paires NaN regex (?/!)    (5) : P014, P032, P042, P075, P091")
+    print("  * Prompt leak [/INST]       (1) : P074")
+    print("  * Paires identiques A==B    (5) : P030, P049, P056, P108, P143")
+    print(f"  * Paires communes nettoyees : {res_clean['overlap_count']} / 48")
+    print(f"  * Mode actif                : {'POOL NETTOYE (--clean)' if args.clean else 'POOL COMPLET (standard)'}")
+    print("=" * 75)
 
     if args.preview_partial or (not args.apply):
-        print("\nBLOC DE MACROS LATEX GENERE :")
+        print(f"\nBLOC DE MACROS LATEX GENERE ({'POOL NETTOYE' if args.clean else 'POOL COMPLET'}) :")
         print(res["latex_commands_block"])
         print()
 
@@ -112,10 +129,10 @@ def main():
         if not res["is_complete"] and not args.force:
             print("[ERROR] L'etude n'est pas encore complete.")
             print("   Pour injecter les chiffres partiels actuels, utilisez l'option --force :")
-            print("   python update_human_study_latex.py --apply --force")
+            print("   python update_human_study_latex.py --apply --force" + (" --clean" if args.clean else ""))
             sys.exit(1)
 
-        print("[APPLY] Application des macros dans les fichiers sources...")
+        print(f"[APPLY] Application des macros ({'POOL NETTOYE' if args.clean else 'POOL COMPLET'}) dans les fichiers sources...")
         targets = [
             repo_root / "dmkd_additions" / "rebuttal" / "Response_to_Reviewers.tex",
             repo_root / "dmkd_additions" / "overleaf_patches" / "tex" / "Experiments.tex",

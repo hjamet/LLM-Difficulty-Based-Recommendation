@@ -42,6 +42,7 @@ __all__ = [
     "load_raw_datasets",
     "generate_annotation_pool",
     "get_or_create_pool",
+    "detect_pool_anomalies",
     "save_atomic_dataframe",
     "get_annotator_filepath",
     "load_annotator_data",
@@ -431,6 +432,52 @@ def get_or_create_pool(repo_root: Path) -> pd.DataFrame:
     return generate_annotation_pool(repo_root, seed=42, pool_path=pool_path)
 
 
+def detect_pool_anomalies(df_pool: pd.DataFrame) -> pd.DataFrame:
+    """Détecte les 11 paires atypiques dans le pool d'annotation.
+
+    Retourne une copie de df_pool enrichie de 4 colonnes booléennes :
+    - is_nan_pair : True si simplification_a ou simplification_b est NaN, vide ou 'nan'/'none'
+    - is_prompt_leak : True si simplification_a ou simplification_b contient [/INST] ou 'Donne moi une phrase simplifiée'
+    - is_identical_pair : True si non-nan et simplification_a.strip() == simplification_b.strip()
+    - is_clean_pair : ~(is_nan_pair | is_prompt_leak | is_identical_pair)
+    """
+    df = df_pool.copy()
+
+    def _is_nan(val: Any) -> bool:
+        if val is None or pd.isna(val):
+            return True
+        s = str(val).strip().lower()
+        return s in ["nan", "none", ""]
+
+    def _is_leak(val: Any) -> bool:
+        if val is None or pd.isna(val):
+            return False
+        s = str(val).lower()
+        return "[/inst]" in s or "donne moi une phrase simplifi" in s
+
+    is_nan_a = df["simplification_a"].apply(_is_nan)
+    is_nan_b = df["simplification_b"].apply(_is_nan)
+    is_nan_pair = is_nan_a | is_nan_b
+
+    is_leak_a = df["simplification_a"].apply(_is_leak)
+    is_leak_b = df["simplification_b"].apply(_is_leak)
+    is_prompt_leak = is_leak_a | is_leak_b
+
+    # Identical pair : strictly when not nan, strings are stripped and equal
+    is_identical_pair = (~is_nan_pair) & (
+        df["simplification_a"].astype(str).str.strip()
+        == df["simplification_b"].astype(str).str.strip()
+    )
+
+    is_clean_pair = ~(is_nan_pair | is_prompt_leak | is_identical_pair)
+
+    df["is_nan_pair"] = is_nan_pair
+    df["is_prompt_leak"] = is_prompt_leak
+    df["is_identical_pair"] = is_identical_pair
+    df["is_clean_pair"] = is_clean_pair
+    return df
+
+
 def save_atomic_dataframe(df: pd.DataFrame, target_path: Path) -> None:
     """Sauvegarde atomique anti-corruption selon le pattern Write-and-Rename.
 
@@ -718,12 +765,27 @@ def compute_krippendorff_alpha_ordinal(
     alpha = 1.0 - (d_o / d_e)
     return float(alpha)
 
-def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
+def compute_iaa_metrics(
+    repo_root: Optional[Path] = None, exclude_anomalies: bool = False
+) -> Dict[str, Any]:
     """Calcule toutes les métriques d'accord inter-annotateurs (Cohen's Kappa,
 
-    Fleiss' Kappa, concordance observée, matrices de confusion) sur les 50 paires partagées.
+    Fleiss' Kappa, concordance observée, matrices de confusion).
+    Si exclude_anomalies=True, calcule sur le sous-ensemble propre is_clean_pair == True.
     """
-    pool_df = get_or_create_pool(repo_root)
+    if repo_root is None:
+        repo_root = find_repo_root()
+    else:
+        repo_root = Path(repo_root)
+
+    pool_df_raw = get_or_create_pool(repo_root)
+    pool_anom = detect_pool_anomalies(pool_df_raw)
+
+    if exclude_anomalies:
+        pool_df = pool_anom[pool_anom["is_clean_pair"]].copy()
+    else:
+        pool_df = pool_df_raw.copy()
+
     shared_pool = pool_df[pool_df["split_assignment"] == "both"].copy()
 
     df_henri = load_annotator_data(repo_root, "henri")
@@ -748,12 +810,28 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
         "maxime_total_annotated": len(df_maxime),
         "henri_shared_annotated": len(henri_shared),
         "maxime_shared_annotated": len(maxime_shared),
+        "exclude_anomalies": exclude_anomalies,
     }
 
     if n_common == 0:
         result["status"] = "no_overlap_annotated"
         result["krippendorff_alpha"] = None
         result["cohen_kappa_pref"] = None
+        if not exclude_anomalies:
+            clean_metrics = compute_iaa_metrics(repo_root, exclude_anomalies=True)
+            nan_ids = pool_anom[pool_anom["is_nan_pair"]]["pair_id"].tolist()
+            leak_ids = pool_anom[pool_anom["is_prompt_leak"]]["pair_id"].tolist()
+            ident_ids = pool_anom[pool_anom["is_identical_pair"]]["pair_id"].tolist()
+            result["clean_subset_summary"] = {
+                "metrics": clean_metrics,
+                "n_total_pool": len(pool_anom),
+                "n_clean_pool": int(pool_anom["is_clean_pair"].sum()),
+                "n_shared_total": int((pool_anom["split_assignment"] == "both").sum()),
+                "n_shared_clean": int(((pool_anom["split_assignment"] == "both") & pool_anom["is_clean_pair"]).sum()),
+                "nan_pairs": nan_ids,
+                "prompt_leak_pairs": leak_ids,
+                "identical_pairs": ident_ids,
+            }
         return result
 
     # Filtrer et aligner dans le même ordre de pair_id
@@ -1013,18 +1091,46 @@ def compute_iaa_metrics(repo_root: Path) -> Dict[str, Any]:
         }
     )
 
+    if not exclude_anomalies:
+        clean_metrics = compute_iaa_metrics(repo_root, exclude_anomalies=True)
+        nan_ids = pool_anom[pool_anom["is_nan_pair"]]["pair_id"].tolist()
+        leak_ids = pool_anom[pool_anom["is_prompt_leak"]]["pair_id"].tolist()
+        ident_ids = pool_anom[pool_anom["is_identical_pair"]]["pair_id"].tolist()
+        result["clean_subset_summary"] = {
+            "metrics": clean_metrics,
+            "n_total_pool": len(pool_anom),
+            "n_clean_pool": int(pool_anom["is_clean_pair"].sum()),
+            "n_shared_total": int((pool_anom["split_assignment"] == "both").sum()),
+            "n_shared_clean": int(((pool_anom["split_assignment"] == "both") & pool_anom["is_clean_pair"]).sum()),
+            "nan_pairs": nan_ids,
+            "prompt_leak_pairs": leak_ids,
+            "identical_pairs": ident_ids,
+        }
+
     return result
 
 
-def compute_model_performance(repo_root: Optional[Path] = None) -> pd.DataFrame:
+def compute_model_performance(
+    repo_root: Optional[Path] = None, exclude_anomalies: bool = False
+) -> pd.DataFrame:
     """Calcule les taux de préservation du sens, de simplicité et de préférence par modèle."""
     if repo_root is None:
         repo_root = find_repo_root()
     else:
         repo_root = Path(repo_root)
 
-    pool_df = get_or_create_pool(repo_root)
+    pool_df_raw = get_or_create_pool(repo_root)
+    pool_anom = detect_pool_anomalies(pool_df_raw)
+
+    if exclude_anomalies:
+        pool_df = pool_anom[pool_anom["is_clean_pair"]].copy()
+    else:
+        pool_df = pool_df_raw.copy()
+
     df_ann = consolidate_annotations(repo_root)
+    if exclude_anomalies and not df_ann.empty:
+        clean_pids = set(pool_df["pair_id"])
+        df_ann = df_ann[df_ann["pair_id"].isin(clean_pids)].copy()
 
     models = [
         "Mistral-7B-FT",
@@ -1119,7 +1225,9 @@ def compute_model_performance(repo_root: Optional[Path] = None) -> pd.DataFrame:
 
 
 def generate_latex_human_study_macros(
-    repo_root: Optional[Path] = None, force_partial: bool = False
+    repo_root: Optional[Path] = None,
+    force_partial: bool = False,
+    exclude_anomalies: bool = False,
 ) -> Dict[str, Any]:
     """Génère le dictionnaire et le bloc des 10 macros LaTeX pour Response_to_Reviewers.tex et Experiments.tex."""
     if repo_root is None:
@@ -1127,8 +1235,8 @@ def generate_latex_human_study_macros(
     else:
         repo_root = Path(repo_root)
 
-    iaa = compute_iaa_metrics(repo_root)
-    df_perf = compute_model_performance(repo_root)
+    iaa = compute_iaa_metrics(repo_root, exclude_anomalies=exclude_anomalies)
+    df_perf = compute_model_performance(repo_root, exclude_anomalies=exclude_anomalies)
 
     henri_count = int(iaa.get("henri_total_annotated", 0))
     maxime_count = int(iaa.get("maxime_total_annotated", 0))
@@ -1210,6 +1318,8 @@ def generate_latex_human_study_macros(
         "henri_count": henri_count,
         "maxime_count": maxime_count,
         "overlap_count": overlap_count,
+        "exclude_anomalies": exclude_anomalies,
+        "clean_subset_summary": iaa.get("clean_subset_summary"),
         "macros_dict": macros,
         "latex_commands_block": latex_commands_block,
     }

@@ -92,13 +92,16 @@ Released under the Apache 2.0 license, Mistral-7B offers complete flexibility fo
 \subsubsection{Pairwise Mismatch \textcolor{red}{and Ordinal Ranking Metrics}}
 Traditional accuracy metrics, while commonly used, may not fully capture the nature of text difficulty assessment. The key insight is that text difficulty is inherently relative\textcolor{red}{: what matters most is not only exact classification, but also the correct ordering of texts by their difficulty level \cite{martinc2021supervised}. In ordinal readability assessment, integer regression metrics such as Mean Absolute Error ($\text{MAE} = \frac{1}{N}\sum_{i=1}^N |y_i - \hat{y}_i|$) and Mean Squared Error ($\text{MSE} = \frac{1}{N}\sum_{i=1}^N (y_i - \hat{y}_i)^2$) penalize errors linearly or quadratically by class distance, while Quadratic Weighted Kappa (QWK) \cite{martinc2021supervised} normalizes squared class deviations against chance agreement:}
 {\color{red}\begin{equation}
-\text{QWK} = 1 - \frac{\sum_{u=1}^{K}\sum_{u'=1}^{K} W_{u,u'} C_{u,u'}}{\sum_{u=1}^{K}\sum_{u'=1}^{K} W_{u,u'} E_{u,u'}}, \quad \text{where } W_{u,u'} = \frac{(u - u')^2}{(K - 1)^2} \text{ and } E_{u,u'} = \frac{1}{N}\left(\sum_{c=1}^{K} C_{u,c}\right)\left(\sum_{r=1}^{K} C_{r,u'}\right).
+\begin{aligned}
+\text{QWK} &= 1 - \frac{\sum_{u=1}^{K}\sum_{u'=1}^{K} W_{u,u'} C_{u,u'}}{\sum_{u=1}^{K}\sum_{u'=1}^{K} W_{u,u'} E_{u,u'}}, \quad \text{where } W_{u,u'} = \frac{(u - u')^2}{(K - 1)^2}, \\
+E_{u,u'} &= \frac{1}{N}\left(\sum_{c=1}^{K} C_{u,c}\right)\left(\sum_{r=1}^{K} C_{r,u'}\right).
+\end{aligned}
 \label{eq:qwk_definition}
 \end{equation}}
 
-\textcolor{red}{To complement QWK and MAE with a direct measure of pairwise ranking inversions across a corpus of $N$ test documents, we introduce the normalized Pairwise Mismatch ($PM_{\text{norm}}$) metric. Let us first define the space of $K$ ordered labels $L = \{1, \dots, K\}$ equipped with an order relation $<_{diff}$ representing increasing difficulty levels. For datasets annotated with the $K=6$ CEFR labels, we map $\{A1, A2, B1, B2, C1, C2\}$ to $\{1, 2, 3, 4, 5, 6\}$ with:}
+\textcolor{red}{To complement QWK and MAE with a direct measure of pairwise ranking inversions across a corpus of $N$ test documents, we introduce the normalized Pairwise Mismatch ($PM_{\text{norm}}$) metric. Let us first define the space of $K$ ordered labels $L = \{1, \dots, K\}$ equipped with an order relation $<_{\text{diff}}$ representing increasing difficulty levels. For datasets annotated with the $K=6$ CEFR labels, we map $\{A1, A2, B1, B2, C1, C2\}$ to $\{1, \dots, 6\}$ with:}
 {\color{red}\begin{equation}
-L = \{A1, A2, B1, B2, C1, C2\}, \quad A1 <_{diff} A2 <_{diff} B1 <_{diff} B2 <_{diff} C1 <_{diff} C2.
+L = \{A1, A2, B1, B2, C1, C2\}, \quad A1 <_{\text{diff}} A2 <_{\text{diff}} B1 <_{\text{diff}} B2 <_{\text{diff}} C1 <_{\text{diff}} C2.
 \label{eq:cefr_order}
 \end{equation}}
 

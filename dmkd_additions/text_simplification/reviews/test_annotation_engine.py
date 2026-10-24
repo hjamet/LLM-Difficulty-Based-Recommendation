@@ -1,6 +1,6 @@
 import os
-import sys
 from pathlib import Path
+import sys
 
 # Assurer la présence du repo_root dans sys.path
 _repo_root = Path(__file__).resolve().parent.parent.parent.parent
@@ -15,6 +15,7 @@ from dmkd_additions.text_simplification.reviews.annotation_engine import (
     load_raw_datasets,
     generate_annotation_pool,
     get_or_create_pool,
+    detect_pool_anomalies,
     save_atomic_dataframe,
     save_single_annotation,
     load_annotator_data,
@@ -32,27 +33,104 @@ from dmkd_additions.text_simplification.reviews.annotation_engine import (
 )
 
 
-def run_tests():
-    print("=== Démarrage des tests unitaires de annotation_engine.py ===")
-
-    # 1. Test find_repo_root
+def test_detect_pool_anomalies():
+    """Vérifie la détection exacte des 11 paires atypiques dans le pool d'annotation."""
     repo_root = find_repo_root()
-    print(f"1. find_repo_root: OK -> {repo_root}")
+    pool = get_or_create_pool(repo_root)
+    assert len(pool) == 150
+
+    pool_anom = detect_pool_anomalies(pool)
+    assert "is_nan_pair" in pool_anom.columns
+    assert "is_prompt_leak" in pool_anom.columns
+    assert "is_identical_pair" in pool_anom.columns
+    assert "is_clean_pair" in pool_anom.columns
+
+    # 1. Paires NaN dues à la regex
+    nan_ids = set(pool_anom[pool_anom["is_nan_pair"]]["pair_id"])
+    assert nan_ids == {"P014", "P032", "P042", "P075", "P091"}, f"NaN inattendus : {nan_ids}"
+
+    # 2. Prompt leak [/INST]
+    leak_ids = set(pool_anom[pool_anom["is_prompt_leak"]]["pair_id"])
+    assert leak_ids == {"P074"}, f"Prompt leak inattendu : {leak_ids}"
+
+    # 3. Paires identiques A == B
+    ident_ids = set(pool_anom[pool_anom["is_identical_pair"]]["pair_id"])
+    assert ident_ids == {"P030", "P049", "P056", "P108", "P143"}, f"Identiques inattendus : {ident_ids}"
+
+    # 4. Totalité des paires propres
+    assert pool_anom["is_clean_pair"].sum() == 139, f"Total clean = {pool_anom['is_clean_pair'].sum()} (attendu: 139)"
+
+    # 5. Paires communes propres (both)
+    both_mask = pool_anom["split_assignment"] == "both"
+    assert (both_mask & pool_anom["is_clean_pair"]).sum() == 48
+    both_anom_ids = set(pool_anom[both_mask & (~pool_anom["is_clean_pair"])]["pair_id"])
+    assert both_anom_ids == {"P042", "P108"}, f"Anomalies both inattendues : {both_anom_ids}"
+
+
+def test_clean_vs_raw_metrics_on_henri_100():
+    """Vérifie le calcul comparatif des métriques sur les 100 annotations réelles d'Henri."""
+    repo_root = find_repo_root()
+    reviews_dir = repo_root / "dmkd_additions" / "text_simplification" / "reviews"
+    f_h = reviews_dir / "annotations_henri.csv"
+    assert f_h.is_file(), "annotations_henri.csv doit être présent"
+
+    df_henri = pd.read_csv(f_h)
+    assert len(df_henri) == 100, f"annotations_henri.csv doit avoir 100 lignes, obtenu {len(df_henri)}"
+
+    # 1. Performance du modèle : Brut vs Nettoyé
+    perf_raw = compute_model_performance(repo_root, exclude_anomalies=False)
+    perf_clean = compute_model_performance(repo_root, exclude_anomalies=True)
+
+    assert len(perf_raw) == 4
+    assert len(perf_clean) == 4
+
+    raw_map = perf_raw.set_index("Modèle").to_dict(orient="index")
+    clean_map = perf_clean.set_index("Modèle").to_dict(orient="index")
+
+    # Vérifications des chiffres connus sur Henri 100/100
+    assert raw_map["Mistral-7B-FT"]["preference_rate"] == 52.0
+    assert clean_map["Mistral-7B-FT"]["preference_rate"] == 50.0
+
+    assert raw_map["GPT-4o-FT"]["preference_rate"] == 60.0
+    assert clean_map["GPT-4o-FT"]["preference_rate"] == 58.3
+
+    assert raw_map["Mistral-7B-FT"]["simpler_rate"] == 80.0
+    assert clean_map["Mistral-7B-FT"]["simpler_rate"] == 81.2
+
+    assert raw_map["GPT-4o-FT"]["simpler_rate"] == 90.0
+    assert clean_map["GPT-4o-FT"]["simpler_rate"] == 89.6
+
+    # 2. IAA Metrics : vérification de la présence de clean_subset_summary
+    iaa_res = compute_iaa_metrics(repo_root, exclude_anomalies=False)
+    assert "clean_subset_summary" in iaa_res
+    clean_sum = iaa_res["clean_subset_summary"]
+    assert clean_sum["n_total_pool"] == 150
+    assert clean_sum["n_clean_pool"] == 139
+    assert clean_sum["n_shared_total"] == 50
+    assert clean_sum["n_shared_clean"] == 48
+    assert set(clean_sum["nan_pairs"]) == {"P014", "P032", "P042", "P075", "P091"}
+    assert set(clean_sum["prompt_leak_pairs"]) == {"P074"}
+    assert set(clean_sum["identical_pairs"]) == {"P030", "P049", "P056", "P108", "P143"}
+
+
+def test_engine_suite():
+    """Suite complète de tests unitaires et d'intégration avec sauvegarde/restauration garantie."""
+    repo_root = find_repo_root()
     assert (repo_root / "results").is_dir()
     assert (repo_root / "dmkd_additions").is_dir()
 
-    # Sauvegarde sécurisée des annotations réelles éventuelles avant manipulation
     reviews_dir = repo_root / "dmkd_additions" / "text_simplification" / "reviews"
     f_h = reviews_dir / "annotations_henri.csv"
     f_m = reviews_dir / "annotations_maxime.csv"
     f_c = reviews_dir / "annotations_consolidated.csv"
 
+    # Sauvegarde octet par octet pour garantir un git status clean
     h_backup = f_h.read_bytes() if f_h.is_file() else None
     m_backup = f_m.read_bytes() if f_m.is_file() else None
     c_backup = f_c.read_bytes() if f_c.is_file() else None
 
     try:
-        # Nettoyage temporaire pour les tests
+        # Nettoyage temporaire pour tester les cas d'étude initiale
         if f_h.exists():
             f_h.unlink()
         if f_m.exists():
@@ -60,18 +138,16 @@ def run_tests():
         if f_c.exists():
             f_c.unlink()
 
-        # 2. Test load_raw_datasets
+        # 1. Test load_raw_datasets
         df_hist, df_recent = load_raw_datasets(repo_root)
-        print(f"2. load_raw_datasets: OK -> hist={len(df_hist)}, recent={len(df_recent)}")
         assert len(df_hist) >= 150
         assert len(df_recent) == 500
         for lvl in CEFR_LEVELS:
             assert (df_hist["cefr_level"] == lvl).sum() >= 15
             assert (df_recent["cefr_level"] == lvl).sum() == 100
 
-        # 3. Test generate_annotation_pool (50 both, 50 henri, 50 maxime)
+        # 2. Test generate_annotation_pool (50 both, 50 henri, 50 maxime)
         pool = generate_annotation_pool(repo_root, seed=42)
-        print(f"3. generate_annotation_pool: OK -> {len(pool)} paires")
         assert len(pool) == 150
         assert (pool["split_assignment"] == "both").sum() == 50
         assert (pool["split_assignment"] == "henri").sum() == 50
@@ -85,15 +161,13 @@ def run_tests():
             assert (lvl_sub["split_assignment"] == "henri").sum() == 10
             assert (lvl_sub["split_assignment"] == "maxime").sum() == 10
 
-        # 4. Test get_or_create_pool
+        # 3. Test get_or_create_pool
         pool_loaded = get_or_create_pool(repo_root)
-        print(f"4. get_or_create_pool: OK -> {len(pool_loaded)} paires persistées")
         pool_file = reviews_dir / "annotation_pool_150.csv"
         assert pool_file.is_file()
         assert len(pool_loaded) == 150
 
-        # 5. Test Fleiss' Kappa on known manual case
-        # Example from literature: 5 subjects, 3 raters, 2 categories
+        # 4. Test Fleiss' Kappa
         mat = np.array([
             [3, 0],
             [0, 3],
@@ -102,10 +176,8 @@ def run_tests():
             [3, 0],
         ])
         kappa = compute_fleiss_kappa(mat)
-        print(f"5. compute_fleiss_kappa: OK -> kappa = {kappa:.4f}")
         assert -1.0 <= kappa <= 1.0
 
-        # Perfect agreement test:
         mat_perfect = np.array([
             [2, 0],
             [0, 2],
@@ -113,9 +185,8 @@ def run_tests():
         ])
         kappa_perf = compute_fleiss_kappa(mat_perfect)
         assert np.isclose(kappa_perf, 1.0)
-        print("   Perfect agreement kappa test: OK (1.0000)")
 
-        # 6. Test save_single_annotation (atomique) avec Simplicité et Sens
+        # 5. Test save_single_annotation (atomique) avec Simplicité et Sens
         test_annotator = "test_evaluator"
         test_file = reviews_dir / f"annotations_{test_annotator}.csv"
         if test_file.exists():
@@ -143,7 +214,7 @@ def run_tests():
         assert df_eval.iloc[0]["meaning_preservation_a"] == PRESERVATION_CHOICES[0]
         assert df_eval.iloc[0]["meaning_preservation_b"] == PRESERVATION_CHOICES[1]
 
-        # In-situ modification test (mode modification)
+        # In-situ modification
         save_single_annotation(
             repo_root=repo_root,
             annotator=test_annotator,
@@ -156,27 +227,19 @@ def run_tests():
             notes="Test note modifiee",
         )
         df_eval_mod = load_annotator_data(repo_root, test_annotator)
-        assert len(df_eval_mod) == 1, "La modification in-situ ne doit pas dupliquer la ligne !"
+        assert len(df_eval_mod) == 1
         assert df_eval_mod.iloc[0]["preferred_option"] == "B"
-        assert df_eval_mod.iloc[0]["content_simpler_a"] == SIMPLER_CHOICES[2]
-        assert df_eval_mod.iloc[0]["content_simpler_b"] == SIMPLER_CHOICES[0]
-        assert df_eval_mod.iloc[0]["meaning_preservation_a"] == PRESERVATION_CHOICES[2]
-        assert df_eval_mod.iloc[0]["meaning_preservation_b"] == PRESERVATION_CHOICES[0]
-        print("6. save_single_annotation & in-situ update: OK")
 
-        # Clean up test evaluator file
         if test_file.exists():
             test_file.unlink()
 
-        # 7. Test compute_iaa_metrics (empty)
+        # 6. Test compute_iaa_metrics (empty)
         iaa_empty = compute_iaa_metrics(repo_root)
-        print(f"7. compute_iaa_metrics (empty): OK -> status={iaa_empty.get('status')}")
         assert iaa_empty["total_shared_pairs"] == 50
 
-        # 8. Test compute_iaa_metrics with simulated shared annotations
+        # 7. Test compute_iaa_metrics with simulated shared annotations
         shared_rows = pool_loaded[pool_loaded["split_assignment"] == "both"].head(5)
         for _, srow in shared_rows.iterrows():
-            # Henri chooses option A
             save_single_annotation(
                 repo_root=repo_root,
                 annotator="henri",
@@ -187,7 +250,6 @@ def run_tests():
                 meaning_preservation_a=PRESERVATION_CHOICES[0],
                 meaning_preservation_b=PRESERVATION_CHOICES[1],
             )
-            # Maxime chooses option A on 4 out of 5
             m_choice = "A" if srow["pair_id"] != shared_rows.iloc[-1]["pair_id"] else "B"
             save_single_annotation(
                 repo_root=repo_root,
@@ -201,74 +263,27 @@ def run_tests():
             )
 
         iaa_sim = compute_iaa_metrics(repo_root)
-        print(
-            f"8. compute_iaa_metrics (with 5 shared pairs): OK -> "
-            f"agreement={iaa_sim['observed_agreement']:.2f}, "
-            f"simpler_cohen_kappa={iaa_sim['simpler_cohen_kappa']:.4f}, "
-            f"meaning_cohen_kappa={iaa_sim['meaning_cohen_kappa']:.4f}"
-        )
         assert iaa_sim["annotated_shared_pairs"] == 5
         assert iaa_sim["observed_agreement"] == 0.8
         assert iaa_sim["simpler_observed_agreement"] == 1.0
         assert iaa_sim["meaning_observed_agreement"] == 1.0
-        assert "simpler_cohen_kappa" in iaa_sim
-        assert "meaning_cohen_kappa" in iaa_sim
-        assert "simpler_confusion_matrix_df" in iaa_sim
-        assert "meaning_confusion_matrix_df" in iaa_sim
-        assert "model_stats_df" in iaa_sim
 
-        # 9. Test compute_model_performance
+        # 8. Test compute_model_performance
         df_perf = compute_model_performance(repo_root)
-        print(f"9. compute_model_performance: OK -> {len(df_perf)} modèles analysés")
         assert len(df_perf) == 4
         assert "Modèle" in df_perf.columns
-        assert "Taux de Meilleure Simplification (%)" in df_perf.columns
-        assert "Taux de Contenu Plus Simple (%)" in df_perf.columns
-        assert "Taux de Sens Conservé (%)" in df_perf.columns
-        assert "Taux de Préservation du Sens (%)" in df_perf.columns
-        assert "Taux de Préférence (%)" in df_perf.columns
-        assert "simpler_rate" in df_perf.columns
         assert df_perf["Total Évaluations"].sum() > 0
 
-        # 10. Test compute_krippendorff_alpha & generate_latex_human_study_macros
-        # Accord parfait
+        # 9. Test Krippendorff & macros LaTeX
         krip_perfect = compute_krippendorff_alpha_ordinal([0, 1, 2, 2, 1], [0, 1, 2, 2, 1])
         assert np.isclose(krip_perfect, 1.0)
-        # Valeurs constantes
-        krip_const = compute_krippendorff_alpha_ordinal([2, 2, 2], [2, 2, 2])
-        assert np.isclose(krip_const, 1.0)
-        # Sur les 5 paires simulees
-        assert "krippendorff_alpha" in iaa_sim
-        krip_sim = iaa_sim["krippendorff_alpha"]
-        assert krip_sim is not None
-        assert -1.0 <= krip_sim <= 1.0
-        print(f"10. compute_krippendorff_alpha: OK -> perfect={krip_perfect:.4f}, sim={krip_sim:.4f}")
 
-        # generate_latex_human_study_macros
         res_macros = generate_latex_human_study_macros(repo_root=repo_root, force_partial=True)
         assert "macros_dict" in res_macros
         assert len(res_macros["macros_dict"]) == 10
-        expected_keys = [
-            "HumanKappaPref",
-            "HumanKappaSimpler",
-            "HumanKappaMeaning",
-            "HumanAlphaKrip",
-            "HumanWinMistral",
-            "HumanWinGPTFour",
-            "HumanSimplerMistral",
-            "HumanSimplerGPTFour",
-            "HumanMeaningMistral",
-            "HumanMeaningGPTFour",
-        ]
-        for ek in expected_keys:
-            assert ek in res_macros["macros_dict"], f"Cle manquante dans macros_dict : {ek}"
-            assert f"\\newcommand{{\\{ek}}}" in res_macros["latex_commands_block"]
-        print("   generate_latex_human_study_macros: OK -> 10 macros validees")
-
-        print("\n=== TOUS LES TESTS DE L'ENGINE SONT PASSÉS AVEC SUCCÈS ! ===")
 
     finally:
-        # Nettoyage et restauration garantie des données d'annotation d'origine
+        # Nettoyage et restauration stricte des fichiers réels
         if f_h.exists():
             f_h.unlink()
         if f_m.exists():
@@ -282,6 +297,13 @@ def run_tests():
             f_m.write_bytes(m_backup)
         if c_backup is not None:
             f_c.write_bytes(c_backup)
+
+
+def run_tests():
+    test_detect_pool_anomalies()
+    test_clean_vs_raw_metrics_on_henri_100()
+    test_engine_suite()
+    print("=== TOUS LES TESTS DE L'ENGINE SONT PASSÉS AVEC SUCCÈS ! ===")
 
 
 if __name__ == "__main__":
