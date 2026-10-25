@@ -1,0 +1,38 @@
+\section{User Interface}
+
+We have developed two prototype applications to present and evaluate our method.
+
+\medskip \noindent
+\textbf{Video-Based Learning Interface:}
+The first application, called Monjoor, is designed to support French language learners by leveraging YouTube videos. The application gathers users' topical preferences (the subjects they are passionate about) and their current proficiency level in French. Using this information, it filters a curated collection of YouTube videos to match the user's interests and skill level.
+
+The app aims to foster daily engagement with the language by delivering content that resonates with the learner. Users can search for videos on specific topics and difficulty levels and watch them directly within the platform. The interface also includes a feature to translate selected portions of captions, making it easier to understand challenging parts of the videos.
+
+Additionally, the app provides personalized video recommendations to encourage further exploration and continuous learning.
+A snapshot of Monjoor is shown in Figure \ref{fig:interface} and interested readers are encouraged to watch a video of the application \href{https://unils-my.sharepoint.com/personal/dimitri_roulin_unil_ch/_layouts/15/stream.aspx?id=%2Fpersonal%2Fdimitri%5Froulin%5Funil%5Fch%2FDocuments%2FPièces%20jointes%2FMonjoor%2DPresentation%2DVideo%2Emp4&ct=1732783086322&or=OWA%2DNT%2DMail&cid=3f82a20f%2Dc3d6%2D4a75%2Dc290%2D52983fe48679&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E87211adb%2D9f56%2D4ba6%2Dbaa5%2D702d28a51d31}{\fbox{here}}.
+
+\begin{figure}[htbp]
+    \centering
+     \includegraphics[width=.99\textwidth]{figures/UI.pdf}
+     \caption{Screenshot of the prototype application for helping learn foreign languages via existing YouTube videos. }
+    \label{fig:interface}
+\end{figure}
+
+\medskip \noindent
+\textbf{Text Analysis and Simplification Interface:}
+The second interface implements a comprehensive text analysis and simplification pipeline. At its core, the system features a versatile text input mechanism that accepts both direct text entry and web content through URL submission. When processing web content, the interface automatically converts the HTML structure into clean markdown format, preserving essential formatting while eliminating extraneous elements that could interfere with subsequent analysis.
+
+A key component of this interface is its sophisticated CEFR level estimation system. Upon text submission, the system employs our fine-tuned language models to analyze various linguistic features and patterns within the text. The analysis generates a probability distribution across all CEFR levels (A1 through C2), which is visualized through an interactive graph. This graph dynamically updates to show the confidence levels for each CEFR category, providing users with a detailed understanding of the text's complexity profile.
+
+The interface's most innovative feature is its iterative text simplification capability. Leveraging specialized OpenAI models fine-tuned on our corpus of simplified texts, the system can generate multiple versions of the input text at progressively simpler levels. This simplification process is not limited to a single iteration; users can continue requesting simpler versions as long as further simplification is possible. \textcolor{red}{Each simplified version aims to preserve the core meaning of the source text while reducing its estimated CEFR complexity; since these transformations emerge implicitly from fine-tuning on parallel sentence pairs rather than from explicit syntactic rules, we evaluate both automatic semantic similarity and human-judged meaning preservation in Section~\ref{sec:experiments}.}
+
+To provide quantitative insights into the simplification process, the interface tracks and visualizes the CEFR level estimates across all generated versions. This is presented as a temporal graph showing the progression of difficulty levels through each iteration. Users can observe how specific linguistic modifications affect the overall complexity score, providing valuable feedback for both language learning and teaching applications. The visualization also helps validate the effectiveness of the simplification process by demonstrating the gradual reduction in CEFR levels while maintaining text coherence.
+
+A screenshot of this analytical interface is shown in Figure \ref{fig:interface2}, demonstrating the integration of these various components into a cohesive tool for text analysis and adaptation. A video demonstration of the interface in action can be viewed \href{https://streamable.com/5oiwg9}{\fbox{here}}.
+
+\begin{figure}[htbp]
+    \centering
+     \includegraphics[width=.99\textwidth]{figures/Interface.png}
+     \caption{Overview of the text analysis and simplification interface. The system consists of three main components: (1) Content addition through website import or direct text input, with radar charts showing CEFR level estimations, (2) Original text version with its corresponding difficulty assessment visualization, and (3) Simplified version generated through our iterative simplification pipeline. The interface demonstrates the transformation of text difficulty through radar charts, where each axis represents a CEFR level (A1-C2), and the colored area indicates the probability distribution across levels.}
+    \label{fig:interface2}
+\end{figure}
