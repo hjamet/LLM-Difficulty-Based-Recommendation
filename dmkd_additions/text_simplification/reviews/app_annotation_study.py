@@ -36,6 +36,7 @@ try:
         normalize_preservation_choice,
         normalize_simpler_choice,
         generate_latex_human_study_macros,
+        get_next_unannotated_index,
     )
 except ImportError:
     from annotation_engine import (
@@ -51,6 +52,7 @@ except ImportError:
         normalize_preservation_choice,
         normalize_simpler_choice,
         generate_latex_human_study_macros,
+        get_next_unannotated_index,
     )
 
 try:
@@ -634,8 +636,10 @@ with tab_eval:
                 meaning_preservation_b=pres_b,
                 notes="",
             )
-            if current_idx < total_user_pairs - 1:
-                st.session_state[session_key] = current_idx + 1
+            updated_annotated_ids = set(annotated_pair_ids) | {str(pair_id)}
+            st.session_state[session_key] = get_next_unannotated_index(
+                user_pairs, updated_annotated_ids, current_idx
+            )
             st.rerun()
 
     # Discret lien de retour pour la navigation réversible sans encombrer la vue

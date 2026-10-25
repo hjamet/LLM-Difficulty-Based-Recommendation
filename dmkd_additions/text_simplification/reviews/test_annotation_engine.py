@@ -30,6 +30,7 @@ from dmkd_additions.text_simplification.reviews.annotation_engine import (
     SIMPLER_CHOICES,
     normalize_preservation_choice,
     normalize_simpler_choice,
+    get_next_unannotated_index,
 )
 
 
@@ -65,32 +66,56 @@ def test_detect_pool_anomalies():
     assert synth_anom.loc[synth_anom["pair_id"] == "T4", "is_clean_pair"].iloc[0]
 
 
-def test_clean_vs_raw_metrics_on_henri_96():
-    """Vérifie les métriques sur les 96 annotations réelles d'Henri et sa progression (96/100)."""
+def test_clean_vs_raw_metrics_on_henri_100():
+    """Vérifie les métriques sur les 100 annotations réelles d'Henri et sa progression complète (100/100)."""
     repo_root = find_repo_root()
     reviews_dir = repo_root / "dmkd_additions" / "text_simplification" / "reviews"
     f_h = reviews_dir / "annotations_henri.csv"
     assert f_h.is_file(), "annotations_henri.csv doit être présent"
 
     df_henri = pd.read_csv(f_h)
-    assert len(df_henri) == 96, f"annotations_henri.csv doit avoir 96 lignes, obtenu {len(df_henri)}"
+    assert len(df_henri) == 100, f"annotations_henri.csv doit avoir 100 lignes, obtenu {len(df_henri)}"
 
-    # Vérification de la progression (reste P032, P042, P056, P108)
+    # Vérification de la progression (100/100 achevées, 0 restante)
     pool = pd.read_csv(reviews_dir / "annotation_pool_150.csv")
     user_pairs = pool[pool["split_assignment"].isin(["henri", "both"])].copy()
     assert len(user_pairs) == 100
     annotated_ids = set(df_henri["pair_id"])
     remaining = sorted(list(set(user_pairs["pair_id"]) - annotated_ids))
-    assert remaining == ["P032", "P042", "P056", "P108"], f"Paires restantes inattendues : {remaining}"
+    assert remaining == [], f"Toutes les paires d'Henri doivent être annotées, restantes : {remaining}"
 
-    # 1. Performance du modèle sur les 96 annotations
+    # 1. Performance du modèle sur les 100 annotations
     perf = compute_model_performance(repo_root)
     assert len(perf) == 4
     perf_map = perf.set_index("Modèle").to_dict(orient="index")
 
-    # Vérifications des chiffres connus sur Henri 96/100
-    assert perf_map["Mistral-7B-FT"]["preference_rate"] == 50.0
-    assert np.isclose(perf_map["GPT-4o-FT"]["preference_rate"], 58.3, atol=0.1)
+    # Vérifications des chiffres connus sur Henri 100/100
+    assert perf_map["Mistral-7B-FT"]["preference_rate"] == 52.0
+    assert perf_map["GPT-4o-FT"]["preference_rate"] == 60.0
+
+
+def test_get_next_unannotated_index():
+    """Vérifie la logique de navigation par saut vers la prochaine paire non annotée."""
+    df_pairs = pd.DataFrame([
+        {"pair_id": f"P{i:03d}"} for i in range(1, 6)
+    ])  # P001, P002, P003, P004, P005
+
+    # Cas 1 : Saut par-dessus les paires déjà remplies (actuel: 0=P001, P002 et P003 déjà annotées -> va à 3=P004)
+    annotated_1 = {"P001", "P002", "P003"}
+    assert get_next_unannotated_index(df_pairs, annotated_1, current_idx=0) == 3
+
+    # Cas 2 : Bouclage au début (actuel: 3=P004, P005 annotée, mais P002 n'est pas annotée -> va à 1=P002)
+    annotated_2 = {"P001", "P003", "P004", "P005"}
+    assert get_next_unannotated_index(df_pairs, annotated_2, current_idx=3) == 1
+
+    # Cas 3 : Cas 100% complet (toutes les paires sont annotées -> retourne min(current_idx + 1, len - 1))
+    annotated_all = {"P001", "P002", "P003", "P004", "P005"}
+    assert get_next_unannotated_index(df_pairs, annotated_all, current_idx=2) == 3
+    assert get_next_unannotated_index(df_pairs, annotated_all, current_idx=4) == 4
+
+    # Cas 4 : Cas bord avec DataFrame vide
+    empty_df = pd.DataFrame(columns=["pair_id"])
+    assert get_next_unannotated_index(empty_df, set(), 0) == 0
 
 
 def test_engine_suite():
@@ -281,7 +306,8 @@ def test_engine_suite():
 
 def run_tests():
     test_detect_pool_anomalies()
-    test_clean_vs_raw_metrics_on_henri_96()
+    test_clean_vs_raw_metrics_on_henri_100()
+    test_get_next_unannotated_index()
     test_engine_suite()
     print("=== TOUS LES TESTS DE L'ENGINE SONT PASSÉS AVEC SUCCÈS ! ===")
 

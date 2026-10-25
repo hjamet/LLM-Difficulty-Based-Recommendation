@@ -28,6 +28,8 @@ if str(_repo_root) not in sys.path:
 from dmkd_additions.text_simplification.reviews.annotation_engine import (
     find_repo_root,
     generate_latex_human_study_macros,
+    get_or_create_pool,
+    detect_pool_anomalies,
 )
 
 
@@ -103,6 +105,18 @@ def main():
 
     res = res_clean if args.clean else res_raw
 
+    pool_df_current = get_or_create_pool(repo_root)
+    pool_anom = detect_pool_anomalies(pool_df_current)
+    nan_ids = pool_anom[pool_anom["is_nan_pair"]]["pair_id"].tolist()
+    leak_ids = pool_anom[pool_anom["is_prompt_leak"]]["pair_id"].tolist()
+    ident_ids = pool_anom[pool_anom["is_identical_pair"]]["pair_id"].tolist()
+    n_clean = int(pool_anom["is_clean_pair"].sum())
+    n_shared_clean = int(((pool_anom["split_assignment"] == "both") & pool_anom["is_clean_pair"]).sum())
+
+    nan_str = ", ".join(nan_ids) if nan_ids else "Aucune"
+    leak_str = ", ".join(leak_ids) if leak_ids else "Aucune"
+    ident_str = ", ".join(ident_ids) if ident_ids else "Aucune"
+
     print("=" * 75)
     print("ETUDE D'ANNOTATION HUMAINE DMKD (T14) - BILAN COMPARATIF DES DONNEES")
     print("=" * 75)
@@ -112,11 +126,11 @@ def main():
     print(f"  * Paires Communes     : {res_raw['overlap_count']} / 50")
     print(f"  * Statut Completude   : {'COMPLETE (150/150 paires)' if res_raw['is_complete'] else 'EN COURS (partielle)'}")
     print()
-    print("2. POOL NETTOYE HORS ANOMALIES (N_clean=139, n_shared_clean=48) :")
-    print("  * Paires NaN regex (?/!)    (5) : P014, P032, P042, P075, P091")
-    print("  * Prompt leak [/INST]       (1) : P074")
-    print("  * Paires identiques A==B    (5) : P030, P049, P056, P108, P143")
-    print(f"  * Paires communes nettoyees : {res_clean['overlap_count']} / 48")
+    print(f"2. POOL NETTOYE HORS ANOMALIES (N_clean={n_clean}, n_shared_clean={n_shared_clean}) :")
+    print(f"  * Paires NaN regex (?/!)    ({len(nan_ids)}) : {nan_str}")
+    print(f"  * Prompt leak [/INST]       ({len(leak_ids)}) : {leak_str}")
+    print(f"  * Paires identiques A==B    ({len(ident_ids)}) : {ident_str}")
+    print(f"  * Paires communes nettoyees : {res_clean['overlap_count']} / {n_shared_clean}")
     print(f"  * Mode actif                : {'POOL NETTOYE (--clean)' if args.clean else 'POOL COMPLET (standard)'}")
     print("=" * 75)
 

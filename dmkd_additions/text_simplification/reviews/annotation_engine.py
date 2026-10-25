@@ -53,6 +53,7 @@ __all__ = [
     "compute_iaa_metrics",
     "compute_model_performance",
     "generate_latex_human_study_macros",
+    "get_next_unannotated_index",
 ]
 
 
@@ -608,10 +609,10 @@ def load_annotator_data(repo_root: Path, annotator: str) -> pd.DataFrame:
                     text_col = candidate_col
                     break
 
-            replaced_pair_ids = {
-                "P014", "P030", "P032", "P042", "P049", "P056",
-                "P074", "P075", "P091", "P108", "P143"
-            }
+            pool_anom = detect_pool_anomalies(df_pool)
+            anomalous_pair_ids = set(
+                pool_anom[~pool_anom["is_clean_pair"]]["pair_id"].astype(str)
+            )
 
             valid_mask = []
             for _, row in df.iterrows():
@@ -626,9 +627,9 @@ def load_annotator_data(repo_root: Path, annotator: str) -> pd.DataFrame:
                         is_match = clean_sentence(actual_text) == clean_sentence(expected_sentence)
                         valid_mask.append(is_match)
                     else:
-                        valid_mask.append(pid not in replaced_pair_ids)
+                        valid_mask.append(pid not in anomalous_pair_ids)
                 else:
-                    valid_mask.append(pid not in replaced_pair_ids)
+                    valid_mask.append(pid not in anomalous_pair_ids)
 
             df = df[valid_mask].copy().reset_index(drop=True)
         except Exception:
@@ -1412,3 +1413,34 @@ def generate_latex_human_study_macros(
         "macros_dict": macros,
         "latex_commands_block": latex_commands_block,
     }
+
+
+def get_next_unannotated_index(
+    user_pairs: pd.DataFrame, annotated_pair_ids: set[str], current_idx: int
+) -> int:
+    """Calcule l'index de la prochaine paire non annotée pour la navigation.
+
+    - Cherche d'abord le premier indice idx dans range(current_idx + 1, len(user_pairs))
+      tel que str(user_pairs.iloc[idx]["pair_id"]) not in annotated_pair_ids.
+    - S'il n'y en a pas après current_idx, cherche dans range(0, min(current_idx + 1, len(user_pairs)))
+      tel que str(user_pairs.iloc[idx]["pair_id"]) not in annotated_pair_ids.
+    - Si toutes les paires sont annotées, retourne min(current_idx + 1, max(0, len(user_pairs) - 1)).
+    """
+    n_pairs = len(user_pairs)
+    if n_pairs == 0:
+        return 0
+
+    # 1. Après current_idx
+    for idx in range(current_idx + 1, n_pairs):
+        pid = str(user_pairs.iloc[idx]["pair_id"]).strip()
+        if pid not in annotated_pair_ids:
+            return idx
+
+    # 2. Avant ou à current_idx (bouclage au début)
+    for idx in range(0, min(current_idx + 1, n_pairs)):
+        pid = str(user_pairs.iloc[idx]["pair_id"]).strip()
+        if pid not in annotated_pair_ids:
+            return idx
+
+    # 3. Toutes les paires de user_pairs sont déjà annotées
+    return min(current_idx + 1, max(0, n_pairs - 1))
