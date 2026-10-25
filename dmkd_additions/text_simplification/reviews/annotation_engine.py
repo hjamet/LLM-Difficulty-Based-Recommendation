@@ -279,6 +279,47 @@ def generate_annotation_pool(
     """
     df_hist, df_recent = load_raw_datasets(repo_root)
 
+    # Filtrage en amont de toute paire défectueuse (NaN/vide, prompt leak, ou A==B)
+    def _is_clean_hist(r):
+        simp_m = str(r["simplified_mistral"]).strip()
+        simp_g = str(r["simplified_gpt35"]).strip()
+        if pd.isna(r["simplified_mistral"]) or pd.isna(r["simplified_gpt35"]):
+            return False
+        if simp_m.lower() in ["nan", "none", ""] or simp_g.lower() in ["nan", "none", ""]:
+            return False
+        if (
+            "[/inst]" in simp_m.lower()
+            or "[/inst]" in simp_g.lower()
+            or "[inst]" in simp_m.lower()
+            or "[inst]" in simp_g.lower()
+            or "donne moi une phrase simplifi" in simp_m.lower()
+        ):
+            return False
+        if simp_m == simp_g:
+            return False
+        return True
+
+    def _is_clean_recent(r):
+        simp_4o = str(r["simplified_gpt4o"]).strip()
+        simp_mini = str(r["simplified_gpt4o_mini"]).strip()
+        if pd.isna(r["simplified_gpt4o"]) or pd.isna(r["simplified_gpt4o_mini"]):
+            return False
+        if simp_4o.lower() in ["nan", "none", ""] or simp_mini.lower() in ["nan", "none", ""]:
+            return False
+        if (
+            "[/inst]" in simp_4o.lower()
+            or "[/inst]" in simp_mini.lower()
+            or "[inst]" in simp_4o.lower()
+            or "[inst]" in simp_mini.lower()
+        ):
+            return False
+        if simp_4o == simp_mini:
+            return False
+        return True
+
+    df_hist = df_hist[df_hist.apply(_is_clean_hist, axis=1)].copy()
+    df_recent = df_recent[df_recent.apply(_is_clean_recent, axis=1)].copy()
+
     rng = np.random.default_rng(seed)
     pairs_list: List[Dict[str, Any]] = []
 
@@ -521,7 +562,7 @@ def get_annotator_filepath(repo_root: Path, annotator: str) -> Path:
 
 
 def load_annotator_data(repo_root: Path, annotator: str) -> pd.DataFrame:
-    """Charge les annotations existantes pour un annotateur donné."""
+    """Charge les annotations existantes pour un annotateur donné, en filtrant les paires obsolètes."""
     filepath = get_annotator_filepath(repo_root, annotator)
     canonical_columns = [
         "pair_id",
@@ -546,6 +587,53 @@ def load_annotator_data(repo_root: Path, annotator: str) -> pd.DataFrame:
         df["content_simpler_a"] = SIMPLER_CHOICES[0]
     if "content_simpler_b" not in df.columns:
         df["content_simpler_b"] = SIMPLER_CHOICES[0]
+
+    # Vérification de cohérence avec annotation_pool_150.csv
+    pool_path = (
+        repo_root
+        / "dmkd_additions"
+        / "text_simplification"
+        / "reviews"
+        / "annotation_pool_150.csv"
+    )
+    if pool_path.is_file() and not df.empty and "pair_id" in df.columns:
+        try:
+            df_pool = pd.read_csv(pool_path)
+            pool_sentences = dict(
+                zip(df_pool["pair_id"], df_pool["original_sentence"])
+            )
+            text_col = None
+            for candidate_col in ["original_sentence", "original_text", "sentence", "sentence_id"]:
+                if candidate_col in df.columns:
+                    text_col = candidate_col
+                    break
+
+            replaced_pair_ids = {
+                "P014", "P030", "P032", "P042", "P049", "P056",
+                "P074", "P075", "P091", "P108", "P143"
+            }
+
+            valid_mask = []
+            for _, row in df.iterrows():
+                pid = str(row.get("pair_id", "")).strip()
+                if pid not in pool_sentences:
+                    valid_mask.append(False)
+                    continue
+                expected_sentence = pool_sentences[pid]
+                if text_col is not None:
+                    actual_text = str(row.get(text_col, ""))
+                    if actual_text and actual_text.lower() not in ["nan", "none", ""]:
+                        is_match = clean_sentence(actual_text) == clean_sentence(expected_sentence)
+                        valid_mask.append(is_match)
+                    else:
+                        valid_mask.append(pid not in replaced_pair_ids)
+                else:
+                    valid_mask.append(pid not in replaced_pair_ids)
+
+            df = df[valid_mask].copy().reset_index(drop=True)
+        except Exception:
+            pass
+
     return df
 
 
@@ -597,6 +685,7 @@ def save_single_annotation(
         "content_simpler_b": norm_simpler_b,
         "meaning_preservation_a": norm_a,
         "meaning_preservation_b": norm_b,
+        "original_sentence": str(pair_row.get("original_sentence", "")).strip(),
         "notes": str(notes).strip() if notes is not None else "",
     }
 

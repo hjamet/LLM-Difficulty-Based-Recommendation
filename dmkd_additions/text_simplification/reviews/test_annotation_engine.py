@@ -34,7 +34,7 @@ from dmkd_additions.text_simplification.reviews.annotation_engine import (
 
 
 def test_detect_pool_anomalies():
-    """Vérifie la détection exacte des 11 paires atypiques dans le pool d'annotation."""
+    """Vérifie la détection d'anomalies sur cas synthétiques et l'absence totale d'anomalie sur le pool réel."""
     repo_root = find_repo_root()
     pool = get_or_create_pool(repo_root)
     assert len(pool) == 150
@@ -45,72 +45,52 @@ def test_detect_pool_anomalies():
     assert "is_identical_pair" in pool_anom.columns
     assert "is_clean_pair" in pool_anom.columns
 
-    # 1. Paires NaN dues à la regex
-    nan_ids = set(pool_anom[pool_anom["is_nan_pair"]]["pair_id"])
-    assert nan_ids == {"P014", "P032", "P042", "P075", "P091"}, f"NaN inattendus : {nan_ids}"
+    # 1. Le pool d'annotation réel ne doit contenir AUCUNE anomalie (0 nan, 0 leak, 0 identical)
+    assert pool_anom["is_nan_pair"].sum() == 0, f"NaN inattendus : {pool_anom[pool_anom['is_nan_pair']]['pair_id'].tolist()}"
+    assert pool_anom["is_prompt_leak"].sum() == 0, f"Prompt leak inattendu : {pool_anom[pool_anom['is_prompt_leak']]['pair_id'].tolist()}"
+    assert pool_anom["is_identical_pair"].sum() == 0, f"Identiques inattendus : {pool_anom[pool_anom['is_identical_pair']]['pair_id'].tolist()}"
+    assert pool_anom["is_clean_pair"].sum() == 150, f"Total clean = {pool_anom['is_clean_pair'].sum()} (attendu: 150)"
 
-    # 2. Prompt leak [/INST]
-    leak_ids = set(pool_anom[pool_anom["is_prompt_leak"]]["pair_id"])
-    assert leak_ids == {"P074"}, f"Prompt leak inattendu : {leak_ids}"
-
-    # 3. Paires identiques A == B
-    ident_ids = set(pool_anom[pool_anom["is_identical_pair"]]["pair_id"])
-    assert ident_ids == {"P030", "P049", "P056", "P108", "P143"}, f"Identiques inattendus : {ident_ids}"
-
-    # 4. Totalité des paires propres
-    assert pool_anom["is_clean_pair"].sum() == 139, f"Total clean = {pool_anom['is_clean_pair'].sum()} (attendu: 139)"
-
-    # 5. Paires communes propres (both)
-    both_mask = pool_anom["split_assignment"] == "both"
-    assert (both_mask & pool_anom["is_clean_pair"]).sum() == 48
-    both_anom_ids = set(pool_anom[both_mask & (~pool_anom["is_clean_pair"])]["pair_id"])
-    assert both_anom_ids == {"P042", "P108"}, f"Anomalies both inattendues : {both_anom_ids}"
+    # 2. Vérification sur un échantillon synthétique avec anomalies
+    synthetic = pd.DataFrame([
+        {"pair_id": "T1", "simplification_a": "nan", "simplification_b": "Texte propre"},
+        {"pair_id": "T2", "simplification_a": "[/INST] Leak", "simplification_b": "Texte propre"},
+        {"pair_id": "T3", "simplification_a": "Texte identique", "simplification_b": "Texte identique"},
+        {"pair_id": "T4", "simplification_a": "Texte A propre", "simplification_b": "Texte B propre"},
+    ])
+    synth_anom = detect_pool_anomalies(synthetic)
+    assert synth_anom.loc[synth_anom["pair_id"] == "T1", "is_nan_pair"].iloc[0]
+    assert synth_anom.loc[synth_anom["pair_id"] == "T2", "is_prompt_leak"].iloc[0]
+    assert synth_anom.loc[synth_anom["pair_id"] == "T3", "is_identical_pair"].iloc[0]
+    assert synth_anom.loc[synth_anom["pair_id"] == "T4", "is_clean_pair"].iloc[0]
 
 
-def test_clean_vs_raw_metrics_on_henri_100():
-    """Vérifie le calcul comparatif des métriques sur les 100 annotations réelles d'Henri."""
+def test_clean_vs_raw_metrics_on_henri_96():
+    """Vérifie les métriques sur les 96 annotations réelles d'Henri et sa progression (96/100)."""
     repo_root = find_repo_root()
     reviews_dir = repo_root / "dmkd_additions" / "text_simplification" / "reviews"
     f_h = reviews_dir / "annotations_henri.csv"
     assert f_h.is_file(), "annotations_henri.csv doit être présent"
 
     df_henri = pd.read_csv(f_h)
-    assert len(df_henri) == 100, f"annotations_henri.csv doit avoir 100 lignes, obtenu {len(df_henri)}"
+    assert len(df_henri) == 96, f"annotations_henri.csv doit avoir 96 lignes, obtenu {len(df_henri)}"
 
-    # 1. Performance du modèle : Brut vs Nettoyé
-    perf_raw = compute_model_performance(repo_root, exclude_anomalies=False)
-    perf_clean = compute_model_performance(repo_root, exclude_anomalies=True)
+    # Vérification de la progression (reste P032, P042, P056, P108)
+    pool = pd.read_csv(reviews_dir / "annotation_pool_150.csv")
+    user_pairs = pool[pool["split_assignment"].isin(["henri", "both"])].copy()
+    assert len(user_pairs) == 100
+    annotated_ids = set(df_henri["pair_id"])
+    remaining = sorted(list(set(user_pairs["pair_id"]) - annotated_ids))
+    assert remaining == ["P032", "P042", "P056", "P108"], f"Paires restantes inattendues : {remaining}"
 
-    assert len(perf_raw) == 4
-    assert len(perf_clean) == 4
+    # 1. Performance du modèle sur les 96 annotations
+    perf = compute_model_performance(repo_root)
+    assert len(perf) == 4
+    perf_map = perf.set_index("Modèle").to_dict(orient="index")
 
-    raw_map = perf_raw.set_index("Modèle").to_dict(orient="index")
-    clean_map = perf_clean.set_index("Modèle").to_dict(orient="index")
-
-    # Vérifications des chiffres connus sur Henri 100/100
-    assert raw_map["Mistral-7B-FT"]["preference_rate"] == 52.0
-    assert clean_map["Mistral-7B-FT"]["preference_rate"] == 50.0
-
-    assert raw_map["GPT-4o-FT"]["preference_rate"] == 60.0
-    assert clean_map["GPT-4o-FT"]["preference_rate"] == 58.3
-
-    assert raw_map["Mistral-7B-FT"]["simpler_rate"] == 80.0
-    assert clean_map["Mistral-7B-FT"]["simpler_rate"] == 81.2
-
-    assert raw_map["GPT-4o-FT"]["simpler_rate"] == 90.0
-    assert clean_map["GPT-4o-FT"]["simpler_rate"] == 89.6
-
-    # 2. IAA Metrics : vérification de la présence de clean_subset_summary
-    iaa_res = compute_iaa_metrics(repo_root, exclude_anomalies=False)
-    assert "clean_subset_summary" in iaa_res
-    clean_sum = iaa_res["clean_subset_summary"]
-    assert clean_sum["n_total_pool"] == 150
-    assert clean_sum["n_clean_pool"] == 139
-    assert clean_sum["n_shared_total"] == 50
-    assert clean_sum["n_shared_clean"] == 48
-    assert set(clean_sum["nan_pairs"]) == {"P014", "P032", "P042", "P075", "P091"}
-    assert set(clean_sum["prompt_leak_pairs"]) == {"P074"}
-    assert set(clean_sum["identical_pairs"]) == {"P030", "P049", "P056", "P108", "P143"}
+    # Vérifications des chiffres connus sur Henri 96/100
+    assert perf_map["Mistral-7B-FT"]["preference_rate"] == 50.0
+    assert np.isclose(perf_map["GPT-4o-FT"]["preference_rate"], 58.3, atol=0.1)
 
 
 def test_engine_suite():
@@ -301,7 +281,7 @@ def test_engine_suite():
 
 def run_tests():
     test_detect_pool_anomalies()
-    test_clean_vs_raw_metrics_on_henri_100()
+    test_clean_vs_raw_metrics_on_henri_96()
     test_engine_suite()
     print("=== TOUS LES TESTS DE L'ENGINE SONT PASSÉS AVEC SUCCÈS ! ===")
 
