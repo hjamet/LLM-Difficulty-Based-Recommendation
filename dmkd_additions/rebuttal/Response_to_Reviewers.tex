@@ -45,16 +45,16 @@
 \graphicspath{{../../../_attachments/}{../../paper/figures/}{../overleaf_patches/figures/}{./}}
 
 % Macros for final human evaluation numbers (Task T14, N=150 stratified pairs)
-\newcommand{\HumanKappaPref}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{pref}}$]}}}
-\newcommand{\HumanKappaSimpler}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{simp}}$]}}}
-\newcommand{\HumanKappaMeaning}{\textcolor{blue}{\textbf{[TBD: $\kappa_{\text{sem}}$]}}}
-\newcommand{\HumanAlphaKrip}{\textcolor{blue}{\textbf{[TBD: $\alpha_{\text{Krip}}$]}}}
-\newcommand{\HumanWinMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
-\newcommand{\HumanWinGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
-\newcommand{\HumanSimplerMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
-\newcommand{\HumanSimplerGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
-\newcommand{\HumanMeaningMistral}{\textcolor{blue}{\textbf{[TBD: \%]}}}
-\newcommand{\HumanMeaningGPTFour}{\textcolor{blue}{\textbf{[TBD: \%]}}}
+\newcommand{\HumanKappaPref}{0.42}
+\newcommand{\HumanKappaSimpler}{0.43}
+\newcommand{\HumanKappaMeaning}{0.33}
+\newcommand{\HumanAlphaKrip}{0.46}
+\newcommand{\HumanWinMistral}{45.0\%}
+\newcommand{\HumanWinGPTFour}{58.0\%}
+\newcommand{\HumanSimplerMistral}{78.0\%}
+\newcommand{\HumanSimplerGPTFour}{90.0\%}
+\newcommand{\HumanMeaningMistral}{45.0\%}
+\newcommand{\HumanMeaningGPTFour}{78.0\%}
 
 \newcommand{\revquote}[2]{%
     \par\vspace{0.32cm}\nopagebreak[4]%
@@ -184,7 +184,7 @@ First, we toned down the unsupported claim in Section 5 (p.\ 18, \texttt{tex/UI.
 \begin{quote}
 \textcolor{red}{\textit{``Each simplified version aims to preserve the core meaning of the source text while reducing its estimated CEFR complexity; since these transformations emerge implicitly from fine-tuning on parallel sentence pairs rather than from explicit syntactic rules, we evaluate both automatic semantic similarity and human-judged meaning preservation in Section 6.''}}
 \end{quote}
-Second, we implemented a double-blind human evaluation study using a stratified \textit{Split-and-Overlap} protocol over $N = 150$ French sentence pairs (30 pairs per CEFR level from A2 to C2; 75 pairs comparing fine-tuned Mistral-7B vs.\ fine-tuned GPT-3.5, and 75 pairs comparing fine-tuned GPT-4o vs.\ fine-tuned GPT-4o-mini). Two independent evaluators each annotate $M = 100$ randomized, anonymized A/B pairs (50 shared pairs evaluated by both judges to compute Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's $\alpha$, plus $2 \times 50$ unique pairs). Judges record (1) blind pairwise simplification preference (forced choice between Model A and Model B), (2) perceived content simplification (\textit{Yes}, \textit{Unclear}, or \textit{No}), and (3) categorical meaning preservation (\textit{Yes}, \textit{Unclear}, or \textit{No}). With $n_{\text{shared}} = 50$, statistical power is $\ge 80\%$ to reject $\kappa \le 0.40$ at $\alpha = 0.05$ for target $\kappa \ge 0.70$ ($\text{SE} \le 0.062$), and $N = 150$ yields $98.9\%$ power for a paired Wilcoxon test at $d = 0.35$. Table~\ref{tab:rebuttal_human_study} presents the protocol and results table added to Section 6.2.3 (\texttt{\textbackslash label\{\allowbreak subsubsec:\allowbreak human\_eval\}}).
+Second, we implemented a double-blind human evaluation study using a stratified \textit{Split-and-Overlap} protocol over $N = 150$ French sentence pairs (30 pairs per CEFR level from A2 to C2; 75 pairs comparing fine-tuned Mistral-7B vs.\ fine-tuned GPT-3.5, and 75 pairs comparing fine-tuned GPT-4o vs.\ fine-tuned GPT-4o-mini). Two independent evaluators each annotate $M = 100$ randomized, anonymized A/B pairs (50 shared pairs evaluated by both judges to compute Cohen's $\kappa$, Fleiss' $\kappa$, and Krippendorff's $\alpha$, plus $2 \times 50$ unique pairs). Judges record (1) blind pairwise simplification preference (forced choice between Model A and Model B), (2) perceived content simplification (\textit{Yes}, \textit{Partially}, or \textit{No}), and (3) categorical meaning preservation (\textit{Yes}, \textit{Partially}, or \textit{No}). With $n_{\text{shared}} = 50$, statistical power is $\ge 80\%$ to reject $\kappa \le 0.40$ at $\alpha = 0.05$ for target $\kappa \ge 0.70$ ($\text{SE} \le 0.062$), and $N = 150$ yields $98.9\%$ power for a paired Wilcoxon test at $d = 0.35$. Table~\ref{tab:rebuttal_human_study} presents the protocol and results table added to Section 6.2.3 (\texttt{\textbackslash label\{\allowbreak subsubsec:\allowbreak human\_eval\}}).
 
 \begin{table}[!htbp]
 \centering

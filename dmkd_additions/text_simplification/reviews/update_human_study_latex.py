@@ -44,11 +44,12 @@ def update_target_file(file_path: Path, macros_dict: Dict[str, str]) -> int:
 
     for key, val in macros_dict.items():
         pattern = re.compile(
-            r"(\\(?:newcommand|providecommand)\{\\" + re.escape(key) + r"\}\{)(?:.*?)(\})"
+            r"^([ \t]*\\(?:newcommand|providecommand)\{\\" + re.escape(key) + r"\}).*?$",
+            re.MULTILINE,
         )
         if pattern.search(content):
             def _repl(m: re.Match) -> str:
-                return f"{m.group(1)}{val}{m.group(2)}"
+                return f"{m.group(1)}{{{val}}}"
 
             new_content = pattern.sub(_repl, content)
             if new_content != content:
@@ -150,6 +151,7 @@ def main():
         targets = [
             repo_root / "dmkd_additions" / "rebuttal" / "Response_to_Reviewers.tex",
             repo_root / "dmkd_additions" / "overleaf_patches" / "tex" / "Experiments.tex",
+            repo_root / "paper" / "tex" / "Experiments.tex",
         ]
 
         total_mods = 0
