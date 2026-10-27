@@ -89,9 +89,9 @@ def test_clean_vs_raw_metrics_on_henri_100():
     assert len(perf) == 4
     perf_map = perf.set_index("Modèle").to_dict(orient="index")
 
-    # Vérifications des chiffres connus sur Henri 100/100
-    assert perf_map["Mistral-7B-FT"]["preference_rate"] == 52.0
-    assert perf_map["GPT-4o-FT"]["preference_rate"] == 60.0
+    # Vérifications des chiffres connus sur le pool consolidé complet (200/200)
+    assert perf_map["Mistral-7B-FT"]["preference_rate"] == 45.0
+    assert perf_map["GPT-4o-FT"]["preference_rate"] == 58.0
 
 
 def test_get_next_unannotated_index():
