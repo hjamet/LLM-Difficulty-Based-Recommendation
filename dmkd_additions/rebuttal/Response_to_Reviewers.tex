@@ -43,7 +43,7 @@
     urlcolor=blue!60!black
 }
 
-\graphicspath{{./}{./figures/}{../../../_attachments/}{../../paper/figures/}{../overleaf_patches/figures/}}
+\graphicspath{{./figures/}{./}}
 
 % Macros for final human evaluation numbers (Task T14, N=150 stratified pairs)
 \newcommand{\HumanKappaPref}{0.42}
@@ -169,7 +169,7 @@ To test whether explicit CEFR system prompts improve prediction accuracy over un
 }
 \end{table}
 
-\medskip\noindent\textcolor{blue}{\textbf{[TO BE COMPLETED BY MAXIME --- Section 6.3 Recommendation Systems (Tasks T10, T11): Insert inter-run standard deviations ($\mu \pm \sigma$) and paired statistical significance tests ($p$-values) for the recommendation benchmarks (Zeeguu, MovieLens-100k, Goodreads, and Tomplay) from Section 6.3.]}}
+\medskip\noindent\textcolor{blue}{\textbf{[To be completed by Maxime --- Section 6.3 Recommender Systems: inter-run variance ($\pm \sigma$) and statistical significance tests.]}}
 
 \subsection{AE.2: Analytical and Multi-Model Justification of Weight $w_1$ (Task T07)}
 \begin{reviewbox}
@@ -206,7 +206,10 @@ To verify that model comparisons do not depend on a narrow choice of $w_1$, we s
 \end{reviewbox}
 
 \noindent\textbf{Response:}
-Every equation in the manuscript is now formally defined, numbered, and cross-referenced, and every figure (Figures 1 to 12 in the revised manuscript) is cited and explained in prose: (1) Figures 1 and 2 are cited directly as ``Figure 1'' and ``Figure 2'' with step-by-step explanations (Responses R1.1, R1.2); (2) $PM_{\text{norm}} \in [0, 1]$ and Algorithm 1 are formalized using confusion matrix variables $C_{u,u'}$ including diagonal exact matches $C_{u,u}$ (Responses R2.2, R2.3); (3) $S$, $A_K$, and $w\text{-Score}$ are numbered with a 6-level numerical walkthrough (Responses R2.4, R2.5); (4) Section 4.2 formalizes LLM embedding extraction (Figure 3), cosine KNN scoring (Figure 4), and LightGCN bipartite graph propagation (Figure 5), alongside $\text{NDCG}@5$ and Xavier initialization (Responses R1.3, R2.7, R2.15, R2.16); and (5) Accuracy is formally defined in Section 6.1.1 and the cross-references to Table 8 (\texttt{tab:hyperparameters}) and Table 11 (formerly Table 9, \texttt{tab:best\_hyperparameters} in the Appendix) are fixed in Section 6.3.4 (Responses R1.5, R1.6).
+Every equation in the manuscript is now formally defined, numbered, and cross-referenced, and every figure (Figures 1 to 12 in the revised manuscript) is cited and explained in prose: (1) Figures 1 and 2 are cited directly as ``Figure 1'' and ``Figure 2'' with step-by-step explanations (Responses R1.1, R1.2); (2) $PM_{\text{norm}} \in [0, 1]$ and Algorithm 1 are formalized using confusion matrix variables $C_{u,u'}$ including diagonal exact matches $C_{u,u}$ (Responses R2.2, R2.3); (3) $S$, $A_K$, and $w\text{-Score}$ are numbered with a 6-level numerical walkthrough (Responses R2.4, R2.5); and (4) Accuracy is formally defined in Section 6.1.1 (Response R1.5).
+
+\medskip\noindent\textcolor{blue}{\textbf{[To be completed by Maxime --- Section 4 / Section 6.3 Recommender Systems (Figures 3--5, $\text{NDCG}@5$, Xavier initialization, and Section 6.3.4 cross-references in Responses R1.3, R1.6, R2.7, R2.15, R2.16).]}}\relax
+% [Draft LaTeX suggestion for Maxime if helpful]: Section 4.2 formalizes LLM embedding extraction (Figure 3), cosine KNN scoring (Figure 4), and LightGCN bipartite graph propagation (Figure 5), alongside \text{NDCG}@5 and Xavier initialization (Responses R1.3, R2.7, R2.15, R2.16), and the cross-references to Table 8 (\texttt{tab:hyperparameters}) and Table 11 (formerly Table 9, \texttt{tab:best\_hyperparameters} in the Appendix) are fixed in Section 6.3.4 (Response R1.6).
 
 \subsection{AE.4: Human Qualitative Evaluation and Claim Moderation on p.\ 18 (Tasks T14, T15)}
 \begin{reviewbox}
@@ -328,15 +331,15 @@ We added a dedicated paragraph in Section 2.3.1 (\texttt{tex/Difficulty\_Estimat
 \textbf{Reviewer 1 (R1.3):} \textit{``In Section 4.2 generate the embeddings explanation missing in detail.''}
 \end{reviewbox}
 
-\noindent\textbf{Response:}
-We expanded Section 4.2 (\texttt{tex/RS.tex}) to formally specify the item and user embedding generation pipeline depicted in Figure 3. For each item $i \in \mathcal{I}$, we construct a structured textual description $d_i$ by concatenating its metadata fields (full article text for \texttt{Zeeguu}; title, summary, cast, director, genres, and ratings for \texttt{ml-100k}; book title, description, publisher, and metadata for \texttt{Goodreads}; score title, composer, style, level, and instrument for \texttt{Tomplay}). A pre-trained encoder $\phi_{\text{LLM}}$ maps $d_i$ into a dense vector $\mathbf{e}_i^{(0)} \in \mathbb{R}^d$:
-\begin{equation}
-\mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i) = \frac{1}{|T_i|} \sum_{t=1}^{|T_i|} \mathbf{h}_{i,t} \in \mathbb{R}^d, \qquad
-\mathbf{e}_u^{(0)} = \frac{1}{|\mathcal{H}_u^{(n)}|} \sum_{i \in \mathcal{H}_u^{(n)}} \mathbf{e}_i^{(0)} \in \mathbb{R}^d,
-\label{eq:rebuttal_item_user_emb}
-\end{equation}
-where $\mathbf{h}_{i,t}$ denotes the contextualized token representation at position $t$ (mean pooling over $|T_i| \le 128$ tokens yields $d = 768$ for \texttt{paraphrase-xlm-r-multilingual-v1}, and $d = 1{,}536$ over up to $8{,}000$ tokens for OpenAI \texttt{text-embedding-ada-002}), and $\mathcal{H}_u^{(n)}$ is the set of the $n$ most recent items interacted with by user $u \in \mathcal{U}$.
-\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
+\noindent\textbf{Response:} \textcolor{blue}{\textbf{[To be completed by Maxime --- Section 4 / Section 6.3 Recommender Systems.]}}
+% [Draft LaTeX suggestion for Maxime if helpful]:
+% We expanded Section 4.2 (\texttt{tex/RS.tex}) to formally specify the item and user embedding generation pipeline depicted in Figure 3. For each item $i \in \mathcal{I}$, we construct a structured textual description $d_i$ by concatenating its metadata fields (full article text for \texttt{Zeeguu}; title, summary, cast, director, genres, and ratings for \texttt{ml-100k}; book title, description, publisher, and metadata for \texttt{Goodreads}; score title, composer, style, level, and instrument for \texttt{Tomplay}). A pre-trained encoder $\phi_{\text{LLM}}$ maps $d_i$ into a dense vector $\mathbf{e}_i^{(0)} \in \mathbb{R}^d$:
+% \begin{equation}
+% \mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i) = \frac{1}{|T_i|} \sum_{t=1}^{|T_i|} \mathbf{h}_{i,t} \in \mathbb{R}^d, \qquad
+% \mathbf{e}_u^{(0)} = \frac{1}{|\mathcal{H}_u^{(n)}|} \sum_{i \in \mathcal{H}_u^{(n)}} \mathbf{e}_i^{(0)} \in \mathbb{R}^d,
+% \label{eq:rebuttal_item_user_emb}
+% \end{equation}
+% where $\mathbf{h}_{i,t}$ denotes the contextualized token representation at position $t$ (mean pooling over $|T_i| \le 128$ tokens yields $d = 768$ for \texttt{paraphrase-xlm-r-multilingual-v1}, and $d = 1{,}536$ over up to $8{,}000$ tokens for OpenAI \texttt{text-embedding-ada-002}), and $\mathcal{H}_u^{(n)}$ is the set of the $n$ most recent items interacted with by user $u \in \mathcal{U}$.
 
 \subsection{R1.4: Introductory Model Synthesis in Section 6 (Task T13)}
 \begin{reviewbox}
@@ -367,8 +370,9 @@ where $N$ denotes the total number of test instances in the evaluation split ($N
 \textbf{Reviewer 1 (R1.6):} \textit{``In Section 6.3.4, the optimal hyperparameters for each model and dataset, identified through grid search and early stopping, are summarized in``? Why was a question mark added? Is there a section detail missing?''}
 \end{reviewbox}
 
-\noindent\textbf{Response:}
-The \texttt{??} in the initial compiled PDF was caused by an unresolved cross-reference in Section 6.3.4 (\texttt{tex/Experiments\_RS.tex}). We fixed the in-text reference to point explicitly to \texttt{\textbackslash autoref\{tab:\allowbreak hyperparameters\}} (Table 8, hyperparameter search grid) and \texttt{\textbackslash autoref\{tab:\allowbreak best\_hyperparameters\}} in \texttt{tex/Appendix.tex} (which resolves cleanly to Table 11 in the revised manuscript, formerly Table 9 prior to inserting the two new evaluation tables in Section 6).
+\noindent\textbf{Response:} \textcolor{blue}{\textbf{[To be completed by Maxime --- Section 4 / Section 6.3 Recommender Systems.]}}
+% [Draft LaTeX suggestion for Maxime if helpful]:
+% The \texttt{??} in the initial compiled PDF was caused by an unresolved cross-reference in Section 6.3.4 (\texttt{tex/Experiments\_RS.tex}). We fixed the in-text reference to point explicitly to \texttt{\textbackslash autoref\{tab:\allowbreak hyperparameters\}} (Table 8, hyperparameter search grid) and \texttt{\textbackslash autoref\{tab:\allowbreak best\_hyperparameters\}} in \texttt{tex/Appendix.tex} (which resolves cleanly to Table 11 in the revised manuscript, formerly Table 9 prior to inserting the two new evaluation tables in Section 6).
 
 \subsection{R1.7: Article Structure and Narrative Flow (Task T28)}
 \begin{reviewbox}
@@ -472,21 +476,21 @@ As detailed in Response \textbf{AE.2} (Equation~\ref{eq:rebuttal_w1_derivation} 
 \textbf{Reviewer 2 (R2.7):} \textit{``In Section 4, when presenting the components of the proposed approach, the components shall be better explained and formalized, [for example] Figs.\ 3, 4, and especially 5. It is insufficient to provide an outline without a textual description and formalization.''}
 \end{reviewbox}
 
-\noindent\textbf{Response:}
-We rewrote Section 4.2 (\texttt{tex/RS.tex}) with numbered equations linked to Figures 3, 4, and 5:
-\begin{enumerate}
-    \item \textbf{Figure 3 (LLM Item and User Embeddings)}: Formalized in Equation~\ref{eq:rebuttal_item_user_emb} ($\mathbf{e}_i^{(0)}, \mathbf{e}_u^{(0)} \in \mathbb{R}^d$).
-    \item \textbf{Figure 4 (User-Based KNN Scoring)}: Using cosine similarity $\text{sim}(u, v) = \frac{\mathbf{e}_u^{(0)} \cdot \mathbf{e}_v^{(0)}}{\|\mathbf{e}_u^{(0)}\|_2 \|\mathbf{e}_v^{(0)}\|_2}$ over the top-$k$ nearest neighbors $\mathcal{N}_k(u)$, the predicted score for candidate item $i \notin \mathcal{H}_u$ is $\hat{y}_{u,i}^{\text{KNN}} = \sum_{v \in \mathcal{N}_k(u)} \text{sim}(u, v) \cdot r_{v,i}$.
-    \item \textbf{Figure 5 (LLM-Initialized LightGCN Bipartite Graph Propagation)}: On the user-item bipartite graph $\mathcal{G} = (\mathcal{U} \cup \mathcal{I}, \mathcal{E})$, we initialize layer-0 embeddings $\mathbf{e}_u^{(0)}, \mathbf{e}_i^{(0)}$ with the pre-trained LLM vectors from Equation~\ref{eq:rebuttal_item_user_emb}. Across $L$ layers ($l = 0, \dots, L-1$), embeddings propagate via symmetric degree normalization and aggregate uniformly to predict preference scores $\hat{y}_{u,i}^{\text{LightGCN}}$ trained under the BPR loss $\mathcal{L}_{\text{BPR}}$:
-    \begin{equation}
-    \mathbf{e}_u^{(l+1)} = \sum_{i \in \mathcal{N}_u} \frac{\mathbf{e}_i^{(l)}}{\sqrt{|\mathcal{N}_u||\mathcal{N}_i|}}, \quad
-    \mathbf{e}_i^{(l+1)} = \sum_{u \in \mathcal{N}_i} \frac{\mathbf{e}_u^{(l)}}{\sqrt{|\mathcal{N}_i||\mathcal{N}_u|}}, \quad
-    \mathbf{e}_u = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_u^{(l)}, \quad
-    \hat{y}_{u,i}^{\text{LightGCN}} = \mathbf{e}_u^\top \mathbf{e}_i.
-    \label{eq:rebuttal_lightgcn_all}
-    \end{equation}
-\end{enumerate}
-\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
+\noindent\textbf{Response:} \textcolor{blue}{\textbf{[To be completed by Maxime --- Section 4 / Section 6.3 Recommender Systems.]}}
+% [Draft LaTeX suggestion for Maxime if helpful]:
+% We rewrote Section 4.2 (\texttt{tex/RS.tex}) with numbered equations linked to Figures 3, 4, and 5:
+% \begin{enumerate}
+%     \item \textbf{Figure 3 (LLM Item and User Embeddings)}: Formalized in Equation~\ref{eq:rebuttal_item_user_emb} ($\mathbf{e}_i^{(0)}, \mathbf{e}_u^{(0)} \in \mathbb{R}^d$).
+%     \item \textbf{Figure 4 (User-Based KNN Scoring)}: Using cosine similarity $\text{sim}(u, v) = \frac{\mathbf{e}_u^{(0)} \cdot \mathbf{e}_v^{(0)}}{\|\mathbf{e}_u^{(0)}\|_2 \|\mathbf{e}_v^{(0)}\|_2}$ over the top-$k$ nearest neighbors $\mathcal{N}_k(u)$, the predicted score for candidate item $i \notin \mathcal{H}_u$ is $\hat{y}_{u,i}^{\text{KNN}} = \sum_{v \in \mathcal{N}_k(u)} \text{sim}(u, v) \cdot r_{v,i}$.
+%     \item \textbf{Figure 5 (LLM-Initialized LightGCN Bipartite Graph Propagation)}: On the user-item bipartite graph $\mathcal{G} = (\mathcal{U} \cup \mathcal{I}, \mathcal{E})$, we initialize layer-0 embeddings $\mathbf{e}_u^{(0)}, \mathbf{e}_i^{(0)}$ with the pre-trained LLM vectors from Equation~\ref{eq:rebuttal_item_user_emb}. Across $L$ layers ($l = 0, \dots, L-1$), embeddings propagate via symmetric degree normalization and aggregate uniformly to predict preference scores $\hat{y}_{u,i}^{\text{LightGCN}}$ trained under the BPR loss $\mathcal{L}_{\text{BPR}}$:
+%     \begin{equation}
+%     \mathbf{e}_u^{(l+1)} = \sum_{i \in \mathcal{N}_u} \frac{\mathbf{e}_i^{(l)}}{\sqrt{|\mathcal{N}_u||\mathcal{N}_i|}}, \quad
+%     \mathbf{e}_i^{(l+1)} = \sum_{u \in \mathcal{N}_i} \frac{\mathbf{e}_u^{(l)}}{\sqrt{|\mathcal{N}_i||\mathcal{N}_u|}}, \quad
+%     \mathbf{e}_u = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_u^{(l)}, \quad
+%     \hat{y}_{u,i}^{\text{LightGCN}} = \mathbf{e}_u^\top \mathbf{e}_i.
+%     \label{eq:rebuttal_lightgcn_all}
+%     \end{equation}
+% \end{enumerate}
 
 \subsection{R2.8: Moderation of Linguistic Transformation Claim on p.\ 18 (Task T15)}
 \begin{reviewbox}
@@ -520,7 +524,7 @@ We added a dedicated paragraph in Section 6.1.3 (\texttt{tex/Experiments.tex}, p
 \noindent\textbf{Response:}
 As shown in Table~\ref{tab:rebuttal_table2} (Response \textbf{AE.1}), we computed QWK ($\ge 0.86$ for prompted GPT-4o across all three datasets, confirming that misclassifications in Figure 8 fall predominantly on adjacent CEFR levels), added $B = 1{,}000$ bootstrap standard errors ($\mu \pm \sigma$) and paired Wilcoxon tests, and revised Section 6.1.2 to explicitly note non-significant prompt differences on \texttt{LjL} ($p = 0.140$ for GPT-4o; $p = 0.606$ for GPT-4o-mini).
 
-\medskip\noindent\textcolor{blue}{\textbf{[TO BE COMPLETED BY MAXIME --- Section 6.3 Recommendation Tables: Report inter-run variance ($\pm \sigma$) and statistical significance markers across the recommendation evaluation tables in Section 6.3, and state explicitly which baseline differences are statistically significant vs.\ non-significant.]}}
+\medskip\noindent\textcolor{blue}{\textbf{[To be completed by Maxime --- Section 6.3 Recommender Systems: inter-run variance ($\pm \sigma$) and statistical significance tests.]}}
 
 \subsection{R2.13 \& R2.14: Iterative Simplification Step 3 and Average CEFR Thresholds in Figure 9 (Tasks T09, T18)}
 \begin{reviewbox}
@@ -535,26 +539,26 @@ In Section 6.2.2 (formerly Section 6.2.4 in the initial submission, \texttt{tex/
 \textbf{Reviewer 2 (R2.15 \& R2.16):} \textit{``The metric NDCG@5 shall be explained in the text prior to its first use. On p.\ 30 (or before), better explain Xavier initialization and the proposed improvement.''}
 \end{reviewbox}
 
-\noindent\textbf{Response:}
-In Section 6.3.3 (\texttt{tex/Experiments\_RS.tex}), before its first mention, we added the formal definitions of $\text{DCG}_u@K$, $\text{IDCG}_u@K$, and $\text{NDCG}@K$ (for $K = 5$), followed by the Glorot (Xavier) uniform initialization distribution:
-\begin{equation}\label{eq:rebuttal_ndcg_xavier}
-\begin{aligned}
-\text{DCG}_u@K &= \sum_{r=1}^{K} \frac{2^{\text{rel}_{u, \pi_u(r)}} - 1}{\log_2(r + 1)}, \qquad
-\text{NDCG}@K = \frac{1}{|\mathcal{U}_{\text{test}}|} \sum_{u \in \mathcal{U}_{\text{test}}} \frac{\text{DCG}_u@K}{\text{IDCG}_u@K}, \\
-e_{j,m}^{(0)} &\sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}},\, +\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}\right).
-\end{aligned}
-\end{equation}
-We explain that Xavier initialization assigns random, semantics-free layer-0 vectors, which suffers under extreme interaction sparsity (\texttt{Zeeguu} $99.92\%$, \texttt{Goodreads} $99.99\%$). Replacing random draws with pre-trained LLM embeddings $\mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i)$ clusters semantically related texts at layer 0 prior to BPR optimization, yielding $+12.12\%$ ($\text{NDCG}@5$) on \texttt{Zeeguu} and $+18.75\%$ on \texttt{Goodreads}.
-\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
+\noindent\textbf{Response:} \textcolor{blue}{\textbf{[To be completed by Maxime --- Section 4 / Section 6.3 Recommender Systems.]}}
+% [Draft LaTeX suggestion for Maxime if helpful]:
+% In Section 6.3.3 (\texttt{tex/Experiments\_RS.tex}), before its first mention, we added the formal definitions of $\text{DCG}_u@K$, $\text{IDCG}_u@K$, and $\text{NDCG}@K$ (for $K = 5$), followed by the Glorot (Xavier) uniform initialization distribution:
+% \begin{equation}\label{eq:rebuttal_ndcg_xavier}
+% \begin{aligned}
+% \text{DCG}_u@K &= \sum_{r=1}^{K} \frac{2^{\text{rel}_{u, \pi_u(r)}} - 1}{\log_2(r + 1)}, \qquad
+% \text{NDCG}@K = \frac{1}{|\mathcal{U}_{\text{test}}|} \sum_{u \in \mathcal{U}_{\text{test}}} \frac{\text{DCG}_u@K}{\text{IDCG}_u@K}, \\
+% e_{j,m}^{(0)} &\sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}},\, +\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}\right).
+% \end{aligned}
+% \end{equation}
+% We explain that Xavier initialization assigns random, semantics-free layer-0 vectors, which suffers under extreme interaction sparsity (\texttt{Zeeguu} $99.92\%$, \texttt{Goodreads} $99.99\%$). Replacing random draws with pre-trained LLM embeddings $\mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i)$ clusters semantically related texts at layer 0 prior to BPR optimization, yielding $+12.12\%$ ($\text{NDCG}@5$) on \texttt{Zeeguu} and $+18.75\%$ on \texttt{Goodreads}.
 
 \subsection{R2.17: Concrete Architectural Recommendations in Section 6.3.4 (Task T24)}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.17):} \textit{``[At the end] of Section 6.3.4 (or later) provide recommendations on what components to use.''}
 \end{reviewbox}
 
-\noindent\textbf{Response:}
-At the end of Section 6.3.4 (\texttt{tex/Experiments\_RS.tex}), we added concrete deployment guidelines: (1) for \textbf{Difficulty Estimation}, use prompted \textbf{GPT-4o-mini} for highest accuracy-to-cost ($0.616$ on \texttt{Sentences Books}, $0.888$ on \texttt{Sentences Internet}) or fine-tuned \textbf{CamemBERT} (110M) for local deployment with minimal pairwise inversions ($PM_{\text{norm}} = 3.86\%$); (2) for \textbf{Text Simplification}, use LoRA fine-tuned \textbf{Mistral-7B} ($A = 0.59, S = 0.91, w\text{-Score} = 0.26$, $78.0\%$ human perceived simplification) as the best local open-weights trade-off on the automated $w\text{-Score}$, or fine-tuned \textbf{GPT-4o} ($58.0\%$ blind preference, $90.0\%$ perceived simplification, $78.0\%$ strict meaning preservation) when fine-grained propositional fidelity judged by native readers is prioritized; and (3) for \textbf{Recommendation}, use \textbf{LightGCN with OpenAI ADA embeddings} ($d=1{,}536, n \in \{1, 2\}$) on text-rich sparse catalogs (\texttt{Zeeguu}, \texttt{Goodreads}) and \textbf{LightGCN with multilingual BERT embeddings} ($d=768, L=2$) on structured metadata catalogs (\texttt{Tomplay}).
-\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
+\noindent\textbf{Response:} \textcolor{blue}{\textbf{[To be completed by Maxime --- Section 4 / Section 6.3 Recommender Systems.]}}
+% [Draft LaTeX suggestion for Maxime if helpful]:
+% At the end of Section 6.3.4 (\texttt{tex/Experiments\_RS.tex}), we added concrete deployment guidelines: (1) for \textbf{Difficulty Estimation}, use prompted \textbf{GPT-4o-mini} for highest accuracy-to-cost ($0.616$ on \texttt{Sentences Books}, $0.888$ on \texttt{Sentences Internet}) or fine-tuned \textbf{CamemBERT} (110M) for local deployment with minimal pairwise inversions ($PM_{\text{norm}} = 3.86\%$); (2) for \textbf{Text Simplification}, use LoRA fine-tuned \textbf{Mistral-7B} ($A = 0.59, S = 0.91, w\text{-Score} = 0.26$, $78.0\%$ human perceived simplification) as the best local open-weights trade-off on the automated $w\text{-Score}$, or fine-tuned \textbf{GPT-4o} ($58.0\%$ blind preference, $90.0\%$ perceived simplification, $78.0\%$ strict meaning preservation) when fine-grained propositional fidelity judged by native readers is prioritized; and (3) for \textbf{Recommendation}, use \textbf{LightGCN with OpenAI ADA embeddings} ($d=1{,}536, n \in \{1, 2\}$) on text-rich sparse catalogs (\texttt{Zeeguu}, \texttt{Goodreads}) and \textbf{LightGCN with multilingual BERT embeddings} ($d=768, L=2$) on structured metadata catalogs (\texttt{Tomplay}).
 
 \subsection{R2.18: Moderation of Language-Agnostic Claims (Task T16)}
 \begin{reviewbox}
