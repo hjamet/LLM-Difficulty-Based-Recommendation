@@ -365,11 +365,14 @@ if nb_annotated >= total_user_pairs and total_user_pairs > 0:
 # Initialisation de l'index courant dans st.session_state
 session_key = f"pair_idx_{annotator_key}"
 if session_key not in st.session_state:
-    first_unannotated_idx = 0
+    clean_ann_ids = {str(x).strip() for x in annotated_pair_ids}
+    first_unannotated_idx = None
     for idx, row in user_pairs.iterrows():
-        if row["pair_id"] not in annotated_pair_ids:
+        if str(row["pair_id"]).strip() not in clean_ann_ids:
             first_unannotated_idx = idx
             break
+    if first_unannotated_idx is None:
+        first_unannotated_idx = 0
     st.session_state[session_key] = first_unannotated_idx
 
 current_idx = st.session_state[session_key]
@@ -394,6 +397,16 @@ tab_eval, tab_telemetry = st.tabs(
 # ONGLET 1 : ÉVALUATION A/B (ZÉRO SCROLL VERTICAL)
 # =============================================================
 with tab_eval:
+    # Notification d'achèvement à 100 % si toutes les paires sont annotées
+    if nb_annotated >= total_user_pairs and total_user_pairs > 0:
+        st.success(
+            f"🎉 **Félicitations {annotator_display_name} !** Toutes vos {total_user_pairs} phrases assignées ont été annotées et enregistrées avec succès. "
+            "Vous pouvez naviguer librement pour relire ou ajuster vos choix si nécessaire."
+        )
+    if st.session_state.get(f"completed_toast_{annotator_key}", False):
+        st.toast("🎉 Toutes vos phrases assignées sont désormais 100 % annotées !", icon="✅")
+        st.session_state[f"completed_toast_{annotator_key}"] = False
+
     current_row = user_pairs.iloc[current_idx]
     pair_id = current_row["pair_id"]
     cefr_lvl = current_row["cefr_level"]
@@ -636,10 +649,18 @@ with tab_eval:
                 meaning_preservation_b=pres_b,
                 notes="",
             )
-            updated_annotated_ids = set(annotated_pair_ids) | {str(pair_id)}
-            st.session_state[session_key] = get_next_unannotated_index(
+            updated_annotated_ids = {
+                str(x).strip() for x in annotated_pair_ids
+            } | {str(pair_id).strip()}
+            next_idx = get_next_unannotated_index(
                 user_pairs, updated_annotated_ids, current_idx
             )
+            if next_idx is not None:
+                st.session_state[session_key] = next_idx
+            else:
+                # 100 % des paires sont annotées pour cet annotateur
+                st.session_state[session_key] = current_idx
+                st.session_state[f"completed_toast_{annotator_key}"] = True
             st.rerun()
 
     # Discret lien de retour pour la navigation réversible sans encombrer la vue

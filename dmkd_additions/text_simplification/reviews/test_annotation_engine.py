@@ -108,14 +108,42 @@ def test_get_next_unannotated_index():
     annotated_2 = {"P001", "P003", "P004", "P005"}
     assert get_next_unannotated_index(df_pairs, annotated_2, current_idx=3) == 1
 
-    # Cas 3 : Cas 100% complet (toutes les paires sont annotées -> retourne min(current_idx + 1, len - 1))
+    # Cas 3 : Cas 100% complet (toutes les paires sont annotées -> retourne None pour signaler la fin)
     annotated_all = {"P001", "P002", "P003", "P004", "P005"}
-    assert get_next_unannotated_index(df_pairs, annotated_all, current_idx=2) == 3
-    assert get_next_unannotated_index(df_pairs, annotated_all, current_idx=4) == 4
+    assert get_next_unannotated_index(df_pairs, annotated_all, current_idx=2) is None
+    assert get_next_unannotated_index(df_pairs, annotated_all, current_idx=4) is None
 
     # Cas 4 : Cas bord avec DataFrame vide
     empty_df = pd.DataFrame(columns=["pair_id"])
-    assert get_next_unannotated_index(empty_df, set(), 0) == 0
+    assert get_next_unannotated_index(empty_df, set(), 0) is None
+
+    # Cas 5 : Cas unitaire Henri Jamet (100 paires 0..99 toutes remplies sauf 12, 47 et 83)
+    # Les paires sont identifiées de P000 à P099 (index 0..99)
+    df_100 = pd.DataFrame([{"pair_id": f"P{i:03d}"} for i in range(100)])
+    unannotated_indices = {12, 47, 83}
+    all_annotated_except_3 = {
+        f"P{i:03d}" for i in range(100) if i not in unannotated_indices
+    }
+
+    # Depuis la paire 12 qu'on vient d'enregistrer -> saut direct à 47
+    ann_after_12 = all_annotated_except_3 | {"P012"}
+    next_after_12 = get_next_unannotated_index(df_100, ann_after_12, current_idx=12)
+    assert next_after_12 == 47, f"Attendu 47, obtenu {next_after_12}"
+
+    # Depuis la paire 47 qu'on vient d'enregistrer -> saut direct à 83
+    ann_after_47 = ann_after_12 | {"P047"}
+    next_after_47 = get_next_unannotated_index(df_100, ann_after_47, current_idx=47)
+    assert next_after_47 == 83, f"Attendu 83, obtenu {next_after_47}"
+
+    # Depuis la paire 83 qu'on vient d'enregistrer -> tout est terminé (None)
+    ann_after_83 = ann_after_47 | {"P083"}
+    next_after_83 = get_next_unannotated_index(df_100, ann_after_83, current_idx=83)
+    assert next_after_83 is None, f"Attendu None (terminé), obtenu {next_after_83}"
+
+    # Cas 6 : Bouclage circulaire si l'index courant est après la paire non remplie
+    ann_only_12_missing = {f"P{i:03d}" for i in range(100) if i != 12}
+    next_wrap = get_next_unannotated_index(df_100, ann_only_12_missing, current_idx=90)
+    assert next_wrap == 12, f"Attendu 12 après bouclage circulaire, obtenu {next_wrap}"
 
 
 def test_engine_suite():
