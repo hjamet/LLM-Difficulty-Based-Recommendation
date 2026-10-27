@@ -1416,31 +1416,36 @@ def generate_latex_human_study_macros(
 
 
 def get_next_unannotated_index(
-    user_pairs: pd.DataFrame, annotated_pair_ids: set[str], current_idx: int
-) -> int:
+    user_pairs: pd.DataFrame,
+    annotated_pair_ids: set[str],
+    current_idx: int,
+) -> Optional[int]:
     """Calcule l'index de la prochaine paire non annotée pour la navigation.
 
     - Cherche d'abord le premier indice idx dans range(current_idx + 1, len(user_pairs))
-      tel que str(user_pairs.iloc[idx]["pair_id"]) not in annotated_pair_ids.
+      tel que str(user_pairs.iloc[idx]["pair_id"]).strip() not in clean_annotated.
     - S'il n'y en a pas après current_idx, cherche dans range(0, min(current_idx + 1, len(user_pairs)))
-      tel que str(user_pairs.iloc[idx]["pair_id"]) not in annotated_pair_ids.
-    - Si toutes les paires sont annotées, retourne min(current_idx + 1, max(0, len(user_pairs) - 1)).
+      tel que str(user_pairs.iloc[idx]["pair_id"]).strip() not in clean_annotated.
+    - Si toutes les paires sont annotées (100 % remplies), retourne None pour signaler
+      clairement que tout est terminé (aucun saut vers une paire déjà annotée).
     """
     n_pairs = len(user_pairs)
     if n_pairs == 0:
-        return 0
+        return None
 
-    # 1. Après current_idx
+    clean_annotated = {str(pid).strip() for pid in annotated_pair_ids}
+
+    # 1. Après current_idx (current_idx + 1 .. n_pairs - 1)
     for idx in range(current_idx + 1, n_pairs):
         pid = str(user_pairs.iloc[idx]["pair_id"]).strip()
-        if pid not in annotated_pair_ids:
+        if pid not in clean_annotated:
             return idx
 
-    # 2. Avant ou à current_idx (bouclage au début)
+    # 2. Avant ou à current_idx (bouclage depuis le début 0 .. current_idx)
     for idx in range(0, min(current_idx + 1, n_pairs)):
         pid = str(user_pairs.iloc[idx]["pair_id"]).strip()
-        if pid not in annotated_pair_ids:
+        if pid not in clean_annotated:
             return idx
 
-    # 3. Toutes les paires de user_pairs sont déjà annotées
-    return min(current_idx + 1, max(0, n_pairs - 1))
+    # 3. Toutes les paires de user_pairs sont déjà annotées (complètes à 100 %)
+    return None
