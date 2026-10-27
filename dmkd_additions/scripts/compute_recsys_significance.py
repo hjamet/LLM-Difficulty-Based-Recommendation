@@ -2,11 +2,15 @@
 compute_recsys_significance.py - Statistical Significance Engine for Recommender Systems (DMKD Revision).
 
 Performs rigorous statistical evaluation of recommendation models:
-1. Non-parametric bootstrap standard errors (SE) and 95% Confidence Intervals for user-level metrics.
-2. Paired Wilcoxon signed-rank tests and paired t-tests evaluating statistical significance against baselines.
-3. Holm-Bonferroni step-down family-wise error rate correction with publication-ready LaTeX markers.
+1. Deterministic analytical upper bounds on Standard Error via Bhatia-Davis (2000) inequality:
+   SE_max = sqrt(mu * (1 - mu) / N), CI_95_max = [max(0, mu - 1.96*SE_max), min(1, mu + 1.96*SE_max)]
+2. Real user-level statistical evaluation from CSV (--input-csv):
+   - Non-parametric bootstrap standard errors (SE) and 95% Confidence Intervals.
+   - Paired Wilcoxon signed-rank tests and paired Student's t-tests.
+   - Holm-Bonferroni step-down family-wise error rate correction.
+3. Utility export function export_notebook_metrics_to_user_csv for 1-line integration
+   at the end of recommender_system/c_Recommendations.ipynb.
 4. Export of results in JSON, CSV, and LaTeX snippet format matching Table 8 of the paper.
-5. Flexible CLI supporting per-user evaluation, synthetic/historical runs, CSV/JSON inputs, and LaTeX table export.
 """
 
 from __future__ import annotations
@@ -107,6 +111,47 @@ MODELS_ORDER: list[str] = [
     "LightGCN BERT",
     "LightGCN Xavier BERT",
 ]
+
+
+def compute_bhatia_davis_se_bound(
+    mean_score: float,
+    n_users: int,
+) -> tuple[float, tuple[float, float]]:
+    """
+    Compute deterministic analytical upper bound on Standard Error and 95% CI
+    via the Bhatia-Davis (2000) inequality for bounded random variables in [0, 1].
+
+    For any metric X_u in [0, 1] with mean mu in [0, 1] over N users:
+        Var(X_u) <= mu * (1 - mu)
+        SE_max = sqrt(mu * (1 - mu) / N)
+        CI_95_max = [max(0.0, mu - 1.96 * SE_max), min(1.0, mu + 1.96 * SE_max)]
+
+    Args:
+        mean_score: Metric mean score in [0.0, 1.0].
+        n_users: Number of users N (must be >= 1).
+
+    Returns:
+        tuple[float, tuple[float, float]]:
+            - se_max: Maximum possible standard error sqrt(mu * (1 - mu) / N).
+            - (ci_low, ci_high): 95% Confidence Interval upper bounds clipped to [0, 1].
+
+    Raises:
+        ValueError: If n_users <= 0 or mean_score is not in [0.0, 1.0] or not finite.
+    """
+    if n_users <= 0:
+        raise ValueError(f"n_users must be positive, got {n_users}")
+    if not np.isfinite(mean_score):
+        raise ValueError(f"mean_score must be a finite number, got {mean_score}")
+    if mean_score < 0.0 or mean_score > 1.0:
+        raise ValueError(f"mean_score must be in [0, 1], got {mean_score}")
+
+    if mean_score == 0.0 or mean_score == 1.0:
+        return 0.0, (float(mean_score), float(mean_score))
+
+    se_max = float(np.sqrt(mean_score * (1.0 - mean_score) / n_users))
+    ci_low = float(max(0.0, mean_score - 1.96 * se_max))
+    ci_high = float(min(1.0, mean_score + 1.96 * se_max))
+    return se_max, (ci_low, ci_high)
 
 
 def compute_bootstrap_se(
@@ -253,13 +298,6 @@ def apply_holm_bonferroni(
 
     Returns:
         list[dict[str, Any]]: Ordered list corresponding to the original p_values sequence.
-            Each item has keys:
-                - index: Original index.
-                - p_raw: Original raw p-value.
-                - p_adj: Adjusted p-value (monotonic step-down).
-                - rejected: Boolean indicating whether H0 is rejected.
-                - rank: 1-based rank in sorted p-values.
-                - latex_marker: String LaTeX marker ('^{***}', '^{**}', '^{*}', or 'ns').
     """
     m = len(p_values)
     if m == 0:
@@ -271,7 +309,6 @@ def apply_holm_bonferroni(
     adjusted = [0.0] * m
     running_max = 0.0
 
-    # Step-down computation: p_adj(k) = min(1.0, max(p_adj(k-1), (m - k + 1) * p(k)))
     for rank_idx, (orig_idx, p_val) in enumerate(sorted_pairs):
         k = rank_idx + 1  # 1-indexed
         raw_p = float(p_val)
@@ -280,7 +317,6 @@ def apply_holm_bonferroni(
         adj_p = min(1.0, running_max)
         adjusted[rank_idx] = (orig_idx, raw_p, adj_p, k)
 
-    # Re-order to original indices and assign markers
     results: list[dict[str, Any]] = [{} for _ in range(m)]  # type: ignore
     for orig_idx, raw_p, adj_p, rank in adjusted:
         rejected = bool(adj_p < alpha)
@@ -315,10 +351,6 @@ def format_metric_with_se_and_sig(
 ) -> str:
     r"""
     Format metric as $\mu \pm \text{SE}$ with optional LaTeX bolding and significance marker.
-
-    Example:
-        format_metric_with_se_and_sig(0.0721, 0.0034, marker="^{*}", bold=True)
-        -> "\\textbf{0.0721 \\pm 0.0034}^{*}"
     """
     val_str = f"{mean:.{decimals}f}"
     se_str = f"{se:.{decimals}f}"
@@ -335,38 +367,50 @@ def format_metric_with_se_and_sig(
     return core
 
 
-def simulate_user_scores_from_summary(
-    mean_score: float,
-    n_users: int,
-    seed: int = 42,
-    dispersion_factor: float = 0.5,
-) -> np.ndarray:
+def compute_bhatia_davis_bounds_table(
+    table_data: dict[str, dict[str, dict[str, float]]] = TABLE_8_DATA,
+    user_counts: dict[str, int] = DATASET_USER_COUNTS,
+) -> dict[str, Any]:
     """
-    Simulate user-level scores matching the exact published mean and cohort size N.
-    Uses Beta distribution bounded in [0, 1] with mean preservation:
-        alpha = mean * (1 - mean) / var - 1
-    This provides rigorous statistical grounds for bootstrap SE estimation when raw per-user logs
-    are not stored in the repository.
+    Calculate deterministic Bhatia-Davis analytical upper bounds on SE and 95% CI
+    for published Table 8 metrics across all datasets and models.
+
+    Because user-level metrics X_u in [0, 1], the population variance is bounded by:
+        Var(X_u) <= mu * (1 - mu)   [Bhatia-Davis, 2000]
+    giving deterministic SE upper bound:
+        SE_max = sqrt(mu * (1 - mu) / N_users)
     """
-    if n_users <= 0:
-        raise ValueError("n_users must be positive.")
-    if mean_score <= 0.0:
-        return np.zeros(n_users, dtype=float)
-    if mean_score >= 1.0:
-        return np.ones(n_users, dtype=float)
+    results: dict[str, Any] = {
+        "mode": "bhatia_davis_analytical_upper_bound",
+        "description": "Deterministic Bhatia-Davis analytical upper bounds on standard error (SE_max = sqrt(mu*(1-mu)/N)) and 95% CI.",
+        "datasets": {},
+        "summary": {
+            "datasets_analyzed": list(table_data.keys()),
+            "inequality": "Bhatia-Davis (2000): Var(X) <= mu * (1 - mu)",
+        },
+    }
 
-    rng = np.random.default_rng(seed)
-    max_var = mean_score * (1.0 - mean_score)
-    var = max_var * (dispersion_factor ** 2)
-    var = max(1e-6, min(var, max_var - 1e-6))
+    for dataset_name, models_dict in table_data.items():
+        n_users = user_counts.get(dataset_name, 1000)
+        ds_results: dict[str, Any] = {"n_users": n_users, "models": {}}
 
-    kappa = (max_var / var) - 1.0
-    alpha = max(1e-2, mean_score * kappa)
-    beta_param = max(1e-2, (1.0 - mean_score) * kappa)
+        for model_name, metrics in models_dict.items():
+            ds_results["models"][model_name] = {}
+            for metric_name in METRICS_ORDER:
+                mean_val = metrics.get(metric_name, 0.0)
+                se_max, (ci_low, ci_high) = compute_bhatia_davis_se_bound(mean_val, n_users)
+                ds_results["models"][model_name][metric_name] = {
+                    "mean": mean_val,
+                    "se_max": se_max,
+                    "se": se_max,  # alias
+                    "ci95_low": ci_low,
+                    "ci95_high": ci_high,
+                    "bound_type": "bhatia_davis_upper_bound",
+                }
 
-    samples = rng.beta(alpha, beta_param, size=n_users)
-    calibrated = samples * (mean_score / np.mean(samples))
-    return np.clip(calibrated, 0.0, 1.0)
+        results["datasets"][dataset_name] = ds_results
+
+    return results
 
 
 def evaluate_table_significance(
@@ -376,83 +420,210 @@ def evaluate_table_significance(
     seed: int = 42,
 ) -> dict[str, Any]:
     """
-    Run full statistical evaluation across all datasets and models in Table 8.
-    Calculates bootstrap SE and Wilcoxon/paired t-test significance with Holm-Bonferroni correction.
+    Deterministic evaluation for Table 8 data using Bhatia-Davis analytical bounds.
+    Maintains compatibility with test suites and callers without synthetic score simulation.
     """
+    return compute_bhatia_davis_bounds_table(table_data=table_data, user_counts=user_counts)
+
+
+def evaluate_from_user_csv(
+    df_user: pd.DataFrame,
+    n_boot: int = 1000,
+    seed: int = 42,
+    alpha: float = 0.05,
+) -> dict[str, Any]:
+    """
+    Perform rigorous user-level statistical evaluation from a real per-user evaluation DataFrame.
+
+    Expects columns:
+        - 'dataset': dataset identifier (e.g., 'Zeeguu', 'ml-100k')
+        - 'model': model name (e.g., 'LightGCN ADA', 'LightGCN Xavier ADA')
+        - 'user_id': user identifier for pairing
+        - metric columns: e.g., 'Recall@5', 'Precision@5', 'F1@5', 'NDCG@5', 'MRR@5', 'MAP@5'
+
+    Computes:
+        1. Bootstrap SE and 95% CI per model and metric.
+        2. Paired Wilcoxon signed-rank and paired t-tests between models aligned on user_id.
+        3. Holm-Bonferroni step-down correction on paired tests.
+    """
+    required_cols = {"dataset", "model", "user_id"}
+    missing = required_cols - set(df_user.columns)
+    if missing:
+        raise ValueError(f"df_user is missing required columns: {sorted(missing)}")
+
+    metric_cols = [c for c in METRICS_ORDER if c in df_user.columns]
+    if not metric_cols:
+        metric_cols = [c for c in df_user.columns if c not in required_cols and pd.api.types.is_numeric_dtype(df_user[c])]
+    if not metric_cols:
+        raise ValueError("No numeric metric columns found in df_user.")
+
     results: dict[str, Any] = {
+        "mode": "user_level_evaluation",
         "datasets": {},
-        "summary": {},
+        "summary": {
+            "n_datasets": int(df_user["dataset"].nunique()),
+            "total_rows": int(len(df_user)),
+            "metric_columns": metric_cols,
+        },
     }
 
-    for dataset_name, models_dict in table_data.items():
-        n_users = user_counts.get(dataset_name, 1000)
-        logger.info("Evaluating dataset: %s (N_users = %d)", dataset_name, n_users)
+    for ds_name, df_ds in df_user.groupby("dataset"):
+        ds_name_str = str(ds_name)
         ds_results: dict[str, Any] = {"models": {}, "comparisons": {}}
 
-        user_scores_dict: dict[str, dict[str, np.ndarray]] = {}
-        model_bootstrap_stats: dict[str, dict[str, dict[str, float]]] = {}
-
-        for m_idx, (model_name, metrics) in enumerate(models_dict.items()):
-            user_scores_dict[model_name] = {}
-            model_bootstrap_stats[model_name] = {}
-
-            for met_idx, (metric_name, mean_val) in enumerate(metrics.items()):
-                sub_seed = seed + hash(f"{dataset_name}_{model_name}_{metric_name}") % 100000
-                scores = simulate_user_scores_from_summary(
-                    mean_val, n_users, seed=sub_seed
-                )
-                user_scores_dict[model_name][metric_name] = scores
-
-                m_val, se, ci_l, ci_h = compute_bootstrap_se(
-                    scores, n_boot=n_boot, seed=sub_seed
-                )
-                model_bootstrap_stats[model_name][metric_name] = {
-                    "mean": m_val,
+        models = list(df_ds["model"].unique())
+        for model_name in models:
+            df_m = df_ds[df_ds["model"] == model_name]
+            ds_results["models"][model_name] = {}
+            for metric in metric_cols:
+                scores = df_m[metric].dropna().values.astype(float)
+                if len(scores) == 0:
+                    continue
+                mean_val, se, ci_l, ci_h = compute_bootstrap_se(scores, n_boot=n_boot, seed=seed)
+                ds_results["models"][model_name][metric] = {
+                    "mean": mean_val,
                     "se": se,
                     "ci95_low": ci_l,
                     "ci95_high": ci_h,
+                    "n_users": int(len(scores)),
                 }
 
-        ds_results["models"] = model_bootstrap_stats
-
+        # Comparisons plan
         comparisons_plan = [
             ("LightGCN ADA", "LightGCN Xavier ADA"),
             ("LightGCN BERT", "LightGCN Xavier BERT"),
             ("LightGCN ADA", "ALS"),
             ("LightGCN BERT", "ALS"),
         ]
+        active_pairs = [(c, b) for c, b in comparisons_plan if c in models and b in models]
+        if not active_pairs and len(models) >= 2:
+            # Pair each subsequent model against the baseline model (index 0)
+            active_pairs = [(models[i], models[0]) for i in range(1, len(models))]
 
         comp_results: dict[str, Any] = {}
-        for cand, base in comparisons_plan:
-            if cand not in user_scores_dict or base not in user_scores_dict:
-                continue
+        for cand, base in active_pairs:
             pair_key = f"{cand} vs {base}"
             comp_results[pair_key] = {}
+            df_cand = df_ds[df_ds["model"] == cand]
+            df_base = df_ds[df_ds["model"] == base]
 
             raw_p_values = []
-            metrics_list = []
+            valid_metrics = []
             stats_list = []
 
-            for metric_name in METRICS_ORDER:
-                if metric_name in user_scores_dict[cand] and metric_name in user_scores_dict[base]:
-                    s_cand = user_scores_dict[cand][metric_name]
-                    s_base = user_scores_dict[base][metric_name]
-                    sig = compute_paired_significance(s_cand, s_base)
-                    raw_p_values.append(sig["wilcoxon_p"])
-                    metrics_list.append(metric_name)
-                    stats_list.append(sig)
+            for metric in metric_cols:
+                m_cand = df_cand[["user_id", metric]].dropna()
+                m_base = df_base[["user_id", metric]].dropna()
+                merged = pd.merge(m_cand, m_base, on="user_id", suffixes=("_cand", "_base"))
+                if len(merged) < 2:
+                    continue
+                s_cand = merged[f"{metric}_cand"].values.astype(float)
+                s_base = merged[f"{metric}_base"].values.astype(float)
+                sig = compute_paired_significance(s_cand, s_base)
+                raw_p_values.append(sig["wilcoxon_p"])
+                valid_metrics.append(metric)
+                stats_list.append(sig)
 
-            adj_results = apply_holm_bonferroni(raw_p_values)
-            for m_name, stat_item, adj_item in zip(metrics_list, stats_list, adj_results):
-                comp_results[pair_key][m_name] = {
-                    **stat_item,
-                    **adj_item,
-                }
+            if raw_p_values:
+                adj_results = apply_holm_bonferroni(raw_p_values, alpha=alpha)
+                for m_name, stat_item, adj_item in zip(valid_metrics, stats_list, adj_results):
+                    comp_results[pair_key][m_name] = {
+                        **stat_item,
+                        **adj_item,
+                    }
 
         ds_results["comparisons"] = comp_results
-        results["datasets"][dataset_name] = ds_results
+        results["datasets"][ds_name_str] = ds_results
 
     return results
+
+
+def export_notebook_metrics_to_user_csv(
+    evaluation_dict: dict[str, Any],
+    output_csv_path: str = "",
+    dataset: str = "Zeeguu",
+    model: str = "LightGCN ADA",
+    user_ids: Optional[Sequence[Any]] = None,
+) -> pd.DataFrame:
+    """
+    Utility function to export per-user metric lists from recommender_system/c_Recommendations.ipynb
+    (Cell 13 output: 'ndcgs', 'rrs', 'aps', 'recalls', 'precisions', 'f1s')
+    to the standardized per-user CSV format expected by evaluate_from_user_csv and --input-csv.
+
+    Args:
+        evaluation_dict: Dictionary returned by Cell 13 of c_Recommendations.ipynb.
+        output_csv_path: Destination CSV file path. If empty, returns DataFrame without writing.
+        dataset: Dataset label (default: 'Zeeguu').
+        model: Model label (default: 'LightGCN ADA').
+        user_ids: Optional sequence of user IDs. If None, 0..N-1 is used.
+
+    Returns:
+        pd.DataFrame: Exported DataFrame with columns:
+            dataset, model, user_id, Recall@5, Precision@5, F1@5, NDCG@5, MRR@5, MAP@5.
+    """
+    # Check if evaluation_dict is multi-model: {model_name: eval_dict}
+    if evaluation_dict:
+        first_val = next(iter(evaluation_dict.values()))
+        if isinstance(first_val, dict) and any(k in first_val for k in ("ndcgs", "recalls", "rrs")):
+            frames = []
+            for m_name, sub_dict in evaluation_dict.items():
+                f = export_notebook_metrics_to_user_csv(
+                    sub_dict, output_csv_path="", dataset=dataset, model=m_name, user_ids=user_ids
+                )
+                frames.append(f)
+            merged_df = pd.concat(frames, ignore_index=True)
+            if output_csv_path:
+                os.makedirs(os.path.dirname(os.path.abspath(output_csv_path)), exist_ok=True)
+                merged_df.to_csv(output_csv_path, index=False)
+                logger.info("Exported multi-model user CSV to %s (%d rows)", output_csv_path, len(merged_df))
+            return merged_df
+
+    key_mapping = {
+        "Recall@5": "recalls",
+        "Precision@5": "precisions",
+        "F1@5": "f1s",
+        "NDCG@5": "ndcgs",
+        "MRR@5": "rrs",
+        "MAP@5": "aps",
+    }
+
+    extracted_cols = {}
+    n_users = 0
+    for col_name, dict_key in key_mapping.items():
+        if dict_key in evaluation_dict and evaluation_dict[dict_key] is not None:
+            vals = list(evaluation_dict[dict_key])
+            extracted_cols[col_name] = vals
+            n_users = max(n_users, len(vals))
+
+    if n_users == 0:
+        raise ValueError("evaluation_dict does not contain any recognizable per-user metric lists (recalls, ndcgs, etc.).")
+
+    # Align metrics to common length
+    for col_name in key_mapping:
+        if col_name not in extracted_cols:
+            extracted_cols[col_name] = [0.0] * n_users
+        elif len(extracted_cols[col_name]) < n_users:
+            extracted_cols[col_name].extend([0.0] * (n_users - len(extracted_cols[col_name])))
+
+    if user_ids is None:
+        user_ids = list(range(n_users))
+    elif len(user_ids) < n_users:
+        user_ids = list(user_ids) + list(range(len(user_ids), n_users))
+
+    data = {
+        "dataset": [dataset] * n_users,
+        "model": [model] * n_users,
+        "user_id": list(user_ids)[:n_users],
+        **extracted_cols,
+    }
+    df = pd.DataFrame(data)
+
+    if output_csv_path:
+        os.makedirs(os.path.dirname(os.path.abspath(output_csv_path)), exist_ok=True)
+        df.to_csv(output_csv_path, index=False)
+        logger.info("Exported notebook metrics to user CSV: %s (%d rows)", output_csv_path, len(df))
+
+    return df
 
 
 def export_results_to_csv(
@@ -461,39 +632,58 @@ def export_results_to_csv(
 ) -> pd.DataFrame:
     """
     Export flattened statistical results table to CSV.
+    Supports both Bhatia-Davis analytical upper bounds and user-level evaluation modes.
     """
+    mode = evaluation_results.get("mode", "bhatia_davis_analytical_upper_bound")
     rows = []
+
     for ds_name, ds_info in evaluation_results["datasets"].items():
+        n_users = ds_info.get("n_users", 0)
         models_info = ds_info.get("models", {})
         comparisons = ds_info.get("comparisons", {})
+
         for model_name, metrics_dict in models_info.items():
             for metric_name, m_stats in metrics_dict.items():
-                marker = ""
-                p_adj = np.nan
-                p_raw = np.nan
-                if model_name == "LightGCN ADA":
-                    comp = comparisons.get("LightGCN ADA vs LightGCN Xavier ADA", {}).get(metric_name, {})
-                    marker = comp.get("latex_marker", "")
-                    p_adj = comp.get("p_adj", np.nan)
-                    p_raw = comp.get("p_raw", np.nan)
-                elif model_name == "LightGCN BERT":
-                    comp = comparisons.get("LightGCN BERT vs LightGCN Xavier BERT", {}).get(metric_name, {})
-                    marker = comp.get("latex_marker", "")
-                    p_adj = comp.get("p_adj", np.nan)
-                    p_raw = comp.get("p_raw", np.nan)
+                if mode == "bhatia_davis_analytical_upper_bound":
+                    rows.append({
+                        "dataset": ds_name,
+                        "model": model_name,
+                        "metric": metric_name,
+                        "mean": m_stats["mean"],
+                        "n_users": n_users,
+                        "se_max_bhatia_davis": m_stats.get("se_max", m_stats.get("se", 0.0)),
+                        "ci95_low": m_stats["ci95_low"],
+                        "ci95_high": m_stats["ci95_high"],
+                        "bound_type": m_stats.get("bound_type", "bhatia_davis_upper_bound"),
+                    })
+                else:
+                    # User-level evaluation mode
+                    marker = ""
+                    p_adj = np.nan
+                    p_raw = np.nan
+                    if model_name == "LightGCN ADA":
+                        comp = comparisons.get("LightGCN ADA vs LightGCN Xavier ADA", {}).get(metric_name, {})
+                        marker = comp.get("latex_marker", "")
+                        p_adj = comp.get("p_adj", np.nan)
+                        p_raw = comp.get("p_raw", np.nan)
+                    elif model_name == "LightGCN BERT":
+                        comp = comparisons.get("LightGCN BERT vs LightGCN Xavier BERT", {}).get(metric_name, {})
+                        marker = comp.get("latex_marker", "")
+                        p_adj = comp.get("p_adj", np.nan)
+                        p_raw = comp.get("p_raw", np.nan)
 
-                rows.append({
-                    "dataset": ds_name,
-                    "model": model_name,
-                    "metric": metric_name,
-                    "mean": m_stats["mean"],
-                    "se": m_stats["se"],
-                    "ci95_low": m_stats["ci95_low"],
-                    "ci95_high": m_stats["ci95_high"],
-                    "p_raw_vs_xavier": p_raw,
-                    "p_adj_holm": p_adj,
-                    "significance_marker": marker,
-                })
+                    rows.append({
+                        "dataset": ds_name,
+                        "model": model_name,
+                        "metric": metric_name,
+                        "mean": m_stats["mean"],
+                        "se": m_stats["se"],
+                        "ci95_low": m_stats["ci95_low"],
+                        "ci95_high": m_stats["ci95_high"],
+                        "p_raw_vs_xavier": p_raw,
+                        "p_adj_holm": p_adj,
+                        "significance_marker": marker,
+                    })
 
     df = pd.DataFrame(rows)
     os.makedirs(os.path.dirname(os.path.abspath(csv_path)), exist_ok=True)
@@ -508,13 +698,22 @@ def build_latex_table_snippet(
     decimals: int = 4,
 ) -> str:
     r"""
-    Generate LaTeX snippet for Table 8 with $\mu \pm \text{SE}$ and Holm-Bonferroni significance markers.
+    Generate LaTeX snippet for Table 8 matching publication style.
     """
+    mode = evaluation_results.get("mode", "bhatia_davis_analytical_upper_bound")
     lines: list[str] = []
-    lines.append("% Statistical Evaluation of Recommendation Models with Bootstrap SE & Holm-Bonferroni")
-    lines.append("\\begin{table*}[t]")
-    lines.append("\\centering")
-    lines.append(r"\caption{Evaluation results ($\mu \pm \text{SE}$ over $N$ users, with bootstrap $B=1000$). Asterisks indicate statistical significance over the respective Xavier baseline via paired Wilcoxon signed-rank test with Holm-Bonferroni FWER control ($^{*}p_{\text{adj}}<0.05$, $^{**}p_{\text{adj}}<0.01$, $^{***}p_{\text{adj}}<0.001$).}")
+
+    if mode == "bhatia_davis_analytical_upper_bound":
+        lines.append("% Table 8: Evaluation results with deterministic Bhatia-Davis analytical upper bounds")
+        lines.append("\\begin{table*}[t]")
+        lines.append("\\centering")
+        lines.append(r"\caption{Evaluation results ($\mu \pm \text{SE}_{\max}$ over $N$ users, with deterministic Bhatia--Davis analytical upper bound $\text{SE}_{\max} = \sqrt{\hat{\mu}(1 - \hat{\mu})/N}$).}")
+    else:
+        lines.append("% Statistical Evaluation of Recommendation Models with Bootstrap SE & Holm-Bonferroni")
+        lines.append("\\begin{table*}[t]")
+        lines.append("\\centering")
+        lines.append(r"\caption{Evaluation results ($\mu \pm \text{SE}$ over $N$ users, with bootstrap $B=1000$). Asterisks indicate statistical significance over the respective Xavier baseline via paired Wilcoxon signed-rank test with Holm-Bonferroni FWER control ($^{*}p_{\text{adj}}<0.05$, $^{**}p_{\text{adj}}<0.01$, $^{***}p_{\text{adj}}<0.001$).}")
+
     lines.append("\\label{tab:evaluation_results_significance}")
     lines.append("\\tiny")
     lines.append("\\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}} l l cccccc}")
@@ -546,16 +745,18 @@ def build_latex_table_snippet(
 
             for met_name in METRICS_ORDER:
                 mean_val = models_dict[model_name].get(met_name, 0.0)
-                se_val = models_stats.get(model_name, {}).get(met_name, {}).get("se", 0.0)
+                m_info = models_stats.get(model_name, {}).get(met_name, {})
+                se_val = m_info.get("se_max", m_info.get("se", 0.0))
                 is_best = (abs(mean_val - best_vals[met_name]) < 1e-6)
 
                 marker = ""
-                if model_name == "LightGCN ADA":
-                    comp_ada = comparisons.get("LightGCN ADA vs LightGCN Xavier ADA", {}).get(met_name, {})
-                    marker = comp_ada.get("latex_marker", "")
-                elif model_name == "LightGCN BERT":
-                    comp_bert = comparisons.get("LightGCN BERT vs LightGCN Xavier BERT", {}).get(met_name, {})
-                    marker = comp_bert.get("latex_marker", "")
+                if mode != "bhatia_davis_analytical_upper_bound":
+                    if model_name == "LightGCN ADA":
+                        comp_ada = comparisons.get("LightGCN ADA vs LightGCN Xavier ADA", {}).get(met_name, {})
+                        marker = comp_ada.get("latex_marker", "")
+                    elif model_name == "LightGCN BERT":
+                        comp_bert = comparisons.get("LightGCN BERT vs LightGCN Xavier BERT", {}).get(met_name, {})
+                        marker = comp_bert.get("latex_marker", "")
 
                 formatted_cell = format_metric_with_se_and_sig(
                     mean_val, se_val, marker=marker, bold=is_best, decimals=decimals
@@ -576,42 +777,43 @@ def build_latex_table_snippet(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Compute Statistical Significance for Recommender Systems (DMKD Revision)."
+        description="Compute Statistical Significance or Bhatia-Davis Analytical Bounds for Recommender Systems (DMKD Revision)."
     )
     parser.add_argument(
         "--input-csv",
         type=str,
         default=None,
-        help="Path to per-user evaluation CSV containing columns: user_id, model, dataset, and metrics.",
+        help="Path to real per-user evaluation CSV containing columns: user_id, model, dataset, and metrics.",
     )
     parser.add_argument(
-        "--from-hf",
+        "--analytical-bounds",
         action="store_true",
-        help="Use downloaded HuggingFace OloriBern/FLDE datasets in results/recommendation/ if available.",
+        default=False,
+        help="Compute deterministic Bhatia-Davis analytical SE upper bounds on Table 8 data.",
     )
     parser.add_argument(
         "--export-latex",
         type=str,
-        default="dmkd_additions/results/recsys_significance_table.tex",
-        help="Output path for LaTeX table snippet.",
+        default=None,
+        help="Optional output path for LaTeX table snippet.",
     )
     parser.add_argument(
         "--export-json",
         type=str,
-        default="dmkd_additions/results/recsys_significance_results.json",
+        default=None,
         help="Output path for JSON results.",
     )
     parser.add_argument(
         "--export-csv",
         type=str,
-        default="dmkd_additions/results/recsys_significance_results.csv",
+        default=None,
         help="Output path for CSV results.",
     )
     parser.add_argument(
         "--n-boot",
         type=int,
         default=1000,
-        help="Number of bootstrap iterations for SE computation (default: 1000).",
+        help="Number of bootstrap iterations for SE computation when evaluating per-user CSV (default: 1000).",
     )
     parser.add_argument(
         "--seed",
@@ -626,39 +828,50 @@ def main() -> None:
     args = parse_args()
     logger.info("Initializing RecSys Statistical Significance Engine...")
 
-    os.makedirs(os.path.dirname(os.path.abspath(args.export_latex)), exist_ok=True)
-    os.makedirs(os.path.dirname(os.path.abspath(args.export_json)), exist_ok=True)
-    os.makedirs(os.path.dirname(os.path.abspath(args.export_csv)), exist_ok=True)
-
     if args.input_csv and os.path.exists(args.input_csv):
-        logger.info("Loading per-user evaluation data from CSV: %s", args.input_csv)
+        logger.info("Operating in USER-LEVEL EVALUATION mode with real CSV: %s", args.input_csv)
         df_user = pd.read_csv(args.input_csv)
         logger.info("Loaded CSV with %d rows and columns: %s", len(df_user), list(df_user.columns))
 
-    logger.info("Computing statistical significance and bootstrap SE for Table 8...")
-    evaluation_results = evaluate_table_significance(
-        table_data=TABLE_8_DATA,
-        user_counts=DATASET_USER_COUNTS,
-        n_boot=args.n_boot,
-        seed=args.seed,
-    )
+        json_out = args.export_json or "dmkd_additions/results/recsys_significance_results.json"
+        csv_out = args.export_csv or "dmkd_additions/results/recsys_significance_results.csv"
 
-    with open(args.export_json, "w", encoding="utf-8") as f:
+        evaluation_results = evaluate_from_user_csv(
+            df_user=df_user,
+            n_boot=args.n_boot,
+            seed=args.seed,
+        )
+    else:
+        logger.info("Operating in BHATIA-DAVIS DETERMINISTIC ANALYTICAL BOUNDS mode...")
+        json_out = args.export_json or "dmkd_additions/results/recsys_bhatia_davis_bounds.json"
+        csv_out = args.export_csv or "dmkd_additions/results/recsys_bhatia_davis_bounds.csv"
+
+        evaluation_results = compute_bhatia_davis_bounds_table(
+            table_data=TABLE_8_DATA,
+            user_counts=DATASET_USER_COUNTS,
+        )
+
+    os.makedirs(os.path.dirname(os.path.abspath(json_out)), exist_ok=True)
+    with open(json_out, "w", encoding="utf-8") as f:
         json.dump(evaluation_results, f, indent=2)
-    logger.info("Saved JSON results to %s", args.export_json)
+    logger.info("Saved JSON results to %s", json_out)
 
-    export_results_to_csv(evaluation_results, args.export_csv)
+    export_results_to_csv(evaluation_results, csv_out)
 
-    latex_snippet = build_latex_table_snippet(TABLE_8_DATA, evaluation_results)
-    with open(args.export_latex, "w", encoding="utf-8") as f:
-        f.write(latex_snippet)
-    logger.info("Saved LaTeX table snippet to %s", args.export_latex)
+    if args.export_latex:
+        os.makedirs(os.path.dirname(os.path.abspath(args.export_latex)), exist_ok=True)
+        latex_snippet = build_latex_table_snippet(TABLE_8_DATA, evaluation_results)
+        with open(args.export_latex, "w", encoding="utf-8") as f:
+            f.write(latex_snippet)
+        logger.info("Saved LaTeX table snippet to %s", args.export_latex)
 
     print("\n" + "=" * 60)
     print("RecSys Significance Computation Completed Successfully!")
-    print(f"JSON:  {args.export_json}")
-    print(f"CSV:   {args.export_csv}")
-    print(f"LaTeX: {args.export_latex}")
+    print(f"Mode:  {evaluation_results.get('mode')}")
+    print(f"JSON:  {json_out}")
+    print(f"CSV:   {csv_out}")
+    if args.export_latex:
+        print(f"LaTeX: {args.export_latex}")
     print("=" * 60)
 
 
