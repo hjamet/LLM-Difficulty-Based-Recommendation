@@ -44,7 +44,7 @@ def update_target_file(file_path: Path, macros_dict: Dict[str, str]) -> int:
 
     for key, val in macros_dict.items():
         pattern = re.compile(
-            r"(\\(?:newcommand|providecommand)\{\\" + re.escape(key) + r"\}\{)(?:.*?)(\})"
+            r"(\\(?:newcommand|providecommand)\{\\" + re.escape(key) + r"\}\{)(?:.*)(\})"
         )
         if pattern.search(content):
             def _repl(m: re.Match) -> str:
