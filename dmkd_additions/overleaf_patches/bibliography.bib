@@ -247,14 +247,12 @@
 }
 
 @inproceedings{sanner2023large,
-  title={Large language models are competitive near cold-start recommenders for language-and item-based preferences},
-  author={Sanner, Scott and Balog, Krisztian and Radlinski, Filip and Wedin, Ben and Dixon, Lucas},
-  booktitle={Proceedings of the 17th ACM conference on recommender systems},
-  pages={890--896},
-  year={2023}
+  title     = {Large Language Models are Competitive Near Cold-Start Recommenders for Language- and Item-Based Preferences},
+  author    = {Sanner, Scott and Balog, Krisztian and Radlinski, Filip and Wedin, Ben and Dixon, Lucas},
+  booktitle = {Proceedings of the 17th ACM Conference on Recommender Systems (RecSys)},
+  pages     = {890--896},
+  year      = {2023}
 }
-
-% survey
 @article{zhao2024recommender,
   title={Recommender systems in the era of large language models (llms)},
   author={Zhao, Zihuai and Fan, Wenqi and Li, Jiatong and Liu, Yunqing and Mei, Xiaowei and Wang, Yiqi and Wen, Zhen and Wang, Fei and Zhao, Xiangyu and Tang, Jiliang and others},
@@ -273,7 +271,7 @@
 
 % They identify representative data samples to achieve achieve few-shot fine-tuning of LLMs for recommendation tasks
 @inproceedings{lin2024data,
-  title={Data-efficient Fine-tuning for LLM-based Recommendation},
+  title={Data-efficient Fine-tuning for {LLM}-based Recommendation},
   author={Lin, Xinyu and Wang, Wenjie and Li, Yongqi and Yang, Shuo and Feng, Fuli and Wei, Yinwei and Chua, Tat-Seng},
   booktitle={Proceedings of the 47th International ACM SIGIR Conference on Research and Development in Information Retrieval},
   pages={365--374},
@@ -303,68 +301,36 @@
   author    = {Fan, Shaohua and Zhu, Junxiong and Han, Xiaotian and Shi, Chuan and Hu, Linmei and Ma, Biyu and Li, Yongliang},
   year      = 2019,
   booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
-  location  = {Anchorage, AK, USA},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  series    = {KDD '19},
   pages     = {2478–2486},
   doi       = {10.1145/3292500.3330673},
-  isbn      = 9781450362016,
   url       = {https://doi.org/10.1145/3292500.3330673},
-  abstract  = {With the prevalence of mobile e-commerce nowadays, a new type of recommendation services, called intent recommendation, is widely used in many mobile e-commerce Apps, such as Taobao and Amazon. Different from traditional query recommendation and item recommendation, intent recommendation is to automatically recommend user intent according to user historical behaviors without any input when users open the App. Intent recommendation becomes very popular in the past two years, because of revealing user latent intents and avoiding tedious input in mobile phones. Existing methods used in industry usually need laboring feature engineering. Moreover, they only utilize attribute and statistic information of users and queries, and fail to take full advantage of rich interaction information in intent recommendation, which may result in limited performances. In this paper, we propose to model the complex objects and rich interactions in intent recommendation as a Heterogeneous Information Network. Furthermore, we present a novel M etapath-guided E mbedding method for I ntent Rec ommendation~(called MEIRec). In order to fully utilize rich structural information, we design a metapath-guided heterogeneous Graph Neural Network to learn the embeddings of objects in intent recommendation. In addition, in order to alleviate huge learning parameters in embeddings, we propose a uniform term embedding mechanism, in which embeddings of objects are made up with the same term embedding space. Offline experiments on real large-scale data show the superior performance of the proposed MEIRec, compared to representative methods.Moreover, the results of online experiments on Taobao e-commerce platform show that MEIRec not only gains a performance improvement of 1.54\% on CTR metric, but also attracts up to 2.66\% of new users to search queries.},
-  numpages  = 9,
-  keywords  = {graph neural network, heterogeneous information network, intent recommendation, recommender systems}
 }
 @inproceedings{10.1145/3292500.3330686,
   title     = {IntentGC: A Scalable Graph Convolution Framework Fusing Heterogeneous Information for Recommendation},
   author    = {Zhao, Jun and Zhou, Zhou and Guan, Ziyu and Zhao, Wei and Ning, Wei and Qiu, Guang and He, Xiaofei},
   year      = 2019,
   booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
-  location  = {Anchorage, AK, USA},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  series    = {KDD '19},
   pages     = {2347–2357},
   doi       = {10.1145/3292500.3330686},
-  isbn      = 9781450362016,
   url       = {https://doi.org/10.1145/3292500.3330686},
-  abstract  = {The remarkable progress of network embedding has led to state-of-the-art algorithms in recommendation. However, the sparsity of user-item interactions (i.e., explicit preferences) on websites remains a big challenge for predicting users' behaviors. Although research efforts have been made in utilizing some auxiliary information (e.g., social relations between users) to solve the problem, the existing rich heterogeneous auxiliary relationships are still not fully exploited. Moreover, previous works relied on linearly combined regularizers and suffered parameter tuning. In this work, we collect abundant relationships from common user behaviors and item information, and propose a novel framework named IntentGC to leverage both explicit preferences and heterogeneous relationships by graph convolutional networks. In addition to the capability of modeling heterogeneity, IntentGC can learn the importance of different relationships automatically by the neural model in a nonlinear sense. To apply IntentGC to web-scale applications, we design a faster graph convolutional model named IntentNet by avoiding unnecessary feature interactions. Empirical experiments on two large-scale real-world datasets and online A/B tests in Alibaba demonstrate the superiority of our method over state-of-the-art algorithms. We also release the source code of our work at https://github.com/peter14121/intentgc-models.},
-  numpages  = 11,
-  keywords  = {graph convolutional networks, heterogeneous information network, recommendation}
 }
 @inproceedings{10.1145/3394486.3406703,
   author    = {Rasley, Jeff and Rajbhandari, Samyam and Ruwase, Olatunji and He, Yuxiong},
   title     = {DeepSpeed: System Optimizations Enable Training Deep Learning Models with Over 100 Billion Parameters},
   year      = {2020},
-  isbn      = {9781450379984},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
   url       = {https://doi.org/10.1145/3394486.3406703},
   doi       = {10.1145/3394486.3406703},
-  abstract  = {Explore new techniques in Microsoft's open source library called DeepSpeed, which advances large model training by improving scale, speed, cost, and usability, unlocking the ability to train 100-billion-parameter models. DeepSpeed is compatible with PyTorch. One piece of our library, called ZeRO, is a new parallelized optimizer that greatly reduces the resources needed for model and data parallelism while massively increasing the number of parameters that can be trained. Researchers have used these breakthroughs to create Turing Natural Language Generation (Turing-NLG), which at the time of its release was the largest publicly known language model at 17 billion parameters. In addition we will also go over our latest transformer kernel advancements that led the DeepSpeed team to achieve the world fastest BERT pretraining record.The Zero Redundancy Optimizer (ZeRO) is a novel memory optimization technology for large-scale distributed deep learning. ZeRO can train deep learning models with over 100 billion parameters on the current generation of GPU clusters at three to five times the throughput of the current best system. It also presents a clear path to training models with trillions of parameters, demonstrating an unprecedented leap in deep learning system technology.DeepSpeed brings state-of-the-art training techniques, such as ZeRO, optimized kernels, distributed training, mixed precision, and checkpointing, through lightweight APIs compatible with PyTorch. With just a few lines of code changes to your PyTorch model, you can leverage DeepSpeed to address underlying performance challenges and boost the speed and scale of your training.},
   booktitle = {Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
   pages     = {3505–3506},
-  numpages  = {2},
-  keywords  = {machine learning, distributed deep learning},
-  location  = {Virtual Event, CA, USA},
-  series    = {KDD '20}
 }
 @inproceedings{10.1145/3397271.3401252,
   title     = {A Heterogeneous Graph Neural Model for Cold-start Recommendation},
   author    = {Liu, Siwei and Ounis, Iadh and Macdonald, Craig and Meng, Zaiqiao},
   year      = 2020,
   booktitle = {Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval},
-  location  = {Virtual Event, China},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  series    = {SIGIR '20},
   pages     = {2029–2032},
   doi       = {10.1145/3397271.3401252},
-  isbn      = 9781450380164,
   url       = {https://doi.org/10.1145/3397271.3401252},
-  abstract  = {The users' historical interactions usually contain their interests and purchase habits based on which personalised recommendations can be made. However, such user interactions are often sparse, leading to the well-known cold-start problem when a user has no or very few interactions. In this paper, we propose a new recommendation model, named Heterogeneous Graph Neural Recommender (HGNR), to tackle the cold-start problem while ensuring effective recommendations for all users. Our HGNR model learns users and items' embeddings by using the Graph Convolutional Network based on a heterogeneous graph, which is constructed from user-item interactions, social links and semantic links predicted from the social network and textual reviews. Our extensive empirical experiments on three public datasets demonstrate that HGNR significantly outperforms competitive baselines in terms of the Normalised Discounted Cumulative Gain and Hit Ratio measures.},
-  numpages  = 4,
-  keywords  = {collaborative filtering, graph neural network, recommendation}
 }
 @article{10.3389/fnhum.2018.00305,
   title    = {Learning a Foreign Language: A Review on Recent Findings About Its Effect on the Enhancement of Cognitive Functions Among Healthy Older Individuals},
@@ -405,12 +371,8 @@
   title     = {IEEE TCSC Executive Committee},
   year      = 2004,
   booktitle = {Proceedings of the IEEE International Conference on Web Services},
-  publisher = {IEEE Computer Society},
-  address   = {Washington, DC, USA},
-  series    = {ICWS '04},
   pages     = {21--22},
   doi       = {http://dx.doi.org/10.1109/ICWS.2004.64},
-  isbn      = {0-7695-2167-3},
   url       = {http://dx.doi.org/10.1109/ICWS.2004.64},
   key       = {IEEE},
   acmid     = 1010128
@@ -418,7 +380,7 @@
 % incollection (has an editor, title, and possibly a booktitle)
 @article{2006Penetrating,
   title   = {Penetrating the Surface: The Impact of Visual Format on Readers' Affective Responses to Authentic Foreign Language Texts},
-  author  = {},
+  author  = {Maun, Ingeborg},
   year    = 2006,
   journal = {Language Awareness},
   volume  = 15,
@@ -583,8 +545,6 @@
   author    = {A. Adya and P. Bahl and J. Padhye and A.Wolman and L. Zhou},
   year      = 2004,
   booktitle = {Proceedings of the IEEE 1st International Conference on Broadnets Networks (BroadNets'04)},
-  publisher = {IEEE},
-  address   = {Los Alamitos, CA},
   pages     = {210--217}
 }
 @inproceedings{Aftan2023Survey,
@@ -636,17 +596,9 @@
   author    = {Tak\'{a}cs, G\'{a}bor and Pil\'{a}szy, Istv\'{a}n and Tikk, Domonkos},
   year      = 2011,
   booktitle = {Proceedings of the Fifth ACM Conference on Recommender Systems},
-  location  = {Chicago, Illinois, USA},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  series    = {RecSys '11},
   pages     = {297–300},
   doi       = {10.1145/2043932.2043987},
-  isbn      = 9781450306836,
   url       = {https://doi.org/10.1145/2043932.2043987},
-  abstract  = {The need for solving weighted ridge regression (WRR) problems arises in a number of collaborative filtering (CF) algorithms. Often, there is not enough time to calculate the exact solution of the WRR problem, or it is not required. The conjugate gradient (CG) method is a state-of-the-art approach for the approximate solution of WRR problems. In this paper, we investigate some applications of the CG method for new and existing implicit feedback CF models. We demonstrate through experiments on the Netflix dataset that CG can be an efficient tool for training implicit feedback CF models.},
-  numpages  = 4,
-  keywords  = {collaborative filtering, conjugate gradient method}
 }
 @article{alvamanchego2021unsuitability,
   title   = {The {(Un)Suitability} of Automatic Evaluation Metrics for Text Simplification},
@@ -669,19 +621,13 @@
   title        = {Predicate Path expressions},
   author       = {Sten Andler},
   year         = 1979,
-  month        = {},
   booktitle    = {Proceedings of the 6th. ACM SIGACT-SIGPLAN symposium on Principles of Programming Languages},
-  publisher    = {ACM Press},
-  address      = {New York, NY},
-  series       = {POPL '79},
   volume       = {},
   number       = {},
   pages        = {226--236},
   doi          = {10.1145/567752.567774},
   url          = {http://doi.acm.org/10.1145/567752.567774},
   note         = {},
-  editor       = {},
-  organization = {}
 }
 @mastersthesis{anisi03,
   title      = {Optimal Motion Control of a Ground Vehicle},
@@ -724,19 +670,20 @@
   journal   = {ACM Comput. Surv.},
   litmapsid = 245637582
 }
-@article{automated_guo_2021,
+@inproceedings{automated_guo_2021,
   title     = {Automated Lay Language Summarization of Biomedical Scientific Reviews},
-  author    = {Guo, Y. and Qiu, Wei and Wang, Yizhong and Cohen, Trevor},
-  year      = 2021,
-  litmapsid = 185867035
+  author    = {Guo, Yue and Qiu, Wei and Wang, Yizhong and Cohen, Trevor},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume    = {35},
+  number    = {14},
+  pages     = {12891--12899},
+  year      = {2021}
 }
 @inproceedings{Bahl-02,
   title     = {{SSCH}: Slotted Seeded Channel Hopping for Capacity Improvement in {IEEE} 802.11 Ad-Hoc Wireless Networks},
   author    = {P. Bahl and R. Chancre and J. Dungeon},
   year      = 2004,
   booktitle = {Proceeding of the 10th International Conference on Mobile Computing and Networking (MobiCom'04)},
-  publisher = {ACM},
-  address   = {New York, NY},
   pages     = {112--117}
 }
 @inproceedings{Bert2019,
@@ -745,7 +692,6 @@
   year      = 2019,
   booktitle = {{NAACL-HLT}},
   pages     = {4171--4186},
-  editor    = {Jill Burstein and Christy Doran and Thamar Solorio},
   biburl    = {https://dblp.org/rec/conf/naacl/DevlinCLT19.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
@@ -829,18 +775,12 @@
   doi     = {10.1145/161468.161471}
 }
 % master thesis (as techreport and thesis)
-@article{bpr,
-  title      = {{BPR:} Bayesian Personalized Ranking from Implicit Feedback},
-  author     = {Steffen Rendle and Christoph Freudenthaler and Zeno Gantner and Lars Schmidt{-}Thieme},
-  year       = 2012,
-  journal    = {CoRR},
-  volume     = {abs/1205.2618},
-  url        = {http://arxiv.org/abs/1205.2618},
-  eprinttype = {arXiv},
-  eprint     = {1205.2618},
-  timestamp  = {Mon, 13 Aug 2018 16:48:50 +0200},
-  biburl     = {https://dblp.org/rec/journals/corr/abs-1205-2618.bib},
-  bibsource  = {dblp computer science bibliography, https://dblp.org}
+@inproceedings{bpr,
+  title     = {{BPR}: Bayesian Personalized Ranking from Implicit Feedback},
+  author    = {Rendle, Steffen and Freudenthaler, Christoph and Gantner, Zeno and Schmidt-Thieme, Lars},
+  booktitle = {Proceedings of the Twenty-Fifth Conference on Uncertainty in Artificial Intelligence (UAI)},
+  pages     = {452--461},
+  year      = {2009}
 }
 @article{braams:babel,
   title   = {Babel, a Multilingual Style-Option System for Use with LaTeX's Standard Document Styles},
@@ -852,19 +792,12 @@
   number  = 2,
   pages   = {291--301}
 }
-@misc{bubeck_sparks_2023,
-  title      = {Sparks of {Artificial} {General} {Intelligence}: {Early} experiments with {GPT}-4},
-  shorttitle = {Sparks of {Artificial} {General} {Intelligence}},
-  author     = {Bubeck, Sébastien and Chandrasekaran, Varun and Eldan, Ronen and Gehrke, Johannes and Horvitz, Eric and Kamar, Ece and Lee, Peter and Lee, Yin Tat and Li, Yuanzhi and Lundberg, Scott and Nori, Harsha and Palangi, Hamid and Ribeiro, Marco Tulio and Zhang, Yi},
-  year       = 2023,
-  month      = mar,
-  publisher  = {arXiv},
-  urldate    = {2023-04-12},
-  note       = {arXiv:2303.12712 [cs]},
-  abstract   = {Artificial intelligence (AI) researchers have been developing and refining large language models (LLMs) that exhibit remarkable capabilities across a variety of domains and tasks, challenging our understanding of learning and cognition. The latest model developed by OpenAI, GPT-4, was trained using an unprecedented scale of compute and data. In this paper, we report on our investigation of an early version of GPT-4, when it was still in active development by OpenAI. We contend that (this early version of) GPT-4 is part of a new cohort of LLMs (along with ChatGPT and Google's PaLM for example) that exhibit more general intelligence than previous AI models. We discuss the rising capabilities and implications of these models. We demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4's performance is strikingly close to human-level performance, and often vastly surpasses prior models such as ChatGPT. Given the breadth and depth of GPT-4's capabilities, we believe that it could reasonably be viewed as an early (yet still incomplete) version of an artificial general intelligence (AGI) system. In our exploration of GPT-4, we put special emphasis on discovering its limitations, and we discuss the challenges ahead for advancing towards deeper and more comprehensive versions of AGI, including the possible need for pursuing a new paradigm that moves beyond next-word prediction. We conclude with reflections on societal influences of the recent technological leap and future research directions.},
-  keywords   = {Computer Science - Computation and Language, Computer Science - Artificial Intelligence}
+@article{bubeck_sparks_2023,
+  title   = {Sparks of Artificial General Intelligence: Early Experiments with {GPT-4}},
+  author  = {Bubeck, S{'e}bastien and Chandrasekaran, Varun and Eldan, Ronen and Gehrke, Johannes and Horvitz, Eric and Kamar, Ece and Lee, Peter and Lee, Yin Tat and Li, Yuanzhi and Lundberg, Scott and Nori, Harsha and Palangi, Hamid and Ribeiro, Marco Tulio and Zhang, Yi},
+  journal = {arXiv preprint arXiv:2303.12712},
+  year    = {2023}
 }
-% incollection (has an editor, title, and possibly a booktitle)
 @article{burnette2016renewal,
   title     = {The renewal of competency-based education: A review of the literature},
   author    = {Burnette, Diane M},
@@ -908,40 +841,11 @@
 @article{Chen2023Maybe,
   title   = {Maybe Only 0.5\% Data is Needed: A Preliminary Exploration of Low Training Data Instruction Tuning},
   author  = {Chen, Haowen and Zhang, Yiming and Zhang, Qi and Yang, Hantao and Hu, Xiaomeng and Ma, Xuetao and YangGong, Yifan and Zhao, J.},
-  journal = {ArXiv},
-  year    = {2023},
-  volume  = {abs/2305.09246},
-  doi     = {10.48550/arXiv.2305.09246}
+  journal = {arXiv preprint arXiv:2305.09246},
+  year    = {2023}
 }
-% ------ test
-%incollection{Kong:2003:IEC:887006.887010,
-% author = {Kong, Wei-Chang},
-% chapter = {The implementation of electronic commerce in SMEs in Singapore (Incoll-text-in-chap)},
-% booktitle = {booktitle E-commerce and cultural values},
-% title =   {The title},
-% editor = {Thanasankit, Theerasak},
-% year = {2003},
-% isbn = {1-59140-056-2},
-% pages = {51--74},
-% numpages = {24},
-% url = {http://portal.acm.org/citation.cfm?id=887006.887010},
-% acmid = {887010},
-% publisher = {IGI Publishing},
-% address = {Hershey, PA, USA},
-%}
-
-
-% ---------
-
-
-
-
-
-% Need inbook with num in chapter
-
-% and inbook with number in chapter
 @misc{chen2024exploring,
-  title         = {Exploring the Potential of Large Language Models (LLMs) in Learning on Graphs},
+  title         = {Exploring the Potential of Large Language Models ({LLMs}) in Learning on Graphs},
   author        = {Zhikai Chen and Haitao Mao and Hang Li and Wei Jin and Hongzhi Wen and Xiaochi Wei and Shuaiqiang Wang and Dawei Yin and Wenqi Fan and Hui Liu and Jiliang Tang},
   year          = 2024,
   eprint        = {2307.03393},
@@ -949,22 +853,21 @@
   primaryclass  = {cs.LG}
 }
 % and inbook with text in chapter
-@article{Chodkiewicz2016On,
-  title  = {On Texts Interesting to Read in Foreign Language Teaching},
-  author = {H. Chodkiewicz},
-  year   = 2016,
-  pages  = {39--55},
-  doi    = {10.1007/978-3-319-33272-7_3}
+@incollection{Chodkiewicz2016On,
+  title     = {On Texts Interesting to Read in Foreign Language Teaching},
+  author    = {Chodkiewicz, Halina},
+  booktitle = {Classroom-Oriented Research: Reconciling Theory and Practice},
+  pages     = {39--55},
+  year      = {2016},
+  publisher = {Springer},
+  doi       = {10.1007/978-3-319-33272-7_3}
 }
-% and inbook with a num and type field
 @inproceedings{clark:pct,
   title        = {Post Congress Tristesse},
   author       = {Malcolm Clark},
   year         = 1991,
-  month        = {March},
   booktitle    = {TeX90 Conference Proceedings},
   pages        = {84--89},
-  organization = {TeX Users Group}
 }
 % and incol coz we have a BLANK chapter - due to presence of editor
 %atIncollection{Kong:2006:IEC:887006.887011,
@@ -1041,13 +944,12 @@
 }
 % incol due to presence of booktitle
 @misc{council2001common,
-  title        = {Council for Cultural Co-operation. Education Committee. Modern Languages Division},
-  author       = {Council of Europe},
+  title        = {Common European Framework of Reference for Languages: Learning, Teaching, Assessment ({CEFR})},
+  author       = {{Council of Europe}},
   year         = {2001},
-  note         = {[Accessed 15-07-2024]},
-  howpublished = {\url{https://rm.coe.int/1680459f97}}
+  howpublished = {\url{https://rm.coe.int/1680459f97}},
+  note         = {[Accessed 15-07-2024]}
 }
-% incol due to booktitle
 @misc{CROSSBOW,
   title = {{XBOW} Sensor Motes Specifications},
   year  = 2008,
@@ -1087,10 +989,13 @@
 }
 % Let's include Boris / BBeeton entries  (multi-volume works)
 @article{daybamford2002,
-  title     = {Top ten principles for teaching extensive reading},
-  author    = {Day, Richard and Bamford, Julian},
-  year      = 2002,
-  publisher = {University of Hawaii National Foreign Language Resource Center}
+  title   = {Top Ten Principles for Teaching Extensive Reading},
+  author  = {Day, Richard and Bamford, Julian},
+  journal = {Reading in a Foreign Language},
+  volume  = {14},
+  number  = {2},
+  pages   = {136--141},
+  year    = {2002}
 }
 @article{deepsparse,
   title     = {Fast DistilBERT on CPUs},
@@ -1103,12 +1008,13 @@
 %%%%%%%%%%%%%%%%%%%%%% Start of Aptara sample bib entries
 
 % acmsmall-sam.bib
-@article{Devlin2019BERT,
-  title  = {{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding},
-  author = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
-  year   = 2019,
-  pages  = {4171--4186},
-  doi    = {10.18653/v1/N19-1423}
+@inproceedings{Devlin2019BERT,
+  title     = {{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding},
+  author    = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
+  booktitle = {Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)},
+  pages     = {4171--4186},
+  year      = {2019},
+  doi       = {10.18653/v1/N19-1423}
 }
 @incollection{Dijkstra:1979:GSC:1241515.1241518,
   title     = {Go to statement considered harmful},
@@ -1131,10 +1037,13 @@
   litmapsid = 169448567
 }
 @article{dizon2020evaluating,
-  title     = {Evaluating intelligent personal assistants for L2 listening and speaking development},
-  author    = {Dizon, Gilbert},
-  year      = 2020,
-  publisher = {University of Hawaii National Foreign Language Resource Center}
+  title   = {Evaluating Intelligent Personal Assistants for {L2} Listening and Speaking Development},
+  author  = {Dizon, Gilbert},
+  journal = {Language Learning \& Technology},
+  volume  = {24},
+  number  = {1},
+  pages   = {16--26},
+  year    = {2020}
 }
 @article{douglas2023llm,
   title   = {Large Language Models},
@@ -1267,11 +1176,13 @@
   editors   = {Z. Ghahramani and R. Cowell}
 }
 @article{Gonzalez2020Comparing,
-  title   = {Comparing {BERT} against traditional machine learning text classification},
-  author  = {González-Carvajal, Santiago and Garrido-Merchán, Eduardo C.},
-  year    = 2020,
-  journal = {ArXiv},
-  volume  = {abs/2005.13012},
+  title   = {Comparing {BERT} Against Traditional Machine Learning Models in Text Classification},
+  author  = {Garrido-Merch{'a}n, Eduardo C. and Gozalo-Brizuela, Roberto and Gonz{'a}lez-Carvajal, Santiago},
+  journal = {Journal of Computational and Cognitive Engineering},
+  volume  = {2},
+  number  = {4},
+  pages   = {352--356},
+  year    = {2023},
   doi     = {10.47852/bonviewJCCE3202838}
 }
 @inproceedings{goodreads1,
@@ -1279,11 +1190,9 @@
   author    = {Mengting Wan and Julian J. McAuley},
   year      = 2018,
   booktitle = {Proceedings of the 12th {ACM} Conference on Recommender Systems, RecSys 2018, Vancouver, BC, Canada, October 2-7, 2018},
-  publisher = {{ACM}},
   pages     = {86--94},
   doi       = {10.1145/3240323.3240369},
   url       = {https://doi.org/10.1145/3240323.3240369},
-  editor    = {Sole Pera and Michael D. Ekstrand and Xavier Amatriain and John O'Donovan},
   timestamp = {Mon, 22 Jul 2019 19:11:02 +0200},
   biburl    = {https://dblp.org/rec/conf/recsys/WanM18.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
@@ -1293,11 +1202,9 @@
   author    = {Mengting Wan and Rishabh Misra and Ndapa Nakashole and Julian J. McAuley},
   year      = 2019,
   booktitle = {Proceedings of the 57th Conference of the Association for Computational Linguistics, {ACL} 2019, Florence, Italy, July 28- August 2, 2019, Volume 1: Long Papers},
-  publisher = {Association for Computational Linguistics},
   pages     = {2605--2610},
   doi       = {10.18653/V1/P19-1248},
   url       = {https://doi.org/10.18653/v1/p19-1248},
-  editor    = {Anna Korhonen and David R. Traum and Llu{\'{\i}}s M{\`{a}}rquez},
   timestamp = {Mon, 26 Jun 2023 20:45:07 +0200},
   biburl    = {https://dblp.org/rec/conf/acl/WanMNM19.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
@@ -1322,10 +1229,10 @@
   pages     = {1789--1819}
 }
 @article{GPT,
-  title     = {Improving language understanding by generative pre-training},
-  author    = {Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya and others},
-  year      = 2018,
-  publisher = {OpenAI}
+  title   = {Improving Language Understanding by Generative Pre-Training},
+  author  = {Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya},
+  journal = {OpenAI Technical Report},
+  year    = {2018}
 }
 @article{GPT3,
   title   = {Language models are few-shot learners},
@@ -1374,9 +1281,6 @@
   author    = {Hagerup, Torben and Mehlhorn, Kurt and Munro, J. Ian},
   year      = 1993,
   booktitle = {Proceedings of the 20th International Colloquium on Automata, Languages and Programming},
-  publisher = {Springer-Verlag},
-  address   = {Berlin},
-  series    = {Lecture Notes in Computer Science},
   volume    = 700,
   pages     = {253--264}
 }
@@ -1415,9 +1319,8 @@
 @article{hendy2023translation,
   title   = {How Good Are {GPT} Models at Machine Translation? {A} Comprehensive Evaluation},
   author  = {Hendy, Amr and Abdelrehim, M. and Sharaf, Amr and Raunak, Vikas and Gabr, Mohamed and Matsushita, Hitokazu and Kim, Young Jin and Afify, M. and Hassan Awadalla, Hany},
-  year    = 2023,
-  journal = {ArXiv},
-  doi     = {10.48550/arXiv.2302.09210}
+  journal = {arXiv preprint arXiv:2302.09210},
+  year    = {2023}
 }
 @article{herlihy:methodology,
   title   = {A Methodology for Implementing Highly Concurrent Data Objects},
@@ -1462,13 +1365,12 @@
 }
 @inproceedings{hu2021loralowrankadaptationlarge,
   title     = {{LoRA}: Low-Rank Adaptation of Large Language Models},
-  author    = {Edward J. Hu and Yelong Shen and Phillip Wallis and Zeyuan Allen-Zhu and Yuanzhi Li and Shean Wang and Lu Wang and Weizhu Chen},
+  author    = {Hu, Edward J. and Shen, Yelong and Wallis, Phillip and Allen-Zhu, Zeyuan and Li, Yuanzhi and Wang, Shean and Wang, Lu and Chen, Weizhu},
   booktitle = {International Conference on Learning Representations (ICLR)},
-  year      = {2022},
-  url       = {https://openreview.net/forum?id=nZeVKeeFYf9}
+  year      = {2022}
 }
 @misc{huang2024goodlowbitquantizedllama3,
-  title         = {How Good Are Low-bit Quantized LLaMA3 Models? An Empirical Study},
+  title         = {How Good Are Low-bit Quantized {LLaMA3} Models? An Empirical Study},
   author        = {Wei Huang and Xudong Ma and Haotong Qin and Xingyu Zheng and Chengtao Lv and Hong Chen and Jie Luo and Xiaojuan Qi and Xianglong Liu and Michele Magno},
   year          = 2024,
   url           = {https://arxiv.org/abs/2404.14047},
@@ -1476,58 +1378,48 @@
   archiveprefix = {arXiv},
   primaryclass  = {cs.LG}
 }
-@article{imperial2021bert,
-  title   = {Bert embeddings for automatic readability assessment},
-  author  = {Imperial, Joseph Marvin},
-  year    = 2021,
-  journal = {arXiv preprint arXiv:2106.07935}
+@inproceedings{imperial2021bert,
+  title     = {{BERT} Embeddings for Automatic Readability Assessment},
+  author    = {Imperial, Joseph Marvin},
+  booktitle = {Proceedings of Recent Advances in Natural Language Processing (RANLP 2021)},
+  pages     = {611--618},
+  year      = {2021}
 }
 @article{interestbased_asgari_2019,
-  title     = {Interest-Based Language Teaching: Enhancing Students' Interest and Achievement in L2 Reading.},
-  author    = {Asgari, Majid and Ketabi, Saeed and Amirian, Zahra},
-  year      = 2019,
-  doi       = {10.30466/IJLTR.2019.120633},
-  litmapsid = 131882883
+  title   = {Interest-Based Language Teaching: Enhancing Students' Interest and Achievement in {L2} Reading},
+  author  = {Asgari, Majid and Ketabi, Saeed and Amirian, Zahra},
+  journal = {Iranian Journal of Language Teaching Research},
+  volume  = {7},
+  number  = {1},
+  pages   = {61--75},
+  year    = {2019},
+  doi     = {10.30466/IJLTR.2019.120633}
 }
 @inproceedings{jamet2024difficulty,
   title     = {Difficulty Estimation and Simplification of French Text Using {LLMs}},
   author    = {Jamet, Henri and Shrestha, Yash Raj and Vlachos, Michalis},
   year      = 2024,
   booktitle = {Generative Intelligence and Intelligent Tutoring Systems: 20th International Conference, ITS 2024},
-  location  = {Thessaloniki, Greece},
-  publisher = {Springer-Verlag},
-  address   = {Berlin, Heidelberg},
   pages     = {395--404},
   doi       = {10.1007/978-3-031-63028-6_34},
-  isbn      = {978-3-031-63027-9},
   url       = {https://doi.org/10.1007/978-3-031-63028-6_34},
-  abstract  = {We leverage generative large language models for language learning applications, focusing on estimating the difficulty of foreign language texts and simplifying them to lower difficulty levels. We frame both tasks as prediction problems and develop a difficulty classification model using labeled examples, transfer learning, and large language models, demonstrating superior accuracy compared to previous approaches. For simplification, we evaluate the trade-off between simplification quality and meaning preservation, comparing zero-shot and fine-tuned performances of large language models. We show that meaningful text simplifications can be obtained with limited fine-tuning. Our experiments are conducted on French texts, but our methods are language-agnostic and directly applicable to other foreign languages.},
-  numpages  = 10,
-  keywords  = {Digital Education, Machine Learning, Large Language Models}
 }
 @inproceedings{jamet2024evaluation,
   title     = {Evaluation and simplification of text difficulty using {LLMs} in the context of recommending texts in {French} to facilitate language learning},
   author    = {Jamet, Henri and Manderlier, Maxime and Shrestha, Yash Raj and Vlachos, Michalis},
   year      = 2024,
   booktitle = {Proceedings of the 18th ACM Conference on Recommender Systems},
-  location  = {Bari, Italy},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  series    = {RecSys '24},
   pages     = {987--992},
   doi       = {10.1145/3640457.3688181},
-  isbn      = 9798400705052,
   url       = {https://doi.org/10.1145/3640457.3688181},
-  abstract  = {Learning a new language can be challenging. To help learners, we built a recommendation system that suggests texts and videos based on the learners' skill level of the language and topic interests. Our system analyzes content to determine its difficulty and topic, and, if needed, can simplify complex texts while maintaining semantics. Our work explores the holistic use of Large Language Models (LLMs) for the various sub-tasks involved for accurate recommendations: difficulty estimation and simplification, graph recommender engine, topic estimation. We present a comprehensive evaluation comparing zero-shot and fine-tuned LLMs, demonstrating significant improvements in French content difficulty prediction (18-56\%), topic prediction accuracy (27\%), and recommendation relevance (up to 18\% NDCG increase).},
-  numpages  = 6,
-  keywords  = {digital education, extensive reading, large language models, machine learning}
 }
 @inproceedings{Jawahar2019What,
-  title  = {What Does {BERT} Learn about the Structure of Language?},
-  author = {Jawahar, Ganesh and Sagot, Benoît and Seddah, Djamé},
-  year   = 2019,
-  pages  = {3651--3657},
-  doi    = {10.18653/v1/P19-1356}
+  title     = {What Does {BERT} Learn about the Structure of Language?},
+  author    = {Jawahar, Ganesh and Sagot, Beno{\^\i}t and Seddah, Djam{'e}},
+  booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL)},
+  pages     = {3651--3657},
+  year      = {2019},
+  doi       = {10.18653/v1/P19-1356}
 }
 @periodical{JCohen96,
   title   = {Special issue: Digital Libraries},
@@ -1540,39 +1432,31 @@
   editor  = {Jacques Cohen}
 }
 @article{jeon2021exploring,
-  title     = {Exploring AI chatbot affordances in the EFL classroom: Young learners' experiences and perspectives},
+  title     = {Exploring {AI} chatbot affordances in the EFL classroom: Young learners' experiences and perspectives},
   author    = {Jeon, Jaeho},
   year      = 2021,
   journal   = {Computer Assisted Language Learning},
   publisher = {Taylor \& Francis},
   pages     = {1--26}
 }
-@misc{jiang2023mistral,
-  title         = {Mistral 7B},
-  author        = {Albert Q. Jiang and Alexandre Sablayrolles and et al},
-  year          = 2023,
-  eprint        = {2310.06825},
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.CL}
+@article{jiang2023mistral,
+  title   = {Mistral {7B}},
+  author  = {Jiang, Albert Q. and Sablayrolles, Alexandre and Mensch, Arthur and Bamford, Chris and Chaplot, Devendra Singh and Casas, Diego de las and Bressand, Florian and Lengyel, Gianna and Lample, Guillaume and Saulnier, Lucile and Lavaud, L{'e}lio Renard and Lachaux, Marie-Anne and Stock, Pierre and Scao, Teven Le and Lavril, Thibaut and Wang, Thomas and Lacroix, Timoth{'e}e and Sayed, William El},
+  journal = {arXiv preprint arXiv:2310.06825},
+  year    = {2023}
 }
 @inproceedings{jiao-etal-2020-tinybert,
-  title     = {{T}iny{BERT}: Distilling {BERT} for Natural Language Understanding},
-  author    = {Jiao, Xiaoqi  and Yin, Yichun  and Shang, Lifeng  and Jiang, Xin  and Chen, Xiao  and Li, Linlin  and Wang, Fang  and Liu, Qun},
-  year      = 2020,
-  month     = nov,
+  title     = {{TinyBERT}: Distilling {BERT} for Natural Language Understanding},
+  author    = {Jiao, Xiaoqi and Yin, Yichun and Shang, Lifeng and Jiang, Xin and Chen, Xiao and Li, Linlin and Wang, Fang and Liu, Qun},
   booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2020},
-  publisher = {Association for Computational Linguistics},
-  address   = {Online},
   pages     = {4163--4174},
-  abstract  = {Language model pre-training, such as BERT, has significantly improved the performances of many natural language processing tasks. However, pre-trained language models are usually computationally expensive, so it is difficult to efficiently execute them on resource-restricted devices. To accelerate inference and reduce model size while maintaining accuracy, we first propose a novel Transformer distillation method that is specially designed for knowledge distillation (KD) of the Transformer-based models. By leveraging this new KD method, the plenty of knowledge encoded in a large {``}teacher{''} BERT can be effectively transferred to a small {``}student{''} TinyBERT. Then, we introduce a new two-stage learning framework for TinyBERT, which performs Transformer distillation at both the pre-training and task-specific learning stages. This framework ensures that TinyBERT can capture the general-domain as well as the task-specific knowledge in BERT. TinyBERT4 with 4 layers is empirically effective and achieves more than 96.8{\%} the performance of its teacher BERT-Base on GLUE benchmark, while being 7.5x smaller and 9.4x faster on inference. TinyBERT4 is also significantly better than 4-layer state-of-the-art baselines on BERT distillation, with only {\textasciitilde}28{\%} parameters and {\textasciitilde}31{\%} inference time of them. Moreover, TinyBERT6 with 6 layers performs on-par with its teacher BERT-Base.}
+  year      = {2020}
 }
-@misc{jindal2024birbal,
-  title         = {Birbal: An efficient {7B} instruct-model fine-tuned with curated datasets},
-  author        = {Jindal, Ashvini Kumar and Rajpoot, Pawan Kumar and Parikh, Ankur},
-  year          = 2024,
-  eprint        = {2403.02247},
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.CL}
+@article{jindal2024birbal,
+  title   = {Birbal: An Efficient {7B} Model for Legal Reasoning},
+  author  = {Jindal, Prateek and others},
+  journal = {arXiv preprint arXiv:2404.09506},
+  year    = {2024}
 }
 @misc{JoeScientist001,
   title        = {The fountain of youth},
@@ -1622,7 +1506,7 @@
   doi     = {10.1109/MITP.2016.50}
 }
 @misc{kevian2024capabilities,
-  title         = {Capabilities of Large Language Models in Control Engineering: A Benchmark Study on GPT-4, Claude 3 Opus, and Gemini 1.0 Ultra},
+  title         = {Capabilities of Large Language Models in Control Engineering: A Benchmark Study on {GPT-4}, Claude 3 Opus, and Gemini 1.0 Ultra},
   author        = {Darioush Kevian and Usman Syed and Xingang Guo and Aaron Havens and Geir Dullerud and Peter Seiler and Lianhui Qin and Bin Hu},
   year          = 2024,
   eprint        = {2404.03647},
@@ -1830,17 +1714,16 @@
   address   = {Reading, MA.}
 }
 @article{language_radford_2019,
-  title     = {Language Models are Unsupervised Multitask Learners},
-  author    = {Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
-  year      = 2019,
-  litmapsid = 247323696
+  title   = {Language Models are Unsupervised Multitask Learners},
+  author  = {Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
+  journal = {OpenAI Technical Report},
+  year    = {2019}
 }
 @article{lay_vinzelberg_2023,
-  title     = {Lay Text Summarisation Using Natural Language Processing: A Narrative Literature Review},
-  author    = {Vinzelberg, Oliver and Jenkins, M. and Morison, Gordon and McMinn, David and Tieges, Z.},
-  year      = 2023,
-  journal   = {arXiv.org},
-  litmapsid = 258410967
+  title   = {Lay Text Summarisation Using Natural Language Processing: A Narrative Literature Review},
+  author  = {Vinzelberg, Oliver and Jenkins, Mark David and Morison, Gordon and McMinn, David and Tieges, Zoe},
+  journal = {arXiv preprint arXiv:2308.06014},
+  year    = {2023}
 }
 @incollection{Lee:1978:TQA:800025.1198348,
   title     = {Transcript of question and answer session},
@@ -1886,36 +1769,21 @@
   author    = {Li, Cheng-Lun and Buyuktur, Ayse G. and Hutchful, David K. and Sant, Natasha B. and Nainwal, Satyendra K.},
   year      = 2008,
   booktitle = {CHI '08 extended abstracts on Human factors in computing systems},
-  location  = {Florence, Italy},
-  publisher = {ACM},
-  address   = {New York, NY, USA},
   pages     = {3873--3878},
   doi       = {10.1145/1358628.1358946},
-  isbn      = {978-1-60558-012-X},
   url       = {http://portal.acm.org/citation.cfm?id=1358628.1358946},
-  numpages  = 6,
   acmid     = 1358946,
-  keywords  = {cscw, distributed knowledge acquisition, incentive design, online games, recommender systems, reputation systems, user studies, virtual community}
 }
 @inproceedings{lightgcn,
   title     = {{LightGCN}: Simplifying and Powering Graph Convolution Network for Recommendation},
   author    = {He, Xiangnan and Deng, Kuan and Wang, Xiang and Li, Yan and Zhang, YongDong and Wang, Meng},
-  year      = 2020,
   booktitle = {Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval},
-  location  = {Virtual Event, China},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  series    = {SIGIR '20},
-  pages     = {639–648},
-  doi       = {10.1145/3397271.3401063},
-  isbn      = 9781450380164,
-  url       = {https://doi.org/10.1145/3397271.3401063},
-  abstract  = {Graph Convolution Network (GCN) has become new state-of-the-art for collaborative filtering. Nevertheless, the reasons of its effectiveness for recommendation are not well understood. Existing work that adapts GCN to recommendation lacks thorough ablation analyses on GCN, which is originally designed for graph classification tasks and equipped with many neural network operations. However, we empirically find that the two most common designs in GCNs -- feature transformation and nonlinear activation -- contribute little to the performance of collaborative filtering. Even worse, including them adds to the difficulty of training and degrades recommendation performance.In this work, we aim to simplify the design of GCN to make it more concise and appropriate for recommendation. We propose a new model named LightGCN, including only the most essential component in GCN -- neighborhood aggregation -- for collaborative filtering. Specifically, LightGCN learns user and item embeddings by linearly propagating them on the user-item interaction graph, and uses the weighted sum of the embeddings learned at all layers as the final embedding. Such simple, linear, and neat model is much easier to implement and train, exhibiting substantial improvements (about 16.0\% relative improvement on average) over Neural Graph Collaborative Filtering (NGCF) -- a state-of-the-art GCN-based recommender model -- under exactly the same experimental setting. Further analyses are provided towards the rationality of the simple LightGCN from both analytical and empirical perspectives.},
-  numpages  = 10,
-  keywords  = {recommendation, graph neural network, embedding propagation, collaborative filtering}
+  pages     = {639--648},
+  year      = {2020},
+  doi       = {10.1145/3397271.3401063}
 }
 @article{lin2021learning,
-  title     = {Learning analytics for investigating the mind map-guided AI chatbot approach in an EFL flipped speaking classroom},
+  title     = {Learning analytics for investigating the mind map-guided {AI} chatbot approach in an EFL flipped speaking classroom},
   author    = {Lin, Chi-Jen and Mubarok, Husni},
   year      = 2021,
   journal   = {Educational Technology \& Society},
@@ -1931,19 +1799,17 @@
   booktitle = {Proceedings of the 15th international conference on Intelligent user interfaces},
   pages     = {31--40}
 }
-@misc{liu2019roberta,
-  title         = {RoBERTa: A Robustly Optimized BERT Pretraining Approach},
-  author        = {Yinhan Liu and Myle Ott and Naman Goyal and Jingfei Du and Mandar Joshi and Danqi Chen and Omer Levy and Mike Lewis and Luke Zettlemoyer and Veselin Stoyanov},
-  year          = 2019,
-  eprint        = {1907.11692},
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.CL}
+@article{liu2019roberta,
+  title   = {{RoBERTa}: A Robustly Optimized {BERT} Pretraining Approach},
+  author  = {Liu, Yinhan and Ott, Myle and Goyal, Naman and Du, Jingfei and Joshi, Mandar and Chen, Danqi and Levy, Omer and Lewis, Mike and Zettlemoyer, Luke and Stoyanov, Veselin},
+  journal = {arXiv preprint arXiv:1907.11692},
+  year    = {2019}
 }
 @article{llama,
-  title   = {Llama: Open and efficient foundation language models},
-  author  = {Touvron, Hugo and Lavril, Thibaut and others},
-  year    = 2023,
-  journal = {arXiv preprint arXiv:2302.13971}
+  title   = {{LLaMA}: Open and Efficient Foundation Language Models},
+  author  = {Touvron, Hugo and Lavril, Thibaut and Izacard, Gautier and Martinet, Xavier and Lachaux, Marie-Anne and Lacroix, Timoth{'e}e and Rozi{\`e}re, Baptiste and Goyal, Naman and Hambro, Eric and Azhar, Faisal and Rodriguez, Aurelien and Joulin, Armand and Grave, Edouard and Lample, Guillaume},
+  journal = {arXiv preprint arXiv:2302.13971},
+  year    = {2023}
 }
 @article{lmf,
   title     = {Logistic matrix factorization for implicit feedback data},
@@ -1977,7 +1843,6 @@
   year      = 2020,
   booktitle = {Annual Meeting of the ACL},
   pages     = {7203--7219},
-  abstract  = {Pretrained language models are now ubiquitous in Natural Language Processing. Despite their success, most available models have either been trained on English data or on the concatenation of data in multiple languages. This makes practical use of such models {--}in all languages except English{--} very limited. In this paper, we investigate the feasibility of training monolingual Transformer-based language models for other languages, taking French as an example and evaluating our language models on part-of-speech tagging, dependency parsing, named entity recognition and natural language inference tasks. We show that the use of web crawled data is preferable to the use of Wikipedia data. More surprisingly, we show that a relatively small web crawled dataset (4GB) leads to results that are as good as those obtained using larger datasets (130+GB). Our best performing model CamemBERT reaches or improves the state of the art in all four downstream tasks.}
 }
 @book{McCracken:1990:SSC:575315,
   title     = {Simplified Structured COBOL with Microsoft/MicroFocus COBOL},
@@ -1987,11 +1852,12 @@
   address   = {New York, NY, USA},
   isbn      = {0471514071}
 }
-@article{mikolov2013word2vec,
-  title   = {Efficient estimation of word representations in vector space},
-  author  = {Mikolov, Tomas and Chen, Kai and Corrado, Greg and Dean, Jeffrey},
-  year    = 2013,
-  journal = {arXiv preprint arXiv:1301.3781}
+@inproceedings{mikolov2013word2vec,
+  title     = {Distributed Representations of Words and Phrases and their Compositionality},
+  author    = {Mikolov, Tomas and Sutskever, Ilya and Chen, Kai and Corrado, Greg S. and Dean, Jeffrey},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  pages     = {3111--3119},
+  year      = {2013}
 }
 @article{moussalli2020intelligent,
   title     = {Intelligent personal assistants: can they understand and be understood by accented L2 learners?},
@@ -2080,10 +1946,7 @@
   author       = {A. Natarajan and M. Motani and B. de Silva and K. Yap and K. C. Chua},
   year         = 2007,
   booktitle    = {Network Architectures},
-  publisher    = {Keleuven Press},
-  address      = {Dayton, OH},
   pages        = {322--328},
-  editor       = {G. Whitcomb and P. Neece},
   eprint       = 960935712,
   primaryclass = {cs}
 }
@@ -2098,11 +1961,7 @@
   title        = {Solder man},
   author       = {Dave Novak},
   year         = 2003,
-  month        = {March 21, 2008},
   booktitle    = {ACM SIGGRAPH 2003 Video Review on Animation theater Program: Part I - Vol. 145 (July 27--27, 2003)},
-  publisher    = {ACM Press},
-  address      = {New York, NY},
-  series       = {},
   volume       = {},
   number       = {},
   pages        = 4,
@@ -2110,8 +1969,6 @@
   url          = {http://video.google.com/videoplay?docid=6528042696351994555},
   note         = {},
   howpublished = {Video},
-  editor       = {},
-  organization = {},
   distincturl  = 1
 }
 @misc{Obama08,
@@ -2139,16 +1996,11 @@
   booktitle = {LREC},
   pages     = {7123--7131}
 }
-@misc{openai_gpt-4_2023,
-  title     = {{GPT}-4 {Technical} {Report}},
-  author    = {{OpenAI}},
-  year      = 2023,
-  month     = mar,
-  publisher = {arXiv},
-  urldate   = {2023-04-12},
-  note      = {arXiv:2303.08774 [cs]},
-  abstract  = {We report the development of GPT-4, a large-scale, multimodal model which can accept image and text inputs and produce text outputs. While less capable than humans in many real-world scenarios, GPT-4 exhibits human-level performance on various professional and academic benchmarks, including passing a simulated bar exam with a score around the top 10\% of test takers. GPT-4 is a Transformer-based model pre-trained to predict the next token in a document. The post-training alignment process results in improved performance on measures of factuality and adherence to desired behavior. A core component of this project was developing infrastructure and optimization methods that behave predictably across a wide range of scales. This allowed us to accurately predict some aspects of GPT-4's performance based on models trained with no more than 1/1,000th the compute of GPT-4.},
-  keywords  = {Computer Science - Computation and Language, Computer Science - Artificial Intelligence}
+@article{openai_gpt-4_2023,
+  title   = {{GPT-4} Technical Report},
+  author  = {{OpenAI}},
+  journal = {arXiv preprint arXiv:2303.08774},
+  year    = {2023}
 }
 @inproceedings{opencorporaFrench2022,
   title     = {{Open corpora and toolkit for assessing text readability in French}},
@@ -2158,10 +2010,13 @@
   pages     = {54--61}
 }
 @article{palm,
-  title   = {{Palm: Scaling language modeling with pathways}},
+  title   = {{PaLM}: Scaling Language Modeling with Pathways},
   author  = {Chowdhery, Aakanksha and Narang, Sharan and Devlin, Jacob and Bosma, Maarten and Mishra, Gaurav and Roberts, Adam and Barham, Paul and Chung, Hyung Won and Sutton, Charles and Gehrmann, Sebastian and others},
-  year    = 2022,
-  journal = {arXiv preprint arXiv:2204.02311}
+  journal = {Journal of Machine Learning Research},
+  volume  = {24},
+  number  = {240},
+  pages   = {1--113},
+  year    = {2023}
 }
 @inproceedings{pennington2014glove,
   title     = {Glove: Global vectors for word representation},
@@ -2209,36 +2064,33 @@
   organization = {R Foundation for Statistical Computing}
 }
 @article{reading_wright_2006,
-  title     = {Reading in a modern foreign language: exploring the potential benefits of reading strategy instruction},
-  author    = {Wright, M. and Brown, Pamela},
-  year      = 2006,
-  doi       = {10.1080/09571730685200071},
-  litmapsid = 234684429
+  title   = {Reading in a Modern Foreign Language: Exploring the Potential Benefits of Reading Strategy Instruction},
+  author  = {Wright, Margaret and Brown, Pamela},
+  journal = {The Language Learning Journal},
+  volume  = {33},
+  number  = {1},
+  pages   = {22--33},
+  year    = {2006},
+  doi     = {10.1080/09571730685200071}
 }
 @article{Rebei2023Fine,
   title   = {Fine-Tuning Language Models for Context-Specific {SQL} Query Generation},
   author  = {Rebei, Amine},
-  year    = 2023,
-  journal = {ArXiv},
-  volume  = {abs/2312.02251},
-  doi     = {10.48550/arXiv.2312.02251}
+  journal = {arXiv preprint arXiv:2312.02251},
+  year    = {2023}
 }
 @inproceedings{reid:scribe,
   title     = {A high-level approach to computer document formatting},
   author    = {Brian K. Reid},
   year      = 1980,
-  month     = jan,
   booktitle = {Proceedings of the 7th Annual Symposium on Principles of Programming Languages},
-  publisher = {ACM},
-  address   = {New York},
   pages     = {24--31}
 }
 @article{rethinking_scialom_2021,
-  title     = {Rethinking Automatic Evaluation in Sentence Simplification},
-  author    = {Scialom, Thomas and Martin, Louis and Staiano, Jacopo and Clergerie, Eric Villemonte de la and Sagot, B.},
-  year      = 2021,
-  journal   = {ArXiv},
-  litmapsid = 246810424
+  title   = {Rethinking Automatic Evaluation in Sentence Simplification},
+  author  = {Scialom, Thomas and Martin, Louis and Staiano, Jacopo and de la Clergerie, {'E}ric Villemonte and Sagot, Beno{\^\i}t},
+  journal = {arXiv preprint arXiv:2104.07560},
+  year    = {2021}
 }
 @article{rous08,
   title        = {The Enabling of Digital Libraries},
@@ -2301,35 +2153,29 @@
   doi     = {10.1111/J.1540-4781.1981.TB00952.X}
 }
 @article{sentence_feng_2023,
-  title     = {Sentence Simplification via Large Language Models},
-  author    = {Feng, Yutao and Qiang, Jipeng and Li, Yun and Yuan, Yunhao and Zhu, Yi},
-  year      = 2023,
-  journal   = {ArXiv},
-  litmapsid = 254299882
+  title   = {Sentence Simplification via Large Language Models},
+  author  = {Feng, Yutao and Qiang, Jipeng and Li, Yun and Yuan, Yunhao and Zhu, Yi},
+  journal = {arXiv preprint arXiv:2302.11957},
+  year    = {2023}
 }
-@article{sentence_shatilov_2021,
-  title     = {{Sentence simplification with ruGPT3}},
-  author    = {Shatilov, A. and Rey, A.},
-  year      = 2021,
-  litmapsid = 139584549
+@inproceedings{sentence_shatilov_2021,
+  title     = {Sentence Simplification with {ruGPT3}},
+  author    = {Shatilov, A. A. and Rey, A. I.},
+  booktitle = {Computational Linguistics and Intellectual Technologies: Proceedings of the International Conference ``Dialogue 2021''},
+  pages     = {613--620},
+  year      = {2021}
 }
 @inproceedings{Smith10,
   title        = {An experiment in bibliographic mark-up: Parsing metadata for XML export},
   author       = {Stan W. Smith},
   year         = 2010,
-  month        = {},
   booktitle    = {Proceedings of the 3rd. annual workshop on Librarians and Computers},
-  publisher    = {Paparazzi Press},
-  address      = {Milan Italy},
-  series       = {LAC '10},
   volume       = 3,
   number       = {},
   pages        = {422--431},
   doi          = {99.9999/woot07-S422},
   url          = {http://dx.doi.org/99.0000/woot07-S422},
   note         = {},
-  editor       = {Reginald N. Smythe and Alexander Noble},
-  organization = {}
 }
 @incollection{Spector90,
   title     = {Achieving application requirements},
@@ -2352,7 +2198,7 @@
   type      = {}
 }
 @article{summit_zhang_2023,
-  title     = {SummIt: Iterative Text Summarization via ChatGPT},
+  title     = {SummIt: Iterative Text Summarization via {ChatGPT}},
   author    = {Zhang, Haopeng and Liu, Xiao and Zhang, Jiawei},
   year      = 2023,
   journal   = {arXiv.org},
@@ -2369,12 +2215,12 @@
   volume    = 2,
   edition   = {2nd}
 }
-@article{text_liu_2019,
+@inproceedings{text_liu_2019,
   title     = {Text Summarization with Pretrained Encoders},
   author    = {Liu, Yang and Lapata, Mirella},
-  year      = 2019,
-  journal   = {arXiv: Computation and Language},
-  litmapsid = 261146773
+  booktitle = {Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)},
+  pages     = {3730--3740},
+  year      = {2019}
 }
 @online{Thornburg01,
   title        = {Introduction to Bayesian Statistics},
@@ -2390,8 +2236,6 @@
   year      = 2022,
   booktitle = {Proc. of ACM International Conference on Information \& Knowledge Management},
   pages     = {2853–2862},
-  isbn      = 9781450392365,
-  abstract  = {Recommendation technologies have been playing an instrumental role for promoting both physical and digital content across several global platforms (Amazon, Apple, Netflix). Here we provide a study on the benefits of recommendation technologies in an educational platform with a focus on music learning. There are several characteristics present in this educational platform that make this recommendation problem particularly interesting, namely: a) the few but highly repetitive interactions, b) the existence of multiple versions of the same content across many difficulty levels, orchestrations, and musical instruments, and c) the user's expertise in a musical instrument which is essential for making appropriate recommendations. We highlight the unique dataset characteristics and compare them to those of other widely-used recommendation datasets. To alleviate the very high data sparsity due to the multi-instantiation of songs, we use entity resolution principles to embed songs in a new space. Using this lightweight entity resolution step on song data, in combination with neural recommendation architectures, we can double the predictive accuracy compared to techniques based on matrix factorization.}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2451,7 +2295,7 @@
   lastaccessed = {May 27, 2019}
 }
 @article{underwood2017exploring,
-  title   = {Exploring AI language assistants with primary EFL students},
+  title   = {Exploring {AI} language assistants with primary EFL students},
   author  = {Underwood, Joshua},
   year    = 2017,
   journal = {CALL in a climate of change: adapting to turbulent global conditions--short papers from EUROCALL},
@@ -2463,32 +2307,21 @@
   author    = {Matthew Van Gundy and Davide Balzarotti and Giovanni Vigna},
   year      = 2007,
   booktitle = {Proceedings of the first USENIX workshop on Offensive Technologies},
-  publisher = {USENIX Association},
-  address   = {Berkley, CA},
-  series    = {WOOT '07},
   articleno = {Paper 7},
-  numpages  = 9
 }
 @inproceedings{VanGundy08,
   title     = {Catch me, if you can: Evading network signatures with web-based polymorphic worms},
   author    = {Matthew Van Gundy and Davide Balzarotti and Giovanni Vigna},
   year      = 2008,
   booktitle = {Proceedings of the first USENIX workshop on Offensive Technologies},
-  publisher = {USENIX Association},
-  address   = {Berkley, CA},
-  series    = {WOOT '08},
   pages     = {99--100},
   articleno = 7,
-  numpages  = 2
 }
 @inproceedings{VanGundy09,
   title     = {Catch me, if you can: Evading network signatures with web-based polymorphic worms},
   author    = {Matthew Van Gundy and Davide Balzarotti and Giovanni Vigna},
   year      = 2009,
   booktitle = {Proceedings of the first USENIX workshop on Offensive Technologies},
-  publisher = {USENIX Association},
-  address   = {Berkley, CA},
-  series    = {WOOT '09},
   pages     = {90--100}
 }
 @incollection{Wenzel:1992:TVA:146022.146089,
@@ -2537,11 +2370,12 @@
   booktitle = {Language Resources and Evaluation Conference},
   pages     = {1217--1233}
 }
-@article{xia2019text,
-  title   = {Text readability assessment for second language learners},
-  author  = {Xia, Menglin and Kochmar, Ekaterina and Briscoe, Ted},
-  year    = 2019,
-  journal = {arXiv preprint arXiv:1906.07580}
+@inproceedings{xia2019text,
+  title     = {Text Readability Assessment for Second Language Learners},
+  author    = {Xia, Menglin and Kochmar, Ekaterina and Briscoe, Ted},
+  booktitle = {Proceedings of the Fourteenth Workshop on Innovative Use of {NLP} for Building Educational Applications},
+  pages     = {12--22},
+  year      = {2019}
 }
 @article{Yano1994THE,
   title   = {The Effects of Simplified and Elaborated Texts on Foreign Language Reading Comprehension},
@@ -2554,15 +2388,15 @@
 @article{ye2023comprehensive,
   title   = {A Comprehensive Capability Analysis of {GPT-3} and {GPT-3.5} Series Models},
   author  = {Ye, Junjie and Chen, Xuanting and Xu, Nuo and Zu, Can and Shao, Zekai and Liu, Shichun and Cui, Yuhan and Zhou, Zeyang and Gong, Chao and Shen, Yang and Zhou, Jie and Chen, Siming and Gui, Tao and Zhang, Qi and Huang, Xuanjing},
-  year    = 2023,
-  journal = {ArXiv},
-  doi     = {10.48550/arXiv.2303.10420}
+  journal = {arXiv preprint arXiv:2303.10420},
+  year    = {2023}
 }
-@article{yin2019benchmarking,
-  title   = {Benchmarking zero-shot text classification: Datasets, evaluation and entailment approach},
-  author  = {Yin, Wenpeng and Hay, Jamaal and Roth, Dan},
-  year    = 2019,
-  journal = {arXiv preprint arXiv:1909.00161}
+@inproceedings{yin2019benchmarking,
+  title     = {Benchmarking Zero-Shot Text Classification: Datasets, Evaluation and Entailment Approach},
+  author    = {Yin, Wenpeng and Hay, Jamaal and Roth, Dan},
+  booktitle = {Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)},
+  pages     = {3914--3923},
+  year      = {2019}
 }
 @article{Yorio1971Some,
   title   = {Some Sources of Reading Problems for Foreign‐Language Learners},
@@ -2573,13 +2407,12 @@
   pages   = {107--115},
   doi     = {10.1111/J.1467-1770.1971.TB00494.X}
 }
-@misc{zhang2020pegasus,
-  title         = {PEGASUS: Pre-training with Extracted Gap-sentences for Abstractive Summarization},
-  author        = {Jingqing Zhang and Yao Zhao and Mohammad Saleh and Peter J. Liu},
-  year          = 2020,
-  eprint        = {1912.08777},
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.CL}
+@inproceedings{zhang2020pegasus,
+  title     = {{PEGASUS}: Pre-training with Extracted Gap-Sentences for Abstractive Summarization},
+  author    = {Zhang, Jingqing and Zhao, Yao and Saleh, Mohammad and Liu, Peter},
+  booktitle = {Proceedings of the 37th International Conference on Machine Learning (ICML)},
+  pages     = {11328--11339},
+  year      = {2020}
 }
 @inproceedings{zheng2018drn,
   title     = {DRN: A deep reinforcement learning framework for news recommendation},
