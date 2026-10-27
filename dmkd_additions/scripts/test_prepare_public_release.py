@@ -48,13 +48,17 @@ def test_secret_detection_true_and_false_positives(tmp_path: Path):
     matches_clean = scan_file_for_secrets(clean_file)
     assert len(matches_clean) == 0, f"Faux positifs détectés : {matches_clean}"
 
-    # Vrais secrets
+    # Vrais secrets (construits par concaténation dynamique pour éviter l'auto-détection statique sur ce fichier)
+    fake_sk = "sk-" + "abcdef1234567890abcdef1234567890"
+    fake_hf = "hf_" + "abcdef1234567890abcdef1234"
+    fake_ghp = "ghp_" + "abcdef1234567890abcdef1234567890"
+    fake_aiza = "AIza" + "SyA1234567890123456789012345678901"
     dirty_file = tmp_path / "dirty.py"
     dirty_file.write_text(
-        "openai_key = 'sk-abcdef1234567890abcdef1234567890'\n"
-        "hf_token = 'hf_abcdef1234567890abcdef1234'\n"
-        "gh_token = 'ghp_abcdef1234567890abcdef1234567890'\n"
-        "google_key = 'AIzaSyA1234567890123456789012345678901'\n",
+        f"openai_key = '{fake_sk}'\n"
+        f"hf_token = '{fake_hf}'\n"
+        f"gh_token = '{fake_ghp}'\n"
+        f"google_key = '{fake_aiza}'\n",
         encoding="utf-8",
     )
     matches_dirty = scan_file_for_secrets(dirty_file)
