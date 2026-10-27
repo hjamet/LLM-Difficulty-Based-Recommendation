@@ -1,0 +1,56 @@
+% Statistical Evaluation of Recommendation Models with Bootstrap SE & Holm-Bonferroni
+\begin{table*}[t]
+\centering
+\caption{Evaluation results ($\mu \pm \text{SE}$ over $N$ users, with bootstrap $B=1000$). Asterisks indicate statistical significance over the respective Xavier baseline via paired Wilcoxon signed-rank test with Holm-Bonferroni FWER control ($^{*}p_{\text{adj}}<0.05$, $^{**}p_{\text{adj}}<0.01$, $^{***}p_{\text{adj}}<0.001$).}
+\label{tab:evaluation_results_significance}
+\tiny
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l l cccccc}
+\toprule
+\rotatebox{45}{\textbf{Dataset}} & \rotatebox{45}{\textbf{Model}} & \rotatebox{45}{\textbf{Recall@5}} & \rotatebox{45}{\textbf{Precision@5}} & \rotatebox{45}{\textbf{F1@5}} & \rotatebox{45}{\textbf{NDCG@5}} & \rotatebox{45}{\textbf{MRR@5}} & \rotatebox{45}{\textbf{MAP@5}} \\
+\midrule
+% Results for Zeeguu
+\multirow{9}{*}{\rotatebox{45}{Zeeguu}} & ALS                  & 0.0626 \pm 0.0030 & 0.0236 \pm 0.0020 & 0.0309 \pm 0.0023 & 0.0595 \pm 0.0032 & 0.0774 \pm 0.0036 & 0.0498 \pm 0.0027 \\
+ & BPR                  & 0.0182 \pm 0.0017 & 0.0061 \pm 0.0010 & 0.0082 \pm 0.0012 & 0.0168 \pm 0.0017 & 0.0191 \pm 0.0017 & 0.0146 \pm 0.0017 \\
+ & LMF                  & 0.0251 \pm 0.0019 & 0.0084 \pm 0.0012 & 0.0116 \pm 0.0015 & 0.0235 \pm 0.0018 & 0.0291 \pm 0.0020 & 0.0202 \pm 0.0017 \\
+ & KNN ADA              & 0.0357 \pm 0.0024 & 0.0122 \pm 0.0014 & 0.0155 \pm 0.0017 & 0.0290 \pm 0.0022 & 0.0324 \pm 0.0022 & 0.0232 \pm 0.0018 \\
+ & KNN BERT             & 0.0170 \pm 0.0018 & 0.0050 \pm 0.0009 & 0.0066 \pm 0.0011 & 0.0143 \pm 0.0014 & 0.0159 \pm 0.0016 & 0.0121 \pm 0.0014 \\
+ & LightGCN ADA         & \textbf{0.0721 \pm 0.0033}^{\text{ns}} & \textbf{0.0274 \pm 0.0020}^{**} & \textbf{0.0352 \pm 0.0022}^{\text{ns}} & \textbf{0.0666 \pm 0.0031}^{*} & \textbf{0.0843 \pm 0.0035}^{\text{ns}} & \textbf{0.0550 \pm 0.0030}^{*} \\
+ & LightGCN Xavier ADA  & 0.0630 \pm 0.0030 & 0.0238 \pm 0.0020 & 0.0308 \pm 0.0021 & 0.0594 \pm 0.0030 & 0.0759 \pm 0.0033 & 0.0498 \pm 0.0027 \\
+ & LightGCN BERT        & 0.0659 \pm 0.0031^{\text{ns}} & 0.0249 \pm 0.0019^{\text{ns}} & 0.0323 \pm 0.0022^{\text{ns}} & 0.0609 \pm 0.0030^{\text{ns}} & 0.0788 \pm 0.0035^{\text{ns}} & 0.0501 \pm 0.0026^{\text{ns}} \\
+ & LightGCN Xavier BERT & 0.0622 \pm 0.0030 & 0.0231 \pm 0.0018 & 0.0300 \pm 0.0022 & 0.0599 \pm 0.0032 & 0.0765 \pm 0.0032 & 0.0508 \pm 0.0028 \\
+\midrule
+% Results for ml-100k
+\multirow{9}{*}{\rotatebox{45}{ml-100k}} & ALS                  & 0.0767 \pm 0.0044 & 0.1285 \pm 0.0054 & 0.0806 \pm 0.0041 & 0.1414 \pm 0.0061 & 0.2504 \pm 0.0070 & 0.0850 \pm 0.0045 \\
+ & BPR                  & 0.0551 \pm 0.0038 & 0.0975 \pm 0.0048 & 0.0580 \pm 0.0039 & 0.1084 \pm 0.0050 & 0.1995 \pm 0.0067 & 0.0634 \pm 0.0040 \\
+ & LMF                  & 0.0381 \pm 0.0031 & 0.0635 \pm 0.0039 & 0.0400 \pm 0.0031 & 0.0704 \pm 0.0041 & 0.1419 \pm 0.0059 & 0.0379 \pm 0.0030 \\
+ & KNN ADA              & 0.0188 \pm 0.0023 & 0.0323 \pm 0.0031 & 0.0196 \pm 0.0022 & 0.0384 \pm 0.0032 & 0.0781 \pm 0.0044 & 0.0222 \pm 0.0023 \\
+ & KNN BERT             & 0.0116 \pm 0.0016 & 0.0189 \pm 0.0023 & 0.0117 \pm 0.0015 & 0.0234 \pm 0.0024 & 0.0495 \pm 0.0035 & 0.0135 \pm 0.0019 \\
+ & LightGCN ADA         & \textbf{0.0903 \pm 0.0047}^{\text{ns}} & \textbf{0.1348 \pm 0.0056}^{\text{ns}} & \textbf{0.0882 \pm 0.0047}^{\text{ns}} & \textbf{0.1556 \pm 0.0059}^{\text{ns}} & 0.2682 \pm 0.0069^{\text{ns}} & \textbf{0.0975 \pm 0.0050}^{\text{ns}} \\
+ & LightGCN Xavier ADA  & 0.0881 \pm 0.0047 & 0.1346 \pm 0.0055 & 0.0869 \pm 0.0046 & 0.1548 \pm 0.0058 & 0.2720 \pm 0.0069 & 0.0958 \pm 0.0050 \\
+ & LightGCN BERT        & 0.0855 \pm 0.0044^{\text{ns}} & 0.1316 \pm 0.0051^{\text{ns}} & 0.0847 \pm 0.0044^{\text{ns}} & 0.1547 \pm 0.0060^{\text{ns}} & \textbf{0.2761 \pm 0.0076}^{\text{ns}} & 0.0971 \pm 0.0047^{\text{ns}} \\
+ & LightGCN Xavier BERT & 0.0855 \pm 0.0044 & 0.1323 \pm 0.0051 & 0.0847 \pm 0.0044 & 0.1508 \pm 0.0056 & 0.2636 \pm 0.0067 & 0.0922 \pm 0.0046 \\
+\midrule
+% Results for Goodreads
+\multirow{9}{*}{\rotatebox{45}{Goodreads}} & ALS                  & 0.0634 \pm 0.0006 & 0.0156 \pm 0.0003 & 0.0237 \pm 0.0004 & 0.0447 \pm 0.0005 & 0.0419 \pm 0.0005 & 0.0366 \pm 0.0005 \\
+ & BPR                  & 0.0447 \pm 0.0005 & 0.0114 \pm 0.0003 & 0.0168 \pm 0.0003 & 0.0323 \pm 0.0004 & 0.0323 \pm 0.0005 & 0.0261 \pm 0.0004 \\
+ & LMF                  & 0.0432 \pm 0.0005 & 0.0099 \pm 0.0002 & 0.0155 \pm 0.0003 & 0.0280 \pm 0.0004 & 0.0245 \pm 0.0004 & 0.0221 \pm 0.0004 \\
+ & KNN ADA              & 0.0175 \pm 0.0003 & 0.0050 \pm 0.0002 & 0.0070 \pm 0.0002 & 0.0127 \pm 0.0003 & 0.0127 \pm 0.0003 & 0.0101 \pm 0.0002 \\
+ & KNN BERT             & 0.0100 \pm 0.0002 & 0.0029 \pm 0.0001 & 0.0040 \pm 0.0002 & 0.0075 \pm 0.0002 & 0.0078 \pm 0.0002 & 0.0060 \pm 0.0002 \\
+ & LightGCN ADA         & \textbf{0.0732 \pm 0.0007}^{***} & \textbf{0.0183 \pm 0.0003}^{***} & \textbf{0.0275 \pm 0.0004}^{***} & \textbf{0.0513 \pm 0.0006}^{***} & \textbf{0.0481 \pm 0.0006}^{***} & \textbf{0.0415 \pm 0.0005}^{***} \\
+ & LightGCN Xavier ADA  & 0.0603 \pm 0.0006 & 0.0155 \pm 0.0003 & 0.0231 \pm 0.0004 & 0.0432 \pm 0.0005 & 0.0415 \pm 0.0005 & 0.0352 \pm 0.0005 \\
+ & LightGCN BERT        & 0.0673 \pm 0.0006^{***} & 0.0170 \pm 0.0003^{***} & 0.0254 \pm 0.0004^{***} & 0.0473 \pm 0.0005^{***} & 0.0449 \pm 0.0005^{***} & 0.0382 \pm 0.0005^{***} \\
+ & LightGCN Xavier BERT & 0.0570 \pm 0.0006 & 0.0149 \pm 0.0003 & 0.0220 \pm 0.0004 & 0.0416 \pm 0.0005 & 0.0405 \pm 0.0005 & 0.0340 \pm 0.0004 \\
+\midrule
+% Results for Tomplay
+\multirow{9}{*}{\rotatebox{45}{Tomplay}} & ALS                  & 0.0875 \pm 0.0007 & 0.0598 \pm 0.0006 & 0.0650 \pm 0.0007 & 0.0838 \pm 0.0007 & 0.1408 \pm 0.0009 & 0.0528 \pm 0.0006 \\
+ & BPR                  & 0.0295 \pm 0.0004 & 0.0236 \pm 0.0004 & 0.0246 \pm 0.0004 & 0.0306 \pm 0.0005 & 0.0583 \pm 0.0006 & 0.0178 \pm 0.0004 \\
+ & LMF                  & 0.0327 \pm 0.0005 & 0.0249 \pm 0.0004 & 0.0263 \pm 0.0004 & 0.0323 \pm 0.0005 & 0.0598 \pm 0.0006 & 0.0187 \pm 0.0004 \\
+ & KNN ADA              & 0.0269 \pm 0.0004 & 0.0170 \pm 0.0003 & 0.0188 \pm 0.0004 & 0.0242 \pm 0.0004 & 0.0379 \pm 0.0005 & 0.0156 \pm 0.0003 \\
+ & KNN BERT             & 0.0323 \pm 0.0005 & 0.0209 \pm 0.0004 & 0.0229 \pm 0.0004 & 0.0314 \pm 0.0004 & 0.0514 \pm 0.0006 & 0.0210 \pm 0.0004 \\
+ & LightGCN ADA         & 0.0958 \pm 0.0008^{*} & 0.0646 \pm 0.0006^{\text{ns}} & 0.0706 \pm 0.0007^{\text{ns}} & 0.0924 \pm 0.0008^{\text{ns}} & 0.1541 \pm 0.0010^{\text{ns}} & 0.0595 \pm 0.0006^{*} \\
+ & LightGCN Xavier ADA  & 0.0943 \pm 0.0008 & 0.0643 \pm 0.0007 & 0.0699 \pm 0.0007 & 0.0910 \pm 0.0007 & 0.1528 \pm 0.0010 & 0.0581 \pm 0.0006 \\
+ & LightGCN BERT        & \textbf{0.0984 \pm 0.0008}^{\text{ns}} & \textbf{0.0660 \pm 0.0007}^{\text{ns}} & \textbf{0.0722 \pm 0.0007}^{\text{ns}} & \textbf{0.0947 \pm 0.0008}^{\text{ns}} & \textbf{0.1582 \pm 0.0009}^{\text{ns}} & \textbf{0.0608 \pm 0.0006}^{\text{ns}} \\
+ & LightGCN Xavier BERT & 0.0966 \pm 0.0008 & 0.0656 \pm 0.0007 & 0.0715 \pm 0.0007 & 0.0936 \pm 0.0008 & 0.1566 \pm 0.0010 & 0.0601 \pm 0.0006 \\
+\bottomrule
+\end{tabular*}
+\end{table*}
