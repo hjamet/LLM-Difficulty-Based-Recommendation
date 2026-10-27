@@ -43,7 +43,7 @@
     urlcolor=blue!60!black
 }
 
-\graphicspath{{../../../_attachments/}{../../paper/figures/}{../overleaf_patches/figures/}{./}}
+\graphicspath{{./}{./figures/}{../../../_attachments/}{../../paper/figures/}{../overleaf_patches/figures/}}
 
 % Macros for final human evaluation numbers (Task T14, N=150 stratified pairs)
 \newcommand{\HumanKappaPref}{0.42}
@@ -168,6 +168,8 @@ To test whether explicit CEFR system prompts improve prediction accuracy over un
 \end{tabular}%
 }
 \end{table}
+
+\medskip\noindent\textcolor{blue}{\textbf{[TO BE COMPLETED BY MAXIME --- Section 6.3 Recommendation Systems (Tasks T10, T11): Insert inter-run standard deviations ($\mu \pm \sigma$) and paired statistical significance tests ($p$-values) for the recommendation benchmarks (Zeeguu, MovieLens-100k, Goodreads, and Tomplay) from Section 6.3.]}}
 
 \subsection{AE.2: Analytical and Multi-Model Justification of Weight $w_1$ (Task T07)}
 \begin{reviewbox}
@@ -334,6 +336,7 @@ We expanded Section 4.2 (\texttt{tex/RS.tex}) to formally specify the item and u
 \label{eq:rebuttal_item_user_emb}
 \end{equation}
 where $\mathbf{h}_{i,t}$ denotes the contextualized token representation at position $t$ (mean pooling over $|T_i| \le 128$ tokens yields $d = 768$ for \texttt{paraphrase-xlm-r-multilingual-v1}, and $d = 1{,}536$ over up to $8{,}000$ tokens for OpenAI \texttt{text-embedding-ada-002}), and $\mathcal{H}_u^{(n)}$ is the set of the $n$ most recent items interacted with by user $u \in \mathcal{U}$.
+\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
 
 \subsection{R1.4: Introductory Model Synthesis in Section 6 (Task T13)}
 \begin{reviewbox}
@@ -483,6 +486,7 @@ We rewrote Section 4.2 (\texttt{tex/RS.tex}) with numbered equations linked to F
     \label{eq:rebuttal_lightgcn_all}
     \end{equation}
 \end{enumerate}
+\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
 
 \subsection{R2.8: Moderation of Linguistic Transformation Claim on p.\ 18 (Task T15)}
 \begin{reviewbox}
@@ -516,6 +520,8 @@ We added a dedicated paragraph in Section 6.1.3 (\texttt{tex/Experiments.tex}, p
 \noindent\textbf{Response:}
 As shown in Table~\ref{tab:rebuttal_table2} (Response \textbf{AE.1}), we computed QWK ($\ge 0.86$ for prompted GPT-4o across all three datasets, confirming that misclassifications in Figure 8 fall predominantly on adjacent CEFR levels), added $B = 1{,}000$ bootstrap standard errors ($\mu \pm \sigma$) and paired Wilcoxon tests, and revised Section 6.1.2 to explicitly note non-significant prompt differences on \texttt{LjL} ($p = 0.140$ for GPT-4o; $p = 0.606$ for GPT-4o-mini).
 
+\medskip\noindent\textcolor{blue}{\textbf{[TO BE COMPLETED BY MAXIME --- Section 6.3 Recommendation Tables: Report inter-run variance ($\pm \sigma$) and statistical significance markers across the recommendation evaluation tables in Section 6.3, and state explicitly which baseline differences are statistically significant vs.\ non-significant.]}}
+
 \subsection{R2.13 \& R2.14: Iterative Simplification Step 3 and Average CEFR Thresholds in Figure 9 (Tasks T09, T18)}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.13 \& R2.14):} \textit{``In iterative simplification (Section 6.2.4), it is not clear what the results of item 3 show, and how they are further processed. Can you improve Fig.\ 9 by showing where, on average, CEFR levels appear?''}
@@ -539,6 +545,7 @@ e_{j,m}^{(0)} &\sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{
 \end{aligned}
 \end{equation}
 We explain that Xavier initialization assigns random, semantics-free layer-0 vectors, which suffers under extreme interaction sparsity (\texttt{Zeeguu} $99.92\%$, \texttt{Goodreads} $99.99\%$). Replacing random draws with pre-trained LLM embeddings $\mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i)$ clusters semantically related texts at layer 0 prior to BPR optimization, yielding $+12.12\%$ ($\text{NDCG}@5$) on \texttt{Zeeguu} and $+18.75\%$ on \texttt{Goodreads}.
+\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
 
 \subsection{R2.17: Concrete Architectural Recommendations in Section 6.3.4 (Task T24)}
 \begin{reviewbox}
@@ -547,6 +554,7 @@ We explain that Xavier initialization assigns random, semantics-free layer-0 vec
 
 \noindent\textbf{Response:}
 At the end of Section 6.3.4 (\texttt{tex/Experiments\_RS.tex}), we added concrete deployment guidelines: (1) for \textbf{Difficulty Estimation}, use prompted \textbf{GPT-4o-mini} for highest accuracy-to-cost ($0.616$ on \texttt{Sentences Books}, $0.888$ on \texttt{Sentences Internet}) or fine-tuned \textbf{CamemBERT} (110M) for local deployment with minimal pairwise inversions ($PM_{\text{norm}} = 3.86\%$); (2) for \textbf{Text Simplification}, use LoRA fine-tuned \textbf{Mistral-7B} ($A = 0.59, S = 0.91, w\text{-Score} = 0.26$, $78.0\%$ human perceived simplification) as the best local open-weights trade-off on the automated $w\text{-Score}$, or fine-tuned \textbf{GPT-4o} ($58.0\%$ blind preference, $90.0\%$ perceived simplification, $78.0\%$ strict meaning preservation) when fine-grained propositional fidelity judged by native readers is prioritized; and (3) for \textbf{Recommendation}, use \textbf{LightGCN with OpenAI ADA embeddings} ($d=1{,}536, n \in \{1, 2\}$) on text-rich sparse catalogs (\texttt{Zeeguu}, \texttt{Goodreads}) and \textbf{LightGCN with multilingual BERT embeddings} ($d=768, L=2$) on structured metadata catalogs (\texttt{Tomplay}).
+\smallskip\noindent\textcolor{blue}{\textbf{[TO BE VERIFIED / COMPLETED BY MAXIME: Please review this formalization and complete with any additional implementation details or updated Section 6.3 numbers if needed.]}}
 
 \subsection{R2.18: Moderation of Language-Agnostic Claims (Task T16)}
 \begin{reviewbox}
