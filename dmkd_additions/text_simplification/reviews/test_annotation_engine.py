@@ -313,7 +313,16 @@ def test_engine_suite():
 
         res_macros = generate_latex_human_study_macros(repo_root=repo_root, force_partial=True)
         assert "macros_dict" in res_macros
-        assert len(res_macros["macros_dict"]) == 10
+        assert len(res_macros["macros_dict"]) == 16
+        for m_key in [
+            "HumanWinGPTThreeFive",
+            "HumanWinGPTFourMini",
+            "HumanSimplerGPTThreeFive",
+            "HumanSimplerGPTFourMini",
+            "HumanMeaningGPTThreeFive",
+            "HumanMeaningGPTFourMini",
+        ]:
+            assert m_key in res_macros["macros_dict"]
 
     finally:
         # Nettoyage et restauration stricte des fichiers réels
