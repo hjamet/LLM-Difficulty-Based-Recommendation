@@ -77,6 +77,7 @@ In the generation of embeddings for our datasets, we use specific content tailor
 \begin{mmblock}
 \caption{Length of the item texts in tokens of each model (all the items used in the experiments, see \autoref{tab:datasets}) and effect of the truncation. Items truncated: share of the items longer than the limit. Text encoded: share of all the tokens of the dataset that BERT receives.}
 \label{tab:token_lengths}
+\setlength{\tabcolsep}{4pt} % [Maxime 28/10] the table was 17pt wider than the text
 \input{tex/generated/rs_token_lengths_table}
 \end{mmblock}
 \end{table}
@@ -235,6 +236,7 @@ KNN & \mm{Profile size $n$} (1, 2, 3, 4, 5, 10, 20, 30, 50, 100) \\
 \caption{Evaluation results: mean$_{\pm \text{standard deviation}}$ over \RSseeds{}. Bold: best mean per dataset and metric. $^\dagger$KNN is deterministic (single run).}
 \label{tab:evaluation_results}
 \tiny
+\setlength{\tabcolsep}{2pt} % [Maxime 28/10] the 5-seed table (mean and std) was 52pt wider than the text
 \input{tex/generated/rs_results_table}
 \end{mmblock}
 \end{minipage}
