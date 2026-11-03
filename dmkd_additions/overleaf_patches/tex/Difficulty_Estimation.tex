@@ -116,8 +116,8 @@ PM_{\text{norm}} = \frac{1}{\binom{N}{2}} \sum_{u=1}^{K} \sum_{u'=1}^{K} C_{u,u'
 This formulation has several important properties:
 \begin{itemize}
     \item It applies equally well to classification and regression tasks, enabling direct comparison between different types of models on the same dataset.
-    \item \textcolor{red}{Being normalized by $\binom{N}{2} = \frac{N(N-1)}{2}$, $PM_{\text{norm}}$ is bounded in $[0, 1]$ (or $[0\%, 100\%]$) and is strictly invariant to dataset size $N$, allowing direct comparison across datasets of different cardinalities.}
-    \item A score of $0$ indicates perfect ordering preservation, \textcolor{red}{while $1$ indicates complete inversion of all document pairs.}
+    \item \textcolor{red}{Being normalized by $\binom{N}{2} = \frac{N(N-1)}{2}$ (the total number of document pairs), $PM_{\text{norm}}$ is bounded in $[0, 1]$ (or $[0\%, 100\%]$) and eliminates the quadratic $\mathcal{O}(N^2)$ scale dependence on corpus size $N$, allowing direct comparisons across datasets of different cardinalities.}
+    \item \textcolor{red}{A score of $0$ indicates perfect ordinal ranking preservation ($PM_{\text{norm}} = 0$). The upper bound is at most $1$ and depends on the empirical distribution of true labels, as pairs sharing the same true level contribute at most $\frac{1}{2}$ under inverted predictions (reaching $1$ when all true levels are distinct).}
 \end{itemize}
 
 \begin{figure}[!h]

@@ -1,0 +1,58 @@
+\newpage
+\appendix
+\section{Appendix}
+\label{sec:appendix}
+
+\begin{table}[!ht]
+\centering
+\caption{Recommender System: best hyperparameters for each dataset and model}
+\label{tab:best_hyperparameters}
+% KNN rows previously labelled "neighbours": it is the profile size n in the code.
+% \resizebox{\columnwidth}{!}{%
+\begin{tabular}{lll}
+\toprule
+\textbf{Dataset} & \textbf{Method} & \textbf{Best Hyperparameters} \\
+\midrule
+\multirow{10}{*}{\rotatebox{45}{Zeeguu}} & LightGCN\textsubscript{ADA} & n\_layers: 9, n: 1, lr: 0.0005 \\
+& LightGCN\textsubscript{Xavier ADA} & n\_layers: 10, lr: 0.0005 \\
+& LightGCN\textsubscript{BERT} & n\_layers: 10, n: 2, lr: 0.01 \\
+& LightGCN\textsubscript{Xavier BERT} & n\_layers: 10, lr: 0.001 \\
+& ALS & factors: 50, regularization: 0.05, alpha: 5 \\
+& BPR & factors: 50, regularization: 0.01, lr: 0.001, \\ & & verify\_negative\_samples: False \\
+& LMF & factors: 20, regularization: 1, lr: 0.1, neg\_prop: 10 \\
+& KNN\textsubscript{ADA} & \mm{$n$}: 4 \\
+& KNN\textsubscript{BERT} & \mm{$n$}: 4 \\
+\midrule
+\multirow{10}{*}{\rotatebox{45}{ml-100k}} & LightGCN\textsubscript{ADA} & n\_layers: 2, n: 5, lr: 0.001 \\
+& LightGCN\textsubscript{BERT} & n\_layers: 2, n: 20, lr: 0.001 \\
+& LightGCN\textsubscript{Xavier ADA} & n\_layers: 2, lr: 0.001 \\
+& LightGCN\textsubscript{Xavier BERT} & n\_layers: 1, lr: 0.001 \\
+& ALS & factors: 20, regularization: 0.05, alpha: 1 \\
+& BPR & factors: 50, regularization: 0.001, lr: 0.05, \\ & & verify\_negative\_samples: True \\
+& LMF & factors: 100, regularization: 1, lr: 0.05, neg\_prop: 50 \\
+& KNN\textsubscript{ADA} & \mm{$n$}: 2 \\
+& KNN\textsubscript{BERT} & \mm{$n$}: 1 \\
+\midrule
+\multirow{10}{*}{\rotatebox{45}{Goodreads}} & LightGCN\textsubscript{ADA} & n\_layers: 2, n: 2, lr: 0.0005 \\
+& LightGCN\textsubscript{Xavier ADA} & n\_layers: 3, lr: 0.001 \\
+& LightGCN\textsubscript{BERT} & n\_layers: 5, n: 5, lr: 0.001 \\
+& LightGCN\textsubscript{Xavier BERT} & n\_layers: 2, lr: 0.001 \\
+& ALS & factors: 100, regularization: 0.01, alpha: 40 \\
+& BPR & factors: 100, regularization: 0.01, lr: 0.001, \\ & & verify\_negative\_samples: True \\
+& LMF & factors: 100, regularization: 1, lr: 0.1, neg\_prop: 10 \\
+& KNN\textsubscript{ADA} & \mm{$n$}: 1 \\
+& KNN\textsubscript{BERT} & \mm{$n$}: 1 \\
+\midrule
+\multirow{10}{*}{\rotatebox{45}{Tomplay}} & LightGCN\textsubscript{ADA} & n\_layers: 2, n: 1, lr: 0.0005 \\
+& LightGCN\textsubscript{Xavier ADA} & n\_layers: 3, lr: 0.0005 \\
+& LightGCN\textsubscript{BERT} & n\_layers: 2, n: 1, lr: 0.0005 \\
+& LightGCN\textsubscript{Xavier BERT} & n\_layers: 2, lr: 0.0005 \\
+& ALS & factors: 100, regularization: 0.001, alpha: 40 \\
+& BPR & factors: 50, regularization: 0.001, lr: 0.05, \\ & & verify\_negative\_samples: True \\
+& LMF & factors: 100, regularization: 1, lr: 0.05, neg\_prop: 10 \\
+& KNN\textsubscript{ADA} & \mm{$n$}: 1 \\
+& KNN\textsubscript{BERT} & \mm{$n$}: 1 \\
+\bottomrule
+\end{tabular}
+% }
+\end{table}

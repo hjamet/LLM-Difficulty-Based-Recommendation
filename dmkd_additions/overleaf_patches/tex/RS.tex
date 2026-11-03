@@ -11,81 +11,198 @@ In our work, we focus on an approach that is simple to implement and can be comb
 This representation will be used in two ways: a) as a representation of the items, which can later be used for a KNN (K-Nearest-Neighbor) approach for finding appropriate recommendations, b) serve as the initialization for embeddings in a graph neural network, specifically the LightGCN architecture \cite{lightgcn}, which is known for its speed and accuracy in predictions. This hybrid approach allows us to combine the advanced text representation capabilities of LLMs with the efficacy of graph neural networks, while maintaining modularity. Additionally, it avoids the need for costly retraining of the LLM, making the methodology easy to code and deploy, and also resource-efficient.
 
 
-\textcolor{red}{Embedding techniques in graph-based recommendation methods have been studied extensively to integrate content-based representations into collaborative filtering architectures \cite{koren2021advances,lightgcn,bpr}. Pairwise learning-to-rank formulations such as Bayesian Personalized Ranking (BPR) \cite{bpr} and matrix factorization methods for implicit feedback (ALS, LMF) \cite{als1,als2,lmf} optimize item orderings from historical interactions, but suffer under severe cold-start sparsity when items lack interaction histories. Recent work shows that initializing graph neural networks with dense representations extracted from pre-trained LLMs bridges content-based semantics and high-order collaborative signals \cite{deldjoo2024review,zhao2024recommender}.}
+% [Maxime revision 2026-10-22] previous red paragraph, replaced below:
+% \textcolor{red}{Embedding techniques in graph-based recommendation methods have been studied extensively to integrate content-based representations into collaborative filtering architectures \cite{koren2021advances,lightgcn,bpr}. Pairwise learning-to-rank formulations such as Bayesian Personalized Ranking (BPR) \cite{bpr} and matrix factorization methods for implicit feedback (ALS, LMF) \cite{als1,als2,lmf} optimize item orderings from historical interactions, but suffer under severe cold-start sparsity when items lack interaction histories. Recent work shows that initializing graph neural networks with dense representations extracted from pre-trained LLMs bridges content-based semantics and high-order collaborative signals \cite{deldjoo2024review,zhao2024recommender}.}
+\mm{Collaborative filtering methods for implicit feedback, such as matrix factorisation trained with alternating least squares (ALS) \cite{als1,als2}, logistic matrix factorisation (LMF) \cite{lmf}, or the pairwise ranking objective of Bayesian Personalized Ranking (BPR) \cite{bpr}, learn user and item embeddings from the interactions only. Graph-based collaborative filtering exploits the structure of the bipartite user--item interaction graph by propagating these embeddings along its edges: NGCF \cite{wang2019ngcf} introduced this embedding propagation, and LightGCN \cite{lightgcn} simplified it by removing feature transformations and non-linear activations, which makes the model both easier to train and more accurate. In all these models, users and items are represented by identifiers (IDs) whose embeddings are learned from the interactions, which carries little semantic information and is particularly limiting when interactions are sparse \cite{zhao2024recommender}.}
+
+\mm{A line of work therefore represents items by embeddings of their textual descriptions computed with pre-trained language models \cite{zhao2024recommender}. Such text-based item representations can be transferred across recommendation domains \cite{hou2022unisrec}, and text-based recommenders can match ID-based ones, although representations used as frozen features perform clearly worse than representations fine-tuned end to end with the recommender \cite{yuan2023where}. With LLMs, Harte et al.~\cite{harte2023leveraging} showed that LLM embeddings of item texts can either be used directly, by recommending the items whose embeddings are the most similar to an aggregate of the embeddings of the items of a session, or serve to initialise the item embeddings of a neural sequential recommender (BERT4Rec), which improves its accuracy \cite{deldjoo2024review}. On graphs, using LLM text embeddings as initial node features of graph neural networks is an effective and efficient way of exploiting textual node attributes for node classification \cite{chen2024exploring}, and recent recommenders combine LLMs with graph collaborative filtering, e.g., by augmenting the interaction graph and the item attributes with LLM-generated knowledge \cite{wei2024llmrec}, or by aligning LLM-based user and item profiles with the representations learned by a graph recommender such as LightGCN \cite{ren2024rlmrec}. Our approach is close to the work of Harte et al.~\cite{harte2023leveraging}, transposed to graph-based collaborative filtering: we study both the direct use of frozen LLM embeddings (content-based nearest-neighbour recommendation) and their use as the initial embeddings of LightGCN, which are then fine-tuned with the collaborative signal of the interaction graph (Section~\ref{subsec:rs_our_approach}).}
 
 \subsection{Our approach}
 \label{subsec:rs_our_approach}
 
 Building on our models for difficulty estimation and simplification, we introduce a recommender system that uses these outputs to suggest suitable content for language learners. In language learning applications, a recommender system is essential for tailoring content to match users’ proficiency levels and personal interests.
 
-When the system identifies (or when the user explicitly declares) their proficiency level, it filters and ranks content that matches both the user’s level and topical interests (e.g., sports or technology), based on data from the user’s historical preferences.
+When the system identifies (or when the user explicitly declares) their proficiency level, it filters and ranks content that matches both the user’s level and topical interests (e.g., sports or technology), based on data from the user’s historical preferences. \mm{Concretely, the candidate items are first restricted to the texts whose CEFR level, estimated with the model of Section~\ref{sec:difficulty_estimation}, matches the level of the learner, possibly after simplification with the model of Section~\ref{sec:simplification}; the recommender described below then ranks these candidates according to the interests of the learner. In the offline evaluation of Section~\ref{sec:recommendation_results}, this level filter is not applied, because the benchmark datasets do not carry CEFR labels: we evaluate the ranking component alone.}
 
-Various approaches exist for recommender systems, including collaborative filtering, content-based filtering, knowledge-based recommendation, and hybrid combinations. Collaborative filtering algorithms, in particular, assume that accurate recommendations can be made by using the collective preferences of similar, like-minded users \cite{koren2021advances}. \textcolor{red}{Our methodological contribution in Section~\ref{sec:recommendation} consists of injecting dense semantic representations from pre-trained LLMs directly into both neighborhood-based (KNN) and graph-convolutional (LightGCN) collaborative filtering architectures without requiring end-to-end LLM fine-tuning.}
+Various approaches exist for recommender systems, including collaborative filtering, content-based filtering, knowledge-based recommendation, and hybrid combinations. Collaborative filtering algorithms, in particular, assume that accurate recommendations can be made by using the collective preferences of similar, like-minded users \cite{koren2021advances}. \mm{We compare two ways of exploiting the text representations of an LLM, which share the same item and user embeddings (Section~\ref{subsubsec:rs_embeddings}): (i) a purely content-based nearest-neighbour recommender, which ranks the items directly in the LLM embedding space (Section~\ref{subsubsec:rs_knn}), and (ii) the graph-based collaborative filtering model LightGCN~\cite{lightgcn}, whose initial embeddings are set to the LLM embeddings instead of random values (Section~\ref{subsubsec:rs_lightgcn}). In both cases, the LLM is only used as a frozen encoder: neither fine-tuning nor back-propagation through the LLM is needed, so that the approach can be combined with any embedding model at the cost of a single encoding pass over the catalogue. The LLM-based initialisation of LightGCN was introduced in our preliminary work~\cite{jamet2024evaluation}; the content-based nearest-neighbour recommender, the formalisation given below, and the extended evaluation of Section~\ref{sec:recommendation_results} (variability across runs, significance tests, and influence of the number of layers) are contributions of this article.}
 
-\subsubsection*{\textcolor{red}{1. LLM Item and User Embedding Generation (\autoref{fig:init_embeddings})}}
-\textcolor{red}{Let $\mathcal{U}$ denote the set of users and $\mathcal{I}$ the set of candidate reading items. As depicted in \autoref{fig:init_embeddings}, each item $i \in \mathcal{I}$ is associated with a textual document or concatenated metadata string $d_i$ (such as the full article text in \texttt{Zeeguu}, or the title, summary, and metadata in \texttt{Goodreads}, \texttt{ml-100k}, and \texttt{Tomplay}). We pass $d_i$ through a pre-trained language model encoder $\phi_{\text{LLM}}$ and apply mean pooling over its contextualized token hidden states $\mathbf{h}_{i,1}, \dots, \mathbf{h}_{i,|T_i|}$ to obtain a $d$-dimensional item embedding $\mathbf{e}_i^{(0)} \in \mathbb{R}^d$:}
-{\color{red}\begin{equation}
-    \mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i) = \frac{1}{|T_i|} \sum_{t=1}^{|T_i|} \mathbf{h}_{i,t} \in \mathbb{R}^d,
+\begin{mmblock}
+\paragraph{Notation.} Let $\mathcal{U}$ and $\mathcal{I}$ denote the sets of users and items, and $\mathcal{E} \subseteq \mathcal{U} \times \mathcal{I}$ the set of positive interactions observed in the training set (Section~\ref{subsec:data_preprocessing}). For a user $u$, $\mathcal{N}_u = \{i \in \mathcal{I} : (u, i) \in \mathcal{E}\}$ is the set of items with which $u$ interacted, and for an item $i$, $\mathcal{N}_i = \{u \in \mathcal{U} : (u, i) \in \mathcal{E}\}$ is the set of users who interacted with $i$. Each item $i$ is described by a text $d_i$: the full content of the article for Zeeguu, and a concatenation of its textual metadata (title, description, authors, genres, etc.) for the other datasets (Section~\ref{embeddings}). Every recommender below computes a score $\hat{y}_{u,i}$ for each user $u$ and each item $i$, and recommends to $u$ the $K$ items of $\mathcal{I} \setminus \mathcal{N}_u$ with the highest scores ($K = 5$ in our experiments).
+\end{mmblock}
+
+\subsubsection{\mm{Item and user embeddings}}
+\label{subsubsec:rs_embeddings}
+
+\begin{mmblock}
+As depicted in \autoref{fig:init_embeddings}, the text $d_i$ of each item is mapped by a pre-trained and frozen language model $\phi$ to a dense vector
+\begin{equation}
+    \mathbf{z}_i = \phi(d_i) \in \mathbb{R}^{d}.
     \label{eq:item_embedding_init}
-\end{equation}}
-\textcolor{red}{where $d = 768$ for our multilingual RoBERTa sentence encoder (\texttt{paraphrase-xlm-r-multilingual-v1}, $|T_i| \le 128$) and $d = 1{,}536$ for OpenAI \texttt{text-embedding-ada-002} ($|T_i| \le 8{,}000$). To represent each user $u \in \mathcal{U}$ in the same semantic space $\mathbb{R}^d$ without requiring explicit demographic profiles, we aggregate the embeddings of the $n$ most recent items $\mathcal{H}_u^{(n)} = \{i_{u,1}, \dots, i_{u,n}\}$ with which user $u$ has positively interacted:}
-{\color{red}\begin{equation}
-    \mathbf{e}_u^{(0)} = \frac{1}{|\mathcal{H}_u^{(n)}|} \sum_{i \in \mathcal{H}_u^{(n)}} \mathbf{e}_i^{(0)} \in \mathbb{R}^d.
+\end{equation}
+We consider two encoders:
+\begin{itemize}
+    \item \textbf{BERT}: the multilingual sentence encoder \texttt{paraphrase-xlm-r-multilingual-v1}, based on the XLM-RoBERTa architecture, with $d = 768$. The text is tokenised and truncated to its first $128$ tokens, and $\mathbf{z}_i$ is the mean of the contextual representations $\mathbf{h}_{i,1}, \dots, \mathbf{h}_{i,T_i}$ of these $T_i \le 128$ tokens in the last layer, $\mathbf{z}_i = \frac{1}{T_i} \sum_{t=1}^{T_i} \mathbf{h}_{i,t}$. For long documents such as the Zeeguu articles, the embedding therefore only reflects the beginning of the text.
+    \item \textbf{ADA}: the OpenAI model \texttt{text-embedding-ada-002}, with $d = 1536$, queried through the OpenAI API with the text truncated to its first $8{,}000$ tokens. Since the pooling performed inside this proprietary model is not documented, we treat it as a black-box function $\phi$.
+\end{itemize}
+Users are represented in the same space, without any additional information about them. Let $\mathcal{H}_u^{(n)} \subseteq \mathcal{N}_u$ denote the $n$ most recent items of user $u$ in the training set (or $\mathcal{N}_u$ itself if $|\mathcal{N}_u| < n$). The embedding of $u$ is the mean of the embeddings of these items:
+\begin{equation}
+    \mathbf{z}_u = \frac{1}{|\mathcal{H}_u^{(n)}|} \sum_{i \in \mathcal{H}_u^{(n)}} \mathbf{z}_i \in \mathbb{R}^{d}.
     \label{eq:user_embedding_init}
-\end{equation}}
+\end{equation}
+\autoref{fig:init_embeddings} illustrates this aggregation for $n = 2$, hence the weights $1/2$. The profile size $n$ is a hyperparameter of both recommenders (\autoref{tab:hyperparameters}); its best value depends on the dataset and on the model, from $n = 1$ to $n = 20$ (\autoref{tab:best_hyperparameters}), and is $n \le 2$ in most cases.
+\end{mmblock}
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\linewidth]{figures/init_embeddings.png}
-    \caption{Generating item embeddings with large language models (LLMs) and combining them to construct user embeddings.}
+    % \includegraphics[width=\linewidth]{figures/init_embeddings.png}
+    \includegraphics[width=\linewidth]{figures/fig_init_embeddings.pdf}
+    \caption{Generating item embeddings with large language models (LLMs) and combining them to construct user embeddings\mm{: each item text $d_i$ is encoded by a frozen LLM $\phi$ (Equation~\ref{eq:item_embedding_init}), and the embedding of a user is the mean of the embeddings of their $n$ most recent training items (Equation~\ref{eq:user_embedding_init}), illustrated here with $n = 2$: the two most recent items of user $u$ are $i_1$ and $i_3$}.}
     \label{fig:init_embeddings}
 \end{figure}
 
-\begin{itemize}
-    \item \textbf{KNN-based \textcolor{red}{(\autoref{fig:recommend_with_knn})}}: \textcolor{red}{In the user-based K-Nearest Neighbors (KNN) method illustrated in \autoref{fig:recommend_with_knn}, we measure the semantic preference similarity between target user $u$ and every other user $v \in \mathcal{U} \setminus \{u\}$ via cosine similarity in the LLM embedding space:}
-    {\color{red}\begin{equation}
-        \text{sim}(u, v) = \frac{\mathbf{e}_u^{(0)} \cdot \mathbf{e}_v^{(0)}}{\|\mathbf{e}_u^{(0)}\|_2 \, \|\mathbf{e}_v^{(0)}\|_2}.
-        \label{eq:knn_user_sim}
-    \end{equation}}
-    \textcolor{red}{Let $\mathcal{N}_k(u) \subset \mathcal{U} \setminus \{u\}$ denote the set of $k$ nearest neighbor users maximizing $\text{sim}(u, v)$. For any candidate item $i \notin \mathcal{H}_u$ whose estimated (or simplified) CEFR difficulty matches the learner's proficiency level, the predicted preference score $\hat{y}_{u,i}^{\text{KNN}}$ is computed as the similarity-weighted sum of neighbor interactions $r_{v,i}$:}
-    {\color{red}\begin{equation}
-        \hat{y}_{u,i}^{\text{KNN}} = \sum_{v \in \mathcal{N}_k(u)} \text{sim}(u, v) \cdot r_{v,i}.
-        \label{eq:knn_score}
-    \end{equation}}
+\subsubsection{\mm{Content-based nearest-neighbour recommendation}}
+\label{subsubsec:rs_knn}
 
-    \begin{figure}[ht!]
-        \centering
-        \includegraphics[width=0.5\linewidth]{figures/recommend_with_knn.png}
-        \caption{Selecting recommended items for a user based on similar users’ preferences using the KNN approach.}
-        \label{fig:recommend_with_knn}
-    \end{figure}
- 
-    \item \textbf{Graph-based \textcolor{red}{(\autoref{fig:recommend_with_lightgcn})}}: We adapt the LightGCN architecture \cite{lightgcn} \textcolor{red}{on the bipartite user-item interaction graph $\mathcal{G} = (\mathcal{U} \cup \mathcal{I}, \mathcal{E})$, where $(u, i) \in \mathcal{E}$ denotes an observed interaction and $\mathcal{N}_u, \mathcal{N}_i$ denote the 1-hop graph neighborhoods of user $u$ and item $i$. Instead of initializing the base embedding matrix $\mathbf{E}^{(0)} \in \mathbb{R}^{(|\mathcal{U}| + |\mathcal{I}|) \times d}$ from a random Xavier uniform distribution, we initialize $\mathbf{e}_u^{(0)}$ and $\mathbf{e}_i^{(0)}$ directly with the pre-trained LLM embeddings from Equations~\ref{eq:item_embedding_init} and \ref{eq:user_embedding_init}. As shown in \autoref{fig:recommend_with_lightgcn}, across $L$ graph convolution layers ($l = 0, \dots, L-1$), LightGCN propagates these semantically initialized representations over the bipartite graph using symmetric square-root degree normalization, omitting feature transformation matrices and non-linear activations:}
-    {\color{red}\begin{equation}
-        \mathbf{e}_u^{(l+1)} = \sum_{i \in \mathcal{N}_u} \frac{1}{\sqrt{|\mathcal{N}_u|}\sqrt{|\mathcal{N}_i|}} \mathbf{e}_i^{(l)}, \qquad
-        \mathbf{e}_i^{(l+1)} = \sum_{u \in \mathcal{N}_i} \frac{1}{\sqrt{|\mathcal{N}_i|}\sqrt{|\mathcal{N}_u|}} \mathbf{e}_u^{(l)}.
-        \label{eq:lightgcn_propagation}
-    \end{equation}}
-    \textcolor{red}{After $L$ propagation hops, the layer-wise representations are aggregated via uniform layer combination ($\alpha_l = \frac{1}{L+1}$), and the preference score $\hat{y}_{u,i}^{\text{LightGCN}}$ for user $u$ and candidate item $i$ is computed as the inner product of their final representations:}
-    {\color{red}\begin{equation}
-        \mathbf{e}_u = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_u^{(l)}, \qquad
-        \mathbf{e}_i = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_i^{(l)}, \qquad
-        \hat{y}_{u,i}^{\text{LightGCN}} = \mathbf{e}_u^\top \mathbf{e}_i.
-        \label{eq:lightgcn_prediction}
-    \end{equation}}
-    \textcolor{red}{The embedding parameters $\mathbf{E}^{(0)}$ are fine-tuned end to end using the pairwise Bayesian Personalized Ranking (BPR) loss \cite{bpr} over observed positive pairs $(u, i^+) \in \mathcal{E}$ and sampled unobserved items $(u, i^-)$:}
-    {\color{red}\begin{equation}
-        \mathcal{L}_{\text{BPR}} = -\sum_{(u, i^+, i^-)} \ln \sigma\left(\hat{y}_{u,i^+}^{\text{LightGCN}} - \hat{y}_{u,i^-}^{\text{LightGCN}}\right) + \lambda \|\mathbf{E}^{(0)}\|_2^2.
-        \label{eq:lightgcn_bpr_loss}
-    \end{equation}}
-\end{itemize}
+\begin{mmblock}
+The first recommender uses the embeddings of Equations~\ref{eq:item_embedding_init} and~\ref{eq:user_embedding_init} directly, without any training. The score of an item $i$ for a user $u$ is the cosine similarity between the profile of the user and the embedding of the item:
+\begin{equation}
+    \hat{y}^{\text{KNN}}_{u,i} = \cos(\mathbf{z}_u, \mathbf{z}_i) = \frac{\mathbf{z}_u^\top \mathbf{z}_i}{\|\mathbf{z}_u\|_2 \, \|\mathbf{z}_i\|_2},
+    \label{eq:knn_score}
+\end{equation}
+so that the $K$ recommended items are the $K$ nearest neighbours of the user profile among the items of $\mathcal{I} \setminus \mathcal{N}_u$ (\autoref{fig:recommend_with_knn}). This recommender only relies on the textual content of the items: it can recommend items that have never been interacted with (item cold start), but it ignores the collaborative signal contained in the interactions of the other users. Its only hyperparameter is the profile size $n$.
+\end{mmblock}
 
-  \begin{figure}[ht!]
-        \centering
-        \includegraphics[width=0.9\linewidth]{figures/recommend_with_lightgcn.png}
-        \caption{Generating a prediction score for a user’s preference toward an item using a GNN-based architecture.}
-        \label{fig:recommend_with_lightgcn}
-    \end{figure}
+\begin{figure}[ht!]
+    \centering
+    % \includegraphics[width=0.5\linewidth]{figures/recommend_with_knn.png}
+    \includegraphics[width=\linewidth]{figures/fig_knn.pdf}
+    % \caption{Selecting recommended items for a user based on similar users’ preferences using the KNN approach.}
+    \caption{\mm{Content-based KNN recommendation, illustrated in two dimensions. Left: the profile $\mathbf{z}_u$ of a user is the mean of the embeddings of their recent items ($i_1$ and $i_3$, Equation~\ref{eq:user_embedding_init}). Right: every other item is scored by the cosine of its angle $\theta$ with $\mathbf{z}_u$ (Equation~\ref{eq:knn_score}), and the $K$ best-scored items that the user has not interacted with yet are recommended.}}
+    \label{fig:recommend_with_knn}
+\end{figure}
+
+\subsubsection{\mm{LLM-initialised LightGCN}}
+\label{subsubsec:rs_lightgcn}
+
+We adapt the LightGCN architecture \cite{lightgcn}\mm{, a graph convolutional network for collaborative filtering that operates on the bipartite user--item graph $\mathcal{G} = (\mathcal{U} \cup \mathcal{I}, \mathcal{E})$, in which each observed interaction is an unweighted edge. Each node has a trainable initial embedding, $\mathbf{e}_u^{(0)} \in \mathbb{R}^d$ for a user and $\mathbf{e}_i^{(0)} \in \mathbb{R}^d$ for an item, and these embeddings form the matrix $\mathbf{E}^{(0)} \in \mathbb{R}^{(|\mathcal{U}| + |\mathcal{I}|) \times d}$, which contains all the parameters of the model. Our only modification of LightGCN concerns the initialisation of $\mathbf{E}^{(0)}$: instead of random values (Xavier initialisation, Section~\ref{subsec:models}), we set}
+\begin{mmblock}
+\begin{equation}
+    \mathbf{e}_i^{(0)} = \mathbf{z}_i \quad \text{and} \quad \mathbf{e}_u^{(0)} = \mathbf{z}_u,
+    \label{eq:lightgcn_init}
+\end{equation}
+with $\mathbf{z}_i$ and $\mathbf{z}_u$ given by Equations~\ref{eq:item_embedding_init} and~\ref{eq:user_embedding_init}, so that the embedding dimension $d$ is the one of the encoder ($768$ for BERT, $1536$ for ADA). These embeddings are then propagated through $L$ light graph convolution layers (\autoref{fig:recommend_with_lightgcn}). At each layer $l = 0, \dots, L-1$, each node computes a weighted sum of the embeddings of its neighbours, with the symmetric normalisation of LightGCN and without feature transformation nor non-linear activation:
+\begin{equation}
+    \mathbf{e}_u^{(l+1)} = \sum_{i \in \mathcal{N}_u} c_{ui} \, \mathbf{e}_i^{(l)}, \qquad
+    \mathbf{e}_i^{(l+1)} = \sum_{u \in \mathcal{N}_i} c_{ui} \, \mathbf{e}_u^{(l)}, \qquad
+    \text{with } c_{ui} = \frac{1}{\sqrt{|\mathcal{N}_u|}\sqrt{|\mathcal{N}_i|}}.
+    \label{eq:lightgcn_propagation}
+\end{equation}
+After $L$ layers, the representations of all layers are averaged (layer combination), and the score of an item for a user is the dot product of their final representations:
+\begin{equation}
+    \mathbf{e}_u = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_u^{(l)}, \qquad
+    \mathbf{e}_i = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_i^{(l)}, \qquad
+    \hat{y}_{u,i}^{\text{LightGCN}} = \mathbf{e}_u^\top \mathbf{e}_i.
+    \label{eq:lightgcn_prediction}
+\end{equation}
+The embeddings $\mathbf{E}^{(0)}$ are trained with the Adam optimiser by minimising the Bayesian Personalized Ranking (BPR) loss \cite{bpr}. Each mini-batch $\mathcal{B}$ contains $|\mathcal{B}| = 1024$ triplets $(u, i^+, i^-)$, obtained by sampling a user $u$, one of its training items $i^+ \in \mathcal{N}_u$, and a negative item $i^- \notin \mathcal{N}_u$ uniformly at random:
+\begin{equation}
+    \begin{split}
+    \mathcal{L}_{\text{BPR}} = \frac{1}{|\mathcal{B}|} \sum_{(u, i^+, i^-) \in \mathcal{B}} \Big[ & -\ln \sigma\left(\hat{y}_{u,i^+}^{\text{LightGCN}} - \hat{y}_{u,i^-}^{\text{LightGCN}}\right) \\
+    & + \frac{\lambda}{2} \left( \|\mathbf{e}_u^{(0)}\|_2^2 + \|\mathbf{e}_{i^+}^{(0)}\|_2^2 + \|\mathbf{e}_{i^-}^{(0)}\|_2^2 \right) \Big],
+    \end{split}
+    \label{eq:lightgcn_bpr_loss}
+\end{equation}
+where $\sigma$ is the sigmoid function and $\lambda = 10^{-4}$. Since all layers are computed from $\mathbf{E}^{(0)}$, the LLM initialisation places semantically similar items (and users with similar recent items) close to each other from the first training epoch, and the collaborative signal of the interaction graph then progressively adapts these representations. The number of layers $L$, the learning rate, and the profile size $n$ are hyperparameters (\autoref{tab:hyperparameters}), and training is stopped early when NDCG@5 stops improving (Section~\ref{subsec:models}).
+\end{mmblock}
+
+\begin{figure}[ht!]
+    \centering
+    % \includegraphics[width=0.9\linewidth]{figures/recommend_with_lightgcn.png}
+    \includegraphics[width=\linewidth]{figures/fig_lightgcn.pdf}
+    \caption{Generating a prediction score for a user’s preference toward an item using a GNN-based architecture\mm{, in three steps. (1) Each node of the user--item interaction graph starts from its LLM embedding (Equation~\ref{eq:lightgcn_init}). (2) Each of the $L$ layers replaces the embedding of every node by a normalised sum of the embeddings of its neighbours, shown here for user $u_1$, whose neighbours are $i_1$ and $i_3$ (Equation~\ref{eq:lightgcn_propagation}). (3) The embeddings of all layers are averaged, and the score of an item for a user is the dot product of their averaged embeddings (Equation~\ref{eq:lightgcn_prediction}). During training, the BPR loss (Equation~\ref{eq:lightgcn_bpr_loss}) updates the initial embeddings $\mathbf{E}^{(0)}$}.}
+    \label{fig:recommend_with_lightgcn}
+\end{figure}
 
 For both the KNN-based and the graph-based approach, we use the embeddings generated by various large language models, and in the experiments we report our findings on which models perform the best.
 The hyperparameters used for each model and dataset combination are detailed in the Appendix \textcolor{red}{(\autoref{tab:best_hyperparameters})}.
+
+% ============================================================================
+% PREVIOUS VERSION of "Our approach" (before Maxime's revision, 22/10/2026),
+% kept for traceability only.
+% ============================================================================
+% \subsection{Our approach}
+% \label{subsec:rs_our_approach}
+%
+% Building on our models for difficulty estimation and simplification, we introduce a recommender system that uses these outputs to suggest suitable content for language learners. In language learning applications, a recommender system is essential for tailoring content to match users’ proficiency levels and personal interests.
+%
+% When the system identifies (or when the user explicitly declares) their proficiency level, it filters and ranks content that matches both the user’s level and topical interests (e.g., sports or technology), based on data from the user’s historical preferences.
+%
+% Various approaches exist for recommender systems, including collaborative filtering, content-based filtering, knowledge-based recommendation, and hybrid combinations. Collaborative filtering algorithms, in particular, assume that accurate recommendations can be made by using the collective preferences of similar, like-minded users \cite{koren2021advances}. \textcolor{red}{Our methodological contribution in Section~\ref{sec:recommendation} consists of injecting dense semantic representations from pre-trained LLMs directly into both neighborhood-based (KNN) and graph-convolutional (LightGCN) collaborative filtering architectures without requiring end-to-end LLM fine-tuning.}
+%
+% \subsubsection*{\textcolor{red}{1. LLM Item and User Embedding Generation (\autoref{fig:init_embeddings})}}
+% \textcolor{red}{Let $\mathcal{U}$ denote the set of users and $\mathcal{I}$ the set of candidate reading items. As depicted in \autoref{fig:init_embeddings}, each item $i \in \mathcal{I}$ is associated with a textual document or concatenated metadata string $d_i$ (such as the full article text in \texttt{Zeeguu}, or the title, summary, and metadata in \texttt{Goodreads}, \texttt{ml-100k}, and \texttt{Tomplay}). We pass $d_i$ through a pre-trained language model encoder $\phi_{\text{LLM}}$ and apply mean pooling over its contextualized token hidden states $\mathbf{h}_{i,1}, \dots, \mathbf{h}_{i,|T_i|}$ to obtain a $d$-dimensional item embedding $\mathbf{e}_i^{(0)} \in \mathbb{R}^d$:}
+% {\color{red}\begin{equation}
+%     \mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i) = \frac{1}{|T_i|} \sum_{t=1}^{|T_i|} \mathbf{h}_{i,t} \in \mathbb{R}^d,
+%     \label{eq:item_embedding_init}
+% \end{equation}}
+% \textcolor{red}{where $d = 768$ for our multilingual RoBERTa sentence encoder (\texttt{paraphrase-xlm-r-multilingual-v1}, $|T_i| \le 128$) and $d = 1{,}536$ for OpenAI \texttt{text-embedding-ada-002} ($|T_i| \le 8{,}000$). To represent each user $u \in \mathcal{U}$ in the same semantic space $\mathbb{R}^d$ without requiring explicit demographic profiles, we aggregate the embeddings of the $n$ most recent items $\mathcal{H}_u^{(n)} = \{i_{u,1}, \dots, i_{u,n}\}$ with which user $u$ has positively interacted:}
+% {\color{red}\begin{equation}
+%     \mathbf{e}_u^{(0)} = \frac{1}{|\mathcal{H}_u^{(n)}|} \sum_{i \in \mathcal{H}_u^{(n)}} \mathbf{e}_i^{(0)} \in \mathbb{R}^d.
+%     \label{eq:user_embedding_init}
+% \end{equation}}
+%
+% \begin{figure}[ht!]
+%     \centering
+%     \includegraphics[width=\linewidth]{figures/init_embeddings.png}
+%     \caption{Generating item embeddings with large language models (LLMs) and combining them to construct user embeddings.}
+%     \label{fig:init_embeddings}
+% \end{figure}
+%
+% \begin{itemize}
+%     \item \textbf{KNN-based \textcolor{red}{(\autoref{fig:recommend_with_knn})}}: \textcolor{red}{In the user-based K-Nearest Neighbors (KNN) method illustrated in \autoref{fig:recommend_with_knn}, we measure the semantic preference similarity between target user $u$ and every other user $v \in \mathcal{U} \setminus \{u\}$ via cosine similarity in the LLM embedding space:}
+%     {\color{red}\begin{equation}
+%         \text{sim}(u, v) = \frac{\mathbf{e}_u^{(0)} \cdot \mathbf{e}_v^{(0)}}{\|\mathbf{e}_u^{(0)}\|_2 \, \|\mathbf{e}_v^{(0)}\|_2}.
+%         \label{eq:knn_user_sim}
+%     \end{equation}}
+%     \textcolor{red}{Let $\mathcal{N}_k(u) \subset \mathcal{U} \setminus \{u\}$ denote the set of $k$ nearest neighbor users maximizing $\text{sim}(u, v)$. For any candidate item $i \notin \mathcal{H}_u$ whose estimated (or simplified) CEFR difficulty matches the learner's proficiency level, the predicted preference score $\hat{y}_{u,i}^{\text{KNN}}$ is computed as the similarity-weighted sum of neighbor interactions $r_{v,i}$:}
+%     {\color{red}\begin{equation}
+%         \hat{y}_{u,i}^{\text{KNN}} = \sum_{v \in \mathcal{N}_k(u)} \text{sim}(u, v) \cdot r_{v,i}.
+%         \label{eq:knn_score}
+%     \end{equation}}
+%
+%     \begin{figure}[ht!]
+%         \centering
+%         \includegraphics[width=0.5\linewidth]{figures/recommend_with_knn.png}
+%         \caption{Selecting recommended items for a user based on similar users’ preferences using the KNN approach.}
+%         \label{fig:recommend_with_knn}
+%     \end{figure}
+%
+%     \item \textbf{Graph-based \textcolor{red}{(\autoref{fig:recommend_with_lightgcn})}}: We adapt the LightGCN architecture \cite{lightgcn} \textcolor{red}{on the bipartite user-item interaction graph $\mathcal{G} = (\mathcal{U} \cup \mathcal{I}, \mathcal{E})$, where $(u, i) \in \mathcal{E}$ denotes an observed interaction and $\mathcal{N}_u, \mathcal{N}_i$ denote the 1-hop graph neighborhoods of user $u$ and item $i$. Instead of initializing the base embedding matrix $\mathbf{E}^{(0)} \in \mathbb{R}^{(|\mathcal{U}| + |\mathcal{I}|) \times d}$ from a random Xavier uniform distribution, we initialize $\mathbf{e}_u^{(0)}$ and $\mathbf{e}_i^{(0)}$ directly with the pre-trained LLM embeddings from Equations~\ref{eq:item_embedding_init} and \ref{eq:user_embedding_init}. As shown in \autoref{fig:recommend_with_lightgcn}, across $L$ graph convolution layers ($l = 0, \dots, L-1$), LightGCN propagates these semantically initialized representations over the bipartite graph using symmetric square-root degree normalization, omitting feature transformation matrices and non-linear activations:}
+%     {\color{red}\begin{equation}
+%         \mathbf{e}_u^{(l+1)} = \sum_{i \in \mathcal{N}_u} \frac{1}{\sqrt{|\mathcal{N}_u|}\sqrt{|\mathcal{N}_i|}} \mathbf{e}_i^{(l)}, \qquad
+%         \mathbf{e}_i^{(l+1)} = \sum_{u \in \mathcal{N}_i} \frac{1}{\sqrt{|\mathcal{N}_i|}\sqrt{|\mathcal{N}_u|}} \mathbf{e}_u^{(l)}.
+%         \label{eq:lightgcn_propagation}
+%     \end{equation}}
+%     \textcolor{red}{After $L$ propagation hops, the layer-wise representations are aggregated via uniform layer combination ($\alpha_l = \frac{1}{L+1}$), and the preference score $\hat{y}_{u,i}^{\text{LightGCN}}$ for user $u$ and candidate item $i$ is computed as the inner product of their final representations:}
+%     {\color{red}\begin{equation}
+%         \mathbf{e}_u = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_u^{(l)}, \qquad
+%         \mathbf{e}_i = \frac{1}{L + 1} \sum_{l=0}^{L} \mathbf{e}_i^{(l)}, \qquad
+%         \hat{y}_{u,i}^{\text{LightGCN}} = \mathbf{e}_u^\top \mathbf{e}_i.
+%         \label{eq:lightgcn_prediction}
+%     \end{equation}}
+%     \textcolor{red}{The embedding parameters $\mathbf{E}^{(0)}$ are fine-tuned end to end using the pairwise Bayesian Personalized Ranking (BPR) loss \cite{bpr} over observed positive pairs $(u, i^+) \in \mathcal{E}$ and sampled unobserved items $(u, i^-)$:}
+%     {\color{red}\begin{equation}
+%         \mathcal{L}_{\text{BPR}} = -\sum_{(u, i^+, i^-)} \ln \sigma\left(\hat{y}_{u,i^+}^{\text{LightGCN}} - \hat{y}_{u,i^-}^{\text{LightGCN}}\right) + \lambda \|\mathbf{E}^{(0)}\|_2^2.
+%         \label{eq:lightgcn_bpr_loss}
+%     \end{equation}}
+% \end{itemize}
+%
+%   \begin{figure}[ht!]
+%         \centering
+%         \includegraphics[width=0.9\linewidth]{figures/recommend_with_lightgcn.png}
+%         \caption{Generating a prediction score for a user’s preference toward an item using a GNN-based architecture.}
+%         \label{fig:recommend_with_lightgcn}
+%     \end{figure}
+%
+% For both the KNN-based and the graph-based approach, we use the embeddings generated by various large language models, and in the experiments we report our findings on which models perform the best.
+% The hyperparameters used for each model and dataset combination are detailed in the Appendix \textcolor{red}{(\autoref{tab:best_hyperparameters})}.

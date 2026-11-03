@@ -1,8 +1,7 @@
 \begin{table}[!htbp]
     \centering
-    \small
-    \setlength{\tabcolsep}{2.8pt}
-    \resizebox{\columnwidth}{!}{%
+    \footnotesize
+    \setlength{\tabcolsep}{1.8pt}
     \begin{tabular}{lccccccc}
         \toprule
         & & \multicolumn{2}{c}{\textbf{Sentences Books}} & \multicolumn{2}{c}{\textbf{LjL}} & \multicolumn{2}{c}{\textbf{Sentences Internet}} \\
@@ -35,16 +34,15 @@
         \\[2pt]
         \textbf{FKGL} & - & \cellcolor[HTML]{a5b7db}\textcolor{black}{0.35} & \cellcolor[HTML]{fefefe}\textcolor{red}{11.7} & \cellcolor[HTML]{93a9d4}\textcolor{black}{0.42} & \cellcolor[HTML]{738fc7}\textcolor{red}{13.2} & \cellcolor[HTML]{a8b9dc}\textcolor{black}{0.34} & \cellcolor[HTML]{dfe5f2}\textcolor{red}{20.7} \\
         \bottomrule
-    \end{tabular}%
-    }
-    \caption{Difficulty estimation metrics for all datasets. \textcolor{red}{For each model and dataset, we report classification Accuracy (Acc.) and formally normalized Pairwise Mismatch ($PM_{\text{norm}}$, \%), measuring difficulty ordering violations scaled over $\binom{N}{2}$ with ties counted as $0.5$. Lower $PM_{\text{norm}}$ indicates superior ordinal ranking consistency. System Prompt indicates whether explicit CEFR descriptions were provided (\checkmark) or not (-). Asterisks indicate paired Wilcoxon signed-rank significance against unprompted baselines ($^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$).} \textbf{\underline{Bold and underlined}} values indicate the best score per metric and dataset. Models used: GPT-3.5 (gpt-3.5-turbo-1106), GPT-4o (gpt-4o-2024-08-06), GPT-4o-mini (gpt-4o-mini-2024-07-18), CamemBERT (camembert-base), Mistral (Mistral-7B), and Davinci (davinci-002).}
+    \end{tabular}
+    \caption{Difficulty estimation metrics for all datasets. \textcolor{red}{For each model and dataset, we report classification Accuracy (Acc.) and formally normalized Pairwise Mismatch ($PM_{\text{norm}}$, \%), measuring difficulty ordering violations scaled over $\binom{N}{2}$ with ties counted as $0.5$. Lower $PM_{\text{norm}}$ indicates superior ordinal ranking consistency. System Prompt indicates whether explicit CEFR descriptions were provided (\checkmark) or not (-). Asterisks ($^{*}p<0.05, ^{**}p<0.01, ^{***}p<0.001$) indicate two-sided paired Wilcoxon signed-rank tests applied to instance-level ordinal prediction errors ($|y_i - \hat{y}_i|$) between configurations with and without the system prompt, and the $\pm$ intervals reported in the text correspond to the non-parametric bootstrap standard error ($B = 1{,}000$ resamples with replacement).} \textbf{\underline{Bold and underlined}} values indicate the best score per metric and dataset. Models used: GPT-3.5 (gpt-3.5-turbo-1106), GPT-4o (gpt-4o-2024-08-06), GPT-4o-mini (gpt-4o-mini-2024-07-18), CamemBERT (camembert-base), Mistral (Mistral-7B), and Davinci (davinci-002).}
     \label{tab:difficulty_estimation_metrics}
 \end{table}
 
 {\color{red}\begin{table*}[!htbp]
     \centering
     \footnotesize
-    \setlength{\tabcolsep}{3pt}
+    \setlength{\tabcolsep}{2.5pt}
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{lccccccccccc}
         \toprule

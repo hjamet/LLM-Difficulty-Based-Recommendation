@@ -1319,7 +1319,7 @@ def generate_latex_human_study_macros(
     force_partial: bool = False,
     exclude_anomalies: bool = False,
 ) -> Dict[str, Any]:
-    """Génère le dictionnaire et le bloc des 10 macros LaTeX pour Response_to_Reviewers.tex et Experiments.tex."""
+    """Génère le dictionnaire et le bloc des 16 macros LaTeX pour Response_to_Reviewers.tex et Experiments.tex."""
     if repo_root is None:
         repo_root = find_repo_root()
     else:
@@ -1341,13 +1341,23 @@ def generate_latex_human_study_macros(
 
     mistral_data = perf_map.get("Mistral-7B-FT", {})
     gpt4o_data = perf_map.get("GPT-4o-FT", {})
+    gpt35_data = perf_map.get("GPT-3.5-turbo-FT", {})
+    gpt4omini_data = perf_map.get("GPT-4o-mini-FT", {})
 
     win_mistral = mistral_data.get("preference_rate", 0.0)
     win_gpt4o = gpt4o_data.get("preference_rate", 0.0)
+    win_gpt35 = gpt35_data.get("preference_rate", 0.0)
+    win_gpt4omini = gpt4omini_data.get("preference_rate", 0.0)
+
     simpler_mistral = mistral_data.get("simpler_rate", 0.0)
     simpler_gpt4o = gpt4o_data.get("simpler_rate", 0.0)
+    simpler_gpt35 = gpt35_data.get("simpler_rate", 0.0)
+    simpler_gpt4omini = gpt4omini_data.get("simpler_rate", 0.0)
+
     meaning_mistral = mistral_data.get("meaning_preservation_rate", 0.0)
     meaning_gpt4o = gpt4o_data.get("meaning_preservation_rate", 0.0)
+    meaning_gpt35 = gpt35_data.get("meaning_preservation_rate", 0.0)
+    meaning_gpt4omini = gpt4omini_data.get("meaning_preservation_rate", 0.0)
 
     k_pref = iaa.get("cohen_kappa_pref", iaa.get("cohen_kappa"))
     k_simp = iaa.get("simpler_cohen_kappa")
@@ -1370,17 +1380,29 @@ def generate_latex_human_study_macros(
     if use_actual_values and (henri_count > 0 or maxime_count > 0):
         macros["HumanWinMistral"] = f"{win_mistral:.1f}\\%"
         macros["HumanWinGPTFour"] = f"{win_gpt4o:.1f}\\%"
+        macros["HumanWinGPTThreeFive"] = f"{win_gpt35:.1f}\\%"
+        macros["HumanWinGPTFourMini"] = f"{win_gpt4omini:.1f}\\%"
         macros["HumanSimplerMistral"] = f"{simpler_mistral:.1f}\\%"
         macros["HumanSimplerGPTFour"] = f"{simpler_gpt4o:.1f}\\%"
+        macros["HumanSimplerGPTThreeFive"] = f"{simpler_gpt35:.1f}\\%"
+        macros["HumanSimplerGPTFourMini"] = f"{simpler_gpt4omini:.1f}\\%"
         macros["HumanMeaningMistral"] = f"{meaning_mistral:.1f}\\%"
         macros["HumanMeaningGPTFour"] = f"{meaning_gpt4o:.1f}\\%"
+        macros["HumanMeaningGPTThreeFive"] = f"{meaning_gpt35:.1f}\\%"
+        macros["HumanMeaningGPTFourMini"] = f"{meaning_gpt4omini:.1f}\\%"
     else:
         macros["HumanWinMistral"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
         macros["HumanWinGPTFour"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanWinGPTThreeFive"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanWinGPTFourMini"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
         macros["HumanSimplerMistral"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
         macros["HumanSimplerGPTFour"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanSimplerGPTThreeFive"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanSimplerGPTFourMini"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
         macros["HumanMeaningMistral"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
         macros["HumanMeaningGPTFour"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanMeaningGPTThreeFive"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
+        macros["HumanMeaningGPTFourMini"] = r"\textcolor{blue}{\textbf{[TBD: \%]}}"
 
     order = [
         "HumanKappaPref",
@@ -1389,10 +1411,16 @@ def generate_latex_human_study_macros(
         "HumanAlphaKrip",
         "HumanWinMistral",
         "HumanWinGPTFour",
+        "HumanWinGPTThreeFive",
+        "HumanWinGPTFourMini",
         "HumanSimplerMistral",
         "HumanSimplerGPTFour",
+        "HumanSimplerGPTThreeFive",
+        "HumanSimplerGPTFourMini",
         "HumanMeaningMistral",
         "HumanMeaningGPTFour",
+        "HumanMeaningGPTThreeFive",
+        "HumanMeaningGPTFourMini",
     ]
 
     latex_lines = [
