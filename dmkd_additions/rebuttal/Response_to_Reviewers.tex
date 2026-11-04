@@ -115,7 +115,6 @@ We thank the Action Editor and the reviewers for their thorough assessment of ou
 % ============================================================================ %
 \section{Response to Action Editor (Prof.\ Andreas Hotho)}
 
-\subsection{AE.1: Statistical Rigor, Variance Across Runs, and Significance Testing}
 \begin{reviewbox}
 \textbf{Action Editor (AE.1):} \textit{``Reviewer 2 notes that variance is rarely reported and that significance of differences is not computed. Please report variability across runs and, where you claim improvements over baselines, provide a test that supports the claim.''}
 \end{reviewbox}
@@ -123,7 +122,7 @@ We thank the Action Editor and the reviewers for their thorough assessment of ou
 \noindent\textbf{Response:}\\
 \noindent\textbf{Difficulty Estimation Experiments (Section 6.1).} We conducted a complete statistical evaluation of the difficulty estimation experiments across all three French benchmarks: \texttt{Sentences Books} ($N = 960$ test sentences across 6 CEFR levels A1 to C2), \texttt{LjL} ($N = 413$ youth literature texts across 4 ordered levels), and \texttt{Sentences Internet} ($N = 480$ unanimously annotated web sentences across 6 CEFR levels). Using non-parametric bootstrap resampling with $B = 1{,}000$ iterations with replacement over each test set, we compute the sample mean and bootstrap standard error ($\mu \pm \sigma$) alongside 95\% confidence intervals for five complementary metrics: classification Accuracy, Macro-F1, Mean Absolute Error (MAE, in integer CEFR steps), Quadratic Weighted Kappa (QWK), and the normalized Pairwise Mismatch rate ($PM_{\text{norm}}$, expressed as a percentage of all $\binom{N}{2}$ pairs).
 
-To test whether explicit CEFR system prompts improve prediction accuracy over unprompted models, we run two-sided paired Wilcoxon signed-rank tests on the instance-level ordinal prediction errors $|y_i - \hat{y}_i|$ ($^{*}p < 0.05$, $^{**}p < 0.01$, $^{***}p < 0.001$). Table~\ref{tab:rebuttal_table2} reports the complete statistical results injected into Section 6.1 (Table 3 of the manuscript). Historical baseline models ($N = 16$) and their normalized Pairwise Mismatch rates are reported in Table 2 of the manuscript, and the bootstrap $\text{QWK} \pm \sigma$ scores of the historical confusion matrices (CamemBERT $0.86 \pm 0.01$, GPT-3.5 on \texttt{LjL} $0.83 \pm 0.02$, and GPT-3.5 on \texttt{Sentences Internet} $0.92 \pm 0.02$) are reported directly on Figure 8 (Section 6.1.3). As observed by Reviewer 2, not every numerical difference is statistically significant: while adding the CEFR system prompt yields highly significant gains on \texttt{Sentences Books} ($p = 9.00 \times 10^{-9}$ for GPT-4o; $p = 0.0044$ for GPT-4o-mini) and on \texttt{Sentences Internet} for GPT-4o ($p = 3.33 \times 10^{-7}$), the prompt difference on \texttt{LjL} is not statistically significant for either GPT-4o ($p = 0.140$) or GPT-4o-mini ($p = 0.606$), nor for GPT-4o-mini on \texttt{Sentences Internet} ($p = 0.383$). Applying a Holm--Bonferroni correction across the six comparisons (consistent with Section 6.3) leaves all conclusions unchanged ($p_{\text{Holm}} < 10^{-6}$ and $0.018$ on \texttt{Sentences Books}, $p_{\text{Holm}} < 10^{-5}$ and $0.77$ on \texttt{Sentences Internet}, and $p_{\text{Holm}} = 0.42$ and $0.77$ on \texttt{LjL}). We now state these non-significant outcomes and adjusted $p$-values explicitly in Section 6.1.2.
+To test whether explicit CEFR system prompts improve prediction accuracy over unprompted models, we run two-sided paired Wilcoxon signed-rank tests on instance-level ordinal prediction errors $|y_i - \hat{y}_i|$ across all datasets, alongside a Holm--Bonferroni correction across comparisons (Table~\ref{tab:rebuttal_table2}, Table 3 of the manuscript). Historical baseline models ($N = 16$) and normalized Pairwise Mismatch rates are reported in Table 2, and bootstrap $\text{QWK} \pm \sigma$ scores of historical confusion matrices are reported on Figure 8. As observed by Reviewer 2, not every numerical difference is statistically significant. The results show that adding the CEFR system prompt yields statistically significant gains on \texttt{Sentences Books} for both models and on \texttt{Sentences Internet} for GPT-4o. In contrast, the prompt effect is not statistically significant on \texttt{LjL} for either model, nor for GPT-4o-mini on \texttt{Sentences Internet}, even after Holm--Bonferroni adjustment. We state these non-significant outcomes explicitly in Section 6.1.2.
 
 \begin{table}[!htbp]
 \centering
@@ -162,8 +161,8 @@ To test whether explicit CEFR system prompts improve prediction accuracy over un
 \begin{mmblock}
 \noindent\textbf{Recommender System Experiments (Section 6.3).} For the content-based and collaborative filtering recommendation experiments in Section 6.3, the results of the submitted version came from a single training run per model. We re-trained every model with its optimal hyperparameters (Table 12 of the revised manuscript) over 5 random seeds, without any new hyperparameter search, so that these runs measure the robustness of the selected configurations. Seed~0 is the original run: it reproduces exactly the published figures of ALS, LightGCN and KNN, whereas BPR and LMF are not deterministic even with a fixed seed, because the Implicit library trains them with multithreaded stochastic gradient descent. KNN is deterministic and evaluated once. Table~\ref{tab:rebuttal_rs_results} (Table 10 of the revised manuscript) reports the mean and standard deviation of each metric over the seeds. To compare two models on a dataset, we average the NDCG@5 of each test user over the seeds and apply a two-sided Wilcoxon signed-rank test to the paired per-user scores, with a Holm--Bonferroni correction over the 20 comparisons of Table~\ref{tab:rebuttal_rs_tests} (Table 11 of the revised manuscript).
 
-LightGCN initialised with LLM embeddings remains the best model on the four datasets (ADA on Zeeguu, ml-100k and Goodreads, BERT on Tomplay). However, as Reviewer~2 suspected, not every difference reported in the submitted version is significant. The ADA initialisation significantly improves over the Xavier initialisation on Zeeguu ($+9.3\%$), Goodreads ($+16.7\%$) and Tomplay ($+3.1\%$), but not on ml-100k ($+3.4\%$). The BERT initialisation significantly improves over Xavier on Goodreads ($+10.2\%$) and Tomplay ($+4.1\%$), but not on Zeeguu and ml-100k. These results on BERT must be read together with the truncation of its inputs to 128 tokens (Table~\ref{tab:rebuttal_token_lengths}, Response \textbf{R1.3}): BERT brings no improvement on Zeeguu, where it encodes only 14.5\% of the text of the articles, whereas on Tomplay, the only dataset where BERT receives the full text of every item, it significantly improves over the Xavier initialisation and outperforms ADA. This pattern is consistent with the truncation explaining part of the gap between ADA and BERT, although a single untruncated dataset does not allow us to separate this effect from the differences between the encoders and between the datasets. % Checked 27/10 against the 5-seed 6.3 discussion, 6.3.4 and abstract.
-We therefore corrected the sentences of Section 6.3 that described the improvement as uniform across datasets and embeddings, and the single-run gains quoted in the text ($+12.12\%$ on Zeeguu and $+18.75\%$ on Goodreads for ADA) are replaced by the means over the seeds. We note two limitations of this analysis: the hyperparameters were selected with seed~0, which slightly favours this seed for the less stable configurations (e.g., LightGCN with BERT on Goodreads, standard deviation $0.0058$), and the per-user test does not account for the variability between seeds, so that on Goodreads and Tomplay (about 35,000 to 40,000 test users) small relative differences already reach very small $p$-values.
+LightGCN initialised with LLM embeddings remains the best model on the four datasets (ADA on Zeeguu, ml-100k, and Goodreads; BERT on Tomplay). However, as Reviewer~2 suspected, not every difference reported in the submitted version is significant. As detailed in Table~\ref{tab:rebuttal_rs_tests}, the ADA initialisation significantly improves over Xavier on Zeeguu, Goodreads, and Tomplay, but not on ml-100k. The BERT initialisation significantly improves over Xavier on Goodreads and Tomplay, but not on Zeeguu or ml-100k. These results on BERT must be read together with the truncation of its inputs to 128 tokens (Table~\ref{tab:rebuttal_token_lengths}, Response \textbf{R1.3}): BERT brings no improvement on Zeeguu, where it encodes only 14.5\% of the text of the articles, whereas on Tomplay, the only dataset where BERT receives the full text of every item, it significantly improves over Xavier and outperforms ADA. This pattern is consistent with truncation explaining part of the gap between ADA and BERT, although a single untruncated dataset does not allow us to separate this effect from differences between encoders and between datasets. % Checked 27/10 against the 5-seed 6.3 discussion, 6.3.4 and abstract.
+We therefore corrected the sentences of Section 6.3 that described the improvement as uniform across datasets and embeddings, replacing single-run gains by the multi-seed means. We note two limitations of this analysis: hyperparameters were selected with seed~0, which slightly favours this seed for less stable configurations (for example, LightGCN with BERT on Goodreads, standard deviation $0.0058$), and the paired per-user test does not account for variability between seeds, so that on large catalogs (Goodreads and Tomplay) small relative differences reach very small $p$-values.
 \end{mmblock}
 
 \begin{table}[!htbp]
@@ -239,7 +238,6 @@ Tomplay & $+3.1^{***}$ & $+4.1^{***}$ & $+9.3^{***}$ & $+12.6^{***}$ & $-3.0^{**
 \end{tabular}
 \end{table}
 
-\subsection{AE.2: Analytical and Multi-Model Justification of Weight $w_1$}
 \begin{reviewbox}
 \textbf{Action Editor (AE.2):} \textit{``The empirical justification of the weight $w_1$ (p.\ 14) rests on a single dataset and a single LLM; please broaden this or state the limitation explicitly.''}
 \end{reviewbox}
@@ -268,7 +266,6 @@ To verify that model comparisons do not depend on a narrow choice of $w_1$, we s
     \label{fig:rebuttal_pareto}
 \end{figure}
 
-\subsection{AE.3: Formalization of Section 4, Figures 1 to 5, and Metric Definitions}
 \begin{reviewbox}
 \textbf{Action Editor (AE.3):} \textit{``Both reviewers ask for the components in Section 4 to be properly described and formalised rather than outlined, this concerns Figures 3, 4 and especially 5. Reviewer 1 lists a number of places where figures lack in-text citations and explanations (Figures 1 and 2), where metric definitions are introduced without being defined (Section 6.1.1, accuracy and pairwise mismatch), and where the text appears unfinished (Section 6.3.4). Please also state the novel contribution explicitly in the methodology section.''}
 \end{reviewbox}
@@ -278,7 +275,6 @@ Every equation in the manuscript is now formally defined, numbered, and cross-re
 
 Section 4.2 formalizes LLM embedding extraction (Figure 3), cosine KNN scoring (Figure 4), and LightGCN bipartite graph propagation (Figure 5), alongside $\text{NDCG}@5$ and Xavier initialization (Responses R1.3, R2.7, R2.15, R2.16), and the cross-references to Table \mmhl{9} (hyperparameter search grid) and Table \mmhl{12} (optimal hyperparameters in the Appendix, formerly Table 9) are fixed in Section 6.3.4 (Response R1.6).
 
-\subsection{AE.4: Human Qualitative Evaluation and Claim Moderation on p.\ 18}
 \begin{reviewbox}
 \textbf{Action Editor (AE.4):} \textit{``Reviewer 2 observes that neither the individual components nor the system as a whole are evaluated qualitatively by human judges. For a system whose output is generated text, a human assessment of simplification quality would substantially strengthen the paper. Related to this: the claim on p.\ 18 that simplified texts reduce complexity ``through careful word choice, syntactic restructuring, and discourse simplification'' needs to be either demonstrated or toned down, as written it is not supported.''}
 \end{reviewbox}
@@ -326,7 +322,6 @@ Second, we implemented a double-blind human evaluation study using a stratified 
 
 Across the double-annotated overlap pairs, the two native judges reach moderate inter-annotator agreement on all evaluation criteria. Within the GPT-4 family, fine-tuned GPT-4o achieves a statistically significant advantage over fine-tuned GPT-4o-mini in perceived simplification, while their differences in blind preference and meaning preservation are not statistically significant. Between Mistral-7B-FT and GPT-3.5-FT, both models achieve comparable perceived simplification and overall preference, whereas GPT-3.5-FT preserves complete meaning more frequently by avoiding the subordinate-clause pruning occasionally observed with Mistral-7B-FT.
 
-\subsection{AE.5: Literature on Readability Ranking and Ordinal Metrics}
 \begin{reviewbox}
 \textbf{Action Editor (AE.5):} \textit{``Reviewer 2 considers the coverage of work on ranking differences incomplete.''}
 \end{reviewbox}
@@ -337,7 +332,6 @@ We expanded Section 2.1.2\mm{ and} Section 2.3.1 to integrate Martinc et al.\ (2
 
 \mm{On the ranking of items in recommendation, we also rewrote the related work of Section 4.1. It now covers collaborative filtering for implicit feedback (ALS, LMF, BPR) and its graph-based form, from NGCF \cite{wang2019ngcf} to LightGCN \cite{lightgcn}, then the representation of items by embeddings of their texts: transferable text-based item representations (UniSRec \cite{hou2022unisrec}), the comparison of text-based and ID-based recommenders \cite{yuan2023where}, LLM item embeddings used directly or as the initialisation of a sequential recommender \cite{harte2023leveraging}, LLM embeddings as initial node representations of graph neural networks \cite{chen2024exploring}, and recommenders combining LLMs with graph collaborative filtering (LLMRec \cite{wei2024llmrec}, RLMRec \cite{ren2024rlmrec}). Section 4.1 positions our approach as the work of Harte et al.\ \cite{harte2023leveraging} transposed to graph-based collaborative filtering.}
 
-\subsection{AE.6: Explicit Demarcation from the RecSys 2024 Short Paper}
 \begin{reviewbox}
 \textbf{Action Editor (AE.6):} \textit{``You note that the manuscript is an extended version of your RecSys 2024 paper. Please state clearly in the manuscript what is new relative to that publication, so that the extent of the extension is verifiable for readers.''}
 \end{reviewbox}
@@ -381,7 +375,6 @@ We added a dedicated subsection in Section 1 and expanded Section 4 to delineate
 \medskip
 \section{Response to Reviewer 1}
 
-\subsection{R1.1: In-Text Citation and Explanation of Figure 1}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.1):} \textit{``Write an explanation of Figure 1 with an in-text citation of Figure 1 missing.''}
 \end{reviewbox}
@@ -392,7 +385,6 @@ We added an explicit citation to Figure 1 and a walkthrough paragraph in Section
 \textit{``As illustrated in Figure 1, our architecture connects these modules into a unified pipeline. First, candidate French documents collected from web and literary sources pass through the difficulty estimation module, which assigns a CEFR proficiency label from A1 to C2 using fine-tuned LLMs and readability baselines. Second, whenever a document that matches a learner's topical interests exceeds their current proficiency level, the text simplification module rewrites the content sentence by sentence toward a lower CEFR target while preserving semantic fidelity. Third, the recommendation engine combines semantic item embeddings extracted from the text with historical user-item interactions via K-Nearest Neighbors (KNN) or LightGCN graph propagation to deliver personalized reading suggestions.''}
 \end{quote}
 
-\subsection{R1.2: In-Text Citation and Explanation of Figure 2}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.2):} \textit{``Write a short paragraph explaining Figure 2 with an in-text citation of Figure 2 missing for Visual explanation of the Pairwise Mismatch metric''}
 \end{reviewbox}
@@ -403,7 +395,6 @@ We added a dedicated paragraph in Section 2.3.1 citing Figure 2 and explaining t
 \textit{``Figure 2 illustrates how pairwise ordering violations arise within a confusion matrix whose rows index true difficulty levels $u \in \{1, \dots, K\}$ and columns index predicted levels $u' \in \{1, \dots, K\}$. For a reference cell $(u, u')$ with count $C_{u,u'}$, any test instance falling in the upper-right quadrant ($v < u$ and $v' > u'$, shaded in red) has a strictly easier true level but receives a strictly harder predicted level, creating $C_{u,u'} \times C_{v,v'}$ strict inversions. Similarly, cells sharing the same predicted column ($v \neq u, v' = u'$) or the same true row ($v = u, v' \neq u'$) represent ties on one dimension and contribute a half-weight penalty of $\frac{1}{2} C_{u,u'} C_{v,u'}$ to the total mismatch count.''}
 \end{quote}
 
-\subsection{R1.3: Detailed Explanation of Embedding Generation in Section 4.2}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.3):} \textit{``In Section 4.2 generate the embeddings explanation missing in detail.''}
 \end{reviewbox}
@@ -442,7 +433,6 @@ Tomplay & 50 & 0.0\% & 100.0\% & 57 & 0.0\% \\
 \end{tabular}
 \end{table}
 
-\subsection{R1.4: Introductory Model Synthesis in Section 6}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.4):} \textit{``Section 6 The goal of our experiments is to demonstrate that (a) fine-tuned LLMs can significantly improve difficulty estimation compared to traditional readability metrics, and (b) our LLM-based text simplification methodology outperforms zero-shot approaches. add short details about the proposed model with the goal of this experiment for readers better understanding??''}
 \end{reviewbox}
@@ -453,7 +443,6 @@ We expanded the opening paragraph of Section 6 to synthesize the three-stage arc
 \textit{``Before detailing individual benchmarks, we briefly recall our proposed three-stage architecture: (1) a difficulty estimation module that fine-tunes encoder-only (CamemBERT) and autoregressive LLMs (Mistral-7B, GPT-3.5, GPT-4o-mini, and GPT-4o) with explicit CEFR assessment prompts to predict ordinal readability levels; (2) a sentence-level simplification module instruction-tuned on validated parallel pairs to lower CEFR difficulty by at least one level while preserving semantic similarity; and (3) a hybrid recommendation module that initializes KNN user profiles and LightGCN bipartite graph embeddings with dense LLM representations. Accordingly, the goal of our experiments is threefold: (a) to verify whether fine-tuned and prompted LLMs improve both exact classification accuracy and ordinal ranking consistency ($PM_{\text{norm}}$, QWK) over classical readability formulas, (b) to evaluate the trade-off between simplification accuracy ($A$) and semantic preservation ($S$) across fine-tuned and zero-shot LLMs alongside human judgments, and (c) to quantify the ranking gains ($\text{NDCG}@5$) achieved by initializing collaborative filtering graphs with LLM text embeddings.''}
 \end{quote}
 
-\subsection{R1.5: Formal Definition of Accuracy and Parameters in Section 6.1.1}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.5):} \textit{``In Section 6.1.1 before Table 2 For each model and dataset, we report two metrics: accuracy (Acc.) and pairwise mismatch (PM). Actually, Acc parameters explanation missing at the beginning of the 6.1.1 section paragraph add it.''}
 \end{reviewbox}
@@ -466,7 +455,6 @@ In Section 6.1.1, prior to Table 2, we added the formal mathematical definition 
 \end{equation}
 where $N$ denotes the total number of test instances in the evaluation split ($N = 960$ for \texttt{Sentences Books}, $N = 413$ for \texttt{LjL}, and $N = 480$ for \texttt{Sentences Internet}), $y_i \in \{1, \dots, K\}$ is the ground-truth ordinal difficulty label of instance $i$, $\hat{y}_i \in \{1, \dots, K\}$ is the predicted difficulty class, and $\mathbb{I}(\cdot)$ is the indicator function equal to $1$ when $\hat{y}_i = y_i$ and $0$ otherwise.
 
-\subsection{R1.6: Hyperparameter Table Reference in Section 6.3.4}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.6):} \textit{``In Section 6.3.4, the optimal hyperparameters for each model and dataset, identified through grid search and early stopping, are summarized in``? Why was a question mark added? Is there a section detail missing?''}
 \end{reviewbox}
@@ -474,7 +462,6 @@ where $N$ denotes the total number of test instances in the evaluation split ($N
 \noindent\textbf{Response:}
 The \texttt{??} in the initial compiled PDF was caused by an unresolved table cross-reference in Section 6.3.4. We fixed the in-text reference so that it points directly to Table \mmhl{9} (hyperparameter search grid) and Table \mmhl{12} in the Appendix (optimal hyperparameters, formerly Table 9 prior to inserting the \mm{new} tables in Section 6).
 
-\subsection{R1.7: Article Structure and Narrative Flow}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.7):} \textit{``Work on the paper structure of article flow for readers' perspective.''}
 \end{reviewbox}
@@ -482,7 +469,6 @@ The \texttt{??} in the initial compiled PDF was caused by an unresolved table cr
 \noindent\textbf{Response:}
 We revised the transitions across all sections to maintain a unified mathematical notation and narrative progression: Section 1 introduces the pipeline (Figure 1) and demarcates the journal extension from RecSys 2024; Sections 2, 3, and 4 formalize Difficulty Estimation ($PM_{\text{norm}}$), Text Simplification ($A_K, S, w\text{-Score}$), and Recommendation ($\mathbf{e}_i^{(0)}, \mathbf{e}_u^{(0)}$, KNN, LightGCN); Section 5 presents the two interactive interfaces; and Section 6 evaluates each module in the exact same order.
 
-\subsection{R1.8: Explicit Statement of Novelty in the Methodology Sections}
 \begin{reviewbox}
 \textbf{Reviewer 1 (R1.8):} \textit{``Elaborating on your work for novelty or research contributions in the specific text of the methodology section or proposed model section is a required change.''}
 \end{reviewbox}
@@ -498,7 +484,6 @@ Alongside Table~\ref{tab:rebuttal_recsys_delta} in Section 1, we added explicit 
 
 \section{Response to Reviewer 2}
 
-\subsection{R2.1: Readability Literature (Martinc et al., 2021) and Ordinal Metrics}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.1):} \textit{``The first claimed novelty of the journal paper, compared to the conference paper, is the Pairwise Mismatch (PM) metric. In this context, related work is poorly reviewed and used. In a similar work, using BERT models to assess readability, Martinc et al. (2021; JCL; Supervised and Unsupervised Neural Approaches to Text Readability) use Quadratic Weighted Kappa (QWK). Further ranking-based measures could be used and compared to, such as integer regression and continuous regression measures, such as mean squared error, etc.''}
 \end{reviewbox}
@@ -511,7 +496,6 @@ We integrated Martinc et al.\ (2021, \textit{Computational Linguistics}) \cite{m
 \end{equation}
 In Section 2.3.1, we compare these formulations: QWK and MSE weight errors quadratically by class distance $(y_i - \hat{y}_i)^2$ normalized by marginal label distributions, whereas $PM_{\text{norm}}$ directly quantifies the empirical probability that a pair of texts $(i, j)$ with $y_i < y_j$ has its difficulty order inverted ($\hat{y}_i > \hat{y}_j$) or tied ($\hat{y}_i = \hat{y}_j$).
 
-\subsection{R2.2 \& R2.3: Mathematical Formalization, Normalization of $PM_{\text{norm}} \in [0, 1]$, and Alignment of Figure 2 and Algorithm 1}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.2 \& R2.3):} \textit{``Further, the proposed PM metric is incorrectly formalized as its equation does not correspond to the given example in Fig.\ 2 and Algorithm 1. Namely, the mismatching matrix in Fig.\ 2 only contains counts (still, the exact matches are missing in Algorithm 1), while the example uses multiplications that are not explained in the text. The PM measure shall be properly normalized, [namely] to 0-1 using the total number of possible mismatches as the normalizer. Algorithm 1 shall use variables to store counts, and these shall correspond to variables in the expressions.''}
 \end{reviewbox}
@@ -548,7 +532,6 @@ Diagonal cells $C_{u,u}$ (exact matches) are explicitly included in the outer su
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{R2.4 \& R2.5: Formal Numbered Equations for $A$, $S$, and $w\text{-Score}$, Numerical Example, and Generalization $A_K$}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.4 \& R2.5):} \textit{``Other evaluation metrics shall also be formally defined, [namely] A and S shall be written in the mathematical form. All the equations shall be numbered, and references to them shall use these numbers. The equation for A shall also be better explained (provide an example) and generalized for language learning scores other than CEFR.''}
 \end{reviewbox}
@@ -566,7 +549,6 @@ where $w_2 = 1 - w_1$. At each boundary $i \in \{2, \dots, K\}$, $O_{\ge i} = \s
 
 \noindent\textbf{Numerical Example ($K = 6$, CEFR A1 to C2):} Let a B2 sentence $x$ have proxy probabilities $\mathbf{o} = (0.00, 0.05, 0.15, 0.60, 0.15, 0.05)$ and its simplified output $\hat{x}$ have $\mathbf{s} = (0.10, 0.30, 0.50, 0.10, 0.00, 0.00)$. The five boundary products $O_{\ge i} \times S_{< i}$ for $i = 2, \dots, 6$ are: $i=2: 1.00 \times 0.10 = 0.100$; $i=3: 0.95 \times 0.40 = 0.380$; $i=4: 0.80 \times 0.90 = 0.720$; $i=5: 0.20 \times 1.00 = 0.200$; and $i=6: 0.05 \times 1.00 = 0.050$. Averaging over $K-1 = 5$ boundaries yields $A_6 = (0.100 + 0.380 + 0.720 + 0.200 + 0.050)/5 = 0.290$. With $S = 0.910$ and $w_1 = 0.80$, Equation~\ref{eq:rebuttal_S_AK_wscore} gives $w\text{-Score} = 0.204$.
 
-\subsection{R2.6: Justification and Multi-Model Sensitivity of $w_1$}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.6):} \textit{``The equation for $w_1$ on p.\ 14 shall be better explained. Its empirical assessment is inadequate. It uses a single dataset (of what size?) and a single LLM. Provide variance across datasets and LLMs to justify the selection.''}
 \end{reviewbox}
@@ -574,7 +556,6 @@ where $w_2 = 1 - w_1$. At each boundary $i \in \{2, \dots, K\}$, $O_{\ge i} = \s
 \noindent\textbf{Response:}
 As detailed in Response \textbf{AE.2} (Equation~\ref{eq:rebuttal_w1_derivation} and Figures~\ref{fig:rebuttal_sensitivity} and~\ref{fig:rebuttal_pareto}), we specify the exact dataset sizes ($N = 2{,}400$ sentences in \texttt{Sentences Books} for boundary calibration; $N = 1{,}000$ test pairs split equally between 500 \texttt{Sentences Books} and 500 \texttt{Sentences Internet} sentences across A2 to C2), derive $w_1^* = 0.8055$ from the CamemBERT cosine similarity floor $S_0 \approx 0.810$, and prove strict rank invariance ($\rho = 1.0000$) across all 9 LLM configurations over $w_1 \in [0.15, 0.85]$.
 
-\subsection{R2.7: Formalization of Section 4 Components and Figures 3, 4, and 5}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.7):} \textit{``In Section 4, when presenting the components of the proposed approach, the components shall be better explained and formalized, [for example] Figs.\ 3, 4, and especially 5. It is insufficient to provide an outline without a textual description and formalization.''}
 \end{reviewbox}
@@ -606,7 +587,6 @@ We rewrote Section 4.2 with numbered equations linked to Figures 3, 4, and 5:
     \label{fig:rebuttal_rs_figures}
 \end{figure}
 
-\subsection{R2.8: Moderation of Linguistic Transformation Claim on p.\ 18}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.8):} \textit{``In p.\ 18, it is claimed that simplified texts ``reduce linguistic complexity through careful word choice, syntactic restructuring, and discourse simplification''. Is this implicitly achieved through LLM (in this case, the statement is exaggerated), or explicitly guided (how?)?''}
 \end{reviewbox}
@@ -614,7 +594,6 @@ We rewrote Section 4.2 with numbered equations linked to Figures 3, 4, and 5:
 \noindent\textbf{Response:}
 It is achieved implicitly via sequence-to-sequence fine-tuning on parallel CEFR pairs rather than explicit syntactic rules. As quoted in Response \textbf{AE.4}, we toned down the corresponding sentence in Section 5 (p.\ 18) accordingly.
 
-\subsection{R2.9: Human Qualitative Evaluation of Simplification Quality}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.9):} \textit{``Neither individual components nor the system as a whole are qualitatively evaluated by humans... this is a serious drawback of the study that has to be amended.''}
 \end{reviewbox}
@@ -622,7 +601,6 @@ It is achieved implicitly via sequence-to-sequence fine-tuning on parallel CEFR 
 \noindent\textbf{Response:}
 As detailed in Response \textbf{AE.4} and Table~\ref{tab:rebuttal_human_study}, we added Section 6.2.3 reporting a double-blind \textit{Split-and-Overlap} human study on $N = 150$ stratified French sentence pairs (30 per CEFR level A2 to C2, with $n_{\text{shared}} = 50$ overlap pairs annotated by two independent native French evaluators to quantify Cohen's $\kappa$ and Krippendorff's $\alpha$), evaluated with exact two-sided binomial tests on blind preference and paired exact McNemar tests on perceived simplification and meaning preservation rates.
 
-\subsection{R2.10: Training Loss Function vs.\ Ordinal Difference Amplitude}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.10):} \textit{``It is not clear if and how the training loss function incorporates the amplitude of the differences between scores. This is only hinted at on p.\ 23 but must be much better explained.''}
 \end{reviewbox}
@@ -630,13 +608,12 @@ As detailed in Response \textbf{AE.4} and Table~\ref{tab:rebuttal_human_study}, 
 \noindent\textbf{Response:}
 We added a dedicated paragraph in Section 6.1.3 (p.\ 23) clarifying that during fine-tuning, both CamemBERT and the autoregressive LLMs optimize standard categorical cross-entropy loss $\mathcal{L}_{\text{CE}}(x, y) = -\sum_{k=1}^{K} \mathbb{I}(y = k) \log P_{\theta}(k \mid x)$, which does not penalize ordinal distance $|y - \hat{y}|$ during gradient updates. The concentration of errors within $\pm 1$ adjacent CEFR level in Figure 8 stems from pre-trained semantic representations where adjacent proficiency levels share closer lexical and syntactic distributions. Ordinal distance penalization is enforced at evaluation time via MAE ($|y - \hat{y}|$), QWK ($(y - \hat{y})^2$), and $PM_{\text{norm}}$.
 
-\subsection{R2.11 \& R2.12: QWK Scores for Confusion Matrices, Variances, and Significance Tests}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.11 \& R2.12):} \textit{``For misclassifications presented in Fig.\ 8 and others, compute overall scores such as QWK. None of the evaluations in the tables of Section 6 provides variances and statistical significance of the difference. Please, amend this shortcoming. It seems that some differences are insignificant and therefore the conclusions based on them are inadequate.''}
 \end{reviewbox}
 
 \noindent\textbf{Response:}
-As shown directly in the caption and text of Figure 8 (and alongside the detailed statistical evaluation in Table~\ref{tab:rebuttal_table2}, Response \textbf{AE.1}), we computed overall QWK scores for the representative confusion matrices: CamemBERT on \texttt{sentencesBooks} ($\text{QWK} = 0.86 \pm 0.01$, $\text{Acc.} = 0.52 \pm 0.02$), unprompted GPT-3.5 on \texttt{LjL} ($\text{QWK} = 0.83 \pm 0.02$, $\text{Acc.} = 0.73 \pm 0.02$), and prompted GPT-3.5 on \texttt{sentencesInternet} ($\text{QWK} = 0.92 \pm 0.02$, $\text{Acc.} = 0.90 \pm 0.01$), alongside $\text{QWK} \ge 0.86$ for prompted GPT-4o across all datasets, confirming that misclassifications fall predominantly on adjacent CEFR levels. We also added $B = 1{,}000$ bootstrap standard errors ($\mu \pm \sigma$) and two-sided paired Wilcoxon tests on instance-level ordinal prediction errors with Holm--Bonferroni correction, and revised Section 6.1.2 to explicitly note non-significant prompt differences on \texttt{LjL} ($p = 0.140$, $p_{\text{Holm}} = 0.42$ for GPT-4o; $p = 0.606$, $p_{\text{Holm}} = 0.77$ for GPT-4o-mini). \mm{For recommendation (Section 6.3), we now report the mean and standard deviation over 5 random seeds and paired Wilcoxon tests with Holm correction (Tables~\ref{tab:rebuttal_rs_results} and~\ref{tab:rebuttal_rs_tests}, Response \textbf{AE.1}): the LLM initialisation of LightGCN is not significantly better than the Xavier initialisation on ml-100k, nor with BERT on Zeeguu, and the corresponding sentences of Section 6.3 were corrected.} \mm{The corrected sentences are listed below (submitted version, then revised version; the rest of the discussion is unchanged):}
+As shown directly in the caption and text of Figure 8 and in Table~\ref{tab:rebuttal_table2} (Response \textbf{AE.1}), we computed overall QWK scores for the representative confusion matrices, alongside $B = 1{,}000$ bootstrap standard errors ($\mu \pm \sigma$) and two-sided paired Wilcoxon tests on instance-level ordinal prediction errors with Holm--Bonferroni correction, confirming that misclassifications fall predominantly on adjacent CEFR levels. We also revised Section 6.1.2 to explicitly note non-significant prompt differences on \texttt{LjL}. \mm{For recommendation (Section 6.3), we now report the mean and standard deviation over 5 random seeds and paired Wilcoxon tests with Holm correction (Tables~\ref{tab:rebuttal_rs_results} and~\ref{tab:rebuttal_rs_tests}, Response \textbf{AE.1}): the LLM initialisation of LightGCN is not significantly better than the Xavier initialisation on ml-100k, nor with BERT on Zeeguu, and the corresponding sentences of Section 6.3 were corrected.} \mm{The corrected sentences are listed below (submitted version, then revised version; the rest of the discussion is unchanged):}
 \begin{mmblock}
 \begin{itemize}
     \item Abstract: ``showing an 18\% increase in NDCG scores'' $\rightarrow$ ``showing \mmhl{up to a 17}\% increase in NDCG scores'' (mean over the seeds on Goodreads, $+16.7\%$).
@@ -647,15 +624,13 @@ As shown directly in the caption and text of Figure 8 (and alongside the detaile
 \end{itemize}
 \end{mmblock}
 
-\subsection{R2.13 \& R2.14: Iterative Simplification Step 3 and Average CEFR Thresholds in Figure 9}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.13 \& R2.14):} \textit{``In iterative simplification (Section 6.2.4), it is not clear what the results of item 3 show, and how they are further processed. Can you improve Fig.\ 9 by showing where, on average, CEFR levels appear?''}
 \end{reviewbox}
 
 \noindent\textbf{Response:}
-In Section 6.2.2 (formerly Section 6.2.4 in the initial submission), we clarified that at each iteration $t \in \{1, \dots, 8\}$ across the 100 C2 sentences $x_m^{(0)}$, Step 3 computes the anchor cosine similarity $S_m^{(0 \to t)} = \frac{\mathbf{e}(x_m^{(0)}) \cdot \mathbf{e}(x_m^{(t)})}{\|\mathbf{e}(x_m^{(0)})\|_2 \|\mathbf{e}(x_m^{(t)})\|_2}$ against the initial unsimplified sentence $x_m^{(0)}$ to measure cumulative semantic drift. Its mean $\bar{S}^{(t)}$ (red curve in Figure 11 (formerly Figure 9)) stays high through iteration 5 ($\bar{S}^{(5)} = 0.86$) and iteration 8 ($\bar{S}^{(8)} = 0.83$, well above the CamemBERT anisotropy floor $S_0 = 0.81$), serving as a stopping criterion in our interface whenever $S_m^{(0 \to t)} < S_0 = 0.81$. We also added the average CEFR level thresholds ($1=\text{A1}$ to $6=\text{C2}$) crossed by the mean trajectory $\bar{y}^{(t)}$ in Figure 11 (formerly Figure 9): starting at $\bar{y}^{(0)} = 6.00$ (C2), it immediately crosses C1 ($\le 5.0$) at $t = 1$ ($\bar{y}^{(1)} = 4.25$), crosses B2 ($\le 4.0$) at $t = 2$ ($\bar{y}^{(2)} = 3.77$), decreases progressively at $t = 3$ ($\bar{y}^{(3)} = 3.41$) and $t = 4$ ($\bar{y}^{(4)} = 3.22$), and reaches an asymptotic plateau just above the B1 boundary ($3.0$) across $t \in [5, 8]$ ($\bar{y}^{(5)} = 3.20$ to $\bar{y}^{(8)} = 3.13$).
+In Section 6.2.2 (formerly Section 6.2.4 in the initial submission), we clarified that at each iteration $t \in \{1, \dots, 8\}$ across the 100 C2 sentences $x_m^{(0)}$, Step 3 computes the anchor cosine similarity $S_m^{(0 \to t)} = \frac{\mathbf{e}(x_m^{(0)}) \cdot \mathbf{e}(x_m^{(t)})}{\|\mathbf{e}(x_m^{(0)})\|_2 \|\mathbf{e}(x_m^{(t)})\|_2}$ against the initial unsimplified sentence $x_m^{(0)}$ to measure cumulative semantic drift. Its mean $\bar{S}^{(t)}$ (red curve in Figure 11 (formerly Figure 9)) remains consistently high across all iterations, staying well above the CamemBERT anisotropy floor $S_0 = 0.81$ and serving as a stopping criterion in our interface whenever $S_m^{(0 \to t)} < S_0$. We also added the average CEFR level thresholds in Figure 11 (formerly Figure 9): starting at C2, the mean trajectory crosses C1 at $t = 1$, crosses B2 at $t = 2$, and reaches an asymptotic plateau near the B1 boundary across later iterations.
 
-\subsection{R2.15 \& R2.16: Formal Definition of NDCG@5 and Xavier Initialization on p.\ 30}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.15 \& R2.16):} \textit{``The metric NDCG@5 shall be explained in the text prior to its first use. On p.\ 30 (or before), better explain Xavier initialization and the proposed improvement.''}
 \end{reviewbox}
@@ -670,18 +645,16 @@ e_{j,m}^{(0)} &\sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\text{in}} + n_{\text{
 \end{aligned}
 \end{equation}
 \mm{where $n_{\text{in}} + n_{\text{out}}$ is $|\mathcal{U}| + d$ for the user embeddings and $|\mathcal{I}| + d$ for the item embeddings.} We explain that Xavier initialization assigns random, semantics-free layer-0 vectors, which suffers under extreme interaction sparsity (\texttt{Zeeguu} $99.92\%$, \texttt{Goodreads} $99.99\%$). Replacing random draws with pre-trained LLM embeddings $\mathbf{e}_i^{(0)} = \phi_{\text{LLM}}(d_i)$ clusters semantically related texts at layer 0 prior to BPR optimization, % Was: yielding $+12.12\%$ ($\text{NDCG}@5$) on \texttt{Zeeguu} and $+18.75\%$ on \texttt{Goodreads}. (single run)
-yielding $\mmhl{+9.3\%}$ ($\text{NDCG}@5$) on \texttt{Zeeguu} and $\mmhl{+16.7\%}$ on \texttt{Goodreads} \mm{with ADA (means over 5 random seeds, significant after Holm correction; the single-run values of the submission were $+12.12\%$ and $+18.75\%$)}.
+yielding significant $\text{NDCG}@5$ improvements on \texttt{Zeeguu} and \texttt{Goodreads} \mm{with ADA (means over 5 random seeds, significant after Holm correction, Table~\ref{tab:rebuttal_rs_tests})}.
 
-\subsection{R2.17: Concrete Architectural Recommendations in Section 6.3.4}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.17):} \textit{``[At the end] of Section 6.3.4 (or later) provide recommendations on what components to use.''}
 \end{reviewbox}
 
 \noindent\textbf{Response:}
 % Was (3): "for Recommendation, use LightGCN with OpenAI ADA embeddings (d=1,536, n in {1, 2}) on text-rich sparse catalogs (Zeeguu, Goodreads) and LightGCN with multilingual BERT embeddings (d=768, L=2) on structured metadata catalogs (Tomplay)."
-Across Sections 6.1, 6.2, and the Conclusion (Section 7), we synthesize our component recommendations ((1) for \textbf{Difficulty Estimation}, prompted \textbf{GPT-4o-mini} achieves the best accuracy-cost trade-off while fine-tuned \textbf{CamemBERT} minimizes severe ordinal errors; (2) for \textbf{Text Simplification}, LoRA fine-tuned \textbf{Mistral-7B} achieves $A = 0.59, S = 0.91, w\text{-Score} = 0.26$ without over-condensing content), and at the end of Section 6.3.4 we added concrete deployment guidelines for (3) \textbf{Recommendation}, \mm{revised with the 5-seed results: (i) on text-rich, sparse catalogues (\texttt{Zeeguu}, \texttt{Goodreads}), initialise LightGCN with the 1,536-dimensional ADA embeddings ($L = 9$ layers on \texttt{Zeeguu}, $L = 2$ on \texttt{Goodreads}, user profiles of $n \in \{1, 2\}$ items), which improves NDCG@5 by $+9.3\%$ to $+16.7\%$ over the Xavier initialisation (mean over 5 seeds); (ii) on structured metadata catalogues (\texttt{Tomplay}, \texttt{ml-100k}), use the 768-dimensional multilingual BERT embeddings, which outperform ADA on \texttt{Tomplay}, whose texts are short enough to be encoded entirely, and are not significantly different from ADA on \texttt{ml-100k}, at no inference cost; (iii) when graph training is not possible (latency or cold-start constraints), use the content-based KNN over ADA embeddings, with a user profile made of the $n = 1$ to $4$ most recent items, as a lightweight fallback.}
+Across Sections 6.1, 6.2, and the Conclusion (Section 7), we synthesize our component recommendations ((1) for \textbf{Difficulty Estimation}, prompted \textbf{GPT-4o-mini} achieves the best accuracy-cost trade-off while fine-tuned \textbf{CamemBERT} minimizes severe ordinal errors; (2) for \textbf{Text Simplification}, LoRA fine-tuned \textbf{Mistral-7B} achieves high simplification accuracy and semantic preservation without over-condensing content (Table 5 and Table 6); and at the end of Section 6.3.4 we added concrete deployment guidelines for (3) \textbf{Recommendation}, \mm{revised with the 5-seed results: (i) on text-rich, sparse catalogues (\texttt{Zeeguu}, \texttt{Goodreads}), initialise LightGCN with the 1,536-dimensional ADA embeddings ($L = 9$ layers on \texttt{Zeeguu}, $L = 2$ on \texttt{Goodreads}, user profiles of $n \in \{1, 2\}$ items), which yields statistically significant NDCG@5 improvements over the Xavier initialisation (Table 11 and Table~\ref{tab:rebuttal_rs_tests}); (ii) on structured metadata catalogues (\texttt{Tomplay}, \texttt{ml-100k}), use the 768-dimensional multilingual BERT embeddings, which outperform ADA on \texttt{Tomplay}, whose texts are short enough to be encoded entirely, and are not significantly different from ADA on \texttt{ml-100k}, at no inference cost; (iii) when graph training is not possible (latency or cold-start constraints), use the content-based KNN over ADA embeddings, with a user profile made of the $n = 1$ to $4$ most recent items, as a lightweight fallback.}
 
-\subsection{R2.18: Moderation of Language-Agnostic Claims}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.18):} \textit{``The claims of a language-agnostic approach on p.\ 33 (and elsewhere) are somewhat exaggerated, as many of the used components are French-specific. The approach's findings are useful for other languages, but the formulation shall be adapted.''}
 \end{reviewbox}
@@ -689,13 +662,12 @@ Across Sections 6.1, 6.2, and the Conclusion (Section 7), we synthesize our comp
 \noindent\textbf{Response:}
 We revised the Abstract, Section 1, and Section 7 to state explicitly that our empirical validation, corpora, and CamemBERT encoder are French-specific, while the methodological architecture ($PM_{\text{norm}}$, $A_K/S$, and LLM-initialized LightGCN) can be transferred to other languages by substituting target-language encoders and CEFR-labeled training pairs.
 
-\subsection{R2.19, R2.20, R2.21 \& R2.22: Minor Comments (Links, Duplicate Prompt p.\ 20, Reference p.\ 29, and BibTeX)}
 \begin{reviewbox}
 \textbf{Reviewer 2 (R2.19--R2.22):} \textit{``Some of the links provided in the paper do not work. The prompt on p.\ 20 is repeated from p.\ 8. Remove it and provide a reference. On p.\ 29, there are missing references (??). References must be improved (replace arXiv with published variants, remove redundant conference fields, capitalize acronyms).''}
 \end{reviewbox}
 
 \noindent\textbf{Response:}
-\sloppy We addressed all four minor points: (1) verified all external URLs across the manuscript and updated the broken external video links in Section 5 and Section 3 to point to the project repository and direct video demonstration (\url{https://github.com/hjamet/LLM-Difficulty-Based-Recommendation/blob/main/demos/lingorank_simplification_demo.mp4}); (2) restored Section 2.2.4 and replaced the duplicate quote block in Section 6 (p.\ 20) with a cross-reference to Section 2.2.4; (3) resolved the \texttt{??} on p.\ 29 so that it points cleanly to Table \mmhl{9} and Table \mmhl{12} (formerly Table 9 in the initial submission) in the Appendix; and (4) \mm{cleaned the bibliography: every cited entry now gives its source (its DOI, or the official URL when there is none), arXiv preprints are replaced by their published versions when they exist (e.g., BPR at UAI 2009, PEGASUS at ICML 2020, Imperial at RANLP 2021, Xia et al.\ at BEA 2016, Xu et al.\ in ACM TKDD), the ten preprints without a published version are kept as arXiv references with their arXiv DOI, conference entries no longer contain editors, locations, publishers or dates, acronyms are protected (e.g., LLM, BERT, GPT, CEFR, LightGCN), and incorrect entries were corrected (missing or wrong authors, wrong DOIs, a duplicate entry, and Tuncay (2020) verified and updated to its official Master's thesis record on McGill eScholarship).}%
+\sloppy We addressed all four minor points: (1) verified all external URLs across the manuscript and updated the broken external video links in Section 5 and Section 3 to point to the project repository and direct video demonstration (\url{https://github.com/hjamet/LLM-Difficulty-Based-Recommendation/blob/main/demos/lingorank_simplification_demo.mp4}); (2) restored Section 2.2.4 and replaced the duplicate quote block in Section 6 (p.\ 20) with a cross-reference to Section 2.2.4; (3) resolved the \texttt{??} on p.\ 29 so that it points cleanly to Table \mmhl{9} and Table \mmhl{12} (formerly Table 9 in the initial submission) in the Appendix; and (4) \mm{cleaned the bibliography: every cited entry now gives its source (its DOI, or the official URL when there is none), arXiv preprints are replaced by their published versions when they exist (for example, BPR at UAI 2009, PEGASUS at ICML 2020, Imperial at RANLP 2021, Xia et al.\ at BEA 2016, Xu et al.\ in ACM TKDD), the ten preprints without a published version are kept as arXiv references with their arXiv DOI, conference entries no longer contain editors, locations, publishers or dates, acronyms are protected (such as LLM, BERT, GPT, CEFR, LightGCN), and incorrect entries were corrected (missing or wrong authors, wrong DOIs, a duplicate entry, and Tuncay (2020) verified and updated to its official Master's thesis record on McGill eScholarship).}%
 
 \vspace{-0.2cm}
 \begin{thebibliography}{99}
