@@ -149,7 +149,7 @@ def main():
 
         print(f"[APPLY] Application des macros ({'POOL NETTOYE' if args.clean else 'POOL COMPLET'}) dans les fichiers sources...")
         targets = [
-            repo_root / "dmkd_additions" / "rebuttal" / "Response_to_Reviewers.tex",
+            repo_root / "dmkd_additions" / "Response_to_Reviewers.tex",
             repo_root / "dmkd_additions" / "overleaf_patches" / "tex" / "Experiments.tex",
             repo_root / "paper" / "tex" / "Experiments.tex",
         ]
