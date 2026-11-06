@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "A research project consisting of 1. assessing the difficulty of a French text. 2. Categorising a text according to its subject. 3. Recommending texts according to their difficulty and subject."
 authors = ["Anonymous for peer review"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "3.9.13"
