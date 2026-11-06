@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "llm_difficulty_recommendations_recsys"
+version = "0.1.0"
+description = "Environment of the notebooks c_Recommendations, d_Graphic and e_TokenLengths. It is separate from the environment of the repository because recommenders requires pandas < 2."
+authors = ["Anonymous for peer review"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.9.13"
+huggingface-hub = "0.24.7"
+implicit = "0.7.2"
+ipykernel = "6.31.0"
+matplotlib = "*"
+nbconvert = "7.17.2"
+numpy = "1.23.5"
+pandas = "1.5.3"
+recommenders = "1.1.1"
+scikit-learn = "1.0.2"
+scipy = "1.13.1"
+tensorflow = {version = "2.15.1", extras = ["and-cuda"]}
+threadpoolctl = "3.7.0"
+tiktoken = "0.14.0"
+tqdm = "4.70.1"
+transformers = "4.48.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
