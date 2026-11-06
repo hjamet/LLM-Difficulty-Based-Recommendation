@@ -79,7 +79,7 @@ python -m ipykernel install --user --name recommendation
 poetry run python -m ipykernel install --user --name main # Without Poetry: python -m ipykernel install --user --name main
 ```
 
-The item embeddings are not distributed: `b_GenerateEmbeddings` computes them, one dataset per run. Set `ada` and `bert` to `True` in the same run, because each run rewrites the embedding file of the dataset. An OpenAI API key is needed for ADA; without ADA, set `OPENAI_API_KEY` to any value and `ada` to `False`. KNN needs both embeddings. The Tomplay dataset is proprietary and not distributed either.
+The item embeddings are not distributed: `b_GenerateEmbeddings` computes them, one dataset per run. Set `ada` and `bert` to `True` in the same run, because each run rewrites the embedding file of the dataset. An OpenAI API key is needed for ADA; without ADA, set `OPENAI_API_KEY` to any value and `ada` to `False`. KNN uses the embeddings that exist. The Tomplay dataset is proprietary and not distributed either.
 
 ## Repository Architecture 🦥
 

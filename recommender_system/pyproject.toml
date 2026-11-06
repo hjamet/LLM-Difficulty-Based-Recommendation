@@ -24,6 +24,19 @@ tensorflow = {version = "2.15.1", extras = ["and-cuda"]}
 threadpoolctl = "3.7.0"
 tiktoken = "0.14.0"
 torch = "2.0.1" # CUDA libraries of more recent versions conflict with those of TensorFlow
+# Dependencies of the Linux wheel of torch 2.0.1, which are missing from the metadata read by Poetry
+nvidia-cuda-nvrtc-cu11 = {version = "11.7.99", markers = "sys_platform == 'linux'"}
+nvidia-cuda-runtime-cu11 = {version = "11.7.99", markers = "sys_platform == 'linux'"}
+nvidia-cuda-cupti-cu11 = {version = "11.7.101", markers = "sys_platform == 'linux'"}
+nvidia-cudnn-cu11 = {version = "8.5.0.96", markers = "sys_platform == 'linux'"}
+nvidia-cublas-cu11 = {version = "11.10.3.66", markers = "sys_platform == 'linux'"}
+nvidia-cufft-cu11 = {version = "10.9.0.58", markers = "sys_platform == 'linux'"}
+nvidia-curand-cu11 = {version = "10.2.10.91", markers = "sys_platform == 'linux'"}
+nvidia-cusolver-cu11 = {version = "11.4.0.1", markers = "sys_platform == 'linux'"}
+nvidia-cusparse-cu11 = {version = "11.7.4.91", markers = "sys_platform == 'linux'"}
+nvidia-nccl-cu11 = {version = "2.14.3", markers = "sys_platform == 'linux'"}
+nvidia-nvtx-cu11 = {version = "11.7.91", markers = "sys_platform == 'linux'"}
+triton = {version = "2.0.0", markers = "sys_platform == 'linux'"}
 tqdm = "4.70.1"
 transformers = "4.48.3"
 
