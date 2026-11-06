@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "llm_difficulty_recommendations_recsys"
 version = "0.1.0"
-description = "Environment of the notebooks c_Recommendations, d_Graphic and e_TokenLengths. It is separate from the environment of the repository because recommenders requires pandas < 2."
+description = "Environment of the recommendation notebooks. It is separate from the environment of the repository because recommenders requires pandas < 2."
 authors = ["Anonymous for peer review"]
 package-mode = false
 
@@ -10,16 +10,20 @@ python = "3.9.13"
 huggingface-hub = "0.24.7"
 implicit = "0.7.2"
 ipykernel = "6.31.0"
+ipywidgets = "*"
 matplotlib = "*"
 nbconvert = "7.17.2"
 numpy = "1.23.5"
+openai = "0.28.1"
 pandas = "1.5.3"
 recommenders = "1.1.1"
 scikit-learn = "1.0.2"
 scipy = "1.13.1"
+sentence-transformers = "2.7.0"
 tensorflow = {version = "2.15.1", extras = ["and-cuda"]}
 threadpoolctl = "3.7.0"
 tiktoken = "0.14.0"
+torch = "2.0.1" # CUDA libraries of more recent versions conflict with those of TensorFlow
 tqdm = "4.70.1"
 transformers = "4.48.3"
 

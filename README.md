@@ -22,6 +22,16 @@ Tools that you can install using the following commands:
 curl https://pyenv.run | bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
+Then make both tools available in the current shell (and add these lines to your shell configuration):
+```bash
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$HOME/.local/bin:$PATH"
+eval "$(pyenv init -)"
+```
+Pyenv compiles Python, which requires a compiler and some system libraries. On Debian or Ubuntu:
+```bash
+apt-get install build-essential curl git python3 xz-utils libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev liblzma-dev tk-dev
+```
 
 Some notebooks also require the following installations:
 - MySQL: [Installation](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
@@ -47,21 +57,27 @@ pip install -r requirements.txt # Installs project dependencies
 
 ### Recommendation notebooks 🦈
 
-The notebooks `c_Recommendations`, `d_Graphic` and `e_TokenLengths` have their own environment, because `recommenders` requires pandas < 2. It is defined in the folder `recommender_system`, with the same tools and Python version as the main environment:
+The notebooks `b_GenerateEmbeddings`, `c_Recommendations`, `d_Graphic` and `e_TokenLengths` have their own environment, because `recommenders` requires pandas < 2. It is defined in the folder `recommender_system`, with the same tools and Python version as the main environment:
 ```bash
 cd recommender_system
-poetry install --no-root # Stops on lightfm, but creates the virtual environment
-poetry run pip install pip==22.0.4 lightfm==1.17 # lightfm 1.17 does not build with recent versions of pip
-poetry install # Installs the other dependencies
+poetry install # Stops on lightfm, but creates the virtual environment and installs the other dependencies
+poetry run pip install pip==22.0.4 # lightfm 1.17 does not build with recent versions of pip
+poetry run pip install lightfm==1.17
+poetry install # Checks that nothing is missing
 poetry run python -m ipykernel install --user --name recommendation # Jupyter kernel of these notebooks
 ```
 Without Poetry, in the folder `recommender_system` and with Python 3.9.13:
 ```bash
 python -m venv .venv
 source .venv/bin/activate
+pip install pip==22.0.4
 pip install -r requirements.txt
+python -m ipykernel install --user --name recommendation
 ```
-`a_GetZeeguData` and `b_GenerateEmbeddings` use the main environment above.
+`a_GetZeeguData` is optional, because its output is part of the downloaded data. It uses the main environment above. To make it available in Jupyter, from the root of the repository:
+```bash
+poetry run python -m ipykernel install --user --name main # Without Poetry: python -m ipykernel install --user --name main
+```
 
 The item embeddings are not distributed: `b_GenerateEmbeddings` computes them, one dataset per run. Set `ada` and `bert` to `True` in the same run, because each run rewrites the embedding file of the dataset. An OpenAI API key is needed for ADA; without ADA, set `OPENAI_API_KEY` to any value and `ada` to `False`. KNN needs both embeddings. The Tomplay dataset is proprietary and not distributed either.
 
