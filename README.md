@@ -53,7 +53,7 @@ cd recommender_system
 poetry install --no-root # Stops on lightfm, but creates the virtual environment
 poetry run pip install pip==22.0.4 lightfm==1.17 # lightfm 1.17 does not build with recent versions of pip
 poetry install # Installs the other dependencies
-poetry run python -m ipykernel install --user --name dmkd_recommendation # Jupyter kernel of these notebooks
+poetry run python -m ipykernel install --user --name recommendation # Jupyter kernel of these notebooks
 ```
 Without Poetry, in the folder `recommender_system` and with Python 3.9.13:
 ```bash
